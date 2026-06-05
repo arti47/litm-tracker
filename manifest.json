@@ -1,0 +1,19 @@
+{
+  "name": "Legend in the Mist — Hero Tracker",
+  "short_name": "LITM",
+  "description": "Companion hero sheet and dice roller for the Legend in the Mist tabletop RPG. Theme cards, Fellowship, statuses, story tags, and a rule-correct 2d6 + Power roller. Works fully offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#2e5d52",
+  "background_color": "#eef1e9",
+  "categories": ["games", "entertainment", "utilities"],
+  "icons": [
+    { "src": "icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
+    { "src": "icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}

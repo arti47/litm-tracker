@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LITM">
+<meta name="theme-color" content="#2e5d52">
+<link rel="manifest" href="manifest.json">
+<title>Legend in the Mist — Hero Tracker</title>
+
+<!-- App icon (inline SVG → data URI, single-file friendly). Misty stag antlers over a forest. -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20180%20180%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233e7a6b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231c3f38%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22url%28%23b%29%22%2F%3E%3Cg%20stroke%3D%22%23eef3ec%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M90%20120%20V70%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C78%2074%2072%2066%2070%2050%20M78%2078%20L62%2074%20M74%2064%20L60%2058%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C102%2074%20108%2066%20110%2050%20M102%2078%20L118%2074%20M106%2064%20L120%2058%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%2290%22%20y%3D%22150%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23eef3ec%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%222%22%3ELITM%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="icon" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20180%20180%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233e7a6b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231c3f38%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22url%28%23b%29%22%2F%3E%3Cg%20stroke%3D%22%23eef3ec%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M90%20120%20V70%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C78%2074%2072%2066%2070%2050%20M78%2078%20L62%2074%20M74%2064%20L60%2058%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C102%2074%20108%2066%20110%2050%20M102%2078%20L118%2074%20M106%2064%20L120%2058%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%2290%22%20y%3D%22150%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23eef3ec%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%222%22%3ELITM%3C%2Ftext%3E%3C%2Fsvg%3E">
+
+<style>
+:root {
+  --bg: #eef1e9;
+  --bg-deep: #e1e7da;
+  --card-bg: #ffffff;
+  --ink: #1f2a26;
+  --ink-soft: #4a5b54;
+  --teal: #2e5d52;
+  --teal-dark: #1c3f38;
+  --teal-light: #3e7a6b;
+  --mist: #7fa99b;
+  --border: rgba(46, 93, 82, 0.25);
+  --shadow: rgba(28, 63, 56, 0.14);
+  /* Tag colours straight from the rulebook palette */
+  --power: #ffe9a3;        /* power / helpful story tags — yellow */
+  --power-ink: #6b5410;
+  --weak: #ffcf9e;         /* weakness / hindering tags — orange */
+  --weak-ink: #8a4a10;
+  --status: #c7e6c0;       /* statuses — green */
+  --status-ink: #2f5d28;
+  --good: #2e7d32;
+  --good-bg: #e8f5e9;
+  --bad: #b3261e;
+  --bad-bg: #fdecea;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bot: env(safe-area-inset-bottom);
+}
+body.dark {
+  --bg: #121816;
+  --bg-deep: #1a221f;
+  --card-bg: #222b27;
+  --ink: #e7efe9;
+  --ink-soft: #aebeb6;
+  --teal: #4f9486;
+  --teal-dark: #6fb3a3;
+  --teal-light: #5fa392;
+  --mist: #6f978a;
+  --border: rgba(95, 163, 146, 0.32);
+  --shadow: rgba(0,0,0,0.5);
+  --power: #7a6526;
+  --power-ink: #ffe9a3;
+  --weak: #84512a;
+  --weak-ink: #ffd9b0;
+  --status: #2f5d36;
+  --status-ink: #cdeac5;
+  --good: #8fd194;
+  --good-bg: rgba(76,175,80,0.18);
+  --bad: #f0a39c;
+  --bad-bg: rgba(179,38,30,0.22);
+}
+body.dark input, body.dark select, body.dark textarea {
+  background: #1a221f; color: var(--ink); border-color: var(--border);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg); color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px; -webkit-text-size-adjust: 100%;
+}
+h1,h2,h3 { font-family: Georgia, 'Times New Roman', serif; }
+
+/* ---------- Header ---------- */
+header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--teal); color: #f3f7f2;
+  padding: calc(var(--safe-top) + 8px) 10px 0;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+.hdr-top { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; }
+.hdr-title { font-size: 17px; font-weight: 700; flex: 1; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: Georgia, serif; }
+.hdr-btn { background: rgba(255,255,255,0.16); border: none; color: #f3f7f2;
+  width: 38px; height: 38px; border-radius: 9px; font-size: 18px; flex: none; }
+.hdr-btn:active { background: rgba(255,255,255,0.3); }
+nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
+nav::-webkit-scrollbar { display: none; }
+.tab { background: transparent; border: none; color: #cfe1db; padding: 9px 13px;
+  font-size: 14px; font-weight: 600; border-radius: 9px 9px 0 0; white-space: nowrap; }
+.tab.active { background: var(--bg); color: var(--teal); }
+body.dark .tab.active { color: var(--teal-dark); }
+
+/* ---------- Layout ---------- */
+.panel { display: none; padding: 14px 12px calc(var(--safe-bot) + 90px); max-width: 720px; margin: 0 auto; }
+.panel.active { display: block; }
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+  padding: 14px; margin-bottom: 14px; box-shadow: 0 1px 4px var(--shadow); }
+.card > h2 { margin: 0 0 10px; font-size: 18px; color: var(--teal); display: flex; align-items: center; gap: 8px; }
+.card > h3 { margin: 14px 0 6px; font-size: 14px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .5px; }
+label.fld { display: block; margin-bottom: 10px; }
+label.fld > span { display: block; font-size: 12px; font-weight: 600; color: var(--ink-soft);
+  text-transform: uppercase; letter-spacing: .4px; margin-bottom: 3px; }
+input[type=text], textarea, select {
+  width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 9px;
+  font-size: 15px; font-family: inherit; background: var(--card-bg); color: var(--ink); }
+textarea { resize: vertical; min-height: 52px; line-height: 1.4; }
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; min-width: 0; }
+.muted { color: var(--ink-soft); font-size: 13px; }
+.hint { font-size: 12px; color: var(--ink-soft); margin: 4px 0 0; line-height: 1.45; }
+
+/* ---------- Buttons ---------- */
+button { font-family: inherit; cursor: pointer; }
+.btn { border: none; border-radius: 9px; padding: 9px 14px; font-size: 14px; font-weight: 600;
+  background: var(--teal); color: #fff; }
+.btn:active { filter: brightness(1.1); }
+.btn.sm { padding: 6px 10px; font-size: 13px; }
+.btn.ghost { background: var(--bg-deep); color: var(--teal); border: 1px solid var(--border); }
+.btn.danger { background: var(--bad); }
+.btn.wide { width: 100%; }
+.addbtn { background: var(--bg-deep); color: var(--teal); border: 1px dashed var(--border);
+  border-radius: 9px; padding: 8px 12px; font-size: 13px; font-weight: 600; }
+
+/* ---------- Tags ---------- */
+.taglist { display: flex; flex-direction: column; gap: 6px; margin: 6px 0; }
+.tagrow { display: flex; align-items: center; gap: 6px; }
+.tagrow input { flex: 1; padding: 7px 10px; border-radius: 20px; font-size: 14px; }
+.tagrow input.power { background: var(--power); color: var(--power-ink); border-color: transparent; font-weight: 600; }
+.tagrow input.weak  { background: var(--weak);  color: var(--weak-ink);  border-color: transparent; font-weight: 600; }
+.tagrow input.story { background: var(--power); color: var(--power-ink); border-color: transparent; }
+.tagrow input.scratched { text-decoration: line-through; opacity: .5; }
+.tagrow .ic { width: 32px; height: 32px; flex: none; border: none; border-radius: 8px;
+  background: var(--bg-deep); font-size: 15px; color: var(--ink-soft); }
+.tagrow .ic.on { background: var(--teal); color: #fff; }
+
+/* ---------- Tracks (improve/abandon/milestone/promise) ---------- */
+.track { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+.track-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+  width: 78px; flex: none; color: var(--ink-soft); }
+.pips { display: flex; gap: 6px; }
+.pip { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--mist); background: transparent; padding: 0; }
+.pip.on { background: var(--teal); border-color: var(--teal); }
+.pip.promise.on { background: var(--teal-light); border-color: var(--teal-light); }
+
+/* ---------- Theme card ---------- */
+.theme { border-left: 4px solid var(--mist); }
+.theme .theme-hd { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+.theme .theme-hd select { flex: none; width: 130px; font-size: 12px; padding: 6px; }
+.theme .title-in { flex: 1; font-size: 16px; font-weight: 700; padding: 8px 10px; }
+.mightbadge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px;
+  text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; align-self: center; }
+.m-origin { background: #d9e8e3; color: #2e5d52; }
+.m-adventure { background: #e6dcc0; color: #7a5a14; }
+.m-greatness { background: #e4d2e8; color: #6a2e7a; }
+.m-any { background: var(--bg-deep); color: var(--ink-soft); }
+body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark); }
+
+/* ---------- Statuses ---------- */
+.status-card { display: flex; align-items: center; gap: 8px; padding: 9px; border-radius: 10px;
+  background: var(--bg-deep); margin-bottom: 8px; }
+.status-card .nm { flex: 1; background: var(--status); color: var(--status-ink); font-weight: 600; border: none; }
+.boxes { display: flex; gap: 3px; }
+.sbox { width: 26px; height: 30px; border: 1.5px solid var(--mist); border-radius: 5px; background: var(--card-bg);
+  font-size: 11px; color: var(--ink-soft); font-weight: 700; padding: 0; position: relative; }
+.sbox.on { background: var(--status); border-color: var(--status-ink); color: var(--status-ink); }
+.sbox.tier { box-shadow: 0 0 0 2px var(--teal); }
+
+/* ---------- Roller ---------- */
+.modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: var(--card-bg); font-size: 13px; font-weight: 600;
+  margin: 0 6px 6px 0; color: var(--ink); }
+.modchip.help { background: var(--power); color: var(--power-ink); border-color: transparent; }
+.modchip.hind { background: var(--weak); color: var(--weak-ink); border-color: transparent; }
+.modchip.stat { border-style: dashed; }
+.modchip .v { font-variant-numeric: tabular-nums; opacity: .8; }
+.modchip .burn { font-size: 13px; }
+.modchip.burning { box-shadow: 0 0 0 2px #e8821e; }
+.seg { display: flex; gap: 4px; flex-wrap: wrap; }
+.seg button { flex: 1; min-width: 64px; padding: 8px 4px; border: 1.5px solid var(--border);
+  background: var(--card-bg); color: var(--ink); border-radius: 8px; font-size: 12px; font-weight: 600; }
+.seg button.on { background: var(--teal); color: #fff; border-color: var(--teal); }
+.stepper { display: flex; align-items: center; gap: 12px; }
+.stepper button { width: 40px; height: 40px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--card-bg); color: var(--teal); font-size: 22px; font-weight: 700; }
+.powerbig { text-align: center; padding: 8px; }
+.powerbig .n { font-size: 44px; font-weight: 800; font-family: Georgia, serif; color: var(--teal); line-height: 1; }
+.powerbig .l { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-soft); }
+.dice { display: flex; justify-content: center; gap: 14px; margin: 14px 0; }
+.die { width: 64px; height: 64px; border-radius: 14px; background: var(--card-bg); border: 2px solid var(--teal);
+  display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800;
+  font-family: Georgia, serif; color: var(--teal); box-shadow: 0 2px 6px var(--shadow); }
+.die.rolling { animation: shake .5s ease; }
+@keyframes shake { 0%,100%{transform:translateY(0) rotate(0)} 25%{transform:translateY(-8px) rotate(-7deg)} 75%{transform:translateY(-8px) rotate(7deg)} }
+.outcome { text-align: center; border-radius: 12px; padding: 14px; margin-top: 6px; }
+.outcome.win  { background: var(--good-bg); color: var(--good); }
+.outcome.mixed{ background: #fff5e0; color: #9a6a10; }
+.outcome.lose { background: var(--bad-bg); color: var(--bad); }
+body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
+.outcome .big { font-size: 22px; font-weight: 800; font-family: Georgia, serif; }
+.outcome .sub { font-size: 14px; margin-top: 4px; }
+.rollhist { font-size: 13px; color: var(--ink-soft); border-bottom: 1px solid var(--border); padding: 7px 0; }
+.rollhist b { color: var(--ink); }
+
+/* ---------- Overlay ---------- */
+.overlay { position: fixed; inset: 0; z-index: 100; background: rgba(20,30,26,0.55);
+  display: none; align-items: flex-end; justify-content: center; }
+.overlay.show { display: flex; }
+.sheet { background: var(--card-bg); width: 100%; max-width: 480px; border-radius: 18px 18px 0 0;
+  padding: 18px 16px calc(var(--safe-bot) + 18px); max-height: 86vh; overflow-y: auto; }
+.sheet h2 { margin: 0 0 14px; color: var(--teal); }
+.menu-item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  background: var(--bg-deep); border: 1px solid var(--border); border-radius: 11px; padding: 13px 14px;
+  font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 9px; }
+.menu-item .em { font-size: 19px; }
+.roster-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.roster-item button.pick { flex: 1; text-align: left; background: var(--bg-deep); border: 1px solid var(--border);
+  border-radius: 10px; padding: 11px 13px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.roster-item button.pick.active { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
+
+/* Quick-ref */
+.ref h3 { color: var(--teal); margin: 14px 0 5px; font-size: 15px; }
+.ref table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ref td { padding: 5px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.ref td:first-child { font-weight: 700; white-space: nowrap; color: var(--teal); }
+.toast { position: fixed; bottom: calc(var(--safe-bot) + 16px); left: 50%; transform: translateX(-50%);
+  background: var(--teal-dark); color: #fff; padding: 10px 18px; border-radius: 22px; font-size: 14px;
+  z-index: 200; opacity: 0; transition: opacity .25s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-top">
+    <div class="hdr-title" id="hdrTitle">Legend in the Mist</div>
+    <button class="hdr-btn" onclick="openRoster()" title="Heroes">👥</button>
+    <button class="hdr-btn" onclick="openMenu()" title="Menu">☰</button>
+  </div>
+  <nav id="nav">
+    <button class="tab active" data-tab="hero" onclick="showTab('hero')">Hero</button>
+    <button class="tab" data-tab="fellowship" onclick="showTab('fellowship')">Fellowship</button>
+    <button class="tab" data-tab="track" onclick="showTab('track')">Tracking</button>
+    <button class="tab" data-tab="roll" onclick="showTab('roll')">Roll</button>
+    <button class="tab" data-tab="ref" onclick="showTab('ref')">Rules</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="panel active" id="panel-hero">
+  <div class="card">
+    <h2>🪶 Hero Card</h2>
+    <div class="row">
+      <label class="fld"><span>Player Name</span><input type="text" id="f_playerName"></label>
+      <label class="fld"><span>Hero Name</span><input type="text" id="f_heroName"></label>
+    </div>
+    <h3>Promise</h3>
+    <div class="track"><span class="track-lbl">Promise</span><div class="pips" id="promisePips"></div></div>
+    <p class="hint">Mark Promise when you evolve or replace a theme (and when trading theme parts). Fill all 5 → a <b>Moment of Fulfillment</b>: reset, carry over extra marks, and gain a Quintessence.</p>
+    <label class="fld" style="margin-top:10px"><span>Moments of Fulfillment</span>
+      <div class="stepper"><button onclick="bump('fulfillments',-1)">−</button><b id="fulfillVal" style="font-size:20px;min-width:24px;text-align:center"></b><button onclick="bump('fulfillments',1)">+</button></div>
+    </label>
+    <label class="fld"><span>Quintessences</span><textarea id="f_quintessences" placeholder="Permanent, rule-breaking qualities gained at a Moment of Fulfillment…"></textarea></label>
+  </div>
+
+  <div class="card">
+    <h2>🎒 Backpack</h2>
+    <p class="hint">Temporary <b>story tags</b> — packed items, prepared songs, memorised incantations. You start with one. Tap 🟡/🟠 to flip helpful/hindering; ✓ to scratch (single-use removed).</p>
+    <div class="taglist" id="backpackList"></div>
+    <button class="addbtn" onclick="addBackpack()">＋ Add story tag</button>
+  </div>
+
+  <div id="themesWrap"></div>
+
+  <div class="card">
+    <h2>📓 Notes</h2>
+    <textarea id="f_notes" style="min-height:90px" placeholder="Anything else about your Hero…"></textarea>
+  </div>
+</section>
+
+<!-- FELLOWSHIP -->
+<section class="panel" id="panel-fellowship">
+  <div class="card">
+    <h2>🤝 Fellowship Theme</h2>
+    <p class="hint">A shared fifth theme any Hero can invoke. Power tags are <b>single-use</b> — scratched when invoked, recovered while camping.</p>
+    <div id="fellowshipWrap"></div>
+  </div>
+  <div class="card">
+    <h2>💞 Fellowship Relationships</h2>
+    <p class="hint">A single-use story tag you hold for each other Hero. Renewed or rephrased around the campfire.</p>
+    <div id="relList"></div>
+    <button class="addbtn" onclick="addRel()">＋ Add fellow Hero</button>
+  </div>
+</section>
+
+<!-- TRACKING -->
+<section class="panel" id="panel-track">
+  <div class="card">
+    <h2>🟢 Statuses</h2>
+    <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. Your <b>Limit is 5</b> — at tier 5 you're overcome, at 6 killed or transformed.</p>
+    <div id="statusList"></div>
+    <button class="addbtn" onclick="addStatus()">＋ Add status</button>
+  </div>
+  <div class="card">
+    <h2>🟡 Scene Story Tags</h2>
+    <p class="hint">Temporary tags in the scene/environment (vantage point, heavy rain, makeshift spear). Toggle helpful/hindering; scratch to remove.</p>
+    <div class="taglist" id="sceneList"></div>
+    <button class="addbtn" onclick="addScene()">＋ Add scene tag</button>
+  </div>
+</section>
+
+<!-- ROLL -->
+<section class="panel" id="panel-roll">
+  <div class="card">
+    <h2 id="rollHead">🎲 Roll an Action</h2>
+    <div class="seg" id="modeSeg" style="margin-bottom:10px">
+      <button data-mode="action" class="on">⚔️ Action</button>
+      <button data-mode="reaction">🛡️ Reaction</button>
+    </div>
+    <p class="hint" id="rollHint">Tap a tag to count it: once = helpful (+1), twice = hindering (−1), again = off. Tap 🔥 on a helpful tag to <b>burn</b> it (+3 instead of +1, scratches the tag). Statuses: only your single highest helpful and highest hindering count.</p>
+    <div id="rollTags"></div>
+    <h3>Might</h3>
+    <div class="seg" id="mightSeg">
+      <button data-m="-6">Extr. Imperiled −6</button>
+      <button data-m="-3">Imperiled −3</button>
+      <button data-m="0" class="on">Matched</button>
+      <button data-m="3">Favored +3</button>
+      <button data-m="6">Extr. Favored +6</button>
+    </div>
+    <h3>Situational (other tags / environment)</h3>
+    <div class="stepper"><button onclick="adjSit(-1)">−</button><b id="sitVal" style="font-size:20px;min-width:40px;text-align:center">0</b><button onclick="adjSit(1)">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="powerbig"><div class="n" id="powerNum">0</div><div class="l">Power</div></div>
+    <div class="dice"><div class="die" id="die1">–</div><div class="die" id="die2">–</div></div>
+    <button class="btn wide" id="rollBtn" style="font-size:17px;padding:14px" onclick="rollDice()">🎲 Roll 2d6 + Power</button>
+    <div id="outcomeBox"></div>
+    <div id="spendBox"></div>
+  </div>
+
+  <div class="card">
+    <h2>📜 Roll History</h2>
+    <div id="rollHist"><p class="muted">No rolls yet.</p></div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section class="panel ref" id="panel-ref">
+  <div class="card">
+    <h2>📖 Quick Reference</h2>
+    <h3>Counting Power</h3>
+    <table><tbody>
+      <tr><td>+1</td><td>each helpful tag (yours, foe's, environment)</td></tr>
+      <tr><td>−1</td><td>each hindering tag</td></tr>
+      <tr><td>+tier</td><td>your single highest helpful status</td></tr>
+      <tr><td>−tier</td><td>your single highest hindering status</td></tr>
+      <tr><td>+3 / +6</td><td>Favored / Extremely Favored (acting below your Might)</td></tr>
+      <tr><td>−3 / −6</td><td>Imperiled / Extremely Imperiled (acting above your Might)</td></tr>
+      <tr><td>Burn</td><td>scratch one helpful tag for +3 instead of +1 (one per roll)</td></tr>
+    </tbody></table>
+    <h3>Roll 2d6 + Power</h3>
+    <table><tbody>
+      <tr><td>10+</td><td>Success — spend your Power on Effects. No Consequences.</td></tr>
+      <tr><td>7–9</td><td>Success &amp; Consequences — spend Power, but take a hit too.</td></tr>
+      <tr><td>6−</td><td>Consequences — no Success.</td></tr>
+      <tr><td>⚅⚅</td><td>Double sixes = Success without Consequences, any Power.</td></tr>
+      <tr><td>⚀⚀</td><td>Double ones = Consequences without Success, any Power.</td></tr>
+      <tr><td>Min 1</td><td>On a Success you always have at least 1 Power to spend.</td></tr>
+      <tr><td>Push</td><td>On 10+ you may accept Consequences for +1 Power (Detailed).</td></tr>
+    </tbody></table>
+    <h3>Spending Power on Effects</h3>
+    <table><tbody>
+      <tr><td>2</td><td>Add / give / recover a tag</td></tr>
+      <tr><td>2</td><td>Scratch a tag</td></tr>
+      <tr><td>1 / tier</td><td>Give a status</td></tr>
+      <tr><td>1 / tier</td><td>Reduce a status</td></tr>
+      <tr><td>1</td><td>Discover a valuable detail</td></tr>
+      <tr><td>1</td><td>Extra feat (only after ≥1 Power on the main purpose)</td></tr>
+      <tr><td>1</td><td>Create a single-use tag (when only 1 Power is left)</td></tr>
+    </tbody></table>
+    <h3>Reactions (defending)</h3>
+    <table><tbody>
+      <tr><td>10+</td><td>Spend Power +1 on any Effect</td></tr>
+      <tr><td>7–9</td><td>Spend Power only to lessen the Consequences</td></tr>
+      <tr><td>6−</td><td>Suffer the Consequences as-is</td></tr>
+    </tbody></table>
+    <h3>Statuses</h3>
+    <table><tbody>
+      <tr><td>Tier</td><td>1 mild → 6 deadly/transformative</td></tr>
+      <tr><td>Stack</td><td>mark the incoming tier's box; if taken, spill to the next free box right. Current tier = highest marked box.</td></tr>
+      <tr><td>Reduce</td><td>move all marks left by the tiers reduced; marks below 1 are removed.</td></tr>
+      <tr><td>Limit 5</td><td>at tier 5 a Hero is overcome; tier 6 kills or transforms.</td></tr>
+    </tbody></table>
+    <h3>Hero Development (per theme)</h3>
+    <table><tbody>
+      <tr><td>Improve</td><td>mark when a weakness tag is invoked or you Reflect in camp. 3 → reset &amp; gain an improvement (usually a new power tag).</td></tr>
+      <tr><td>Abandon</td><td>mark when you ignore/betray the Quest. 3 → the theme is replaced (mark Promise).</td></tr>
+      <tr><td>Milestone</td><td>mark when you achieve the Quest. 3 → the theme evolves (mark Promise).</td></tr>
+    </tbody></table>
+    <h3>Camping</h3>
+    <p class="muted" style="line-height:1.5">Narrator expires story tags → establish the place → each Hero takes 2 activities (3 with Consequences): <b>Rest</b> (recover statuses &amp; scratched power tags), <b>Reflect</b> (mark Improve on a theme), <b>Camp Action</b> (count Power, spend half without rolling, or roll). Then each Hero recovers a Fellowship power tag or renews one relationship tag.</p>
+  </div>
+</section>
+
+<!-- MENU OVERLAY -->
+<div class="overlay" id="menuOverlay" onclick="if(event.target===this)closeOverlays()">
+  <div class="sheet">
+    <h2>Menu</h2>
+    <button class="menu-item" onclick="newHero()"><span class="em">✨</span> New Hero</button>
+    <button class="menu-item" onclick="openRoster()"><span class="em">👥</span> Switch Hero</button>
+    <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
+    <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
+    <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
+    <button class="menu-item danger-text" onclick="deleteHero()"><span class="em">🗑️</span> Delete this hero</button>
+    <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
+    <p class="hint" style="text-align:center;margin-top:10px">Legend in the Mist — Hero Tracker · offline PWA<br>Rules © Son of Oak Game Studio. This is an unofficial fan tool.</p>
+  </div>
+</div>
+
+<!-- ROSTER OVERLAY -->
+<div class="overlay" id="rosterOverlay" onclick="if(event.target===this)closeOverlays()">
+  <div class="sheet">
+    <h2>Your Heroes</h2>
+    <div id="rosterList"></div>
+    <button class="btn wide" style="margin-top:6px" onclick="newHero()">✨ New Hero</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   Legend in the Mist — Hero Tracker
+   Single-file PWA. Rules-faithful to the LITM Core Rulebook.
+   ============================================================ */
+
+const LS_ROSTER = 'litm-roster-v1';
+const LS_ACTIVE = 'litm-active-v1';
+const LS_ROLLS  = 'litm-rolls-v1';
+const LS_THEME  = 'litm-theme';
+
+const THEME_TYPES = {
+  'Origin (ordinary)':     ['Circumstance','Devotion','Past','People','Personality','Skill or Trade','Trait'],
+  'Adventure (heroic)':    ['Duty','Influence','Knowledge','Prodigious Ability','Relic','Uncanny Being'],
+  'Greatness (legendary)': ['Destiny','Dominion','Mastery','Monstrosity'],
+  'Any Might':             ['Companion','Magic','Possessions']
+};
+// Map a theme type to its Might category for the badge.
+const MIGHT_OF = {};
+THEME_TYPES['Origin (ordinary)'].forEach(t => MIGHT_OF[t] = 'origin');
+THEME_TYPES['Adventure (heroic)'].forEach(t => MIGHT_OF[t] = 'adventure');
+THEME_TYPES['Greatness (legendary)'].forEach(t => MIGHT_OF[t] = 'greatness');
+THEME_TYPES['Any Might'].forEach(t => MIGHT_OF[t] = 'any');
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+
+function blankTheme() {
+  return { id: uid(), type: 'Skill or Trade', title: '',
+    power: [{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],
+    weak: [{id:uid(),text:''}],
+    quest: '', improve: 0, abandon: 0, milestone: 0, special: '' };
+}
+function blankHero() {
+  return {
+    id: uid(),
+    playerName: '', heroName: '',
+    promise: 0, fulfillments: 0, quintessences: '', notes: '',
+    backpack: [{id:uid(), text:'', type:'story', scratched:false}],
+    themes: [blankTheme(), blankTheme(), blankTheme(), blankTheme()],
+    fellowship: { type:'Companion', title:'',
+      power:[{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],
+      weak:[{id:uid(),text:''}], quest:'', improve:0, abandon:0, milestone:0, special:'' },
+    relationships: [],
+    statuses: [],
+    scene: []
+  };
+}
+
+// ---------- Persistence ----------
+let roster = [];
+let activeId = null;
+let rolls = [];
+let S = null;            // active hero state
+let sit = 0;             // situational power adjust
+let might = 0;           // might modifier
+let burnId = null;       // tag id currently being burned
+let rollMods = {};       // tagId -> 'help'|'hind' (transient selection for the roller)
+let rollMode = 'action'; // 'action' | 'reaction'
+let spend = null;        // active Power-spend budget after a successful roll
+
+function loadAll() {
+  try { roster = JSON.parse(localStorage.getItem(LS_ROSTER)) || []; } catch(e){ roster = []; }
+  if (!roster.length) { const h = blankHero(); roster = [h]; }
+  // migrate any partial heroes
+  roster.forEach(h => { const b = blankHero(); for (const k in b) if (h[k] === undefined) h[k] = b[k]; });
+  activeId = localStorage.getItem(LS_ACTIVE);
+  S = roster.find(h => h.id === activeId) || roster[0];
+  activeId = S.id;
+  try { rolls = JSON.parse(localStorage.getItem(LS_ROLLS)) || []; } catch(e){ rolls = []; }
+}
+let saveTimer = null;
+function save() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    localStorage.setItem(LS_ROSTER, JSON.stringify(roster));
+    localStorage.setItem(LS_ACTIVE, activeId);
+  }, 250);
+}
+function saveRolls(){ localStorage.setItem(LS_ROLLS, JSON.stringify(rolls.slice(0,40))); }
+
+// ---------- Helpers ----------
+const $ = id => document.getElementById(id);
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1600); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ---------- Tabs ----------
+function showTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+  $('panel-'+name).classList.add('active');
+  window.scrollTo(0,0);
+  if (name==='roll') renderRoller();
+}
+
+// ============================================================
+//  RENDER
+// ============================================================
+function renderAll(){
+  $('hdrTitle').textContent = S.heroName ? S.heroName : 'Legend in the Mist';
+  $('f_playerName').value = S.playerName;
+  $('f_heroName').value   = S.heroName;
+  $('f_quintessences').value = S.quintessences;
+  $('f_notes').value = S.notes;
+  $('fulfillVal').textContent = S.fulfillments;
+  renderPromise();
+  renderBackpack();
+  renderThemes();
+  renderFellowship();
+  renderRel();
+  renderStatuses();
+  renderScene();
+  renderRollHist();
+}
+
+function renderPromise(){
+  const w = $('promisePips'); w.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const b=document.createElement('button');
+    b.className='pip promise'+(i<=S.promise?' on':'');
+    b.onclick=()=>{ S.promise = (S.promise===i? i-1 : i); renderPromise(); save(); };
+    w.appendChild(b);
+  }
+}
+
+function tagRow(tag, kind, onScratchToggle, onFlip, onDel, onText){
+  // kind: 'power' | 'weak' | 'story'
+  const row=document.createElement('div'); row.className='tagrow';
+  const inp=document.createElement('input'); inp.type='text';
+  inp.className = kind + (tag.scratched?' scratched':'') + (kind==='story' && tag.type==='hindering'?' weak':'');
+  if(kind==='story' && tag.type==='hindering'){ inp.classList.remove('story'); inp.classList.add('weak'); }
+  inp.value=tag.text;
+  inp.placeholder = kind==='weak' ? 'weakness tag…' : (kind==='power'?'power tag…':'story tag…');
+  inp.oninput=()=>{ onText(inp.value); };
+  row.appendChild(inp);
+  if(onFlip){ // story tags flip helpful/hindering
+    const f=document.createElement('button'); f.className='ic'; f.textContent = tag.type==='hindering'?'🟠':'🟡';
+    f.title='Flip helpful/hindering'; f.onclick=onFlip; row.appendChild(f);
+  }
+  if(onScratchToggle){
+    const s=document.createElement('button'); s.className='ic'+(tag.scratched?' on':''); s.textContent='✓';
+    s.title='Scratch / recover'; s.onclick=onScratchToggle; row.appendChild(s);
+  }
+  const d=document.createElement('button'); d.className='ic'; d.textContent='✕'; d.title='Delete'; d.onclick=onDel;
+  row.appendChild(d);
+  return row;
+}
+
+function renderBackpack(){
+  const w=$('backpackList'); w.innerHTML='';
+  S.backpack.forEach((t,i)=>{
+    w.appendChild(tagRow(t,'story',
+      ()=>{ t.scratched=!t.scratched; renderBackpack(); save(); },
+      ()=>{ t.type = t.type==='hindering'?'story':'hindering'; renderBackpack(); save(); },
+      ()=>{ S.backpack.splice(i,1); renderBackpack(); save(); },
+      v=>{ t.text=v; save(); }));
+  });
+}
+function addBackpack(){ S.backpack.push({id:uid(),text:'',type:'story',scratched:false}); renderBackpack(); save(); }
+
+function renderThemes(){
+  const wrap=$('themesWrap'); wrap.innerHTML='';
+  S.themes.forEach((th,ti)=> wrap.appendChild(themeCard(th, ti, false)));
+  // allow adding/removing themes (default 4, but evolution can change count)
+  const add=document.createElement('button'); add.className='addbtn'; add.style.marginBottom='14px';
+  add.textContent='＋ Add theme'; add.onclick=()=>{ S.themes.push(blankTheme()); renderThemes(); save(); };
+  wrap.appendChild(add);
+}
+
+function themeCard(th, idx, isFellowship){
+  const card=document.createElement('div'); card.className='card theme';
+  // header
+  const hd=document.createElement('div'); hd.className='theme-hd';
+  const sel=document.createElement('select');
+  for(const grp in THEME_TYPES){
+    const og=document.createElement('optgroup'); og.label=grp;
+    THEME_TYPES[grp].forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; if(t===th.type)o.selected=true; og.appendChild(o); });
+    sel.appendChild(og);
+  }
+  sel.onchange=()=>{ th.type=sel.value; badge.className='mightbadge '+mc(th.type); badge.textContent=mtxt(th.type); save(); };
+  const title=document.createElement('input'); title.type='text'; title.className='title-in power';
+  title.placeholder = isFellowship?'Fellowship title tag…':'Theme title (main power tag)…';
+  title.value=th.title; title.oninput=()=>{ th.title=title.value; save(); };
+  const mc=t=>'m-'+(MIGHT_OF[t]||'any');
+  const mtxt=t=>({origin:'Origin',adventure:'Adventure',greatness:'Greatness',any:'Any'})[MIGHT_OF[t]||'any'];
+  const badge=document.createElement('span'); badge.className='mightbadge '+mc(th.type); badge.textContent=mtxt(th.type);
+  hd.appendChild(sel); hd.appendChild(title); hd.appendChild(badge);
+  card.appendChild(hd);
+
+  // power tags
+  const ph=document.createElement('h3'); ph.textContent='Power Tags'; card.appendChild(ph);
+  const pl=document.createElement('div'); pl.className='taglist';
+  th.power.forEach((t,i)=> pl.appendChild(tagRow(t,'power',
+    ()=>{ t.scratched=!t.scratched; renderHost(); },
+    null,
+    ()=>{ th.power.splice(i,1); renderHost(); },
+    v=>{ t.text=v; save(); })));
+  card.appendChild(pl);
+  const ap=document.createElement('button'); ap.className='addbtn'; ap.textContent='＋ power tag';
+  ap.onclick=()=>{ th.power.push({id:uid(),text:'',scratched:false}); renderHost(); }; card.appendChild(ap);
+
+  // weakness tags
+  const wh=document.createElement('h3'); wh.textContent='Weakness Tags'; card.appendChild(wh);
+  const wl=document.createElement('div'); wl.className='taglist';
+  th.weak.forEach((t,i)=> wl.appendChild(tagRow(t,'weak',
+    null, null,
+    ()=>{ th.weak.splice(i,1); renderHost(); },
+    v=>{ t.text=v; save(); })));
+  card.appendChild(wl);
+  const aw=document.createElement('button'); aw.className='addbtn'; aw.textContent='＋ weakness tag';
+  aw.onclick=()=>{ th.weak.push({id:uid(),text:''}); renderHost(); }; card.appendChild(aw);
+
+  // quest
+  const ql=document.createElement('label'); ql.className='fld'; ql.style.marginTop='12px';
+  ql.innerHTML='<span>Quest</span>'; const qi=document.createElement('input'); qi.type='text';
+  qi.placeholder='A goal, belief, or journey this theme upholds…'; qi.value=th.quest;
+  qi.oninput=()=>{ th.quest=qi.value; save(); }; ql.appendChild(qi); card.appendChild(ql);
+
+  // tracks
+  ['improve','abandon','milestone'].forEach(tk=>{
+    const tr=document.createElement('div'); tr.className='track';
+    const lbl=document.createElement('span'); lbl.className='track-lbl'; lbl.textContent=tk; tr.appendChild(lbl);
+    const pips=document.createElement('div'); pips.className='pips';
+    for(let i=1;i<=3;i++){ const p=document.createElement('button'); p.className='pip'+(i<=th[tk]?' on':'');
+      p.onclick=()=>{ th[tk]=(th[tk]===i?i-1:i); renderHost(); }; pips.appendChild(p); }
+    tr.appendChild(pips);
+    if(tk==='improve'){ const n=document.createElement('span'); n.className='muted'; n.style.marginLeft='6px'; n.style.fontSize='11px'; n.textContent='3 → improvement'; tr.appendChild(n); }
+    card.appendChild(tr);
+  });
+
+  // special improvements
+  const sl=document.createElement('label'); sl.className='fld'; sl.style.marginTop='10px';
+  sl.innerHTML='<span>Special Improvements / notes</span>';
+  const st=document.createElement('textarea'); st.value=th.special; st.placeholder='Special Improvements gained as the theme grows…';
+  st.oninput=()=>{ th.special=st.value; save(); }; sl.appendChild(st); card.appendChild(sl);
+
+  if(!isFellowship){
+    const del=document.createElement('button'); del.className='btn ghost sm'; del.style.marginTop='4px';
+    del.textContent='Remove this theme'; del.onclick=()=>{ if(confirm('Remove this theme?')){ S.themes.splice(idx,1); renderThemes(); save(); } };
+    card.appendChild(del);
+  }
+
+  function renderHost(){ save(); if(isFellowship) renderFellowship(); else renderThemes(); }
+  return card;
+}
+
+function renderFellowship(){
+  const wrap=$('fellowshipWrap'); wrap.innerHTML='';
+  const card=themeCard(S.fellowship, -1, true);
+  // unwrap the inner contents (themeCard returns a .card; we want it inside the existing card)
+  card.classList.remove('card'); card.style.padding='0'; card.style.borderLeft='none';
+  wrap.appendChild(card);
+}
+
+function renderRel(){
+  const w=$('relList'); w.innerHTML='';
+  S.relationships.forEach((r,i)=>{
+    const row=document.createElement('div'); row.className='tagrow'; row.style.marginBottom='6px';
+    const nm=document.createElement('input'); nm.type='text'; nm.placeholder='Hero name'; nm.value=r.name;
+    nm.style.flex='0 0 38%'; nm.oninput=()=>{ r.name=nm.value; save(); };
+    const tg=document.createElement('input'); tg.type='text'; tg.className='story'; tg.placeholder='relationship tag…'; tg.value=r.tag;
+    tg.oninput=()=>{ r.tag=tg.value; save(); };
+    const s=document.createElement('button'); s.className='ic'+(r.scratched?' on':''); s.textContent='✓'; s.title='Scratch (used)';
+    s.onclick=()=>{ r.scratched=!r.scratched; renderRel(); save(); };
+    const d=document.createElement('button'); d.className='ic'; d.textContent='✕'; d.onclick=()=>{ S.relationships.splice(i,1); renderRel(); save(); };
+    if(r.scratched) tg.classList.add('scratched');
+    row.appendChild(nm); row.appendChild(tg); row.appendChild(s); row.appendChild(d);
+    w.appendChild(row);
+  });
+}
+function addRel(){ S.relationships.push({id:uid(),name:'',tag:'',scratched:false}); renderRel(); save(); }
+
+function renderStatuses(){
+  const w=$('statusList'); w.innerHTML='';
+  if(!S.statuses.length){ w.innerHTML='<p class="muted">No active statuses.</p>'; }
+  S.statuses.forEach((st,i)=>{
+    const card=document.createElement('div'); card.className='status-card';
+    const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='status name'; nm.value=st.name;
+    nm.oninput=()=>{ st.name=nm.value; save(); };
+    const boxes=document.createElement('div'); boxes.className='boxes';
+    const tier = st.boxes.lastIndexOf(true)+1; // highest marked
+    for(let t=1;t<=6;t++){
+      const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'');
+      b.textContent=t;
+      b.onclick=()=>{ toggleStatusBox(st,t); renderStatuses(); save(); };
+      boxes.appendChild(b);
+    }
+    const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none';
+    del.onclick=()=>{ S.statuses.splice(i,1); renderStatuses(); save(); };
+    card.appendChild(nm); card.appendChild(boxes); card.appendChild(del);
+    w.appendChild(card);
+    if(tier>=5){ const warn=document.createElement('div'); warn.className='hint'; warn.style.color='var(--bad)';
+      warn.style.margin='-4px 0 8px'; warn.textContent = tier>=6 ? '⚠ Tier 6 — killed or transformed.' : '⚠ Tier 5 — Limit reached: overcome by this status.';
+      w.appendChild(warn); }
+  });
+}
+function toggleStatusBox(st,t){
+  // Tap a box: if it's the current single mark set, treat as "set tier to t" (fill 1..? no — LITM marks single boxes).
+  // Simplest faithful behaviour: tapping an empty box marks it; tapping a marked box clears it and any to its right.
+  if(st.boxes[t-1]){ for(let k=t-1;k<6;k++) st.boxes[k]=false; }
+  else { st.boxes[t-1]=true; }
+}
+function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false]}); renderStatuses(); save(); }
+
+function renderScene(){
+  const w=$('sceneList'); w.innerHTML='';
+  S.scene.forEach((t,i)=>{
+    w.appendChild(tagRow(t,'story',
+      ()=>{ S.scene.splice(i,1); renderScene(); save(); }, // scene tags: scratch = remove
+      ()=>{ t.type = t.type==='hindering'?'story':'hindering'; renderScene(); save(); },
+      ()=>{ S.scene.splice(i,1); renderScene(); save(); },
+      v=>{ t.text=v; save(); }));
+  });
+}
+function addScene(){ S.scene.push({id:uid(),text:'',type:'story',scratched:false}); renderScene(); save(); }
+
+// ============================================================
+//  ROLLER
+// ============================================================
+function availableTags(){
+  // Returns [{id,label,kind,base,status?,tier?}]
+  const out=[];
+  S.themes.forEach(th=>{
+    if(th.title.trim() && !th._titleScr) out.push({id:'tt_'+th.id,label:th.title,kind:'power',base:1});
+    th.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1}); });
+    th.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1}); });
+  });
+  // fellowship
+  if(S.fellowship.title.trim()) out.push({id:'ft_'+S.fellowship.id,label:S.fellowship.title,kind:'power',base:1});
+  S.fellowship.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1}); });
+  S.fellowship.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1}); });
+  // backpack + scene story tags
+  S.backpack.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1}); });
+  S.scene.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1}); });
+  // statuses
+  S.statuses.forEach(st=>{ const tier=st.boxes.lastIndexOf(true)+1; if(st.name.trim() && tier>0) out.push({id:st.id,label:st.name,kind:'status',tier}); });
+  return out;
+}
+
+function renderRoller(){
+  const w=$('rollTags'); w.innerHTML='';
+  const tags=availableTags();
+  if(!tags.length){ w.innerHTML='<p class="muted">Add tags on the Hero tab and they\'ll appear here.</p>'; computePower(); return; }
+  const tagDiv=document.createElement('div');
+  tags.forEach(t=>{
+    const sel=rollMods[t.id];
+    const chip=document.createElement('span');
+    chip.className='modchip'+(sel==='help'?' help':'')+(sel==='hind'?' hind':'')+(t.kind==='status'?' stat':'')+(burnId===t.id?' burning':'');
+    let val='';
+    if(t.kind==='status'){ val = sel==='help'?'+'+t.tier : sel==='hind'?'−'+t.tier : '±'+t.tier; }
+    else { val = sel==='help'?(burnId===t.id?'+3':'+1') : sel==='hind'?'−1':(t.base>0?'+1':'−1'); }
+    chip.innerHTML = '<span>'+esc(t.label)+'</span> <span class="v">'+val+'</span>';
+    chip.onclick=()=>{ cycleMod(t); };
+    // burn flame for helpful non-status tags
+    if(t.kind!=='status' && sel==='help'){
+      const fl=document.createElement('button'); fl.className='burn'; fl.style.cssText='border:none;background:transparent;font-size:14px;padding:0 0 0 2px';
+      fl.textContent = burnId===t.id?'🔥':'🪵'; fl.title='Burn this tag for +3';
+      fl.onclick=(e)=>{ e.stopPropagation(); burnId = burnId===t.id?null:t.id; renderRoller(); };
+      chip.appendChild(fl);
+    }
+    tagDiv.appendChild(chip);
+  });
+  w.appendChild(tagDiv);
+  // sync might segment + sit
+  document.querySelectorAll('#mightSeg button').forEach(b=>b.classList.toggle('on', +b.dataset.m===might));
+  $('sitVal').textContent=(sit>0?'+':'')+sit;
+  computePower();
+}
+
+function cycleMod(t){
+  const cur=rollMods[t.id];
+  if(t.kind==='weak'){ // weakness: off -> hind -> off (it's a penalty)
+    rollMods[t.id] = cur==='hind' ? undefined : 'hind';
+  } else if(t.kind==='status'){
+    rollMods[t.id] = cur==='help' ? 'hind' : cur==='hind' ? undefined : 'help';
+  } else {
+    rollMods[t.id] = cur==='help' ? 'hind' : cur==='hind' ? undefined : 'help';
+  }
+  if(rollMods[t.id]!=='help' && burnId===t.id) burnId=null;
+  renderRoller();
+}
+
+function computePower(){
+  const tags=availableTags();
+  let p=0, hiHelp=0, hiHind=0, invokedWeak=false;
+  tags.forEach(t=>{
+    const sel=rollMods[t.id]; if(!sel) return;
+    if(t.kind==='status'){ if(sel==='help') hiHelp=Math.max(hiHelp,t.tier); else hiHind=Math.max(hiHind,t.tier); }
+    else {
+      if(sel==='help'){ p += (burnId===t.id?3:1); }
+      else { p -= 1; if(t.kind==='weak') invokedWeak=true; }
+    }
+  });
+  p += hiHelp - hiHind + might + sit;
+  $('powerNum').textContent=p;
+  $('powerNum')._val=p;
+  $('powerNum')._weak=invokedWeak;
+  return p;
+}
+
+document.querySelectorAll('#mightSeg button').forEach(b=>{
+  b.onclick=()=>{ might=+b.dataset.m; renderRoller(); };
+});
+function adjSit(d){ sit=Math.max(-20,Math.min(20,sit+d)); renderRoller(); }
+
+function rollDice(){
+  const power=computePower();
+  const reaction = rollMode==='reaction';
+  spend=null; $('spendBox').innerHTML='';
+  const d1=$('die1'), d2=$('die2');
+  d1.classList.add('rolling'); d2.classList.add('rolling');
+  d1.textContent='?'; d2.textContent='?';
+  setTimeout(()=>{
+    const r1=1+Math.floor(Math.random()*6), r2=1+Math.floor(Math.random()*6);
+    d1.textContent=r1; d2.textContent=r2;
+    d1.classList.remove('rolling'); d2.classList.remove('rolling');
+    const total=r1+r2+power;
+    const dbl6=(r1===6&&r2===6), dbl1=(r1===1&&r2===1);
+    let tier; // win | mixed | lose
+    if(dbl6) tier='win'; else if(dbl1) tier='lose';
+    else if(total>=10) tier='win'; else if(total>=7) tier='mixed'; else tier='lose';
+
+    // burn: scratch the burned tag now (it was worth +3 this roll)
+    let burnNote='';
+    if(burnId){ const lbl=scratchTagById(burnId); if(lbl) burnNote='<div class="sub">🔥 Burned <b>'+esc(lbl)+'</b> — scratched.</div>'; burnId=null; }
+
+    let cls=tier,big,sub,detail='';
+    if(reaction){
+      if(tier==='win'){ const sp=Math.max(1,power+1); big=(total>=10||dbl6)?'10+ React!':'React!';
+        sub='Spend Power +1 on any Effect — lessen or turn the blow.';
+        detail='<div class="sub"><b>'+sp+' Power</b> to spend.</div>'; openSpend(sp,true); }
+      else if(tier==='mixed'){ const sp=Math.max(1,power); big='7–9 — Lessen only';
+        sub='Spend Power only to lessen the Consequences.'; detail='<div class="sub"><b>'+sp+' Power</b> to lessen.</div>'; openSpend(sp,true); }
+      else { big='6− — Take it'; sub='Suffer the Consequences as-is.'; }
+    } else {
+      if(dbl6){ big='Success!'; sub='Double sixes — Success without Consequences.'; }
+      else if(dbl1){ big='Consequences'; sub='Double ones — Consequences without Success.'; }
+      else if(total>=10){ big='10+ Success'; sub='No Consequences.'; }
+      else if(total>=7){ big='7–9 Success & Consequences'; sub='You succeed, but take a hit too.'; }
+      else { big='6− Consequences'; sub='The action fails and you take the hit.'; }
+      if(tier!=='lose'){ const sp=Math.max(1,power);
+        detail='<div class="sub"><b>'+sp+' Power</b> to spend on Effects'+(power<=0?' (Rule of Minimum One)':'')+'.</div>';
+        if((total>=10||dbl6) && !dbl1) detail+='<div class="sub" style="opacity:.8">Push your luck: take Consequences for +1 Power.</div>';
+        openSpend(sp,false); }
+    }
+    const weakNote = $('powerNum')._weak ? '<div class="sub" style="opacity:.85">⚑ Weakness invoked — mark Improve on its theme.</div>' : '';
+    $('outcomeBox').innerHTML = '<div class="outcome '+cls+'"><div class="big">'+big+'</div>'
+      + '<div class="sub">Rolled '+r1+' + '+r2+' '+(power>=0?'+ ':'− ')+Math.abs(power)+' Power = <b>'+total+'</b></div>'
+      + '<div class="sub">'+sub+'</div>'+detail+weakNote+burnNote+'</div>';
+    rolls.unshift({t:Date.now(), r1, r2, power, total, big:(reaction?'🛡 ':'')+big, hero:S.heroName||'Hero'});
+    rolls=rolls.slice(0,40); saveRolls(); renderRollHist();
+    if(burnNote){ save(); renderThemes(); renderFellowship(); renderBackpack(); renderScene(); renderRoller(); }
+    if(navigator.vibrate) navigator.vibrate(tier!=='lose'?20:[10,40,10]);
+  }, 480);
+}
+
+// ----- Burn / scratch / recover helpers -----
+function scratchTagById(id){
+  if(id.indexOf('tt_')===0){ const th=S.themes.find(t=>'tt_'+t.id===id); if(th){ th._titleScr=true; return th.title; } return null; }
+  if(id.indexOf('ft_')===0){ return S.fellowship.title; }
+  let label=null;
+  S.themes.forEach(th=>{ const t=th.power.find(x=>x.id===id); if(t){ t.scratched=true; label=t.text; } });
+  if(!label){ const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=true; label=t.text; } }
+  if(!label){ const t=S.backpack.find(x=>x.id===id); if(t){ t.scratched=true; label=t.text; } }
+  if(!label){ const i=S.scene.findIndex(x=>x.id===id); if(i>=0){ label=S.scene[i].text; S.scene.splice(i,1); } }
+  return label;
+}
+function scratchedTags(){
+  const out=[];
+  S.themes.forEach(th=>{ if(th._titleScr&&th.title.trim()) out.push({id:'tt_'+th.id,label:th.title}); th.power.forEach(t=>{ if(t.scratched&&t.text.trim()) out.push({id:t.id,label:t.text}); }); });
+  S.fellowship.power.forEach(t=>{ if(t.scratched&&t.text.trim()) out.push({id:t.id,label:t.text}); });
+  S.backpack.forEach(t=>{ if(t.scratched&&t.text.trim()) out.push({id:t.id,label:t.text}); });
+  return out;
+}
+function recoverTagById(id){
+  if(id.indexOf('tt_')===0){ const th=S.themes.find(t=>'tt_'+t.id===id); if(th) th._titleScr=false; return; }
+  S.themes.forEach(th=>{ const t=th.power.find(x=>x.id===id); if(t)t.scratched=false; });
+  const f=S.fellowship.power.find(x=>x.id===id); if(f)f.scratched=false;
+  const b=S.backpack.find(x=>x.id===id); if(b)b.scratched=false;
+}
+// ----- Status apply/reduce (rules-correct stacking) -----
+function giveStatusTier(name,tier){
+  let st=S.statuses.find(s=>s.name.trim().toLowerCase()===name.trim().toLowerCase());
+  if(!st){ st={id:uid(),name:name,boxes:[false,false,false,false,false,false]}; S.statuses.push(st); }
+  let b=tier-1; while(b<6 && st.boxes[b]) b++;   // spill right if the box is taken
+  if(b<6) st.boxes[b]=true;
+  renderStatuses(); save();
+}
+function reduceStatusByAmt(st,amt){
+  for(let k=0;k<amt;k++){ for(let i=0;i<6;i++) st.boxes[i]=st.boxes[i+1]||false; }
+  renderStatuses(); save();
+}
+// ----- Effect spender -----
+function openSpend(total,isReaction){ spend={total:total,remaining:total,reaction:isReaction,log:[],_form:null}; renderSpend(); }
+function closeSpend(){ spend=null; $('spendBox').innerHTML=''; }
+function doSpend(cost,label,apply){
+  if(cost>spend.remaining){ toast('Not enough Power'); return false; }
+  spend.remaining-=cost; spend.log.push(label+' (−'+cost+')'); if(apply) apply(); return true;
+}
+function spForm(t){
+  if(t==='detail'||t==='feat'){ doSpend(1, t==='detail'?'discovered a detail':'extra feat'); renderSpend(); return; }
+  spend._form = (spend._form&&spend._form.type===t)?null:{type:t,tier:1,amt:1};
+  renderSpend();
+}
+function renderSpend(){
+  const box=$('spendBox'); if(!spend){ box.innerHTML=''; return; }
+  const r=spend.remaining;
+  let h='<div class="card" style="margin-top:12px">';
+  h+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">';
+  h+='<div class="powerbig" style="padding:0"><div class="n" style="font-size:30px">'+r+'</div><div class="l">Power left</div></div>';
+  h+='<div class="muted" style="flex:1">'+(spend.reaction?'Spend to lessen the blow':'Spend on Effects')+'</div>';
+  h+='<button class="btn ghost sm" onclick="closeSpend()">Done</button></div>';
+  const E=[['status','＋ Status'],['reduce','− Status'],['bag','＋ Backpack'],['recover','Recover'],['detail','Detail · 1'],['feat','Feat · 1'],['other','Other…']];
+  h+='<div class="seg">'+E.map(e=>'<button onclick="spForm(\''+e[0]+'\')"'+(spend._form&&spend._form.type===e[0]?' class="on"':'')+'>'+e[1]+'</button>').join('')+'</div>';
+  h+='<div id="spForm"></div>';
+  if(spend.log.length) h+='<p class="hint" style="margin-top:8px">Spent: '+spend.log.map(esc).join(' · ')+'</p>';
+  h+='</div>';
+  box.innerHTML=h; drawSpForm();
+}
+function drawSpForm(){
+  const w=$('spForm'); if(!w||!spend._form) return; const f=spend._form, r=spend.remaining;
+  if(f.type==='status'){
+    w.innerHTML='<div class="row" style="margin-top:10px;align-items:flex-end"><label class="fld" style="flex:2;margin:0"><span>Give yourself a status</span><input id="sp_nm" placeholder="e.g. focused" value="'+esc(f.name||'')+'"></label>'
+      +'<div style="flex:0 0 auto"><span style="font-size:11px;color:var(--ink-soft)">Tier</span><div class="stepper"><button id="sp_tm">−</button><b style="min-width:22px;text-align:center">'+f.tier+'</b><button id="sp_tp">+</button></div></div></div>'
+      +'<button class="btn sm" id="sp_apply" style="margin-top:8px">Apply · −'+f.tier+' Power</button>';
+    $('sp_nm').oninput=e=>f.name=e.target.value;
+    $('sp_tm').onclick=()=>{ f.tier=Math.max(1,f.tier-1); drawSpForm(); };
+    $('sp_tp').onclick=()=>{ f.tier=Math.min(6,f.tier+1); drawSpForm(); };
+    $('sp_apply').onclick=()=>{ const nm=(f.name||'').trim(); if(!nm){toast('Name the status');return;} if(doSpend(f.tier,'gave '+nm+'-'+f.tier,()=>giveStatusTier(nm,f.tier))){ spend._form=null; renderSpend(); } };
+  } else if(f.type==='reduce'){
+    if(!S.statuses.length){ w.innerHTML='<p class="hint" style="margin-top:8px">No statuses to reduce.</p>'; return; }
+    const opts=S.statuses.map((s,i)=>{ const ti=s.boxes.lastIndexOf(true)+1; return '<option value="'+i+'"'+(f.sel===i?' selected':'')+'>'+esc(s.name||'(unnamed)')+'-'+ti+'</option>'; }).join('');
+    w.innerHTML='<div class="row" style="margin-top:10px;align-items:flex-end"><label class="fld" style="flex:2;margin:0"><span>Reduce a status</span><select id="sp_sel">'+opts+'</select></label>'
+      +'<div><span style="font-size:11px;color:var(--ink-soft)">By</span><div class="stepper"><button id="sp_am">−</button><b style="min-width:22px;text-align:center">'+f.amt+'</b><button id="sp_ap">+</button></div></div></div>'
+      +'<button class="btn sm" id="sp_apply" style="margin-top:8px">Apply · −'+f.amt+' Power</button>';
+    $('sp_sel').onchange=e=>f.sel=+e.target.value;
+    $('sp_am').onclick=()=>{ f.amt=Math.max(1,f.amt-1); drawSpForm(); };
+    $('sp_ap').onclick=()=>{ f.amt=Math.min(r,f.amt+1); drawSpForm(); };
+    $('sp_apply').onclick=()=>{ const st=S.statuses[f.sel||0]; if(st&&doSpend(f.amt,'reduced '+(st.name||'status')+' by '+f.amt,()=>reduceStatusByAmt(st,f.amt))){ spend._form=null; renderSpend(); } };
+  } else if(f.type==='bag'){
+    const cost=r===1?1:2;
+    w.innerHTML='<label class="fld" style="margin-top:10px"><span>Add a tag to your backpack'+(cost===1?' (single-use)':'')+'</span><input id="sp_bt" placeholder="e.g. rope and hook" value="'+esc(f.text||'')+'"></label>'
+      +'<button class="btn sm" id="sp_apply">Apply · −'+cost+' Power</button>';
+    $('sp_bt').oninput=e=>f.text=e.target.value;
+    $('sp_apply').onclick=()=>{ const t=(f.text||'').trim(); if(!t){toast('Name the tag');return;} if(doSpend(cost,'added '+t,()=>{ S.backpack.push({id:uid(),text:t,type:'story',scratched:false}); renderBackpack(); save(); })){ spend._form=null; renderSpend(); } };
+  } else if(f.type==='recover'){
+    const sc=scratchedTags(); if(!sc.length){ w.innerHTML='<p class="hint" style="margin-top:8px">No scratched tags to recover.</p>'; return; }
+    w.innerHTML='<label class="fld" style="margin-top:10px"><span>Recover a scratched tag</span><select id="sp_rc">'+sc.map(t=>'<option value="'+t.id+'">'+esc(t.label)+'</option>').join('')+'</select></label>'
+      +'<button class="btn sm" id="sp_apply">Apply · −2 Power</button>';
+    $('sp_apply').onclick=()=>{ const id=$('sp_rc').value; const t=sc.find(x=>x.id===id); if(doSpend(2,'recovered '+(t?t.label:'tag'),()=>{ recoverTagById(id); save(); renderThemes(); renderFellowship(); renderBackpack(); renderRoller(); })){ spend._form=null; renderSpend(); } };
+  } else if(f.type==='other'){
+    w.innerHTML='<div class="row" style="margin-top:10px;align-items:flex-end"><label class="fld" style="flex:2;margin:0"><span>Other effect (give a foe a status, etc.)</span><input id="sp_ot" placeholder="describe" value="'+esc(f.text||'')+'"></label>'
+      +'<div><span style="font-size:11px;color:var(--ink-soft)">Cost</span><div class="stepper"><button id="sp_om">−</button><b style="min-width:22px;text-align:center">'+f.amt+'</b><button id="sp_op">+</button></div></div></div>'
+      +'<button class="btn sm" id="sp_apply" style="margin-top:8px">Spend −'+f.amt+'</button>';
+    $('sp_ot').oninput=e=>f.text=e.target.value;
+    $('sp_om').onclick=()=>{ f.amt=Math.max(1,f.amt-1); drawSpForm(); };
+    $('sp_op').onclick=()=>{ f.amt=Math.min(r,f.amt+1); drawSpForm(); };
+    $('sp_apply').onclick=()=>{ const t=(f.text||'').trim()||'effect'; if(doSpend(f.amt,t)){ spend._form=null; renderSpend(); } };
+  }
+}
+// ----- Action / Reaction mode toggle -----
+document.querySelectorAll('#modeSeg button').forEach(b=>{
+  b.onclick=()=>{
+    rollMode=b.dataset.mode;
+    document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x.dataset.mode===rollMode));
+    $('rollHead').textContent = rollMode==='reaction'?'🛡️ Roll a Reaction':'🎲 Roll an Action';
+    $('rollBtn').textContent = rollMode==='reaction'?'🛡️ Roll Reaction':'🎲 Roll 2d6 + Power';
+    $('rollHint').innerHTML = rollMode==='reaction'
+      ? 'Defending: invoke only <b>reactive/passive</b> tags &amp; statuses (armour, alert, shielded, a counterspell…). <b>10+</b> spend Power+1 · <b>7–9</b> spend Power only to lessen · <b>6−</b> take it as-is.'
+      : 'Tap a tag to count it: helpful (+1), hindering (−1), off. Tap 🔥 to <b>burn</b> a helpful tag (+3, scratches it). Statuses: only your single highest helpful and hindering count.';
+    spend=null; $('spendBox').innerHTML=''; $('outcomeBox').innerHTML='';
+  };
+});
+
+function renderRollHist(){
+  const w=$('rollHist'); if(!rolls.length){ w.innerHTML='<p class="muted">No rolls yet.</p>'; return; }
+  w.innerHTML='';
+  rolls.slice(0,20).forEach(r=>{
+    const d=document.createElement('div'); d.className='rollhist';
+    const time=new Date(r.t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    d.innerHTML='<b>'+r.total+'</b> · '+r.big+' <span class="muted">('+r.r1+'+'+r.r2+(r.power>=0?'+':'−')+Math.abs(r.power)+') · '+time+'</span>';
+    w.appendChild(d);
+  });
+}
+
+// ============================================================
+//  HERO CARD INPUTS
+// ============================================================
+$('f_playerName').oninput=e=>{ S.playerName=e.target.value; save(); };
+$('f_heroName').oninput=e=>{ S.heroName=e.target.value; $('hdrTitle').textContent=S.heroName||'Legend in the Mist'; save(); };
+$('f_quintessences').oninput=e=>{ S.quintessences=e.target.value; save(); };
+$('f_notes').oninput=e=>{ S.notes=e.target.value; save(); };
+function bump(key,d){ S[key]=Math.max(0,S[key]+d); $('fulfillVal').textContent=S.fulfillments; save(); }
+
+// ============================================================
+//  ROSTER / MENU
+// ============================================================
+function openMenu(){ $('menuOverlay').classList.add('show'); $('themeLbl').textContent = document.body.classList.contains('dark')?'Switch to light mode':'Switch to dark mode'; }
+function openRoster(){ renderRoster(); $('rosterOverlay').classList.add('show'); }
+function closeOverlays(){ $('menuOverlay').classList.remove('show'); $('rosterOverlay').classList.remove('show'); }
+function renderRoster(){
+  const w=$('rosterList'); w.innerHTML='';
+  roster.forEach(h=>{
+    const row=document.createElement('div'); row.className='roster-item';
+    const pick=document.createElement('button'); pick.className='pick'+(h.id===activeId?' active':'');
+    pick.innerHTML=(esc(h.heroName)||'<i>Unnamed Hero</i>')+(h.playerName?' <span class="muted">· '+esc(h.playerName)+'</span>':'');
+    pick.onclick=()=>{ switchHero(h.id); };
+    row.appendChild(pick);
+    if(roster.length>1){ const d=document.createElement('button'); d.className='ic'; d.style.cssText='width:38px;height:38px;border:1px solid var(--border);border-radius:9px;background:var(--bg-deep)'; d.textContent='🗑'; d.onclick=(e)=>{ e.stopPropagation(); if(confirm('Delete '+(h.heroName||'this hero')+'?')) delHeroById(h.id); }; row.appendChild(d); }
+    w.appendChild(row);
+  });
+}
+function switchHero(id){ activeId=id; S=roster.find(h=>h.id===id); save(); renderAll(); closeOverlays(); showTab('hero'); toast('Switched to '+(S.heroName||'hero')); }
+function newHero(){ const h=blankHero(); roster.push(h); switchHero(h.id); toast('New hero created'); }
+function delHeroById(id){
+  roster=roster.filter(h=>h.id!==id);
+  if(!roster.length) roster=[blankHero()];
+  if(activeId===id){ activeId=roster[0].id; S=roster[0]; renderAll(); }
+  save(); renderRoster();
+}
+function deleteHero(){ if(confirm('Delete '+(S.heroName||'this hero')+'? This cannot be undone.')){ delHeroById(activeId); closeOverlays(); toast('Hero deleted'); } }
+
+function exportJSON(){
+  const data=JSON.stringify(S,null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=(S.heroName||'litm-hero').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.json';
+  a.click(); URL.revokeObjectURL(a.href); closeOverlays();
+}
+function importJSON(ev){
+  const file=ev.target.files[0]; if(!file) return;
+  const fr=new FileReader();
+  fr.onload=()=>{ try{
+    const h=JSON.parse(fr.result); const b=blankHero(); for(const k in b) if(h[k]===undefined) h[k]=b[k];
+    h.id=uid(); roster.push(h); switchHero(h.id); toast('Hero imported');
+  }catch(e){ alert('Could not read that file.'); } };
+  fr.readAsText(file); ev.target.value='';
+}
+
+// ============================================================
+//  THEME (light/dark)
+// ============================================================
+function applyTheme(){
+  const t=localStorage.getItem(LS_THEME);
+  if(t==='dark') document.body.classList.add('dark');
+  else if(t==='light') document.body.classList.remove('dark');
+  else if(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) document.body.classList.add('dark');
+}
+function toggleTheme(){
+  const dark=!document.body.classList.contains('dark');
+  document.body.classList.toggle('dark',dark);
+  localStorage.setItem(LS_THEME, dark?'dark':'light');
+  document.querySelector('meta[name=theme-color]').setAttribute('content', dark?'#1c3f38':'#2e5d52');
+  closeOverlays();
+}
+
+// ============================================================
+//  BOOT
+// ============================================================
+applyTheme();
+loadAll();
+renderAll();
+
+
+// Service worker
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=> navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
