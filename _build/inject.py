@@ -11,6 +11,12 @@ data=json.load(open(os.path.join(B,'litm-data.json'),encoding='utf-8'))
 qpath=os.path.join(B,'quintessences.json')
 if os.path.exists(qpath):
     data['quintessences']=json.load(open(qpath,encoding='utf-8'))['quintessences']
+# Special-Improvement override: the PDF parser drops the 5th entry for five theme types;
+# these authoritative 5-each lists (from NotebookLM) replace them so the picker is complete.
+spath=os.path.join(B,'specials-override.json')
+if os.path.exists(spath):
+    for k,v in json.load(open(spath,encoding='utf-8'))['specials'].items():
+        data.setdefault('specials',{})[k]=v
 wiz=open(os.path.join(B,'wizard.js'),encoding='utf-8').read()
 datajs='const LITM_DATA = '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n'
 block='\n/* ===== Phase 2: creation data + wizard ===== */\n'+datajs+wiz+'\n'

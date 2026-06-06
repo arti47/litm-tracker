@@ -50,7 +50,7 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 As of last verification:
 - **`character-tracker.html`**: ~2,043 lines / ~233 KB (includes the embedded Phase-2
   creation dataset + the Quintessence list, ~135 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v11` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v12` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -77,12 +77,16 @@ three sources in `_build/` and injected:
 - `_build/quintessences.json` — the **Quintessence** list (name + verbatim effect + a one-line
   `mechanical` note), sourced from the Core Book via NotebookLM (not the PDF parser).
   `inject.py` merges it into `LITM_DATA.quintessences`, so `parse_litm.py` can't clobber it.
+- `_build/specials-override.json` — authoritative **Special Improvements** for the five theme
+  types whose 5th entry the parser drops (Personality, Influence, Destiny, Companion,
+  Possessions). `inject.py` merges these over `LITM_DATA.specials`, so all 20 types have 5.
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
 - `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
-  `wizard.js` → `character-tracker.html` **and** `index.html` (mirrors automatically).
+  `specials-override.json` + `wizard.js` → `character-tracker.html` **and** `index.html`
+  (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -127,7 +131,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `icon.svg` + `icon-192.png` + `icon-512.png` — app icon (misty stag antlers + "LITM").
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
-  `litm-data.json`, `quintessences.json`, `parse_litm.py`, `inject.py`.
+  `litm-data.json`, `quintessences.json`, `specials-override.json`, `parse_litm.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -139,10 +143,10 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `LITM_DATA` (injected) — the Phase-2 rules dataset consumed by the wizard:
   - `themebooks` — 20 types × {concept, powerQ[], weakQ[], questIdeas[]}
   - `themekits` — 20 types × ~6 kits × {name, power[], weak[], quest}  (**113 kits**)
-  - `specials` — 20 types × Special Improvements {name, desc}. The Core Book lists **5** per
-    type, but the parser currently recovers only **4** for five types (Personality, Influence,
-    Destiny, Companion, Possessions) — see the Phase-3 data-gap follow-up. The picker shows
-    whatever is present, so this is non-fatal but incomplete.
+  - `specials` — 20 types × Special Improvements {name, desc}, **5 per type (complete)**. The
+    PDF parser dropped the 5th for five types (Personality, Influence, Destiny, Companion,
+    Possessions); those five are now supplied authoritatively by `_build/specials-override.json`
+    (sourced via NotebookLM) and merged over the parsed data in `inject.py`.
   - `tropes` — 28 × {name, themes[3], fourth[3], backpack[]}
   - `fellowshipKits` — 6 × {name, power[], weak[], quest}
   - `relationship` — relationship-tag examples grouped in 4 categories
@@ -222,8 +226,8 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
   track (3rd mark) **auto-opens the matching development flow** (see Theme Development below); a
   **Resolve** button also appears under any track sitting at 3.
 - **Special Improvements (Phase 3)** — a real **picker** (not free text): a 🔖 modal lists the
-  improvements for the theme's type (from `LITM_DATA.specials`; 5 per type, 4 for five types
-  pending re-extraction), each with its rulebook
+  improvements for the theme's type (from `LITM_DATA.specials`; **5 per type, all 20 complete**),
+  each with its rulebook
   benefit; tap to add/remove (each once per theme). Chosen ones show as removable cards on the
   card; eligibility hint ("gain one when the Improve track fills"). A separate **Notes**
   free-text box preserves the old `special` field. Works the same on the Fellowship card.
@@ -388,10 +392,9 @@ name + verbatim effect) was sourced from the Core Book via NotebookLM and lives 
       Quintessences with a `mechanical` note — Larger Than Life, Loyal Companion, Lucky Bastard,
       Virtuoso, etc. — are once-per-session / contextual player choices, left as recorded text
       rather than auto-applied; revisit if a manual-trigger UI is wanted.)*
-- [ ] *Data-gap follow-up:* re-extract the **5th** Special Improvement for **Personality,
-      Influence, Destiny, Companion, Possessions** (parser dropped one each). Prompt sent to
-      NotebookLM — paste the JSON to finish. Needs a `parse_litm.py`/`litm-data.json` update
-      then `inject.py`.
+- [x] *Data-gap follow-up done (2026-06-06):* the **5th** Special Improvement for **Personality,
+      Influence, Destiny, Companion, Possessions** (parser dropped one each) is now supplied by
+      `_build/specials-override.json` and merged in `inject.py` — all 20 types have 5.
 
 ### Phase 4 — Theme Development automation ✅ DONE (2026-06-06)
 Shipped as the **theme-development overlay** + **Moment of Fulfillment** prompt (see Implemented
