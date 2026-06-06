@@ -1,0 +1,115 @@
+{
+  "_source": "Legend in the Mist Core Rulebook — Special Improvements for the five theme types whose 5th entry the PDF parser dropped. Authoritative 5-each lists sourced via NotebookLM; merged over LITM_DATA.specials by inject.py.",
+  "specials": {
+    "Personality": [
+      {
+        "name": "Adaptable Persona",
+        "desc": "Once per session, when you take an action using tags from this theme and get only Consequences, you may choose to Succeed as well."
+      },
+      {
+        "name": "Big Personality",
+        "desc": "When you burn power tags from this theme for Power, they add 4 Power instead of 3."
+      },
+      {
+        "name": "Infectious Personality",
+        "desc": "When you camp or sojourn, you may give another Hero a story tag describing an aspect of your Personality (expiring any previous tag created this way)."
+      },
+      {
+        "name": "Lasting Impression",
+        "desc": "Once per scene, when you take a social action and Succeed, you may give a lasting impression to everyone you affect with this action."
+      },
+      {
+        "name": "Unshakeable",
+        "desc": "Once per scene, when you react to lessen social or emotional Consequences and get a total result of 7 or above, you may spend all your Power to completely avoid all Consequence Effects."
+      }
+    ],
+    "Influence": [
+      {
+        "name": "Follow Me!",
+        "desc": "Once per session, when you roll to recruit, muster, or rally someone under your Influence and Succeed, you may create multiple single-use story tags (page 165) for 1 Power each."
+      },
+      {
+        "name": "Friends Everywhere",
+        "desc": "When you enter a settlement for the first time, you gain a useful contact there. You may name them and define their relationship with you at the Narrator's discretion."
+      },
+      {
+        "name": "Long Reach",
+        "desc": "Once per session, you can have a representative of your Influence be present anywhere they could conceivably be, and then take action as that character using tags from this theme."
+      },
+      {
+        "name": "Overextend",
+        "desc": "Whenever you roll with tags from this theme and suffer a status as a Consequence, you may increase the tier of that status by 1 and gain 2 more Power to spend on Effects."
+      },
+      {
+        "name": "Read Between the Lines",
+        "desc": "Whenever you roll a reaction using tags from this theme to lessen a social or influence-related Consequence, you receive one valuable detail about the source of the Consequence."
+      }
+    ],
+    "Destiny": [
+      {
+        "name": "As Foretold",
+        "desc": "Once per session, you may declare an action by you or another Hero as pivotal in the fulfillment of your Destiny. Count Power normally and, instead of rolling, treat the result as a Success with Consequences."
+      },
+      {
+        "name": "Meet It Head-On",
+        "desc": "Once per session, when you act against something preventing you from fulfilling your Destiny, you first gain a story tag or a tier-2 status that represents your readiness."
+      },
+      {
+        "name": "Not How It Ends",
+        "desc": "Once per session, when you take Consequences that would hinder you on the way to your Destiny (despaired, tired, cursed, etc.), you may avoid these Consequences completely."
+      },
+      {
+        "name": "Reincarnation",
+        "desc": "When your Destiny finally manifests, you may remove any harmful status on you, including tier-6 statuses. This theme evolves, and you can replace any number of your other themes. You gain Promise as usual for all themes."
+      },
+      {
+        "name": "Pull of Destiny",
+        "desc": "Once per session, you may ask the Narrator what the best way to pursue your Destiny is, and get one valuable detail."
+      }
+    ],
+    "Companion": [
+      {
+        "name": "Everyone's Best Friend",
+        "desc": "Once per session, when your Companion helps another member of your Fellowship, you may invoke only tags from this theme, forgo rolling, and get a Success without Consequences."
+      },
+      {
+        "name": "Here For You",
+        "desc": "Once per session, when you or your Companion take action to heal one another or help the other recover, mark Improve on this theme. This does not apply while camping."
+      },
+      {
+        "name": "Perfect Positioning",
+        "desc": "Once per session, you can declare your Companion is positioned anywhere in the scene as long as they could get there, and give them a tier-2 status representing their advantageous position."
+      },
+      {
+        "name": "Reliable Ally",
+        "desc": "Once per session, when you act alongside your Companion and get only Consequences, you may scratch a tag in this theme to Succeed as well."
+      },
+      {
+        "name": "Retaliation",
+        "desc": "Whenever anyone gives your Companion a harmful or hindering tag or status, you gain provoked-2, which helps actions to retaliate against the offender."
+      }
+    ],
+    "Possessions": [
+      {
+        "name": "Durable",
+        "desc": "Choose a tag from this theme. Once per session, you can prevent Consequence Effects that would scratch it or give it a status of tier 3 or less."
+      },
+      {
+        "name": "Favorite Piece",
+        "desc": "Choose a power tag in this theme. Once per session, you may burn this tag for Power without scratching it."
+      },
+      {
+        "name": "I'm Keeping This",
+        "desc": "Choose one of your backpack tags and move it to this theme; it becomes a power tag. Once per session, you may return this tag to your backpack and pick a different one to move to this theme."
+      },
+      {
+        "name": "Just The Thing",
+        "desc": "Once per session, you may gain a story tag that represents something useful you have on you or that you have access to, or a new use for your items."
+      },
+      {
+        "name": "Quartermaster",
+        "desc": "Choose a power tag from this theme representing an item. Members of your Fellowship may treat it as if it were in their backpack, as long as it is possible for you to hand it to them and let them use it. (It retains the Might of this theme.)"
+      }
+    ]
+  }
+}

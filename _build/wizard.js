@@ -134,7 +134,7 @@
       render();
     });
   }
-  function blankT(){ return {id:uid(),type:'Skill or Trade',title:'',power:[],weak:[],quest:'',improve:0,abandon:0,milestone:0,special:''}; }
+  function blankT(){ return {id:uid(),type:'Skill or Trade',title:'',power:[],weak:[],quest:'',improve:0,abandon:0,milestone:0,special:'',specials:[]}; }
 
   // ---------- Step: name ----------
   function renderName(){
@@ -377,7 +377,7 @@
       hero.fellowship={ type:'Companion', title:k.name,
         power:k.power.slice(0,3).map(t=>({id:uid(),text:t,scratched:false})),
         weak:[{id:uid(),text:k.weak[0]||''}], quest:k.quest||'',
-        improve:0,abandon:0,milestone:0,special:'' };
+        improve:0,abandon:0,milestone:0,special:'',specials:[] };
     }
     const rels=(draft._rels||[]).filter(r=>(r.name||'').trim()||(r.tag||'').trim());
     if(rels.length) hero.relationships=rels.map(r=>({id:uid(),name:r.name||'',tag:r.tag||'',scratched:false}));
@@ -390,9 +390,9 @@
     closeWizard();
     if(typeof toast==='function') toast('Hero created — '+(hero.heroName||'unnamed'));
   }
-  function emptyTheme(){ return {id:uid(),type:'Skill or Trade',title:'',power:[{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],weak:[{id:uid(),text:''}],quest:'',improve:0,abandon:0,milestone:0,special:''}; }
+  function emptyTheme(){ return {id:uid(),type:'Skill or Trade',title:'',power:[{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],weak:[{id:uid(),text:''}],quest:'',improve:0,abandon:0,milestone:0,special:'',specials:[]}; }
   function normTheme(th){
-    const out={id:th.id||uid(),type:th.type||'Skill or Trade',title:th.title||'',quest:th.quest||'',improve:0,abandon:0,milestone:0,special:''};
+    const out={id:th.id||uid(),type:th.type||'Skill or Trade',title:th.title||'',quest:th.quest||'',improve:0,abandon:0,milestone:0,special:'',specials:[]};
     const toTag=x=> (typeof x==='string')?{id:uid(),text:x,scratched:false}:{id:x.id||uid(),text:x.text||'',scratched:!!x.scratched};
     out.power=(th.power&&th.power.length?th.power:[]).map(toTag);
     out.weak =(th.weak&&th.weak.length?th.weak:[]).map(x=> (typeof x==='string')?{id:uid(),text:x}:{id:x.id||uid(),text:x.text||''});

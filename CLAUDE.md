@@ -37,7 +37,9 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 
 ### Current state (verify before quoting — figures drift)
 
-Last verified: **2026-06-05** (Phase 2 + polish + Phase 5 play loop). Re-run to refresh:
+Last verified: **2026-06-06** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
+Improvements + Phase 4 development automation + Phase 6 scene board & camp/sojourn + Phase 7
+searchable reference). Re-run to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -46,9 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~1,528 lines / ~198 KB (includes the embedded Phase-2
-  creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v4` (bump on every deploy)
+- **`character-tracker.html`**: ~2,118 lines / ~269 KB (includes the embedded Phase-2 dataset +
+  Quintessence list + Might table + Action-Grimoire examples + the Gerrin tutorial, ~170 KB of
+  it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v15` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -72,12 +75,28 @@ three sources in `_build/` and injected:
 - `_build/base.html` — the hand-written app shell (everything except the Phase-2 block).
 - `_build/litm-data.json` — the rules dataset (themebooks, theme kits, special improvements,
   tropes, fellowship kits, relationship tags, general store), **parsed from the Core Book**.
+- `_build/quintessences.json` — the **Quintessence** list (name + verbatim effect + a one-line
+  `mechanical` note), sourced from the Core Book via NotebookLM (not the PDF parser).
+  `inject.py` merges it into `LITM_DATA.quintessences`, so `parse_litm.py` can't clobber it.
+- `_build/specials-override.json` — authoritative **Special Improvements** for the five theme
+  types whose 5th entry the parser drops (Personality, Influence, Destiny, Companion,
+  Possessions). `inject.py` merges these over `LITM_DATA.specials`, so all 20 types have 5.
+- `_build/might-table.json` — the **per-Might example-action table** (Climb/Archery/… at
+  Origin/Adventure/Greatness), from the Core Book via NotebookLM. Merged into
+  `LITM_DATA.mightTable`; rendered in the Reference tab's Might section (`renderMightRef`).
+- `_build/grimoire.json` — the Core Book's **Action Grimoire** worked examples (verbatim
+  cost+effect spends per scenario, action & reaction). Merged into `LITM_DATA.grimoire`;
+  rendered in the Reference tab's Action-Grimoire section grouped by scenario (`renderGrimoireRef`).
+- `_build/tutorial.json` — the Core Book's **Gerrin deer-stalker tutorial** (11 steps,
+  title + verbatim text). Merged into `LITM_DATA.tutorial`; shown in the paginated tutorial
+  overlay (`openTutorial`/`renderTutorial`, `#tutorialOverlay`).
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
-- `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `wizard.js` →
-  `character-tracker.html` **and** `index.html` (mirrors automatically).
+- `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
+  `specials-override.json` + `might-table.json` + `grimoire.json` + `tutorial.json` +
+  `wizard.js` → `character-tracker.html` **and** `index.html` (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -110,7 +129,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
    weakness=orange, status=green); teal/mist "rustic fantasy" theme.
 3. `<header>` — sticky title + 👥 roster + ☰ menu, then a 5-tab nav.
 4. `<section.panel>` ×5 — **Hero / Fellowship / Tracking / Roll / Rules**.
-5. Overlays — Menu sheet, Roster sheet, hidden import `<input type=file>`, toast.
+5. Overlays — Menu sheet, Roster sheet, Tutorial sheet, hidden import `<input type=file>`, toast.
 6. `<script>` — state model, render functions, roller, persistence, theme; then the injected
    **Phase-2 block** (`LITM_DATA` + the creation-wizard IIFE, which appends its own overlay
    DOM and CSS at runtime); then SW register.
@@ -122,7 +141,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `icon.svg` + `icon-192.png` + `icon-512.png` — app icon (misty stag antlers + "LITM").
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
-  `litm-data.json`, `parse_litm.py`, `inject.py`.
+  `litm-data.json`, `quintessences.json`, `specials-override.json`, `might-table.json`,
+  `grimoire.json`, `tutorial.json`, `parse_litm.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -134,21 +154,30 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `LITM_DATA` (injected) — the Phase-2 rules dataset consumed by the wizard:
   - `themebooks` — 20 types × {concept, powerQ[], weakQ[], questIdeas[]}
   - `themekits` — 20 types × ~6 kits × {name, power[], weak[], quest}  (**113 kits**)
-  - `specials` — 20 types × 5 Special Improvements {name, desc}
+  - `specials` — 20 types × Special Improvements {name, desc}, **5 per type (complete)**. The
+    PDF parser dropped the 5th for five types (Personality, Influence, Destiny, Companion,
+    Possessions); those five are now supplied authoritatively by `_build/specials-override.json`
+    (sourced via NotebookLM) and merged over the parsed data in `inject.py`.
   - `tropes` — 28 × {name, themes[3], fourth[3], backpack[]}
   - `fellowshipKits` — 6 × {name, power[], weak[], quest}
   - `relationship` — relationship-tag examples grouped in 4 categories
   - `generalStore` — backpack item suggestions grouped in 6 categories
+  - `quintessences` (merged from `_build/quintessences.json`) — **18** × {name, effect,
+    mechanical}. Consumed by the Moment-of-Fulfillment picker (`litmQuintessences()`) and the
+    searchable Reference tab; `hasQuintessence(name)` substring-matches the hero's free-text
+    Quintessences field to drive roller encodings (currently **Beyond Luck**).
 
 ### State model (one hero)
 ```
 { id, playerName, heroName, promise(0–5), fulfillments, quintessences, notes,
   backpack:[{text,type:'story'|'hindering',scratched}],
-  themes:[{type,title,power:[{text,scratched}],weak:[{text}],quest,improve,abandon,milestone,special}] ×4 (variable),
+  themes:[{type,title,power:[{text,scratched}],weak:[{text}],quest,improve,abandon,milestone,
+           special(free-text notes),specials:[{name,desc}]}] ×4 (variable),
   fellowship:{…same shape as a theme…},
   relationships:[{name,tag,scratched}],
-  statuses:[{name,boxes:[6×bool]}],
-  scene:[{text,type,scratched}] }
+  statuses:[{name,boxes:[6×bool],limit:1–6}],   // limit defaults to 5 (Hero); legacy/unset → 5
+  scene:[{text,type,scratched}],
+  sceneBoard:{step:-1|0|1|2, stakes, threats} }
 ```
 
 ---
@@ -204,8 +233,38 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
 - **Power tags** — add/remove, scratch/recover (✓).
 - **Weakness tags** — add/remove (orange; reminder that invoking them marks Improve).
 - **Quest** text.
-- **Improve / Abandon / Milestone** tracks (3 pips each), per the development rules.
-- **Special Improvements / notes** free-text.
+- **Improve / Abandon / Milestone** tracks (3 pips each), per the development rules. Filling a
+  track (3rd mark) **auto-opens the matching development flow** (see Theme Development below); a
+  **Resolve** button also appears under any track sitting at 3.
+- **Special Improvements (Phase 3)** — a real **picker** (not free text): a 🔖 modal lists the
+  improvements for the theme's type (from `LITM_DATA.specials`; **5 per type, all 20 complete**),
+  each with its rulebook
+  benefit; tap to add/remove (each once per theme). Chosen ones show as removable cards on the
+  card; eligibility hint ("gain one when the Improve track fills"). A separate **Notes**
+  free-text box preserves the old `special` field. Works the same on the Fellowship card.
+
+### Theme Development automation (Phase 4) ✅
+A single development overlay (`#devOverlay`, `openDev`/`renderDev`/`endDev`) auto-opens when a
+theme fills a track, and resets the track on completion:
+- **Improve (3 → improvement)** — gain a new **power tag** (inline input) or route into the
+  Special-Improvement picker, or just reset the track.
+- **Milestone (3 → evolve)** — light **transformation editor** (revise title / type+Might /
+  Quest; tags & Special Improvements carry over) → **marks Promise**.
+- **Abandon (3 → replace)** — resets the theme to a blank one (keeps its id so roller refs stay
+  valid) → **marks Promise**, plus a **Promise-trading helper**: a checklist of the theme's
+  extra parts (power tags beyond 3, weaknesses beyond 1, each Special Improvement), each worth
+  **+1 Promise**, with a live "+N Promise" preview.
+- **Promise → Moment of Fulfillment** — reaching **5** Promise (via a development flow *or*
+  manually tapping the pips) opens the **MoF prompt** (`openMoF`/`renderMoF`): increments
+  Fulfillments, resets Promise carrying over the overflow, and runs a **guided Quintessence
+  picker** (Phase 3 ✅) — a scrollable list of the **18** Core-Book Quintessences (name +
+  verbatim effect from `LITM_DATA.quintessences`); tap to choose (already-owned ones show
+  "✓ have" and are disabled), plus a custom/notes box. Claiming appends "Name — effect" (and
+  any note) to the Hero's Quintessences field. **Beyond Luck** is **encoded in the roller**:
+  when the hero has it (`hasQuintessence`), double ones no longer auto-miss and the outcome
+  shows a "✨ Beyond Luck" note.
+- Helpers: `markPromise`, `tradeableParts`, `typeOptionsHTML`, `refreshSheet`. Uses only
+  existing state fields (promise/fulfillments/quintessences + per-theme tracks) — no new keys.
 
 ### Fellowship
 - A full shared theme card (type, title, single-use power tags, weakness, quest, tracks,
@@ -214,9 +273,28 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
 
 ### Tracking
 - **Statuses** — named, with a **6-box tier track**. Tap to set/clear tier (clearing a box
-  also clears boxes to its right). Highlights the current tier; **Limit 5** warning at tier
-  5 (overcome) and tier 6 (killed/transformed).
+  also clears boxes to its right). Highlights the current tier. A per-status **Limit selector
+  (1–6)** sets when the target is taken out — a Hero defaults to **5** (overcome at 5,
+  killed/transformed at 6); lower it for a Challenge/foe. The Limit box is dash-outlined; the
+  warning fires at `tier ≥ limit` ("taken out", or "overcome"/"killed or transformed" at the
+  Hero defaults). `statusLimit(st)` falls back to 5 for legacy/unset/out-of-range values.
 - **Scene story tags** — environment/temporary tags; flip helpful/hindering; remove.
+- **Scene board (Phase 6)** — a 🎬 card with the game-loop selector (Establish → Action →
+  Consequences), a **stakes** field, and a **challenges/threats** note. Persisted per hero in
+  `sceneBoard`. Includes the **Camp / Sojourn…** entry point.
+
+### Camping & Sojourn (Phase 6) ✅
+A guided overlay (`#campOverlay`, `openCamp`/`renderCamp`) that actually restores the sheet,
+opened from the Scene card or the ☰ menu. Single scrolling sheet:
+- **1 · Expire story tags** — checklist of scene tags (checked = expire); removes the chosen ones.
+- **2 · Establish the place** — add a haven story tag to the scene.
+- **3 · Activities** — 2 (or **3** via the "Took Consequences" toggle), with a used/limit counter:
+  **Rest** (un-scratches every scratched power tag — themes/title/fellowship/backpack — and
+  reduces each status by 1 tier), **Reflect** (marks Improve on a chosen theme), **Camp Action**
+  (logged advisory: count Power, spend half without rolling, or roll on the Roll tab).
+- **4 · Recover one Fellowship part** — un-scratch a chosen Fellowship power tag *or* renew a
+  scratched relationship tag.
+- A running "This camp" log; each action applies to the sheet immediately (`renderAll`).
 
 ### Roll (the headline feature) — rule-correct **2d6 + Power**
 - Auto-collects every eligible tag from the sheet (theme titles, power tags, weakness tags,
@@ -228,7 +306,8 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
 - **Situational** ± stepper for any other foe/environment tags the Narrator invokes.
 - Live **Power** readout; animated dice; outcome banner:
   - **10+** Success (no Consequences) · **7–9** Success & Consequences · **6−** Consequences
-  - Double 6 = guaranteed Success; double 1 = guaranteed Consequences (regardless of Power).
+  - Double 6 = guaranteed Success; double 1 = guaranteed Consequences (regardless of Power) —
+    unless the hero has the **Beyond Luck** Quintessence, which removes the double-ones auto-miss.
   - On success: **Power to spend** with **Rule of Minimum One**; **Push-your-luck** hint on 10+.
   - **Weakness invoked → mark Improve** reminder.
 - **Roll history** (last 20).
@@ -255,14 +334,40 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
     `scratchedTags`, `openSpend`/`doSpend`/`renderSpend`/`drawSpForm`. Form inputs persist
     across stepper re-renders (values stored on the form-state object).
 
-### Rules tab (quick reference, all from the rulebook)
-Counting Power · roll outcome tiers + special rolls · spending Power on Effects (exact costs)
-· Reactions · statuses (tier/stack/reduce/Limit) · Hero development tracks · Camping summary.
+### Reference tab — searchable (Phase 7) ✅
+A **search box** (`filterRef`) filters every reference row live; sections collapse when they
+have no match, with a "no entries match" note. Ten `.ref-sec` blocks, all rules-grounded:
+**Getting started** (app onboarding — original content), **Counting Power**, **Might · Favored
+& Imperiled** (the mechanic: task-Might vs your Might → ±3/±6, grounded in the roller's Might
+control, **plus a per-Might example-action table** from `LITM_DATA.mightTable` via
+`renderMightRef`), **Roll 2d6 + Power**, **Action Grimoire — spending Power** (the Effect costs
+enforced by the spender, **plus the Core-Book's verbatim worked examples** grouped by scenario
+from `LITM_DATA.grimoire` via `renderGrimoireRef`), **Reactions**, **Statuses**, **Hero
+Development** (incl. Promise → Moment of Fulfillment), **Quintessences** (all 18, name +
+verbatim effect), **Camping**. The Might example-table, Action-Grimoire examples, and the
+Quintessences list are built at runtime via `renderRefData` (→ `renderMightRef` +
+`renderGrimoireRef` + `renderQuintRef`), since `LITM_DATA` is injected after boot. *(The 5E
+crossover is deferred — it needs a source not reachable here; see Roadmap Phase 7.)*
+
+### Tutorial — the Gerrin walkthrough (Phase 7) ✅
+A paginated **tutorial overlay** (`#tutorialOverlay`, `openTutorial`/`renderTutorial`/
+`closeTutorial`) presenting the Core Book's 11-step Gerrin deer-stalker introduction (data in
+`LITM_DATA.tutorial`). Back / Next / Finish navigation with a "Step N of 11" counter; each
+step's text is split into paragraphs and HTML-escaped. Opened from the **▶ Play the
+interactive tutorial** button in the Reference tab's Getting-started section and the **📖
+Tutorial** ☰ menu item. Reopening always resets to step 1 (no new localStorage key).
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
 - **Export / import** a hero as JSON.
 - **Light/dark** theme (manual + auto), iOS safe-area aware, installable PWA, fully offline.
+- **PWA update banner** — when the service worker installs a newer version, a bottom banner
+  ("New version ready — tap to update") appears. **Update** posts `SKIP_WAITING` to the waiting
+  worker and reloads once on `controllerchange` (guarded so it reloads exactly once); **✕**
+  dismisses it. Wired in the SW-registration block (`showUpdateBanner`/`applyUpdate`/
+  `dismissUpdate`, `#updateBanner`); detects both an already-`waiting` worker and a fresh
+  `updatefound`→`installed` transition (only when the page is already controlled, so first
+  install is silent).
 
 ---
 
@@ -289,26 +394,43 @@ themebooks, 20 special-improvement sets, 6 fellowship kits — parsed from the C
 - [ ] *Remaining follow-ups:* the single *Heirloom Longsword* wrapped-quest artifact; expose
       **Special Improvements** (already in `LITM_DATA.specials`) as kit-creation hints.
 
-### Phase 3 — Theme Special Improvements & Quintessences (data-complete)
-*Note: `LITM_DATA.specials` (20 types × 5 Special Improvements) is already extracted and
-embedded — Phase 3 mostly needs UI to surface and apply it.*
-- [ ] **Special Improvements** — each of the 20 theme types has exactly **5**; selectable
-      (each once) when a theme hits its 3rd Improve. Replace the free-text box with a real
-      picker that records the chosen improvement and its rule benefit.
-- [ ] **Quintessence** picker at a Moment of Fulfillment — ship the named list (Beyond Luck,
-      Diligent Drudge, Fumbling Master, Jack of Many Lives, Magus Magnificent, Master of
-      Craft, Master of the Little Things, Nine Lives, Old Hand, Pillar of Wisdom, The Bearer,
-      The Common Hero, Virtuoso, Budding/Great Thaumaturge, …) with their effects.
-- [ ] Encode *Beyond Luck* etc. into the roller (e.g., no auto-miss on double ones).
+### Phase 3 — Theme Special Improvements & Quintessences ✅ DONE (2026-06-06)
+*Special Improvements **and** the Quintessence picker now ship. The Quintessence list (18,
+name + verbatim effect) was sourced from the Core Book via NotebookLM and lives in
+`_build/quintessences.json` (merged into `LITM_DATA.quintessences` by `inject.py`).*
+- [x] **Special Improvements** — each of the 20 theme types has exactly **5**; selectable
+      (each once). Replaced the free-text box with a real **picker** (🔖 modal `#specialOverlay`,
+      `openSpecialPicker`/`renderSpecialPicker`/`toggleSpecial`, data via `litmSpecials(type)`)
+      that records the chosen improvement and its rule benefit on `theme.specials:[{name,desc}]`.
+      Chosen ones render as removable cards; a Notes box preserves the legacy `special` string.
+      Works on themes **and** the Fellowship card.
+- [x] **Quintessence** picker at a Moment of Fulfillment — the guided MoF picker (`renderMoF`)
+      lists all 18 Quintessences (name + verbatim effect), tap-to-choose with already-owned
+      ones disabled, plus a custom/notes box; claiming appends "Name — effect" to the Hero's
+      Quintessences. Also surfaced in the searchable Reference tab (`renderQuintRef`).
+- [x] Encode *Beyond Luck* in the roller — when the hero has it (`hasQuintessence`), double
+      ones no longer auto-miss and the outcome shows a "✨ Beyond Luck" note. *(Other
+      Quintessences with a `mechanical` note — Larger Than Life, Loyal Companion, Lucky Bastard,
+      Virtuoso, etc. — are once-per-session / contextual player choices, left as recorded text
+      rather than auto-applied; revisit if a manual-trigger UI is wanted.)*
+- [x] *Data-gap follow-up done (2026-06-06):* the **5th** Special Improvement for **Personality,
+      Influence, Destiny, Companion, Possessions** (parser dropped one each) is now supplied by
+      `_build/specials-override.json` and merged in `inject.py` — all 20 types have 5.
 
-### Phase 4 — Theme Development automation
-- [ ] Auto-prompt at the **3rd Improve** (gain improvement, reset track), **3rd Milestone**
+### Phase 4 — Theme Development automation ✅ DONE (2026-06-06)
+Shipped as the **theme-development overlay** + **Moment of Fulfillment** prompt (see Implemented
+Features → "Theme Development automation"). The MoF reward now runs the guided **Quintessence
+picker** (Phase 3 ✅).
+- [x] Auto-prompt at the **3rd Improve** (gain improvement, reset track), **3rd Milestone**
       (theme evolves → mark Promise), **3rd Abandon** (theme replaced → mark Promise + trade
-      parts for improvements).
-- [ ] **Promise trading** helper — +1 Promise per power tag beyond 3, per weakness beyond 1,
-      per Special Improvement traded; trigger Moment of Fulfillment on filling 5.
-- [ ] **Quests & Transformations** guided flow (evolve vs replace: new title/type/Might,
-      revise tags/quest, keep or trade Special Improvements).
+      parts for improvements). *(Also a persistent **Resolve** button when a track sits at 3.)*
+- [x] **Promise trading** helper — +1 Promise per power tag beyond 3, per weakness beyond 1,
+      per Special Improvement traded; triggers the Moment of Fulfillment prompt on filling 5
+      (resets Promise carrying over the overflow, bumps Fulfillments, captures a Quintessence).
+- [x] **Quests & Transformations** guided flow (evolve vs replace: new title/type/Might,
+      revise tags/quest; evolve keeps tags & Special Improvements, replace resets the theme).
+- [x] *Follow-up done (2026-06-06):* the free-text Quintessence capture at a Moment of
+      Fulfillment is now the guided **Quintessence picker** (Phase 3).
 
 ### Phase 5 — Play-loop helpers (player-facing) ✅ MOSTLY DONE (2026-06-05)
 Shipped as the **Action/Reaction toggle + burn-scratch + interactive Effect-spender** (see
@@ -322,23 +444,38 @@ Implemented Features → "Play loop").
 - [ ] **Group / help actions** — combine multiple players' contributed tags; add a Challenge's
       group Might as ± Power. *(Still open — the only Phase-5 item left.)*
 
-### Phase 6 — Scene & session context (still player-side)
-- [ ] **Scene tracker** — current stakes, Challenges in view, Threats pending; the game loop
-      (Establish → Action → Consequences) as a lightweight checklist.
-- [ ] **Camping & Sojourn** wizard — expire story tags → establish place → each Hero takes 2
-      activities (3 with Consequences): **Rest** (recover statuses + scratched power tags),
-      **Reflect** (mark Improve), **Camp Action** (count Power, spend half without rolling, or
-      roll); then recover a Fellowship power tag or renew one relationship tag.
-- [ ] **Journey** montage helper — Vignette Challenges resolved with Quick actions.
+### Phase 6 — Scene & session context (still player-side) ✅ MOSTLY DONE (2026-06-06)
+Scene board + Camping/Sojourn shipped; only the Journey montage remains.
+- [x] **Scene tracker** — current stakes, challenges/threats in view, and the game loop
+      (Establish → Action → Consequences) as a lightweight selector. Shipped as the 🎬 Scene
+      card on the Tracking tab (persisted in `sceneBoard`).
+- [x] **Camping & Sojourn** wizard — expire story tags → establish place → 2 activities (3 with
+      Consequences): **Rest** (un-scratch power tags + reduce statuses), **Reflect** (mark
+      Improve), **Camp Action** (advisory); then recover a Fellowship power tag or renew a
+      relationship tag. Shipped as `#campOverlay` (see Implemented Features → "Camping & Sojourn").
+- [ ] **Journey** montage helper — Vignette Challenges resolved with Quick actions. *(Still open
+      — the only Phase-6 item left.)*
 
-### Phase 7 — Reference & onboarding
-- [ ] **Action Grimoire** browser — searchable example spends ("Climb a ledge", "Tame a
-      beast", "Ask about a legend at a tavern", "Bandage an ally", "Resist a spell").
-- [ ] **Might / Favored / Imperiled** explainer with the rulebook's action-Might table
-      (Climb/Archery/Sneak/Craft/Heal at Origin/Adventure/Greatness).
-- [ ] Built-in **tutorial** (the Gerrin deer-stalker walkthrough) as a first-run guide.
-- [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints) — from the notebook's
-      crossover source.
+### Phase 7 — Reference & onboarding ✅ MOSTLY DONE (2026-06-06)
+Shipped the **searchable Reference tab** (see Implemented Features → "Reference tab"): live
+filter, a Might/Favored/Imperiled mechanic explainer, an Action-Grimoire effects/cost browser,
+and a Getting-started onboarding guide — all grounded in rules already encoded in the app. The
+remaining items need Core-Book/notebook source text not reachable in this environment.
+- [x] **Action Grimoire** browser — searchable effects/cost reference **plus the Core-Book's
+      verbatim worked examples** ("Climbing up a ledge", "Taming a wild beast", "Resisting a
+      spell of beguilement", …) grouped by scenario, sourced via NotebookLM into
+      `_build/grimoire.json` and rendered by `renderGrimoireRef`. ✅ (2026-06-06)
+- [x] **Might / Favored / Imperiled** explainer — the mechanic (task-Might vs your Might → ±3/±6),
+      **plus the rulebook's per-Might example-action table** (Climb/Archery/Performance/Sneak/
+      Craft/Heal at Origin/Adventure/Greatness), sourced via NotebookLM into
+      `_build/might-table.json` and rendered by `renderMightRef`. ✅ (2026-06-06)
+- [x] Built-in **tutorial** (the Gerrin deer-stalker walkthrough) — a paginated 11-step
+      overlay (`openTutorial`, `#tutorialOverlay`) opened from the Getting-started Reference
+      section or ☰ menu; data in `_build/tutorial.json` → `LITM_DATA.tutorial`. ✅ (2026-06-06)
+      *(Follow-up: optional auto-open on first run; the source dump interleaves narrative and
+      rules call-outs, so the text reads as the rulebook pages do.)*
+- [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
+      *(Blocked: needs the notebook's crossover source.)*
 
 ### Phase 8 — Narrator-adjacent (optional / separate companion)
 *Out of scope for a pure player app, but defined in the rules — consider a sibling Narrator
@@ -352,9 +489,10 @@ app rather than bloating this one (cf. the TOR2E Loremaster companion).*
 ### Cross-cutting / tech debt
 - [ ] **Share / sync a Fellowship** — the Fellowship theme + relationship tags are shared
       across players; today each hero stores its own copy. Add export/merge of a Fellowship.
-- [ ] PWA **update banner** ("new version — tap to update") posting `SKIP_WAITING` (the SW
-      already supports the message; the page UI is not wired yet).
-- [ ] Per-status **custom Limit** (Challenges can have Limits 1–6; Heroes are always 5).
+- [x] PWA **update banner** ("New version ready — tap to update") posting `SKIP_WAITING` —
+      done (2026-06-06). Reloads once on `controllerchange`; first install stays silent.
+- [x] Per-status **custom Limit** (Challenges can have Limits 1–6; Heroes are always 5) —
+      done (2026-06-06). `limit` field + selector; `statusLimit()` defaults legacy/unset to 5.
 - [ ] Undo/redo; autosave indicator.
 
 ---

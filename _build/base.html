@@ -171,6 +171,22 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
   font-size: 11px; color: var(--ink-soft); font-weight: 700; padding: 0; position: relative; }
 .sbox.on { background: var(--status); border-color: var(--status-ink); color: var(--status-ink); }
 .sbox.tier { box-shadow: 0 0 0 2px var(--teal); }
+.sbox.lim { border-style: dashed; border-color: var(--bad); }
+.status-meta { display: flex; align-items: center; gap: 6px; margin: -2px 0 10px;
+  font-size: 11px; color: var(--ink-soft); }
+.status-meta select { padding: 2px 6px; font-size: 12px; border-radius: 6px; }
+.status-meta .lim-warn { flex: 1; color: var(--bad); font-weight: 600; }
+.q-list { display: flex; flex-direction: column; gap: 6px; max-height: 46vh; overflow: auto; margin-bottom: 4px; }
+.q-pick { text-align: left; padding: 9px 11px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--card-bg); color: var(--ink); display: flex; flex-direction: column; gap: 3px; cursor: pointer; }
+.q-pick.sel { border-color: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+.q-pick.owned { opacity: .5; }
+.q-pick .q-eff { font-size: 12px; color: var(--ink-soft); line-height: 1.35; font-weight: 400; }
+.q-pick .q-have { font-size: 11px; color: var(--teal); font-weight: 700; }
+.tut-text { max-height: 56vh; overflow: auto; padding-right: 4px; }
+.tut-text p { line-height: 1.5; margin: 0 0 9px; font-size: 14px; }
+.tut-nav { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+.tut-nav .tut-spacer { flex: 1; }
 
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
@@ -224,6 +240,38 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   border-radius: 10px; padding: 11px 13px; font-size: 15px; font-weight: 600; color: var(--ink); }
 .roster-item button.pick.active { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
 
+/* ---------- Special Improvements (Phase 3) ---------- */
+.special-item { display: flex; align-items: flex-start; gap: 8px; background: var(--bg-deep);
+  border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; }
+.special-tx { flex: 1; }
+.special-tx b { display: block; color: var(--teal); font-size: 14px; }
+.special-tx span { display: block; color: var(--ink-soft); font-size: 12.5px; line-height: 1.4; margin-top: 2px; }
+.special-item .ic { width: 30px; height: 30px; flex: none; border: none; border-radius: 8px;
+  background: var(--card-bg); font-size: 14px; color: var(--ink-soft); }
+.special-pick { display: block; width: 100%; text-align: left; background: var(--bg-deep);
+  border: 1.5px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 9px; color: var(--ink); }
+.special-pick.sel { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
+.special-pick .hd { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.special-pick .hd b { color: var(--teal); font-size: 15px; font-family: Georgia, serif; }
+.special-pick .mk { font-size: 12px; font-weight: 600; color: var(--ink-soft); white-space: nowrap; }
+.special-pick.sel .mk { color: var(--teal); }
+.special-pick .ds { font-size: 13px; color: var(--ink-soft); line-height: 1.45; margin-top: 5px; }
+
+/* ---------- Theme development (Phase 4) ---------- */
+.resolve-btn { display: block; width: 100%; margin: 2px 0 12px; background: var(--teal-light); }
+.dv-trade { display: flex; align-items: center; gap: 10px; padding: 9px 4px; font-size: 14px;
+  color: var(--ink); border-bottom: 1px solid var(--border); }
+.dv-trade input { width: 18px; height: 18px; flex: none; }
+.dv-gain { margin-top: 10px; font-weight: 700; color: var(--teal); }
+
+/* ---------- Camp / Sojourn (Phase 6) ---------- */
+.camp-h { margin: 16px 0 4px; font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .5px; }
+.camp-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.camp-chk { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); }
+.camp-chk input { width: 17px; height: 17px; }
+.camp-log { margin: 6px 0 0; padding-left: 18px; }
+.camp-log li { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
 /* Quick-ref */
 .ref h3 { color: var(--teal); margin: 14px 0 5px; font-size: 15px; }
 .ref table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -233,6 +281,18 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   background: var(--teal-dark); color: #fff; padding: 10px 18px; border-radius: 22px; font-size: 14px;
   z-index: 200; opacity: 0; transition: opacity .25s; pointer-events: none; }
 .toast.show { opacity: 1; }
+.update-banner { position: fixed; left: 50%; transform: translateX(-50%) translateY(20px);
+  bottom: calc(var(--safe-bot) + 16px); max-width: 92vw; z-index: 210;
+  background: var(--teal-dark); color: #fff; padding: 10px 12px 10px 16px; border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.3); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+.update-banner.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+.update-banner b { font-weight: 700; }
+.update-banner .upd-msg { line-height: 1.3; }
+.update-banner button { border: 0; border-radius: 10px; padding: 8px 12px; font-size: 14px;
+  font-weight: 700; cursor: pointer; white-space: nowrap; }
+.update-banner .upd-go { background: #fff; color: var(--teal-dark); }
+.update-banner .upd-x { background: transparent; color: #fff; opacity: .8; padding: 8px 6px; }
 </style>
 </head>
 <body>
@@ -302,8 +362,20 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 <!-- TRACKING -->
 <section class="panel" id="panel-track">
   <div class="card">
+    <h2>🎬 Scene</h2>
+    <p class="hint">The game loop. Tap the beat you're in; jot the stakes and what's looming.</p>
+    <div class="seg" id="loopSeg" style="margin:8px 0 12px">
+      <button data-step="0">① Establish</button>
+      <button data-step="1">② Action</button>
+      <button data-step="2">③ Consequences</button>
+    </div>
+    <label class="fld"><span>Stakes — what's at risk right now</span><input type="text" id="sb_stakes" placeholder="e.g. reach the ford before nightfall"></label>
+    <label class="fld"><span>Challenges &amp; threats in view</span><textarea id="sb_threats" placeholder="Foes, Challenges, looming Threats the Narrator has shown…"></textarea></label>
+    <button class="btn wide" style="margin-top:6px" onclick="openCamp()">🏕️ Camp / Sojourn…</button>
+  </div>
+  <div class="card">
     <h2>🟢 Statuses</h2>
-    <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. Your <b>Limit is 5</b> — at tier 5 you're overcome, at 6 killed or transformed.</p>
+    <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. A Hero's <b>Limit is 5</b> (overcome at 5, killed/transformed at 6); lower the per-status <b>Limit</b> when tracking a Challenge or foe that's taken out sooner.</p>
     <div id="statusList"></div>
     <button class="addbtn" onclick="addStatus()">＋ Add status</button>
   </div>
@@ -351,61 +423,116 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 </section>
 
-<!-- RULES -->
+<!-- RULES / REFERENCE -->
 <section class="panel ref" id="panel-ref">
   <div class="card">
-    <h2>📖 Quick Reference</h2>
-    <h3>Counting Power</h3>
-    <table><tbody>
-      <tr><td>+1</td><td>each helpful tag (yours, foe's, environment)</td></tr>
-      <tr><td>−1</td><td>each hindering tag</td></tr>
-      <tr><td>+tier</td><td>your single highest helpful status</td></tr>
-      <tr><td>−tier</td><td>your single highest hindering status</td></tr>
-      <tr><td>+3 / +6</td><td>Favored / Extremely Favored (acting below your Might)</td></tr>
-      <tr><td>−3 / −6</td><td>Imperiled / Extremely Imperiled (acting above your Might)</td></tr>
-      <tr><td>Burn</td><td>scratch one helpful tag for +3 instead of +1 (one per roll)</td></tr>
-    </tbody></table>
-    <h3>Roll 2d6 + Power</h3>
-    <table><tbody>
-      <tr><td>10+</td><td>Success — spend your Power on Effects. No Consequences.</td></tr>
-      <tr><td>7–9</td><td>Success &amp; Consequences — spend Power, but take a hit too.</td></tr>
-      <tr><td>6−</td><td>Consequences — no Success.</td></tr>
-      <tr><td>⚅⚅</td><td>Double sixes = Success without Consequences, any Power.</td></tr>
-      <tr><td>⚀⚀</td><td>Double ones = Consequences without Success, any Power.</td></tr>
-      <tr><td>Min 1</td><td>On a Success you always have at least 1 Power to spend.</td></tr>
-      <tr><td>Push</td><td>On 10+ you may accept Consequences for +1 Power (Detailed).</td></tr>
-    </tbody></table>
-    <h3>Spending Power on Effects</h3>
-    <table><tbody>
-      <tr><td>2</td><td>Add / give / recover a tag</td></tr>
-      <tr><td>2</td><td>Scratch a tag</td></tr>
-      <tr><td>1 / tier</td><td>Give a status</td></tr>
-      <tr><td>1 / tier</td><td>Reduce a status</td></tr>
-      <tr><td>1</td><td>Discover a valuable detail</td></tr>
-      <tr><td>1</td><td>Extra feat (only after ≥1 Power on the main purpose)</td></tr>
-      <tr><td>1</td><td>Create a single-use tag (when only 1 Power is left)</td></tr>
-    </tbody></table>
-    <h3>Reactions (defending)</h3>
-    <table><tbody>
-      <tr><td>10+</td><td>Spend Power +1 on any Effect</td></tr>
-      <tr><td>7–9</td><td>Spend Power only to lessen the Consequences</td></tr>
-      <tr><td>6−</td><td>Suffer the Consequences as-is</td></tr>
-    </tbody></table>
-    <h3>Statuses</h3>
-    <table><tbody>
-      <tr><td>Tier</td><td>1 mild → 6 deadly/transformative</td></tr>
-      <tr><td>Stack</td><td>mark the incoming tier's box; if taken, spill to the next free box right. Current tier = highest marked box.</td></tr>
-      <tr><td>Reduce</td><td>move all marks left by the tiers reduced; marks below 1 are removed.</td></tr>
-      <tr><td>Limit 5</td><td>at tier 5 a Hero is overcome; tier 6 kills or transforms.</td></tr>
-    </tbody></table>
-    <h3>Hero Development (per theme)</h3>
-    <table><tbody>
-      <tr><td>Improve</td><td>mark when a weakness tag is invoked or you Reflect in camp. 3 → reset &amp; gain an improvement (usually a new power tag).</td></tr>
-      <tr><td>Abandon</td><td>mark when you ignore/betray the Quest. 3 → the theme is replaced (mark Promise).</td></tr>
-      <tr><td>Milestone</td><td>mark when you achieve the Quest. 3 → the theme evolves (mark Promise).</td></tr>
-    </tbody></table>
-    <h3>Camping</h3>
-    <p class="muted" style="line-height:1.5">Narrator expires story tags → establish the place → each Hero takes 2 activities (3 with Consequences): <b>Rest</b> (recover statuses &amp; scratched power tags), <b>Reflect</b> (mark Improve on a theme), <b>Camp Action</b> (count Power, spend half without rolling, or roll). Then each Hero recovers a Fellowship power tag or renews one relationship tag.</p>
+    <h2>📖 Reference</h2>
+    <label class="fld"><span>Search the reference</span><input type="text" id="refSearch" placeholder="e.g. burn, status, favored, camp, promise…" oninput="filterRef()"></label>
+    <p class="hint" id="refEmpty" style="display:none">No reference entries match your search.</p>
+
+    <div class="ref-sec">
+      <h3>Getting started</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>Build a Hero</td><td>Tap ☰ → <b>New Hero</b> (or 👥) for the guided wizard: pick a <b>Trope</b>, answer a <b>Themebook</b>, or start blank.</td></tr>
+        <tr class="ref-row"><td>Hero tab</td><td>Your four <b>themes</b> — each has a title, power tags (🟡), weakness tags (🟠), a <b>Quest</b>, and Improve/Abandon/Milestone tracks. The <b>Backpack</b> holds story tags; <b>Promise</b> tracks advancement.</td></tr>
+        <tr class="ref-row"><td>Tracking tab</td><td><b>Statuses</b> (tiered conditions), <b>Scene</b> story tags, the Scene board (game loop), and the <b>Camp / Sojourn</b> helper.</td></tr>
+        <tr class="ref-row"><td>Roll tab</td><td>Tap the tags &amp; status you're invoking, set your <b>Might</b>, then roll <b>2d6 + Power</b>. After a Success, spend Power in the Effects panel.</td></tr>
+        <tr class="ref-row"><td>Develop</td><td>Filling a theme track prompts you to <b>improve</b>, <b>evolve</b>, or <b>replace</b> it. Reaching <b>5 Promise</b> opens a Moment of Fulfillment.</td></tr>
+        <tr class="ref-row"><td>Camp</td><td>☰ → <b>Camp / Sojourn</b>: Rest to recover scratched tags &amp; statuses, Reflect to grow, recover a Fellowship part.</td></tr>
+      </tbody></table>
+      <button class="btn wide" style="margin-top:8px" onclick="openTutorial()">▶ Play the interactive tutorial (Gerrin)</button>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Counting Power</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>+1</td><td>each helpful tag (yours, foe's, environment)</td></tr>
+        <tr class="ref-row"><td>−1</td><td>each hindering tag</td></tr>
+        <tr class="ref-row"><td>+tier</td><td>your single highest helpful status</td></tr>
+        <tr class="ref-row"><td>−tier</td><td>your single highest hindering status</td></tr>
+        <tr class="ref-row"><td>+3 / +6</td><td>Favored / Extremely Favored (acting below your Might)</td></tr>
+        <tr class="ref-row"><td>−3 / −6</td><td>Imperiled / Extremely Imperiled (acting above your Might)</td></tr>
+        <tr class="ref-row"><td>Burn</td><td>scratch one helpful tag for +3 instead of +1 (one per roll)</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Might · Favored &amp; Imperiled</h3>
+      <p class="ref-row muted" style="line-height:1.5">Themes come in three Mights: <b>Origin</b> (ordinary) → <b>Adventure</b> (heroic) → <b>Greatness</b> (legendary). When you act, compare the <b>Might the task demands</b> to the Might you bring (your relevant theme/tag).</p>
+      <table><tbody>
+        <tr class="ref-row"><td>Matched</td><td>task is about your level — no Might modifier (0).</td></tr>
+        <tr class="ref-row"><td>Favored +3</td><td>the task is <b>below</b> your Might — you outclass it.</td></tr>
+        <tr class="ref-row"><td>Extr. Favored +6</td><td>the task is <b>far below</b> your Might.</td></tr>
+        <tr class="ref-row"><td>Imperiled −3</td><td>the task is <b>above</b> your Might — out of your depth.</td></tr>
+        <tr class="ref-row"><td>Extr. Imperiled −6</td><td>the task is <b>far above</b> your Might.</td></tr>
+        <tr class="ref-row"><td>Where</td><td>set this with the <b>Might</b> control on the Roll tab; the Narrator calls it.</td></tr>
+      </tbody></table>
+      <div id="refMight"></div>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Roll 2d6 + Power</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>10+</td><td>Success — spend your Power on Effects. No Consequences.</td></tr>
+        <tr class="ref-row"><td>7–9</td><td>Success &amp; Consequences — spend Power, but take a hit too.</td></tr>
+        <tr class="ref-row"><td>6−</td><td>Consequences — no Success.</td></tr>
+        <tr class="ref-row"><td>⚅⚅</td><td>Double sixes = Success without Consequences, any Power.</td></tr>
+        <tr class="ref-row"><td>⚀⚀</td><td>Double ones = Consequences without Success, any Power.</td></tr>
+        <tr class="ref-row"><td>Min 1</td><td>On a Success you always have at least 1 Power to spend.</td></tr>
+        <tr class="ref-row"><td>Push</td><td>On 10+ you may accept Consequences for +1 Power.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Action Grimoire — spending Power</h3>
+      <p class="ref-row muted" style="line-height:1.45">Costs are the rulebook's; the example actions are illustrative. The Roll tab's Effects panel applies these for you.</p>
+      <table><tbody>
+        <tr class="ref-row"><td>tier</td><td><b>Inflict a status on a foe</b> (stagger, frighten, pin) — costs its tier.</td></tr>
+        <tr class="ref-row"><td>tier</td><td><b>Reduce a status</b> on yourself or an ally — costs the tiers removed.</td></tr>
+        <tr class="ref-row"><td>2</td><td><b>Create, give, or recover a tag</b> — a story tag, a hand-off to an ally, or un-scratching a tag.</td></tr>
+        <tr class="ref-row"><td>2</td><td><b>Scratch / strip a tag</b> — remove a foe's or the scene's tag.</td></tr>
+        <tr class="ref-row"><td>1</td><td><b>Discover a detail</b> — ask the Narrator a useful question about the scene.</td></tr>
+        <tr class="ref-row"><td>1</td><td><b>Extra feat</b> — a small bonus action, only after ≥1 Power on your main purpose.</td></tr>
+        <tr class="ref-row"><td>1</td><td><b>Single-use tag</b> — make one when only 1 Power is left.</td></tr>
+      </tbody></table>
+      <div id="refGrimoire"></div>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Reactions (defending)</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>10+</td><td>Spend Power +1 on any Effect</td></tr>
+        <tr class="ref-row"><td>7–9</td><td>Spend Power only to lessen the Consequences</td></tr>
+        <tr class="ref-row"><td>6−</td><td>Suffer the Consequences as-is</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Statuses</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>Tier</td><td>1 mild → 6 deadly/transformative</td></tr>
+        <tr class="ref-row"><td>Stack</td><td>mark the incoming tier's box; if taken, spill to the next free box right. Current tier = highest marked box.</td></tr>
+        <tr class="ref-row"><td>Reduce</td><td>move all marks left by the tiers reduced; marks below 1 are removed.</td></tr>
+        <tr class="ref-row"><td>Limit</td><td>a Hero's Limit is 5 (overcome at 5, killed/transformed at 6). A Challenge or foe can have a Limit of 1–6 — set it per status; reaching it takes the target out.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Hero Development (per theme)</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>Improve</td><td>mark when a weakness tag is invoked or you Reflect in camp. 3 → reset &amp; gain an improvement (a power tag or Special Improvement).</td></tr>
+        <tr class="ref-row"><td>Abandon</td><td>mark when you ignore/betray the Quest. 3 → the theme is replaced (mark Promise).</td></tr>
+        <tr class="ref-row"><td>Milestone</td><td>mark when you achieve the Quest. 3 → the theme evolves (mark Promise).</td></tr>
+        <tr class="ref-row"><td>Promise</td><td>marked on evolve/replace and trades. Fill 5 → a Moment of Fulfillment: reset (carry the overflow), gain a Quintessence.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div id="refQuint"></div>
+
+    <div class="ref-sec">
+      <h3>Camping</h3>
+      <p class="ref-row muted" style="line-height:1.5">Expire story tags → establish the place → each Hero takes 2 activities (3 with Consequences): <b>Rest</b> (recover statuses &amp; scratched power tags), <b>Reflect</b> (mark Improve on a theme), <b>Camp Action</b> (count Power, spend half without rolling, or roll). Then each Hero recovers a Fellowship power tag or renews one relationship tag.</p>
+    </div>
   </div>
 </section>
 
@@ -415,6 +542,8 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <h2>Menu</h2>
     <button class="menu-item" onclick="newHero()"><span class="em">✨</span> New Hero</button>
     <button class="menu-item" onclick="openRoster()"><span class="em">👥</span> Switch Hero</button>
+    <button class="menu-item" onclick="openCamp()"><span class="em">🏕️</span> Camp / Sojourn</button>
+    <button class="menu-item" onclick="openTutorial()"><span class="em">📖</span> Tutorial (Gerrin walkthrough)</button>
     <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
@@ -433,7 +562,48 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 </div>
 
+<!-- SPECIAL IMPROVEMENTS OVERLAY -->
+<div class="overlay" id="specialOverlay" onclick="if(event.target===this)closeSpecialPicker()">
+  <div class="sheet">
+    <h2 id="specialTitle">Special Improvements</h2>
+    <p class="hint" style="margin:-8px 0 12px">Each can be taken once per theme. Choose one whenever the theme fills its <b>Improve</b> track.</p>
+    <div id="specialList"></div>
+    <button class="btn wide" style="margin-top:10px" onclick="closeSpecialPicker()">Done</button>
+  </div>
+</div>
+
+<!-- THEME DEVELOPMENT OVERLAY (Phase 4) -->
+<div class="overlay" id="devOverlay" onclick="if(event.target===this)closeDev()">
+  <div class="sheet">
+    <h2 id="devTitle">Theme Development</h2>
+    <div id="devBody"></div>
+  </div>
+</div>
+
+<!-- CAMP / SOJOURN OVERLAY (Phase 6) -->
+<div class="overlay" id="campOverlay" onclick="if(event.target===this)closeCamp()">
+  <div class="sheet">
+    <h2>🏕️ Camp / Sojourn</h2>
+    <p class="hint" style="margin:-8px 0 4px">Expire the scene's tags, establish your haven, take your activities, then recover one Fellowship part.</p>
+    <div id="campBody"></div>
+  </div>
+</div>
+
+<!-- TUTORIAL OVERLAY (Phase 7) -->
+<div class="overlay" id="tutorialOverlay" onclick="if(event.target===this)closeTutorial()">
+  <div class="sheet">
+    <h2 id="tutTitle">📖 Tutorial</h2>
+    <div id="tutBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
+
+<div class="update-banner" id="updateBanner">
+  <span class="upd-msg"><b>New version ready</b> — tap to update.</span>
+  <button class="upd-go" onclick="applyUpdate()">Update</button>
+  <button class="upd-x" onclick="dismissUpdate()" aria-label="Dismiss">✕</button>
+</div>
 
 <script>
 "use strict";
@@ -466,7 +636,7 @@ function blankTheme() {
   return { id: uid(), type: 'Skill or Trade', title: '',
     power: [{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],
     weak: [{id:uid(),text:''}],
-    quest: '', improve: 0, abandon: 0, milestone: 0, special: '' };
+    quest: '', improve: 0, abandon: 0, milestone: 0, special: '', specials: [] };
 }
 function blankHero() {
   return {
@@ -477,10 +647,11 @@ function blankHero() {
     themes: [blankTheme(), blankTheme(), blankTheme(), blankTheme()],
     fellowship: { type:'Companion', title:'',
       power:[{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],
-      weak:[{id:uid(),text:''}], quest:'', improve:0, abandon:0, milestone:0, special:'' },
+      weak:[{id:uid(),text:''}], quest:'', improve:0, abandon:0, milestone:0, special:'', specials:[] },
     relationships: [],
     statuses: [],
-    scene: []
+    scene: [],
+    sceneBoard: { step: -1, stakes: '', threats: '' }
   };
 }
 
@@ -501,6 +672,11 @@ function loadAll() {
   if (!roster.length) { const h = blankHero(); roster = [h]; }
   // migrate any partial heroes
   roster.forEach(h => { const b = blankHero(); for (const k in b) if (h[k] === undefined) h[k] = b[k]; });
+  // migrate themes + fellowship: ensure the Special Improvements array exists (Phase 3)
+  roster.forEach(h => {
+    (h.themes||[]).forEach(t => { if(!Array.isArray(t.specials)) t.specials = []; });
+    if (h.fellowship && !Array.isArray(h.fellowship.specials)) h.fellowship.specials = [];
+  });
   activeId = localStorage.getItem(LS_ACTIVE);
   S = roster.find(h => h.id === activeId) || roster[0];
   activeId = S.id;
@@ -528,6 +704,91 @@ function showTab(name){
   $('panel-'+name).classList.add('active');
   window.scrollTo(0,0);
   if (name==='roll') renderRoller();
+  if (name==='ref') renderRefData();
+}
+
+// ---------- Reference search (Phase 7) ----------
+function filterRef(){
+  const q=($('refSearch').value||'').trim().toLowerCase();
+  let anyVisible=false;
+  document.querySelectorAll('#panel-ref .ref-sec').forEach(sec=>{
+    let any=false;
+    sec.querySelectorAll('.ref-row').forEach(row=>{
+      const m=!q || row.textContent.toLowerCase().indexOf(q)>=0;
+      row.style.display=m?'':'none'; if(m) any=true;
+    });
+    sec.style.display=any?'':'none';
+    if(any) anyVisible=true;
+  });
+  const e=$('refEmpty'); if(e) e.style.display=(q && !anyVisible)?'':'none';
+}
+function renderRefData(){ renderQuintRef(); renderMightRef(); renderGrimoireRef(); }
+
+// ----- Tutorial overlay (Phase 7 — the Core Book's Gerrin walkthrough) -----
+let tutStep=0;
+function litmTutorial(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.tutorial)) return LITM_DATA.tutorial; }catch(e){} return []; }
+function openTutorial(){ if(typeof closeOverlays==='function') closeOverlays(); tutStep=0; renderTutorial(); $('tutorialOverlay').classList.add('show'); }
+function closeTutorial(){ $('tutorialOverlay').classList.remove('show'); }
+function renderTutorial(){
+  const t=litmTutorial();
+  if(!t.length){ $('tutBody').innerHTML='<p class="hint">Tutorial unavailable.</p>'; return; }
+  tutStep=Math.max(0,Math.min(t.length-1,tutStep));
+  const s=t[tutStep];
+  $('tutTitle').textContent='📖 '+s.title;
+  const paras=(s.text||'').split(/\n+/).map(p=>p.trim()).filter(Boolean).map(p=>'<p>'+esc(p)+'</p>').join('');
+  $('tutBody').innerHTML=
+    '<p class="hint" style="margin:-8px 0 8px">Step '+(tutStep+1)+' of '+t.length+' · the Core Book’s Gerrin walkthrough</p>'
+    +'<div class="tut-text">'+paras+'</div>'
+    +'<div class="tut-nav">'
+    +'<button class="btn ghost" id="tut_prev"'+(tutStep===0?' disabled':'')+'>‹ Back</button>'
+    +'<span class="tut-spacer"></span>'
+    +(tutStep<t.length-1?'<button class="btn" id="tut_next">Next ›</button>':'<button class="btn" id="tut_done">Finish</button>')
+    +'</div>'
+    +'<button class="btn ghost wide" id="tut_close" style="margin-top:8px">Close</button>';
+  const sheet=document.querySelector('#tutorialOverlay .sheet');
+  const scroll=()=>{ const tx=document.querySelector('#tutorialOverlay .tut-text'); if(tx) tx.scrollTop=0; if(sheet) sheet.scrollTop=0; };
+  const p=$('tut_prev'); if(p) p.onclick=()=>{ tutStep--; renderTutorial(); scroll(); };
+  const n=$('tut_next'); if(n) n.onclick=()=>{ tutStep++; renderTutorial(); scroll(); };
+  const d=$('tut_done'); if(d) d.onclick=()=>closeTutorial();
+  $('tut_close').onclick=()=>closeTutorial();
+}
+function prettyScenario(s){
+  s=(s||'').replace(/[.…]+\s*$/,'').trim();              // drop trailing ellipsis/period
+  const core=s.replace(/\([^)]*\)/g,'');                  // ignore parenthetical status hints
+  if(/[a-z]/.test(core)) return s;                        // already mixed-case — leave it
+  return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase(); // sentence-case a shouty title
+}
+function renderGrimoireRef(){
+  const host=$('refGrimoire'); if(!host) return;
+  let list=[]; try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.grimoire)) list=LITM_DATA.grimoire; }catch(e){}
+  if(!list.length){ host.innerHTML=''; return; }
+  const groups=[]; const byName={};
+  list.forEach(g=>{ const k=g.action||''; if(!byName[k]){ byName[k]={name:k, spends:[]}; groups.push(byName[k]); } byName[k].spends.push(g); });
+  const rows=groups.map(grp=>{
+    const spends=grp.spends.map(s=>'<div><b>'+esc(s.cost)+'</b> — '+esc(s.effect)+'</div>').join('');
+    return '<tr class="ref-row"><td>'+esc(prettyScenario(grp.name))+'</td><td>'+spends+'</td></tr>';
+  }).join('');
+  host.innerHTML='<p class="ref-row muted" style="line-height:1.4;margin-top:8px">Worked examples from the rulebook — how Power is spent in real situations (action &amp; reaction):</p>'
+    +'<table><tbody>'+rows+'</tbody></table>';
+}
+function renderQuintRef(){
+  const host=$('refQuint'); if(!host) return;
+  const list=litmQuintessences();
+  if(!list.length){ host.innerHTML=''; return; }
+  const rows=list.map(q=>'<tr class="ref-row"><td>'+esc(q.name)+'</td><td>'+esc(q.effect)+'</td></tr>').join('');
+  host.innerHTML='<div class="ref-sec"><h3>Quintessences</h3>'
+    +'<p class="ref-row muted" style="line-height:1.4">Permanent, rule-breaking qualities — gain one at each Moment of Fulfillment (Promise filled to 5).</p>'
+    +'<table><tbody>'+rows+'</tbody></table></div>';
+}
+function renderMightRef(){
+  const host=$('refMight'); if(!host) return;
+  let list=[]; try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.mightTable)) list=LITM_DATA.mightTable; }catch(e){}
+  if(!list.length){ host.innerHTML=''; return; }
+  const rows=list.map(a=>'<tr class="ref-row"><td>'+esc(a.activity)+'</td><td>'
+    +'<b>Origin</b> '+esc(a.origin)+' · <b>Adventure</b> '+esc(a.adventure)+' · <b>Greatness</b> '+esc(a.greatness)
+    +'</td></tr>').join('');
+  host.innerHTML='<p class="ref-row muted" style="line-height:1.4;margin-top:8px">Example actions at each Might — what the <i>same</i> kind of task looks like as it scales:</p>'
+    +'<table><tbody>'+rows+'</tbody></table>';
 }
 
 // ============================================================
@@ -547,6 +808,7 @@ function renderAll(){
   renderRel();
   renderStatuses();
   renderScene();
+  renderSceneBoard();
   renderRollHist();
 }
 
@@ -555,7 +817,7 @@ function renderPromise(){
   for(let i=1;i<=5;i++){
     const b=document.createElement('button');
     b.className='pip promise'+(i<=S.promise?' on':'');
-    b.onclick=()=>{ S.promise = (S.promise===i? i-1 : i); renderPromise(); save(); };
+    b.onclick=()=>{ S.promise = (S.promise===i? i-1 : i); renderPromise(); save(); if(S.promise>=5) openMoF(); };
     w.appendChild(b);
   }
 }
@@ -654,21 +916,45 @@ function themeCard(th, idx, isFellowship){
   qi.oninput=()=>{ th.quest=qi.value; save(); }; ql.appendChild(qi); card.appendChild(ql);
 
   // tracks
+  const TRACK_NOTE={improve:'3 → improvement',milestone:'3 → evolve · Promise',abandon:'3 → replace · Promise'};
   ['improve','abandon','milestone'].forEach(tk=>{
     const tr=document.createElement('div'); tr.className='track';
     const lbl=document.createElement('span'); lbl.className='track-lbl'; lbl.textContent=tk; tr.appendChild(lbl);
     const pips=document.createElement('div'); pips.className='pips';
     for(let i=1;i<=3;i++){ const p=document.createElement('button'); p.className='pip'+(i<=th[tk]?' on':'');
-      p.onclick=()=>{ th[tk]=(th[tk]===i?i-1:i); renderHost(); }; pips.appendChild(p); }
+      p.onclick=()=>{ const was=th[tk]; th[tk]=(th[tk]===i?i-1:i); renderHost(); if(th[tk]===3 && was!==3) openDev(th,tk,renderHost); }; pips.appendChild(p); }
     tr.appendChild(pips);
-    if(tk==='improve'){ const n=document.createElement('span'); n.className='muted'; n.style.marginLeft='6px'; n.style.fontSize='11px'; n.textContent='3 → improvement'; tr.appendChild(n); }
+    const n=document.createElement('span'); n.className='muted'; n.style.marginLeft='6px'; n.style.fontSize='11px'; n.textContent=TRACK_NOTE[tk]; tr.appendChild(n);
     card.appendChild(tr);
+    if(th[tk]>=3){ const rb=document.createElement('button'); rb.className='btn sm resolve-btn';
+      rb.textContent=({improve:'⚙ Resolve improvement',milestone:'✨ Resolve evolution',abandon:'♻ Resolve replacement'})[tk];
+      rb.onclick=()=>openDev(th,tk,renderHost); card.appendChild(rb); }
   });
 
-  // special improvements
+  // special improvements (Phase 3 — picker from LITM_DATA.specials)
+  if(!Array.isArray(th.specials)) th.specials=[];
+  const sh=document.createElement('h3'); sh.textContent='Special Improvements'; card.appendChild(sh);
+  const shint=document.createElement('p'); shint.className='hint';
+  shint.innerHTML='Each theme type offers <b>5</b>. Gain one when the theme fills its <b>Improve</b> track (3 marks). Tap to add — each can be taken once.';
+  card.appendChild(shint);
+  const slist=document.createElement('div'); slist.className='taglist';
+  if(!th.specials.length){ const e=document.createElement('p'); e.className='muted'; e.textContent='None chosen yet.'; slist.appendChild(e); }
+  th.specials.forEach((sp,i)=>{
+    const it=document.createElement('div'); it.className='special-item';
+    const tx=document.createElement('div'); tx.className='special-tx';
+    tx.innerHTML='<b>'+esc(sp.name)+'</b><span>'+esc(sp.desc||'')+'</span>';
+    const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.title='Remove';
+    del.onclick=()=>{ th.specials.splice(i,1); renderHost(); };
+    it.appendChild(tx); it.appendChild(del); slist.appendChild(it);
+  });
+  card.appendChild(slist);
+  const addsp=document.createElement('button'); addsp.className='addbtn'; addsp.textContent='＋ Choose Special Improvement';
+  addsp.onclick=()=>openSpecialPicker(th, ()=>renderHost()); card.appendChild(addsp);
+
+  // notes (free text, kept from v1 'special' field)
   const sl=document.createElement('label'); sl.className='fld'; sl.style.marginTop='10px';
-  sl.innerHTML='<span>Special Improvements / notes</span>';
-  const st=document.createElement('textarea'); st.value=th.special; st.placeholder='Special Improvements gained as the theme grows…';
+  sl.innerHTML='<span>Notes</span>';
+  const st=document.createElement('textarea'); st.value=th.special||''; st.placeholder='Other notes about this theme…';
   st.oninput=()=>{ th.special=st.value; save(); }; sl.appendChild(st); card.appendChild(sl);
 
   if(!isFellowship){
@@ -711,14 +997,16 @@ function renderStatuses(){
   const w=$('statusList'); w.innerHTML='';
   if(!S.statuses.length){ w.innerHTML='<p class="muted">No active statuses.</p>'; }
   S.statuses.forEach((st,i)=>{
+    const lim = statusLimit(st);
     const card=document.createElement('div'); card.className='status-card';
     const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='status name'; nm.value=st.name;
     nm.oninput=()=>{ st.name=nm.value; save(); };
     const boxes=document.createElement('div'); boxes.className='boxes';
     const tier = st.boxes.lastIndexOf(true)+1; // highest marked
     for(let t=1;t<=6;t++){
-      const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'');
+      const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'')+(t===lim?' lim':'');
       b.textContent=t;
+      if(t===lim) b.title='Limit '+lim+' — reaching this tier takes the target out';
       b.onclick=()=>{ toggleStatusBox(st,t); renderStatuses(); save(); };
       boxes.appendChild(b);
     }
@@ -726,18 +1014,30 @@ function renderStatuses(){
     del.onclick=()=>{ S.statuses.splice(i,1); renderStatuses(); save(); };
     card.appendChild(nm); card.appendChild(boxes); card.appendChild(del);
     w.appendChild(card);
-    if(tier>=5){ const warn=document.createElement('div'); warn.className='hint'; warn.style.color='var(--bad)';
-      warn.style.margin='-4px 0 8px'; warn.textContent = tier>=6 ? '⚠ Tier 6 — killed or transformed.' : '⚠ Tier 5 — Limit reached: overcome by this status.';
-      w.appendChild(warn); }
+
+    // Per-status Limit selector (Heroes are always 5; a Challenge/foe may be 1–6).
+    const meta=document.createElement('div'); meta.className='status-meta';
+    const limLbl=document.createElement('span'); limLbl.textContent='Limit';
+    const sel=document.createElement('select');
+    for(let L=1;L<=6;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===lim) o.selected=true; sel.appendChild(o); }
+    sel.onchange=()=>{ st.limit=+sel.value; renderStatuses(); save(); };
+    meta.appendChild(limLbl); meta.appendChild(sel);
+    if(tier>=lim){ const warn=document.createElement('span'); warn.className='lim-warn';
+      warn.textContent = (lim>=6 || tier>=6) ? '⚠ Tier '+tier+' — killed or transformed.'
+        : lim===5 ? '⚠ Tier 5 — Limit reached: overcome by this status.'
+        : '⚠ Tier '+tier+' ≥ Limit '+lim+' — taken out.';
+      meta.appendChild(warn); }
+    w.appendChild(meta);
   });
 }
+function statusLimit(st){ const L=+(st&&st.limit); return (L>=1 && L<=6) ? L : 5; }
 function toggleStatusBox(st,t){
   // Tap a box: if it's the current single mark set, treat as "set tier to t" (fill 1..? no — LITM marks single boxes).
   // Simplest faithful behaviour: tapping an empty box marks it; tapping a marked box clears it and any to its right.
   if(st.boxes[t-1]){ for(let k=t-1;k<6;k++) st.boxes[k]=false; }
   else { st.boxes[t-1]=true; }
 }
-function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false]}); renderStatuses(); save(); }
+function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false],limit:5}); renderStatuses(); save(); }
 
 function renderScene(){
   const w=$('sceneList'); w.innerHTML='';
@@ -750,6 +1050,270 @@ function renderScene(){
   });
 }
 function addScene(){ S.scene.push({id:uid(),text:'',type:'story',scratched:false}); renderScene(); save(); }
+
+// ============================================================
+//  SCENE BOARD + CAMP / SOJOURN (Phase 6)
+// ============================================================
+function renderSceneBoard(){
+  if(!S.sceneBoard) S.sceneBoard={step:-1,stakes:'',threats:''};
+  const sb=S.sceneBoard;
+  document.querySelectorAll('#loopSeg button').forEach(b=>b.classList.toggle('on', +b.dataset.step===sb.step));
+  $('sb_stakes').value=sb.stakes||'';
+  $('sb_threats').value=sb.threats||'';
+}
+document.querySelectorAll('#loopSeg button').forEach(b=>{
+  b.onclick=()=>{ if(!S.sceneBoard) S.sceneBoard={step:-1,stakes:'',threats:''};
+    const s=+b.dataset.step; S.sceneBoard.step=(S.sceneBoard.step===s? -1 : s); renderSceneBoard(); save(); };
+});
+$('sb_stakes').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.stakes=e.target.value; save(); };
+$('sb_threats').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.threats=e.target.value; save(); };
+
+// ----- Camp / Sojourn wizard -----
+let campCtx = null; // { limit, used, log:[] }
+function openCamp(){ if(typeof closeOverlays==='function') closeOverlays(); campCtx={limit:2,used:0,log:[]}; renderCamp(); $('campOverlay').classList.add('show'); }
+function closeCamp(){ $('campOverlay').classList.remove('show'); campCtx=null; }
+function campRest(){
+  let n=0, red=0;
+  S.themes.forEach(th=>{ if(th._titleScr){th._titleScr=false;n++;} th.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} }); });
+  S.fellowship.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });
+  S.backpack.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });
+  S.statuses.forEach(st=>{ if(st.boxes.some(Boolean)){ for(let i=0;i<6;i++) st.boxes[i]=st.boxes[i+1]||false; red++; } });
+  campCtx.used++; campCtx.log.push('Rest — recovered '+n+' scratched tag(s); reduced '+red+' status(es) by 1 tier');
+  save(); renderAll(); renderCamp();
+}
+function campReflect(idx){
+  const th=S.themes[idx]; if(!th) return;
+  th.improve=Math.min(3,(th.improve||0)+1);
+  campCtx.used++; campCtx.log.push('Reflect — marked Improve on '+(th.title||('Theme '+(idx+1)))+' ('+th.improve+'/3)');
+  save(); renderAll(); renderCamp();
+  if(th.improve>=3) toast('Improve full — Resolve it on the Hero tab');
+}
+function campAction(){ campCtx.used++; campCtx.log.push('Camp Action — count Power, then spend half without rolling, or roll on the Roll tab'); renderCamp(); }
+function campRecoverFellow(id){ const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=false; campCtx.log.push('Recovered Fellowship power tag — '+t.text); save(); renderAll(); renderCamp(); } }
+function campRenewRel(idx){ const r=S.relationships[idx]; if(r){ r.scratched=false; campCtx.log.push('Renewed relationship — '+((r.name||'')+(r.tag?(' / '+r.tag):''))); save(); renderAll(); renderCamp(); } }
+function renderCamp(){
+  if(!campCtx) return;
+  const body=$('campBody');
+  const scene=S.scene||[];
+  const scratchedF=S.fellowship.power.filter(t=>t.scratched && (t.text||'').trim());
+  const scratchedR=S.relationships.filter(r=>r.scratched);
+  let h='';
+  h+='<div class="camp-meta"><label class="camp-chk"><input type="checkbox" id="camp_conseq"'+(campCtx.limit===3?' checked':'')+'> Took Consequences (3 activities)</label>'
+    +'<div class="dv-gain" style="margin:0">Activities: '+campCtx.used+' / '+campCtx.limit+'</div></div>';
+  // 1 expire
+  h+='<h3 class="camp-h">1 · Expire story tags</h3>';
+  if(scene.length){
+    h+='<p class="hint">The scene\'s temporary tags fade as you make camp.</p><div id="camp_scene">';
+    scene.forEach((t,i)=>{ h+='<label class="dv-trade"><input type="checkbox" data-ei="'+i+'" checked> '+esc((t.text||'').trim()||'(blank)')+'</label>'; });
+    h+='</div><button class="btn ghost sm" id="camp_expire" style="margin-top:6px">Expire checked tags</button>';
+  } else { h+='<p class="muted">No scene tags to expire.</p>'; }
+  // 2 establish
+  h+='<h3 class="camp-h">2 · Establish the place</h3><div class="row" style="align-items:flex-end">'
+    +'<label class="fld" style="flex:1;margin:0"><span>A story tag for your camp / haven</span><input id="camp_place" placeholder="e.g. sheltered hollow"></label>'
+    +'<button class="btn sm" id="camp_addplace">Add</button></div>';
+  // 3 activities
+  h+='<h3 class="camp-h">3 · Activities</h3><p class="hint">Each Hero takes <b>2</b> (3 if they took Consequences): Rest, Reflect, or a Camp Action.</p>';
+  h+='<div class="seg" style="margin-top:4px"><button id="camp_rest">💤 Rest</button><button id="camp_action">⚔️ Camp Action</button></div>';
+  h+='<div class="row" style="align-items:flex-end;margin-top:8px"><label class="fld" style="flex:1;margin:0"><span>🤔 Reflect — mark Improve on…</span><select id="camp_reflsel">'
+    +S.themes.map((t,i)=>'<option value="'+i+'">'+esc((t.title||('Theme '+(i+1))))+' ('+(t.improve||0)+'/3)</option>').join('')+'</select></label><button class="btn sm" id="camp_reflect">Reflect</button></div>';
+  // 4 fellowship recovery
+  h+='<h3 class="camp-h">4 · Recover one Fellowship part</h3><p class="hint">Recover a Fellowship power tag <b>or</b> renew one relationship tag.</p>';
+  if(scratchedF.length){
+    h+='<div class="row" style="align-items:flex-end"><label class="fld" style="flex:1;margin:0"><span>Recover Fellowship power tag</span><select id="camp_fsel">'
+      +scratchedF.map(t=>'<option value="'+t.id+'">'+esc(t.text)+'</option>').join('')+'</select></label><button class="btn sm" id="camp_frec">Recover</button></div>';
+  }
+  if(scratchedR.length){
+    h+='<div class="row" style="align-items:flex-end;margin-top:6px"><label class="fld" style="flex:1;margin:0"><span>Renew relationship</span><select id="camp_rsel">'
+      +scratchedR.map(r=>'<option value="'+S.relationships.indexOf(r)+'">'+esc(((r.name||'(unnamed)')+(r.tag?(' / '+r.tag):'')))+'</option>').join('')+'</select></label><button class="btn sm" id="camp_rren">Renew</button></div>';
+  }
+  if(!scratchedF.length && !scratchedR.length) h+='<p class="muted">No scratched Fellowship tags or relationships to recover.</p>';
+  // log
+  if(campCtx.log.length) h+='<h3 class="camp-h">This camp</h3><ul class="camp-log">'+campCtx.log.map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul>';
+  h+='<button class="btn wide" id="camp_done" style="margin-top:14px">Done</button>';
+  body.innerHTML=h;
+  // wire
+  $('camp_conseq').onchange=e=>{ campCtx.limit=e.target.checked?3:2; renderCamp(); };
+  if($('camp_expire')) $('camp_expire').onclick=()=>{
+    const keep=[]; body.querySelectorAll('#camp_scene input[type=checkbox]').forEach(cb=>{ if(!cb.checked) keep.push(scene[+cb.dataset.ei]); });
+    const removed=scene.length-keep.length; S.scene=keep; if(removed) campCtx.log.push('Expired '+removed+' scene tag(s)'); save(); renderAll(); renderCamp();
+  };
+  $('camp_addplace').onclick=()=>{ const v=($('camp_place').value||'').trim(); if(!v){toast('Name the place tag');return;} S.scene.push({id:uid(),text:v,type:'story',scratched:false}); campCtx.log.push('Established the place — '+v); save(); renderAll(); renderCamp(); };
+  $('camp_rest').onclick=campRest;
+  $('camp_action').onclick=campAction;
+  $('camp_reflect').onclick=()=>campReflect(+$('camp_reflsel').value);
+  if($('camp_frec')) $('camp_frec').onclick=()=>campRecoverFellow($('camp_fsel').value);
+  if($('camp_rren')) $('camp_rren').onclick=()=>campRenewRel(+$('camp_rsel').value);
+  $('camp_done').onclick=closeCamp;
+}
+
+// ============================================================
+//  SPECIAL IMPROVEMENTS PICKER (Phase 3)
+// ============================================================
+let specialCtx = null; // { th, rerender }
+function litmSpecials(type){
+  try { if(typeof LITM_DATA!=='undefined' && LITM_DATA.specials) return LITM_DATA.specials[type]||[]; }
+  catch(e){}
+  return [];
+}
+function openSpecialPicker(th, rerender){
+  specialCtx={ th:th, rerender:rerender };
+  renderSpecialPicker();
+  $('specialOverlay').classList.add('show');
+}
+function closeSpecialPicker(){ $('specialOverlay').classList.remove('show'); specialCtx=null; }
+function renderSpecialPicker(){
+  if(!specialCtx) return;
+  const th=specialCtx.th;
+  $('specialTitle').textContent=(th.type||'Theme')+' — Special Improvements';
+  const list=litmSpecials(th.type);
+  const w=$('specialList'); w.innerHTML='';
+  if(!list.length){ w.innerHTML='<p class="muted">No special improvements found for this theme type.</p>'; return; }
+  const chosen=(th.specials||[]).map(s=>s.name);
+  list.forEach(sp=>{
+    const on=chosen.indexOf(sp.name)>=0;
+    const b=document.createElement('button'); b.className='special-pick'+(on?' sel':'');
+    b.innerHTML='<div class="hd"><b>'+esc(sp.name)+'</b><span class="mk">'+(on?'✓ chosen':'＋ add')+'</span></div>'
+      +'<div class="ds">'+esc((sp.desc||'').replace(/\s+/g,' ').trim())+'</div>';
+    b.onclick=()=>toggleSpecial(th, sp);
+    w.appendChild(b);
+  });
+}
+function toggleSpecial(th, sp){
+  if(!Array.isArray(th.specials)) th.specials=[];
+  const i=th.specials.findIndex(s=>s.name===sp.name);
+  if(i>=0) th.specials.splice(i,1);
+  else th.specials.push({name:sp.name, desc:(sp.desc||'').replace(/\s+/g,' ').trim()});
+  save();
+  renderSpecialPicker();
+  if(specialCtx && specialCtx.rerender) specialCtx.rerender();
+}
+
+// ============================================================
+//  THEME DEVELOPMENT AUTOMATION (Phase 4)
+// ============================================================
+let devCtx = null; // { kind:'improve'|'milestone'|'abandon'|'mof', th, rerender, form }
+
+function typeOptionsHTML(sel){
+  let h='';
+  for(const grp in THEME_TYPES){
+    h+='<optgroup label="'+esc(grp)+'">';
+    THEME_TYPES[grp].forEach(t=>{ h+='<option'+(t===sel?' selected':'')+'>'+esc(t)+'</option>'; });
+    h+='</optgroup>';
+  }
+  return h;
+}
+function markPromise(n){ S.promise=Math.min(99,(S.promise||0)+n); save(); renderPromise(); }
+function tradeableParts(th){
+  const parts=[];
+  th.power.forEach((t,i)=>{ if(i>=3 && (t.text||'').trim()) parts.push('Power tag: '+t.text); });
+  th.weak.forEach((t,i)=>{ if(i>=1 && (t.text||'').trim()) parts.push('Weakness tag: '+t.text); });
+  (th.specials||[]).forEach(s=>parts.push('Special: '+s.name));
+  return parts;
+}
+function openDev(th, kind, rerender){
+  devCtx={ kind:kind, th:th, rerender:rerender, form:{} };
+  if(kind==='milestone') devCtx.form={ title:th.title||'', type:th.type, quest:th.quest||'' };
+  if(kind==='abandon')   devCtx.form={ trade:{} };
+  renderDev();
+  $('devOverlay').classList.add('show');
+}
+function closeDev(){ $('devOverlay').classList.remove('show'); devCtx=null; }
+function refreshSheet(){ renderPromise(); renderThemes(); renderFellowship(); }
+// finish a track flow: refresh the sheet, close, then surface any Moment of Fulfillment
+function endDev(){
+  if(devCtx && devCtx.rerender) devCtx.rerender();
+  refreshSheet(); closeDev();
+  if((S.promise||0)>=5) openMoF();
+}
+function renderDev(){
+  if(!devCtx) return;
+  const k=devCtx.kind, th=devCtx.th, f=devCtx.form, w=$('devBody');
+  if(k==='improve'){
+    $('devTitle').textContent='Improve — gain an improvement';
+    w.innerHTML=
+      '<p class="hint" style="margin:0 0 12px">This theme filled its <b>Improve</b> track. Gain an improvement, then the track resets. An improvement is usually a new <b>power tag</b> or a <b>Special Improvement</b>.</p>'
+      +'<label class="fld"><span>New power tag</span><input id="dv_pt" placeholder="e.g. Quick on my feet"></label>'
+      +'<button class="btn wide" id="dv_addpt" style="margin:4px 0 14px">＋ Gain this power tag</button>'
+      +'<button class="btn ghost wide" id="dv_sp" style="margin-bottom:8px">🔖 Choose a Special Improvement</button>'
+      +'<button class="btn ghost wide" id="dv_reset">Reset track only</button>';
+    $('dv_addpt').onclick=()=>{ const v=($('dv_pt').value||'').trim(); th.power.push({id:uid(),text:v,scratched:false}); th.improve=0; save(); toast('Improvement gained — new power tag'); endDev(); };
+    $('dv_sp').onclick=()=>{ th.improve=0; save(); const r=devCtx.rerender; closeDev(); refreshSheet(); openSpecialPicker(th, r||refreshSheet); };
+    $('dv_reset').onclick=()=>{ th.improve=0; save(); toast('Improve track reset'); endDev(); };
+  } else if(k==='milestone'){
+    $('devTitle').textContent='Milestone — the theme evolves';
+    w.innerHTML=
+      '<p class="hint" style="margin:0 0 12px">You achieved this theme\'s Quest, so it <b>evolves</b> (a transformation). Revise its identity below — its tags and Special Improvements carry over. You <b>mark Promise</b>, and the track resets.</p>'
+      +'<label class="fld"><span>Theme title</span><input id="dv_title" value="'+esc(f.title)+'"></label>'
+      +'<label class="fld"><span>Theme type / Might</span><select id="dv_type">'+typeOptionsHTML(f.type)+'</select></label>'
+      +'<label class="fld"><span>New Quest</span><input id="dv_quest" value="'+esc(f.quest)+'" placeholder="The next goal this theme pursues…"></label>'
+      +'<button class="btn wide" id="dv_evolve" style="margin-top:12px">✨ Evolve — mark Promise</button>';
+    $('dv_title').oninput=e=>f.title=e.target.value;
+    $('dv_type').onchange=e=>f.type=e.target.value;
+    $('dv_quest').oninput=e=>f.quest=e.target.value;
+    $('dv_evolve').onclick=()=>{ th.title=f.title; th.type=f.type; th.quest=f.quest; th.milestone=0; markPromise(1); toast('Theme evolved — Promise marked'); endDev(); };
+  } else if(k==='abandon'){
+    $('devTitle').textContent='Abandon — the theme is replaced';
+    const parts=tradeableParts(th);
+    let trade='';
+    if(parts.length){
+      trade='<h3 style="margin:14px 0 4px;font-size:13px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px">Trade parts for Promise</h3>'
+        +'<p class="hint" style="margin:0 0 6px">Each extra part you let go is worth <b>+1 Promise</b> (power tags beyond 3, weaknesses beyond 1, and Special Improvements).</p>';
+      parts.forEach((p,i)=>{ trade+='<label class="dv-trade"><input type="checkbox" data-i="'+i+'"'+(f.trade[i]?' checked':'')+'> '+esc(p)+'</label>'; });
+    }
+    w.innerHTML=
+      '<p class="hint" style="margin:0 0 12px">You betrayed or abandoned this theme\'s Quest, so the theme is <b>replaced</b>. It resets to a blank theme — build the new one on the sheet. You <b>mark Promise</b> (at least 1).</p>'
+      +trade+'<div class="dv-gain" id="dv_gain"></div>'
+      +'<button class="btn wide" id="dv_replace" style="margin-top:12px">♻ Replace — mark Promise</button>';
+    const upd=()=>{ const c=Object.keys(f.trade).filter(x=>f.trade[x]).length; $('dv_gain').textContent='Promise to mark: +'+(1+c); $('dv_replace').textContent='♻ Replace — mark Promise (+'+(1+c)+')'; };
+    w.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=()=>{ f.trade[cb.dataset.i]=cb.checked; upd(); });
+    upd();
+    $('dv_replace').onclick=()=>{
+      const c=Object.keys(f.trade).filter(x=>f.trade[x]).length;
+      const fresh=blankTheme(); fresh.id=th.id;          // keep id so roller references stay valid
+      Object.keys(th).forEach(key=>{ delete th[key]; });
+      Object.keys(fresh).forEach(key=>{ th[key]=fresh[key]; });
+      markPromise(1+c); toast('Theme replaced — Promise +'+(1+c)); endDev();
+    };
+  }
+}
+// ----- Moment of Fulfillment -----
+function litmQuintessences(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.quintessences)) return LITM_DATA.quintessences; }catch(e){} return []; }
+function hasQuintessence(name){ return (S.quintessences||'').toLowerCase().indexOf((name||'').toLowerCase())>=0; }
+
+function openMoF(){ devCtx={ kind:'mof', form:{q:null, custom:''} }; renderMoF(); $('devOverlay').classList.add('show'); }
+function renderMoF(){
+  $('devTitle').textContent='🌟 Moment of Fulfillment';
+  const carry=Math.max(0,(S.promise||0)-5);
+  const list=litmQuintessences();
+  const sel=devCtx.form.q;
+  const cards = list.length
+    ? list.map(q=>{ const owned=hasQuintessence(q.name); const isSel=sel===q.name;
+        return '<button type="button" class="q-pick'+(isSel?' sel':'')+(owned?' owned':'')+'" data-q="'+esc(q.name)+'"'+(owned?' disabled':'')+'>'
+          +'<b>'+esc(q.name)+(owned?' <span class="q-have">✓ have</span>':'')+'</b>'
+          +'<span class="q-eff">'+esc(q.effect)+'</span></button>'; }).join('')
+    : '<p class="hint">Quintessence list unavailable.</p>';
+  $('devBody').innerHTML=
+    '<p class="hint" style="margin:0 0 10px">Your Promise is full. Claim a <b>Moment of Fulfillment</b>: Promise resets'
+    +(carry?(' (carrying over <b>'+carry+'</b>)'):'')+', your Fulfillments counter goes up, and you gain a <b>Quintessence</b> — a permanent, rule-breaking quality. Pick one'+(list.length?'':' (or note it below)')+':</p>'
+    +'<div class="q-list">'+cards+'</div>'
+    +'<label class="fld" style="margin-top:10px"><span>Custom / notes (optional)</span><textarea id="dv_q" placeholder="A Quintessence not listed, or notes about how you gained it…">'+esc(devCtx.form.custom||'')+'</textarea></label>'
+    +'<button class="btn wide" id="dv_claim">Claim Moment of Fulfillment</button>'
+    +'<button class="btn ghost wide" id="dv_later" style="margin-top:8px">Not yet</button>';
+  $('devBody').querySelectorAll('.q-pick').forEach(b=>{ b.onclick=()=>{ devCtx.form.q=(devCtx.form.q===b.dataset.q?null:b.dataset.q); renderMoF(); }; });
+  $('dv_q').oninput=e=>{ devCtx.form.custom=e.target.value; };
+  $('dv_claim').onclick=()=>{
+    const custom=($('dv_q').value||'').trim();
+    const chosen=devCtx.form.q;
+    const add=[];
+    if(chosen){ const q=litmQuintessences().find(x=>x.name===chosen); if(q) add.push(q.name+' — '+q.effect); }
+    if(custom) add.push(custom);
+    if(add.length) S.quintessences=(S.quintessences?S.quintessences+'\n':'')+add.join('\n');
+    S.fulfillments=(S.fulfillments||0)+1;
+    S.promise=Math.max(0,(S.promise||0)-5);
+    save(); renderAll(); closeDev(); toast('Moment of Fulfillment claimed!');
+  };
+  $('dv_later').onclick=()=>closeDev();
+}
 
 // ============================================================
 //  ROLLER
@@ -853,8 +1417,10 @@ function rollDice(){
     d1.classList.remove('rolling'); d2.classList.remove('rolling');
     const total=r1+r2+power;
     const dbl6=(r1===6&&r2===6), dbl1=(r1===1&&r2===1);
+    const beyondLuck = dbl1 && hasQuintessence('Beyond Luck'); // Quintessence: no auto-miss on double ones
+    const dbl1auto = dbl1 && !beyondLuck;
     let tier; // win | mixed | lose
-    if(dbl6) tier='win'; else if(dbl1) tier='lose';
+    if(dbl6) tier='win'; else if(dbl1auto) tier='lose';
     else if(total>=10) tier='win'; else if(total>=7) tier='mixed'; else tier='lose';
 
     // burn: scratch the burned tag now (it was worth +3 this roll)
@@ -871,19 +1437,20 @@ function rollDice(){
       else { big='6− — Take it'; sub='Suffer the Consequences as-is.'; }
     } else {
       if(dbl6){ big='Success!'; sub='Double sixes — Success without Consequences.'; }
-      else if(dbl1){ big='Consequences'; sub='Double ones — Consequences without Success.'; }
+      else if(dbl1auto){ big='Consequences'; sub='Double ones — Consequences without Success.'; }
       else if(total>=10){ big='10+ Success'; sub='No Consequences.'; }
       else if(total>=7){ big='7–9 Success & Consequences'; sub='You succeed, but take a hit too.'; }
       else { big='6− Consequences'; sub='The action fails and you take the hit.'; }
       if(tier!=='lose'){ const sp=Math.max(1,power);
         detail='<div class="sub"><b>'+sp+' Power</b> to spend on Effects'+(power<=0?' (Rule of Minimum One)':'')+'.</div>';
-        if((total>=10||dbl6) && !dbl1) detail+='<div class="sub" style="opacity:.8">Push your luck: take Consequences for +1 Power.</div>';
+        if((total>=10||dbl6) && !dbl1auto) detail+='<div class="sub" style="opacity:.8">Push your luck: take Consequences for +1 Power.</div>';
         openSpend(sp,false); }
     }
     const weakNote = $('powerNum')._weak ? '<div class="sub" style="opacity:.85">⚑ Weakness invoked — mark Improve on its theme.</div>' : '';
+    const blNote = beyondLuck ? '<div class="sub" style="opacity:.85">✨ Beyond Luck — double ones no longer auto-miss.</div>' : '';
     $('outcomeBox').innerHTML = '<div class="outcome '+cls+'"><div class="big">'+big+'</div>'
       + '<div class="sub">Rolled '+r1+' + '+r2+' '+(power>=0?'+ ':'− ')+Math.abs(power)+' Power = <b>'+total+'</b></div>'
-      + '<div class="sub">'+sub+'</div>'+detail+weakNote+burnNote+'</div>';
+      + '<div class="sub">'+sub+'</div>'+detail+weakNote+blNote+burnNote+'</div>';
     rolls.unshift({t:Date.now(), r1, r2, power, total, big:(reaction?'🛡 ':'')+big, hero:S.heroName||'Hero'});
     rolls=rolls.slice(0,40); saveRolls(); renderRollHist();
     if(burnNote){ save(); renderThemes(); renderFellowship(); renderBackpack(); renderScene(); renderRoller(); }
@@ -918,7 +1485,7 @@ function recoverTagById(id){
 // ----- Status apply/reduce (rules-correct stacking) -----
 function giveStatusTier(name,tier){
   let st=S.statuses.find(s=>s.name.trim().toLowerCase()===name.trim().toLowerCase());
-  if(!st){ st={id:uid(),name:name,boxes:[false,false,false,false,false,false]}; S.statuses.push(st); }
+  if(!st){ st={id:uid(),name:name,boxes:[false,false,false,false,false,false],limit:5}; S.statuses.push(st); }
   let b=tier-1; while(b<6 && st.boxes[b]) b++;   // spill right if the box is taken
   if(b<6) st.boxes[b]=true;
   renderStatuses(); save();
@@ -1099,9 +1666,32 @@ loadAll();
 renderAll();
 
 
-// Service worker
+// Service worker + update banner
+let _waitingSW=null, _reloading=false;
+function showUpdateBanner(sw){ _waitingSW=sw; const b=$('updateBanner'); if(b) b.classList.add('show'); }
+function dismissUpdate(){ const b=$('updateBanner'); if(b) b.classList.remove('show'); }
+function applyUpdate(){
+  dismissUpdate();
+  if(_waitingSW){ _waitingSW.postMessage({type:'SKIP_WAITING'}); }
+  else { location.reload(); }
+}
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=> navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  // Reload once the fresh SW takes control (after SKIP_WAITING).
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(_reloading) return; _reloading=true; location.reload();
+  });
+  window.addEventListener('load',()=> navigator.serviceWorker.register('sw.js').then(reg=>{
+    if(!reg) return;
+    // A worker already waiting (page loaded from the old cache, new SW installed).
+    if(reg.waiting && navigator.serviceWorker.controller) showUpdateBanner(reg.waiting);
+    // A new worker is installing → prompt when it finishes (if we're already controlled).
+    reg.addEventListener('updatefound',()=>{
+      const nw=reg.installing; if(!nw) return;
+      nw.addEventListener('statechange',()=>{
+        if(nw.state==='installed' && navigator.serviceWorker.controller) showUpdateBanner(nw);
+      });
+    });
+  }).catch(()=>{}));
 }
 </script>
 </body>
