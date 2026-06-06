@@ -248,6 +248,14 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 .dv-trade input { width: 18px; height: 18px; flex: none; }
 .dv-gain { margin-top: 10px; font-weight: 700; color: var(--teal); }
 
+/* ---------- Camp / Sojourn (Phase 6) ---------- */
+.camp-h { margin: 16px 0 4px; font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .5px; }
+.camp-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.camp-chk { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); }
+.camp-chk input { width: 17px; height: 17px; }
+.camp-log { margin: 6px 0 0; padding-left: 18px; }
+.camp-log li { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
 /* Quick-ref */
 .ref h3 { color: var(--teal); margin: 14px 0 5px; font-size: 15px; }
 .ref table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -325,6 +333,18 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 
 <!-- TRACKING -->
 <section class="panel" id="panel-track">
+  <div class="card">
+    <h2>🎬 Scene</h2>
+    <p class="hint">The game loop. Tap the beat you're in; jot the stakes and what's looming.</p>
+    <div class="seg" id="loopSeg" style="margin:8px 0 12px">
+      <button data-step="0">① Establish</button>
+      <button data-step="1">② Action</button>
+      <button data-step="2">③ Consequences</button>
+    </div>
+    <label class="fld"><span>Stakes — what's at risk right now</span><input type="text" id="sb_stakes" placeholder="e.g. reach the ford before nightfall"></label>
+    <label class="fld"><span>Challenges &amp; threats in view</span><textarea id="sb_threats" placeholder="Foes, Challenges, looming Threats the Narrator has shown…"></textarea></label>
+    <button class="btn wide" style="margin-top:6px" onclick="openCamp()">🏕️ Camp / Sojourn…</button>
+  </div>
   <div class="card">
     <h2>🟢 Statuses</h2>
     <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. Your <b>Limit is 5</b> — at tier 5 you're overcome, at 6 killed or transformed.</p>
@@ -439,6 +459,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <h2>Menu</h2>
     <button class="menu-item" onclick="newHero()"><span class="em">✨</span> New Hero</button>
     <button class="menu-item" onclick="openRoster()"><span class="em">👥</span> Switch Hero</button>
+    <button class="menu-item" onclick="openCamp()"><span class="em">🏕️</span> Camp / Sojourn</button>
     <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
@@ -472,6 +493,15 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   <div class="sheet">
     <h2 id="devTitle">Theme Development</h2>
     <div id="devBody"></div>
+  </div>
+</div>
+
+<!-- CAMP / SOJOURN OVERLAY (Phase 6) -->
+<div class="overlay" id="campOverlay" onclick="if(event.target===this)closeCamp()">
+  <div class="sheet">
+    <h2>🏕️ Camp / Sojourn</h2>
+    <p class="hint" style="margin:-8px 0 4px">Expire the scene's tags, establish your haven, take your activities, then recover one Fellowship part.</p>
+    <div id="campBody"></div>
   </div>
 </div>
 
@@ -522,7 +552,8 @@ function blankHero() {
       weak:[{id:uid(),text:''}], quest:'', improve:0, abandon:0, milestone:0, special:'', specials:[] },
     relationships: [],
     statuses: [],
-    scene: []
+    scene: [],
+    sceneBoard: { step: -1, stakes: '', threats: '' }
   };
 }
 
@@ -594,6 +625,7 @@ function renderAll(){
   renderRel();
   renderStatuses();
   renderScene();
+  renderSceneBoard();
   renderRollHist();
 }
 
@@ -821,6 +853,101 @@ function renderScene(){
   });
 }
 function addScene(){ S.scene.push({id:uid(),text:'',type:'story',scratched:false}); renderScene(); save(); }
+
+// ============================================================
+//  SCENE BOARD + CAMP / SOJOURN (Phase 6)
+// ============================================================
+function renderSceneBoard(){
+  if(!S.sceneBoard) S.sceneBoard={step:-1,stakes:'',threats:''};
+  const sb=S.sceneBoard;
+  document.querySelectorAll('#loopSeg button').forEach(b=>b.classList.toggle('on', +b.dataset.step===sb.step));
+  $('sb_stakes').value=sb.stakes||'';
+  $('sb_threats').value=sb.threats||'';
+}
+document.querySelectorAll('#loopSeg button').forEach(b=>{
+  b.onclick=()=>{ if(!S.sceneBoard) S.sceneBoard={step:-1,stakes:'',threats:''};
+    const s=+b.dataset.step; S.sceneBoard.step=(S.sceneBoard.step===s? -1 : s); renderSceneBoard(); save(); };
+});
+$('sb_stakes').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.stakes=e.target.value; save(); };
+$('sb_threats').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.threats=e.target.value; save(); };
+
+// ----- Camp / Sojourn wizard -----
+let campCtx = null; // { limit, used, log:[] }
+function openCamp(){ if(typeof closeOverlays==='function') closeOverlays(); campCtx={limit:2,used:0,log:[]}; renderCamp(); $('campOverlay').classList.add('show'); }
+function closeCamp(){ $('campOverlay').classList.remove('show'); campCtx=null; }
+function campRest(){
+  let n=0, red=0;
+  S.themes.forEach(th=>{ if(th._titleScr){th._titleScr=false;n++;} th.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} }); });
+  S.fellowship.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });
+  S.backpack.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });
+  S.statuses.forEach(st=>{ if(st.boxes.some(Boolean)){ for(let i=0;i<6;i++) st.boxes[i]=st.boxes[i+1]||false; red++; } });
+  campCtx.used++; campCtx.log.push('Rest — recovered '+n+' scratched tag(s); reduced '+red+' status(es) by 1 tier');
+  save(); renderAll(); renderCamp();
+}
+function campReflect(idx){
+  const th=S.themes[idx]; if(!th) return;
+  th.improve=Math.min(3,(th.improve||0)+1);
+  campCtx.used++; campCtx.log.push('Reflect — marked Improve on '+(th.title||('Theme '+(idx+1)))+' ('+th.improve+'/3)');
+  save(); renderAll(); renderCamp();
+  if(th.improve>=3) toast('Improve full — Resolve it on the Hero tab');
+}
+function campAction(){ campCtx.used++; campCtx.log.push('Camp Action — count Power, then spend half without rolling, or roll on the Roll tab'); renderCamp(); }
+function campRecoverFellow(id){ const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=false; campCtx.log.push('Recovered Fellowship power tag — '+t.text); save(); renderAll(); renderCamp(); } }
+function campRenewRel(idx){ const r=S.relationships[idx]; if(r){ r.scratched=false; campCtx.log.push('Renewed relationship — '+((r.name||'')+(r.tag?(' / '+r.tag):''))); save(); renderAll(); renderCamp(); } }
+function renderCamp(){
+  if(!campCtx) return;
+  const body=$('campBody');
+  const scene=S.scene||[];
+  const scratchedF=S.fellowship.power.filter(t=>t.scratched && (t.text||'').trim());
+  const scratchedR=S.relationships.filter(r=>r.scratched);
+  let h='';
+  h+='<div class="camp-meta"><label class="camp-chk"><input type="checkbox" id="camp_conseq"'+(campCtx.limit===3?' checked':'')+'> Took Consequences (3 activities)</label>'
+    +'<div class="dv-gain" style="margin:0">Activities: '+campCtx.used+' / '+campCtx.limit+'</div></div>';
+  // 1 expire
+  h+='<h3 class="camp-h">1 · Expire story tags</h3>';
+  if(scene.length){
+    h+='<p class="hint">The scene\'s temporary tags fade as you make camp.</p><div id="camp_scene">';
+    scene.forEach((t,i)=>{ h+='<label class="dv-trade"><input type="checkbox" data-ei="'+i+'" checked> '+esc((t.text||'').trim()||'(blank)')+'</label>'; });
+    h+='</div><button class="btn ghost sm" id="camp_expire" style="margin-top:6px">Expire checked tags</button>';
+  } else { h+='<p class="muted">No scene tags to expire.</p>'; }
+  // 2 establish
+  h+='<h3 class="camp-h">2 · Establish the place</h3><div class="row" style="align-items:flex-end">'
+    +'<label class="fld" style="flex:1;margin:0"><span>A story tag for your camp / haven</span><input id="camp_place" placeholder="e.g. sheltered hollow"></label>'
+    +'<button class="btn sm" id="camp_addplace">Add</button></div>';
+  // 3 activities
+  h+='<h3 class="camp-h">3 · Activities</h3><p class="hint">Each Hero takes <b>2</b> (3 if they took Consequences): Rest, Reflect, or a Camp Action.</p>';
+  h+='<div class="seg" style="margin-top:4px"><button id="camp_rest">💤 Rest</button><button id="camp_action">⚔️ Camp Action</button></div>';
+  h+='<div class="row" style="align-items:flex-end;margin-top:8px"><label class="fld" style="flex:1;margin:0"><span>🤔 Reflect — mark Improve on…</span><select id="camp_reflsel">'
+    +S.themes.map((t,i)=>'<option value="'+i+'">'+esc((t.title||('Theme '+(i+1))))+' ('+(t.improve||0)+'/3)</option>').join('')+'</select></label><button class="btn sm" id="camp_reflect">Reflect</button></div>';
+  // 4 fellowship recovery
+  h+='<h3 class="camp-h">4 · Recover one Fellowship part</h3><p class="hint">Recover a Fellowship power tag <b>or</b> renew one relationship tag.</p>';
+  if(scratchedF.length){
+    h+='<div class="row" style="align-items:flex-end"><label class="fld" style="flex:1;margin:0"><span>Recover Fellowship power tag</span><select id="camp_fsel">'
+      +scratchedF.map(t=>'<option value="'+t.id+'">'+esc(t.text)+'</option>').join('')+'</select></label><button class="btn sm" id="camp_frec">Recover</button></div>';
+  }
+  if(scratchedR.length){
+    h+='<div class="row" style="align-items:flex-end;margin-top:6px"><label class="fld" style="flex:1;margin:0"><span>Renew relationship</span><select id="camp_rsel">'
+      +scratchedR.map(r=>'<option value="'+S.relationships.indexOf(r)+'">'+esc(((r.name||'(unnamed)')+(r.tag?(' / '+r.tag):'')))+'</option>').join('')+'</select></label><button class="btn sm" id="camp_rren">Renew</button></div>';
+  }
+  if(!scratchedF.length && !scratchedR.length) h+='<p class="muted">No scratched Fellowship tags or relationships to recover.</p>';
+  // log
+  if(campCtx.log.length) h+='<h3 class="camp-h">This camp</h3><ul class="camp-log">'+campCtx.log.map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul>';
+  h+='<button class="btn wide" id="camp_done" style="margin-top:14px">Done</button>';
+  body.innerHTML=h;
+  // wire
+  $('camp_conseq').onchange=e=>{ campCtx.limit=e.target.checked?3:2; renderCamp(); };
+  if($('camp_expire')) $('camp_expire').onclick=()=>{
+    const keep=[]; body.querySelectorAll('#camp_scene input[type=checkbox]').forEach(cb=>{ if(!cb.checked) keep.push(scene[+cb.dataset.ei]); });
+    const removed=scene.length-keep.length; S.scene=keep; if(removed) campCtx.log.push('Expired '+removed+' scene tag(s)'); save(); renderAll(); renderCamp();
+  };
+  $('camp_addplace').onclick=()=>{ const v=($('camp_place').value||'').trim(); if(!v){toast('Name the place tag');return;} S.scene.push({id:uid(),text:v,type:'story',scratched:false}); campCtx.log.push('Established the place — '+v); save(); renderAll(); renderCamp(); };
+  $('camp_rest').onclick=campRest;
+  $('camp_action').onclick=campAction;
+  $('camp_reflect').onclick=()=>campReflect(+$('camp_reflsel').value);
+  if($('camp_frec')) $('camp_frec').onclick=()=>campRecoverFellow($('camp_fsel').value);
+  if($('camp_rren')) $('camp_rren').onclick=()=>campRenewRel(+$('camp_rsel').value);
+  $('camp_done').onclick=closeCamp;
+}
 
 // ============================================================
 //  SPECIAL IMPROVEMENTS PICKER (Phase 3)

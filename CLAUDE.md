@@ -38,7 +38,8 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 ### Current state (verify before quoting — figures drift)
 
 Last verified: **2026-06-06** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
-Improvements + Phase 4 development automation). Re-run to refresh:
+Improvements + Phase 4 development automation + Phase 6 scene board & camp/sojourn). Re-run
+to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -47,9 +48,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~1,751 lines / ~208 KB (includes the embedded Phase-2
+- **`character-tracker.html`**: ~1,878 lines / ~218 KB (includes the embedded Phase-2
   creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v6` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v7` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -153,7 +154,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
   fellowship:{…same shape as a theme…},
   relationships:[{name,tag,scratched}],
   statuses:[{name,boxes:[6×bool]}],
-  scene:[{text,type,scratched}] }
+  scene:[{text,type,scratched}],
+  sceneBoard:{step:-1|0|1|2, stakes, threats} }
 ```
 
 ---
@@ -248,6 +250,22 @@ theme fills a track, and resets the track on completion:
   also clears boxes to its right). Highlights the current tier; **Limit 5** warning at tier
   5 (overcome) and tier 6 (killed/transformed).
 - **Scene story tags** — environment/temporary tags; flip helpful/hindering; remove.
+- **Scene board (Phase 6)** — a 🎬 card with the game-loop selector (Establish → Action →
+  Consequences), a **stakes** field, and a **challenges/threats** note. Persisted per hero in
+  `sceneBoard`. Includes the **Camp / Sojourn…** entry point.
+
+### Camping & Sojourn (Phase 6) ✅
+A guided overlay (`#campOverlay`, `openCamp`/`renderCamp`) that actually restores the sheet,
+opened from the Scene card or the ☰ menu. Single scrolling sheet:
+- **1 · Expire story tags** — checklist of scene tags (checked = expire); removes the chosen ones.
+- **2 · Establish the place** — add a haven story tag to the scene.
+- **3 · Activities** — 2 (or **3** via the "Took Consequences" toggle), with a used/limit counter:
+  **Rest** (un-scratches every scratched power tag — themes/title/fellowship/backpack — and
+  reduces each status by 1 tier), **Reflect** (marks Improve on a chosen theme), **Camp Action**
+  (logged advisory: count Power, spend half without rolling, or roll on the Roll tab).
+- **4 · Recover one Fellowship part** — un-scratch a chosen Fellowship power tag *or* renew a
+  scratched relationship tag.
+- A running "This camp" log; each action applies to the sheet immediately (`renderAll`).
 
 ### Roll (the headline feature) — rule-correct **2d6 + Power**
 - Auto-collects every eligible tag from the sheet (theme titles, power tags, weakness tags,
@@ -371,14 +389,17 @@ Implemented Features → "Play loop").
 - [ ] **Group / help actions** — combine multiple players' contributed tags; add a Challenge's
       group Might as ± Power. *(Still open — the only Phase-5 item left.)*
 
-### Phase 6 — Scene & session context (still player-side)
-- [ ] **Scene tracker** — current stakes, Challenges in view, Threats pending; the game loop
-      (Establish → Action → Consequences) as a lightweight checklist.
-- [ ] **Camping & Sojourn** wizard — expire story tags → establish place → each Hero takes 2
-      activities (3 with Consequences): **Rest** (recover statuses + scratched power tags),
-      **Reflect** (mark Improve), **Camp Action** (count Power, spend half without rolling, or
-      roll); then recover a Fellowship power tag or renew one relationship tag.
-- [ ] **Journey** montage helper — Vignette Challenges resolved with Quick actions.
+### Phase 6 — Scene & session context (still player-side) ✅ MOSTLY DONE (2026-06-06)
+Scene board + Camping/Sojourn shipped; only the Journey montage remains.
+- [x] **Scene tracker** — current stakes, challenges/threats in view, and the game loop
+      (Establish → Action → Consequences) as a lightweight selector. Shipped as the 🎬 Scene
+      card on the Tracking tab (persisted in `sceneBoard`).
+- [x] **Camping & Sojourn** wizard — expire story tags → establish place → 2 activities (3 with
+      Consequences): **Rest** (un-scratch power tags + reduce statuses), **Reflect** (mark
+      Improve), **Camp Action** (advisory); then recover a Fellowship power tag or renew a
+      relationship tag. Shipped as `#campOverlay` (see Implemented Features → "Camping & Sojourn").
+- [ ] **Journey** montage helper — Vignette Challenges resolved with Quick actions. *(Still open
+      — the only Phase-6 item left.)*
 
 ### Phase 7 — Reference & onboarding
 - [ ] **Action Grimoire** browser — searchable example spends ("Climb a ledge", "Tame a
