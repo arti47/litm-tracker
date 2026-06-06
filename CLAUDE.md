@@ -371,8 +371,8 @@ rendered as a collapsible `<details>` card showing action examples, explanation,
 **hinders**, **Success** effects, **Extra Feats**, **Consequences**, and any **Might** note. A search
 box filters across all entry text and auto-expands matches. Opened from a **📜 Browse the Action
 Grimoire** button in the Reference tab's Action-Grimoire section and the **📜 Action Grimoire** ☰ menu
-item. **Partial dataset** — currently **Crafting** + **Direct Attacks** (6 entries); being filled
-in section by section (see Roadmap Phase 7). No new localStorage key.
+item. **Partial dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks**
+(11 entries); being filled in section by section (see Roadmap Phase 7). No new localStorage key.
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
@@ -494,8 +494,8 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
 - [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
       *(Blocked: needs the notebook's crossover source.)*
 - [ ] 🚧 **Action Grimoire supplement** browser (`#agOverlay`/`renderAG`) — the standalone book's
-      full action catalog, searchable. Infrastructure + **Crafting** + **Direct Attacks** shipped
-      (2026-06-06); remaining ~17 leaf sections (Tactical Attacks, Support/Movement/Defense,
+      full action catalog, searchable. Infrastructure + **Crafting** + **Direct Attacks** +
+      **Tactical Attacks** shipped (2026-06-06); remaining ~16 leaf sections (Support/Movement/Defense,
       Information Gathering, Thievery, Survival, Navigating Danger, Recovery & Healing, the Magic
       sections, Commerce, Community, Influence & Intrigue, Fellowship) + the prose sections are
       being extracted section-by-section from NotebookLM and appended to `_build/action-grimoire.json`.

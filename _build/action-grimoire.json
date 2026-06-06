@@ -225,6 +225,127 @@
           "might": null
         }
       ]
+    },
+    {
+      "section": "Tactical Attacks",
+      "page": 20,
+      "intro": null,
+      "entries": [
+        {
+          "name": "disarming and Sundering Gear",
+          "actionExamples": [
+            "Sunder a weapon",
+            "Swat weapon away",
+            "Break shield",
+            "Bust armor",
+            "Disenchant weapon’s magic",
+            "Destroy wand",
+            "Break claws",
+            "Snatch out of their hands"
+          ],
+          "explanation": "You attack a piece of equipment on somebody’s person, either held, stowed away, or attached to their body, with the goal of making it unusable or unavailable to them.\nRetrieving their gear might be as easy for your target as reaching over to pick a pitchfork up from the ground, or as complicated as spending weeks in a sanctum of sorcery to repair their broken magical talisman. If it is possible within the scope of a scene, the Narrator can use Consequences later in the scene to determine that the target retrieved their gear.",
+          "power": {
+            "positive": [
+              "physical strength",
+              "precision",
+              "appropriate weapon skills and maneuvers",
+              "long reach",
+              "opponent’s recklessness",
+              "entangling equipment or weapons such as chains, whips, or flails",
+              "opponent’s fragile gear"
+            ],
+            "negative": [
+              "opponent’s strong grip or extra arms",
+              "gear belts, fastenings, chains, and such",
+              "gear that is small, hard to reach, or well protected",
+              "limited space",
+              "robust or magically-shielded equipment",
+              "weapons or armor hidden under cloak"
+            ]
+          },
+          "success": "QUICK  Remove an item not represented by a tag. Consequences and activities involving the item are not available until it is retrieved. WEAKEN  to remove an existing tag representing gear. If you succeed, you could then Create for yourself the same tag, meaning you managed to grab hold of it and can now use it yourself (see Improvising Weapons, page 26).",
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Feinting and Distracting Attacks",
+          "actionExamples": [],
+          "explanation": null,
+          "power": {
+            "positive": [
+              "nimbleness",
+              "deceptiveness",
+              "appropriate gear",
+              "powers of distraction",
+              "booming voice",
+              "illusions",
+              "knowledge of the battlefield",
+              "battlefield tactics",
+              "target’s fear or gullibility",
+              "fake emotions"
+            ],
+            "negative": [
+              "target’s alertness, resolve, training, sharp senses, or leadership",
+              "enemy reconnaissance efforts",
+              "impaired communication, when leading a group"
+            ]
+          },
+          "success": "QUICK  The target takes the desired action. INFLUENCE  to dictate the target’s next actions by giving them a compelling status such as hostile to their own allies, focused on something else, docile, or overconfident. DISRUPT  to inflict a hindering status such as vulnerable, overextended, guard-down, or unaware, surprised, dazed, or distracted. WEAKEN  to reduce a positive tag on the target that represents preparation or commitment such as high-morale, energized, or drilled maneuver.",
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Holding Off or Spurring Opponents",
+          "actionExamples": [],
+          "explanation": null,
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Impairing Attacks",
+          "actionExamples": [],
+          "explanation": null,
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Trick Shots",
+          "actionExamples": [],
+          "explanation": null,
+          "power": {
+            "positive": [],
+            "negative": [
+              "heavy or bulky weapons",
+              "poor vision or visibility",
+              "target’s size",
+              "heavy, armored, or durable objects"
+            ]
+          },
+          "success": "QUICK You successfully pull off your stunt. CREATE  tags that represent new elements in the environment produced by your trick shot, such as a fallen tree, sudden flood, or flurry of falling leaves. INFLUENCE  onlookers with a status such as impressed, amused, or threatened.",
+          "extraFeats": [
+            "Destroy an object or remove it from the scene.",
+            "Cause others to flinch or be distracted.",
+            "Create a breach or opening.",
+            "Have the item arrive in someone’s hands."
+          ],
+          "consequences": [],
+          "might": null
+        }
+      ]
     }
   ]
 }
