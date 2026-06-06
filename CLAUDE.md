@@ -48,9 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,075 lines / ~238 KB (includes the embedded Phase-2 dataset +
-  Quintessence list + Might table + Action-Grimoire examples, ~139 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v14` (bump on every deploy)
+- **`character-tracker.html`**: ~2,118 lines / ~269 KB (includes the embedded Phase-2 dataset +
+  Quintessence list + Might table + Action-Grimoire examples + the Gerrin tutorial, ~170 KB of
+  it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v15` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -86,13 +87,16 @@ three sources in `_build/` and injected:
 - `_build/grimoire.json` — the Core Book's **Action Grimoire** worked examples (verbatim
   cost+effect spends per scenario, action & reaction). Merged into `LITM_DATA.grimoire`;
   rendered in the Reference tab's Action-Grimoire section grouped by scenario (`renderGrimoireRef`).
+- `_build/tutorial.json` — the Core Book's **Gerrin deer-stalker tutorial** (11 steps,
+  title + verbatim text). Merged into `LITM_DATA.tutorial`; shown in the paginated tutorial
+  overlay (`openTutorial`/`renderTutorial`, `#tutorialOverlay`).
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
 - `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
-  `specials-override.json` + `might-table.json` + `grimoire.json` + `wizard.js` →
-  `character-tracker.html` **and** `index.html` (mirrors automatically).
+  `specials-override.json` + `might-table.json` + `grimoire.json` + `tutorial.json` +
+  `wizard.js` → `character-tracker.html` **and** `index.html` (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -125,7 +129,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
    weakness=orange, status=green); teal/mist "rustic fantasy" theme.
 3. `<header>` — sticky title + 👥 roster + ☰ menu, then a 5-tab nav.
 4. `<section.panel>` ×5 — **Hero / Fellowship / Tracking / Roll / Rules**.
-5. Overlays — Menu sheet, Roster sheet, hidden import `<input type=file>`, toast.
+5. Overlays — Menu sheet, Roster sheet, Tutorial sheet, hidden import `<input type=file>`, toast.
 6. `<script>` — state model, render functions, roller, persistence, theme; then the injected
    **Phase-2 block** (`LITM_DATA` + the creation-wizard IIFE, which appends its own overlay
    DOM and CSS at runtime); then SW register.
@@ -138,7 +142,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
   `litm-data.json`, `quintessences.json`, `specials-override.json`, `might-table.json`,
-  `grimoire.json`, `parse_litm.py`, `inject.py`.
+  `grimoire.json`, `tutorial.json`, `parse_litm.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -342,9 +346,16 @@ from `LITM_DATA.grimoire` via `renderGrimoireRef`), **Reactions**, **Statuses**,
 Development** (incl. Promise → Moment of Fulfillment), **Quintessences** (all 18, name +
 verbatim effect), **Camping**. The Might example-table, Action-Grimoire examples, and the
 Quintessences list are built at runtime via `renderRefData` (→ `renderMightRef` +
-`renderGrimoireRef` + `renderQuintRef`), since `LITM_DATA` is injected after boot. *(The Gerrin
-tutorial and the 5E crossover are deferred — they need source text not reachable here; see
-Roadmap Phase 7.)*
+`renderGrimoireRef` + `renderQuintRef`), since `LITM_DATA` is injected after boot. *(The 5E
+crossover is deferred — it needs a source not reachable here; see Roadmap Phase 7.)*
+
+### Tutorial — the Gerrin walkthrough (Phase 7) ✅
+A paginated **tutorial overlay** (`#tutorialOverlay`, `openTutorial`/`renderTutorial`/
+`closeTutorial`) presenting the Core Book's 11-step Gerrin deer-stalker introduction (data in
+`LITM_DATA.tutorial`). Back / Next / Finish navigation with a "Step N of 11" counter; each
+step's text is split into paragraphs and HTML-escaped. Opened from the **▶ Play the
+interactive tutorial** button in the Reference tab's Getting-started section and the **📖
+Tutorial** ☰ menu item. Reopening always resets to step 1 (no new localStorage key).
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
@@ -458,8 +469,11 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
       **plus the rulebook's per-Might example-action table** (Climb/Archery/Performance/Sneak/
       Craft/Heal at Origin/Adventure/Greatness), sourced via NotebookLM into
       `_build/might-table.json` and rendered by `renderMightRef`. ✅ (2026-06-06)
-- [ ] Built-in **tutorial** (the Gerrin deer-stalker walkthrough) as a first-run guide.
-      *(Blocked: needs the Core-Book narrative.)*
+- [x] Built-in **tutorial** (the Gerrin deer-stalker walkthrough) — a paginated 11-step
+      overlay (`openTutorial`, `#tutorialOverlay`) opened from the Getting-started Reference
+      section or ☰ menu; data in `_build/tutorial.json` → `LITM_DATA.tutorial`. ✅ (2026-06-06)
+      *(Follow-up: optional auto-open on first run; the source dump interleaves narrative and
+      rules call-outs, so the text reads as the rulebook pages do.)*
 - [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
       *(Blocked: needs the notebook's crossover source.)*
 

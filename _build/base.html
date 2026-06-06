@@ -183,6 +183,10 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
 .q-pick.owned { opacity: .5; }
 .q-pick .q-eff { font-size: 12px; color: var(--ink-soft); line-height: 1.35; font-weight: 400; }
 .q-pick .q-have { font-size: 11px; color: var(--teal); font-weight: 700; }
+.tut-text { max-height: 56vh; overflow: auto; padding-right: 4px; }
+.tut-text p { line-height: 1.5; margin: 0 0 9px; font-size: 14px; }
+.tut-nav { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+.tut-nav .tut-spacer { flex: 1; }
 
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
@@ -436,6 +440,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
         <tr class="ref-row"><td>Develop</td><td>Filling a theme track prompts you to <b>improve</b>, <b>evolve</b>, or <b>replace</b> it. Reaching <b>5 Promise</b> opens a Moment of Fulfillment.</td></tr>
         <tr class="ref-row"><td>Camp</td><td>☰ → <b>Camp / Sojourn</b>: Rest to recover scratched tags &amp; statuses, Reflect to grow, recover a Fellowship part.</td></tr>
       </tbody></table>
+      <button class="btn wide" style="margin-top:8px" onclick="openTutorial()">▶ Play the interactive tutorial (Gerrin)</button>
     </div>
 
     <div class="ref-sec">
@@ -538,6 +543,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="menu-item" onclick="newHero()"><span class="em">✨</span> New Hero</button>
     <button class="menu-item" onclick="openRoster()"><span class="em">👥</span> Switch Hero</button>
     <button class="menu-item" onclick="openCamp()"><span class="em">🏕️</span> Camp / Sojourn</button>
+    <button class="menu-item" onclick="openTutorial()"><span class="em">📖</span> Tutorial (Gerrin walkthrough)</button>
     <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
@@ -580,6 +586,14 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <h2>🏕️ Camp / Sojourn</h2>
     <p class="hint" style="margin:-8px 0 4px">Expire the scene's tags, establish your haven, take your activities, then recover one Fellowship part.</p>
     <div id="campBody"></div>
+  </div>
+</div>
+
+<!-- TUTORIAL OVERLAY (Phase 7) -->
+<div class="overlay" id="tutorialOverlay" onclick="if(event.target===this)closeTutorial()">
+  <div class="sheet">
+    <h2 id="tutTitle">📖 Tutorial</h2>
+    <div id="tutBody"></div>
   </div>
 </div>
 
@@ -709,6 +723,35 @@ function filterRef(){
   const e=$('refEmpty'); if(e) e.style.display=(q && !anyVisible)?'':'none';
 }
 function renderRefData(){ renderQuintRef(); renderMightRef(); renderGrimoireRef(); }
+
+// ----- Tutorial overlay (Phase 7 — the Core Book's Gerrin walkthrough) -----
+let tutStep=0;
+function litmTutorial(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.tutorial)) return LITM_DATA.tutorial; }catch(e){} return []; }
+function openTutorial(){ if(typeof closeOverlays==='function') closeOverlays(); tutStep=0; renderTutorial(); $('tutorialOverlay').classList.add('show'); }
+function closeTutorial(){ $('tutorialOverlay').classList.remove('show'); }
+function renderTutorial(){
+  const t=litmTutorial();
+  if(!t.length){ $('tutBody').innerHTML='<p class="hint">Tutorial unavailable.</p>'; return; }
+  tutStep=Math.max(0,Math.min(t.length-1,tutStep));
+  const s=t[tutStep];
+  $('tutTitle').textContent='📖 '+s.title;
+  const paras=(s.text||'').split(/\n+/).map(p=>p.trim()).filter(Boolean).map(p=>'<p>'+esc(p)+'</p>').join('');
+  $('tutBody').innerHTML=
+    '<p class="hint" style="margin:-8px 0 8px">Step '+(tutStep+1)+' of '+t.length+' · the Core Book’s Gerrin walkthrough</p>'
+    +'<div class="tut-text">'+paras+'</div>'
+    +'<div class="tut-nav">'
+    +'<button class="btn ghost" id="tut_prev"'+(tutStep===0?' disabled':'')+'>‹ Back</button>'
+    +'<span class="tut-spacer"></span>'
+    +(tutStep<t.length-1?'<button class="btn" id="tut_next">Next ›</button>':'<button class="btn" id="tut_done">Finish</button>')
+    +'</div>'
+    +'<button class="btn ghost wide" id="tut_close" style="margin-top:8px">Close</button>';
+  const sheet=document.querySelector('#tutorialOverlay .sheet');
+  const scroll=()=>{ const tx=document.querySelector('#tutorialOverlay .tut-text'); if(tx) tx.scrollTop=0; if(sheet) sheet.scrollTop=0; };
+  const p=$('tut_prev'); if(p) p.onclick=()=>{ tutStep--; renderTutorial(); scroll(); };
+  const n=$('tut_next'); if(n) n.onclick=()=>{ tutStep++; renderTutorial(); scroll(); };
+  const d=$('tut_done'); if(d) d.onclick=()=>closeTutorial();
+  $('tut_close').onclick=()=>closeTutorial();
+}
 function prettyScenario(s){
   s=(s||'').replace(/[.…]+\s*$/,'').trim();              // drop trailing ellipsis/period
   const core=s.replace(/\([^)]*\)/g,'');                  // ignore parenthetical status hints

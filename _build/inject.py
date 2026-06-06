@@ -25,6 +25,10 @@ if os.path.exists(mpath):
 gpath=os.path.join(B,'grimoire.json')
 if os.path.exists(gpath):
     data['grimoire']=json.load(open(gpath,encoding='utf-8'))['grimoire']
+# Gerrin tutorial walkthrough (tutorial overlay) — Core Book via NotebookLM.
+tpath=os.path.join(B,'tutorial.json')
+if os.path.exists(tpath):
+    data['tutorial']=json.load(open(tpath,encoding='utf-8'))['tutorial']
 wiz=open(os.path.join(B,'wizard.js'),encoding='utf-8').read()
 datajs='const LITM_DATA = '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n'
 block='\n/* ===== Phase 2: creation data + wizard ===== */\n'+datajs+wiz+'\n'
