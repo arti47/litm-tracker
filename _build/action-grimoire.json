@@ -180,6 +180,51 @@
           "might": null
         }
       ]
+    },
+    {
+      "section": "Direct Attacks",
+      "page": 17,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Area Attacks",
+          "actionExamples": [
+            "Cast an explosive spell",
+            "Bombard with siege weapon",
+            "Shower with a hail of arrows",
+            "Cleave with a mighty weapon",
+            "Infuse an area with evil spirits",
+            "Blanket area with magical hoar frost"
+          ],
+          "explanation": "You deliver an attack to an entire area. Targets in the area are hit selectively or indiscriminately, depending on the nature of your attack. If there are defensive tags shared by most of the targets, they apply to this roll; otherwise, targets defend from this attack individually (Area Effect Actions, Corebook Vol. I, page 178).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Combo Attacks",
+          "actionExamples": [
+            "You can shoot your great bow at a chandelier above a target so it’ll fall on them as an Attack to wound them, while also Creating a flaming chandelier story tag blocking the entrance.",
+            "You can use your vampiric magic tag suck life force to Attack and give the enemy drained-life, Weaken their energized status, and Recover to heal your own wounded status.",
+            "Your vial of acid could Weaken an enemy’s heavy armor and Attack to give them acid-burns.",
+            "You can pounce from the darkness and stab a monster’s limb with a silver dagger to Disrupt them with a weak limb and Influence them to be frightened!"
+          ],
+          "explanation": "The actions in this section describe distinct battle actions, but every offensive action can potentially combine multiple Effects, depending on the tags used and the amount of Power at your disposal.",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        }
+      ]
     }
   ]
 }
