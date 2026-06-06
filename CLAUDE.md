@@ -48,9 +48,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~1,985 lines / ~225 KB (includes the embedded Phase-2
+- **`character-tracker.html`**: ~2,004 lines / ~226 KB (includes the embedded Phase-2
   creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v9` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v10` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -153,7 +153,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
            special(free-text notes),specials:[{name,desc}]}] ×4 (variable),
   fellowship:{…same shape as a theme…},
   relationships:[{name,tag,scratched}],
-  statuses:[{name,boxes:[6×bool]}],
+  statuses:[{name,boxes:[6×bool],limit:1–6}],   // limit defaults to 5 (Hero); legacy/unset → 5
   scene:[{text,type,scratched}],
   sceneBoard:{step:-1|0|1|2, stakes, threats} }
 ```
@@ -247,8 +247,11 @@ theme fills a track, and resets the track on completion:
 
 ### Tracking
 - **Statuses** — named, with a **6-box tier track**. Tap to set/clear tier (clearing a box
-  also clears boxes to its right). Highlights the current tier; **Limit 5** warning at tier
-  5 (overcome) and tier 6 (killed/transformed).
+  also clears boxes to its right). Highlights the current tier. A per-status **Limit selector
+  (1–6)** sets when the target is taken out — a Hero defaults to **5** (overcome at 5,
+  killed/transformed at 6); lower it for a Challenge/foe. The Limit box is dash-outlined; the
+  warning fires at `tier ≥ limit` ("taken out", or "overcome"/"killed or transformed" at the
+  Hero defaults). `statusLimit(st)` falls back to 5 for legacy/unset/out-of-range values.
 - **Scene story tags** — environment/temporary tags; flip helpful/hindering; remove.
 - **Scene board (Phase 6)** — a 🎬 card with the game-loop selector (Establish → Action →
   Consequences), a **stakes** field, and a **challenges/threats** note. Persisted per hero in
@@ -445,7 +448,8 @@ app rather than bloating this one (cf. the TOR2E Loremaster companion).*
       across players; today each hero stores its own copy. Add export/merge of a Fellowship.
 - [x] PWA **update banner** ("New version ready — tap to update") posting `SKIP_WAITING` —
       done (2026-06-06). Reloads once on `controllerchange`; first install stays silent.
-- [ ] Per-status **custom Limit** (Challenges can have Limits 1–6; Heroes are always 5).
+- [x] Per-status **custom Limit** (Challenges can have Limits 1–6; Heroes are always 5) —
+      done (2026-06-06). `limit` field + selector; `statusLimit()` defaults legacy/unset to 5.
 - [ ] Undo/redo; autosave indicator.
 
 ---

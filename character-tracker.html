@@ -171,6 +171,11 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
   font-size: 11px; color: var(--ink-soft); font-weight: 700; padding: 0; position: relative; }
 .sbox.on { background: var(--status); border-color: var(--status-ink); color: var(--status-ink); }
 .sbox.tier { box-shadow: 0 0 0 2px var(--teal); }
+.sbox.lim { border-style: dashed; border-color: var(--bad); }
+.status-meta { display: flex; align-items: center; gap: 6px; margin: -2px 0 10px;
+  font-size: 11px; color: var(--ink-soft); }
+.status-meta select { padding: 2px 6px; font-size: 12px; border-radius: 6px; }
+.status-meta .lim-warn { flex: 1; color: var(--bad); font-weight: 600; }
 
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
@@ -359,7 +364,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
   <div class="card">
     <h2>🟢 Statuses</h2>
-    <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. Your <b>Limit is 5</b> — at tier 5 you're overcome, at 6 killed or transformed.</p>
+    <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. A Hero's <b>Limit is 5</b> (overcome at 5, killed/transformed at 6); lower the per-status <b>Limit</b> when tracking a Challenge or foe that's taken out sooner.</p>
     <div id="statusList"></div>
     <button class="addbtn" onclick="addStatus()">＋ Add status</button>
   </div>
@@ -494,7 +499,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
         <tr class="ref-row"><td>Tier</td><td>1 mild → 6 deadly/transformative</td></tr>
         <tr class="ref-row"><td>Stack</td><td>mark the incoming tier's box; if taken, spill to the next free box right. Current tier = highest marked box.</td></tr>
         <tr class="ref-row"><td>Reduce</td><td>move all marks left by the tiers reduced; marks below 1 are removed.</td></tr>
-        <tr class="ref-row"><td>Limit 5</td><td>at tier 5 a Hero is overcome; tier 6 kills or transforms.</td></tr>
+        <tr class="ref-row"><td>Limit</td><td>a Hero's Limit is 5 (overcome at 5, killed/transformed at 6). A Challenge or foe can have a Limit of 1–6 — set it per status; reaching it takes the target out.</td></tr>
       </tbody></table>
     </div>
 
@@ -898,14 +903,16 @@ function renderStatuses(){
   const w=$('statusList'); w.innerHTML='';
   if(!S.statuses.length){ w.innerHTML='<p class="muted">No active statuses.</p>'; }
   S.statuses.forEach((st,i)=>{
+    const lim = statusLimit(st);
     const card=document.createElement('div'); card.className='status-card';
     const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='status name'; nm.value=st.name;
     nm.oninput=()=>{ st.name=nm.value; save(); };
     const boxes=document.createElement('div'); boxes.className='boxes';
     const tier = st.boxes.lastIndexOf(true)+1; // highest marked
     for(let t=1;t<=6;t++){
-      const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'');
+      const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'')+(t===lim?' lim':'');
       b.textContent=t;
+      if(t===lim) b.title='Limit '+lim+' — reaching this tier takes the target out';
       b.onclick=()=>{ toggleStatusBox(st,t); renderStatuses(); save(); };
       boxes.appendChild(b);
     }
@@ -913,18 +920,30 @@ function renderStatuses(){
     del.onclick=()=>{ S.statuses.splice(i,1); renderStatuses(); save(); };
     card.appendChild(nm); card.appendChild(boxes); card.appendChild(del);
     w.appendChild(card);
-    if(tier>=5){ const warn=document.createElement('div'); warn.className='hint'; warn.style.color='var(--bad)';
-      warn.style.margin='-4px 0 8px'; warn.textContent = tier>=6 ? '⚠ Tier 6 — killed or transformed.' : '⚠ Tier 5 — Limit reached: overcome by this status.';
-      w.appendChild(warn); }
+
+    // Per-status Limit selector (Heroes are always 5; a Challenge/foe may be 1–6).
+    const meta=document.createElement('div'); meta.className='status-meta';
+    const limLbl=document.createElement('span'); limLbl.textContent='Limit';
+    const sel=document.createElement('select');
+    for(let L=1;L<=6;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===lim) o.selected=true; sel.appendChild(o); }
+    sel.onchange=()=>{ st.limit=+sel.value; renderStatuses(); save(); };
+    meta.appendChild(limLbl); meta.appendChild(sel);
+    if(tier>=lim){ const warn=document.createElement('span'); warn.className='lim-warn';
+      warn.textContent = (lim>=6 || tier>=6) ? '⚠ Tier '+tier+' — killed or transformed.'
+        : lim===5 ? '⚠ Tier 5 — Limit reached: overcome by this status.'
+        : '⚠ Tier '+tier+' ≥ Limit '+lim+' — taken out.';
+      meta.appendChild(warn); }
+    w.appendChild(meta);
   });
 }
+function statusLimit(st){ const L=+(st&&st.limit); return (L>=1 && L<=6) ? L : 5; }
 function toggleStatusBox(st,t){
   // Tap a box: if it's the current single mark set, treat as "set tier to t" (fill 1..? no — LITM marks single boxes).
   // Simplest faithful behaviour: tapping an empty box marks it; tapping a marked box clears it and any to its right.
   if(st.boxes[t-1]){ for(let k=t-1;k<6;k++) st.boxes[k]=false; }
   else { st.boxes[t-1]=true; }
 }
-function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false]}); renderStatuses(); save(); }
+function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false],limit:5}); renderStatuses(); save(); }
 
 function renderScene(){
   const w=$('sceneList'); w.innerHTML='';
@@ -1352,7 +1371,7 @@ function recoverTagById(id){
 // ----- Status apply/reduce (rules-correct stacking) -----
 function giveStatusTier(name,tier){
   let st=S.statuses.find(s=>s.name.trim().toLowerCase()===name.trim().toLowerCase());
-  if(!st){ st={id:uid(),name:name,boxes:[false,false,false,false,false,false]}; S.statuses.push(st); }
+  if(!st){ st={id:uid(),name:name,boxes:[false,false,false,false,false,false],limit:5}; S.statuses.push(st); }
   let b=tier-1; while(b<6 && st.boxes[b]) b++;   // spill right if the box is taken
   if(b<6) st.boxes[b]=true;
   renderStatuses(); save();
