@@ -38,7 +38,7 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 ### Current state (verify before quoting — figures drift)
 
 Last verified: **2026-06-06** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
-Improvements). Re-run to refresh:
+Improvements + Phase 4 development automation). Re-run to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -47,9 +47,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~1,622 lines / ~200 KB (includes the embedded Phase-2
+- **`character-tracker.html`**: ~1,751 lines / ~208 KB (includes the embedded Phase-2
   creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v5` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v6` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -209,13 +209,34 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
 - **Power tags** — add/remove, scratch/recover (✓).
 - **Weakness tags** — add/remove (orange; reminder that invoking them marks Improve).
 - **Quest** text.
-- **Improve / Abandon / Milestone** tracks (3 pips each), per the development rules.
+- **Improve / Abandon / Milestone** tracks (3 pips each), per the development rules. Filling a
+  track (3rd mark) **auto-opens the matching development flow** (see Theme Development below); a
+  **Resolve** button also appears under any track sitting at 3.
 - **Special Improvements (Phase 3)** — a real **picker** (not free text): a 🔖 modal lists the
   improvements for the theme's type (from `LITM_DATA.specials`; 5 per type, 4 for five types
   pending re-extraction), each with its rulebook
   benefit; tap to add/remove (each once per theme). Chosen ones show as removable cards on the
   card; eligibility hint ("gain one when the Improve track fills"). A separate **Notes**
   free-text box preserves the old `special` field. Works the same on the Fellowship card.
+
+### Theme Development automation (Phase 4) ✅
+A single development overlay (`#devOverlay`, `openDev`/`renderDev`/`endDev`) auto-opens when a
+theme fills a track, and resets the track on completion:
+- **Improve (3 → improvement)** — gain a new **power tag** (inline input) or route into the
+  Special-Improvement picker, or just reset the track.
+- **Milestone (3 → evolve)** — light **transformation editor** (revise title / type+Might /
+  Quest; tags & Special Improvements carry over) → **marks Promise**.
+- **Abandon (3 → replace)** — resets the theme to a blank one (keeps its id so roller refs stay
+  valid) → **marks Promise**, plus a **Promise-trading helper**: a checklist of the theme's
+  extra parts (power tags beyond 3, weaknesses beyond 1, each Special Improvement), each worth
+  **+1 Promise**, with a live "+N Promise" preview.
+- **Promise → Moment of Fulfillment** — reaching **5** Promise (via a development flow *or*
+  manually tapping the pips) opens the **MoF prompt** (`openMoF`): increments Fulfillments,
+  resets Promise carrying over the overflow, and captures the gained **Quintessence** as text
+  appended to the Hero's Quintessences. *(The guided Quintessence picker is still deferred —
+  see Roadmap Phase 3 — so the reward is recorded free-text for now.)*
+- Helpers: `markPromise`, `tradeableParts`, `typeOptionsHTML`, `refreshSheet`. Uses only
+  existing state fields (promise/fulfillments/quintessences + per-theme tracks) — no new keys.
 
 ### Fellowship
 - A full shared theme card (type, title, single-use power tags, weakness, quest, tracks,
@@ -323,14 +344,20 @@ to finish it.*
       Influence, Destiny, Companion, Possessions** (parser dropped one each). Needs the Core
       Book raw text + a `parse_litm.py` tweak, then `inject.py`.
 
-### Phase 4 — Theme Development automation
-- [ ] Auto-prompt at the **3rd Improve** (gain improvement, reset track), **3rd Milestone**
+### Phase 4 — Theme Development automation ✅ DONE (2026-06-06)
+Shipped as the **theme-development overlay** + **Moment of Fulfillment** prompt (see Implemented
+Features → "Theme Development automation"). The only carry-over is the Quintessence *reward*,
+which is recorded as free text until the deferred Phase-3 Quintessence picker lands.
+- [x] Auto-prompt at the **3rd Improve** (gain improvement, reset track), **3rd Milestone**
       (theme evolves → mark Promise), **3rd Abandon** (theme replaced → mark Promise + trade
-      parts for improvements).
-- [ ] **Promise trading** helper — +1 Promise per power tag beyond 3, per weakness beyond 1,
-      per Special Improvement traded; trigger Moment of Fulfillment on filling 5.
-- [ ] **Quests & Transformations** guided flow (evolve vs replace: new title/type/Might,
-      revise tags/quest, keep or trade Special Improvements).
+      parts for improvements). *(Also a persistent **Resolve** button when a track sits at 3.)*
+- [x] **Promise trading** helper — +1 Promise per power tag beyond 3, per weakness beyond 1,
+      per Special Improvement traded; triggers the Moment of Fulfillment prompt on filling 5
+      (resets Promise carrying over the overflow, bumps Fulfillments, captures a Quintessence).
+- [x] **Quests & Transformations** guided flow (evolve vs replace: new title/type/Might,
+      revise tags/quest; evolve keeps tags & Special Improvements, replace resets the theme).
+- [ ] *Follow-up:* swap the free-text Quintessence capture at a Moment of Fulfillment for the
+      guided **Quintessence picker** once its data lands (depends on Phase 3's deferred half).
 
 ### Phase 5 — Play-loop helpers (player-facing) ✅ MOSTLY DONE (2026-06-05)
 Shipped as the **Action/Reaction toggle + burn-scratch + interactive Effect-spender** (see

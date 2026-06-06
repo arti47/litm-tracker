@@ -241,6 +241,13 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 .special-pick.sel .mk { color: var(--teal); }
 .special-pick .ds { font-size: 13px; color: var(--ink-soft); line-height: 1.45; margin-top: 5px; }
 
+/* ---------- Theme development (Phase 4) ---------- */
+.resolve-btn { display: block; width: 100%; margin: 2px 0 12px; background: var(--teal-light); }
+.dv-trade { display: flex; align-items: center; gap: 10px; padding: 9px 4px; font-size: 14px;
+  color: var(--ink); border-bottom: 1px solid var(--border); }
+.dv-trade input { width: 18px; height: 18px; flex: none; }
+.dv-gain { margin-top: 10px; font-weight: 700; color: var(--teal); }
+
 /* Quick-ref */
 .ref h3 { color: var(--teal); margin: 14px 0 5px; font-size: 15px; }
 .ref table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -460,6 +467,14 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 </div>
 
+<!-- THEME DEVELOPMENT OVERLAY (Phase 4) -->
+<div class="overlay" id="devOverlay" onclick="if(event.target===this)closeDev()">
+  <div class="sheet">
+    <h2 id="devTitle">Theme Development</h2>
+    <div id="devBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -587,7 +602,7 @@ function renderPromise(){
   for(let i=1;i<=5;i++){
     const b=document.createElement('button');
     b.className='pip promise'+(i<=S.promise?' on':'');
-    b.onclick=()=>{ S.promise = (S.promise===i? i-1 : i); renderPromise(); save(); };
+    b.onclick=()=>{ S.promise = (S.promise===i? i-1 : i); renderPromise(); save(); if(S.promise>=5) openMoF(); };
     w.appendChild(b);
   }
 }
@@ -686,15 +701,19 @@ function themeCard(th, idx, isFellowship){
   qi.oninput=()=>{ th.quest=qi.value; save(); }; ql.appendChild(qi); card.appendChild(ql);
 
   // tracks
+  const TRACK_NOTE={improve:'3 → improvement',milestone:'3 → evolve · Promise',abandon:'3 → replace · Promise'};
   ['improve','abandon','milestone'].forEach(tk=>{
     const tr=document.createElement('div'); tr.className='track';
     const lbl=document.createElement('span'); lbl.className='track-lbl'; lbl.textContent=tk; tr.appendChild(lbl);
     const pips=document.createElement('div'); pips.className='pips';
     for(let i=1;i<=3;i++){ const p=document.createElement('button'); p.className='pip'+(i<=th[tk]?' on':'');
-      p.onclick=()=>{ th[tk]=(th[tk]===i?i-1:i); renderHost(); }; pips.appendChild(p); }
+      p.onclick=()=>{ const was=th[tk]; th[tk]=(th[tk]===i?i-1:i); renderHost(); if(th[tk]===3 && was!==3) openDev(th,tk,renderHost); }; pips.appendChild(p); }
     tr.appendChild(pips);
-    if(tk==='improve'){ const n=document.createElement('span'); n.className='muted'; n.style.marginLeft='6px'; n.style.fontSize='11px'; n.textContent='3 → improvement'; tr.appendChild(n); }
+    const n=document.createElement('span'); n.className='muted'; n.style.marginLeft='6px'; n.style.fontSize='11px'; n.textContent=TRACK_NOTE[tk]; tr.appendChild(n);
     card.appendChild(tr);
+    if(th[tk]>=3){ const rb=document.createElement('button'); rb.className='btn sm resolve-btn';
+      rb.textContent=({improve:'⚙ Resolve improvement',milestone:'✨ Resolve evolution',abandon:'♻ Resolve replacement'})[tk];
+      rb.onclick=()=>openDev(th,tk,renderHost); card.appendChild(rb); }
   });
 
   // special improvements (Phase 3 — picker from LITM_DATA.specials)
@@ -843,6 +862,116 @@ function toggleSpecial(th, sp){
   save();
   renderSpecialPicker();
   if(specialCtx && specialCtx.rerender) specialCtx.rerender();
+}
+
+// ============================================================
+//  THEME DEVELOPMENT AUTOMATION (Phase 4)
+// ============================================================
+let devCtx = null; // { kind:'improve'|'milestone'|'abandon'|'mof', th, rerender, form }
+
+function typeOptionsHTML(sel){
+  let h='';
+  for(const grp in THEME_TYPES){
+    h+='<optgroup label="'+esc(grp)+'">';
+    THEME_TYPES[grp].forEach(t=>{ h+='<option'+(t===sel?' selected':'')+'>'+esc(t)+'</option>'; });
+    h+='</optgroup>';
+  }
+  return h;
+}
+function markPromise(n){ S.promise=Math.min(99,(S.promise||0)+n); save(); renderPromise(); }
+function tradeableParts(th){
+  const parts=[];
+  th.power.forEach((t,i)=>{ if(i>=3 && (t.text||'').trim()) parts.push('Power tag: '+t.text); });
+  th.weak.forEach((t,i)=>{ if(i>=1 && (t.text||'').trim()) parts.push('Weakness tag: '+t.text); });
+  (th.specials||[]).forEach(s=>parts.push('Special: '+s.name));
+  return parts;
+}
+function openDev(th, kind, rerender){
+  devCtx={ kind:kind, th:th, rerender:rerender, form:{} };
+  if(kind==='milestone') devCtx.form={ title:th.title||'', type:th.type, quest:th.quest||'' };
+  if(kind==='abandon')   devCtx.form={ trade:{} };
+  renderDev();
+  $('devOverlay').classList.add('show');
+}
+function closeDev(){ $('devOverlay').classList.remove('show'); devCtx=null; }
+function refreshSheet(){ renderPromise(); renderThemes(); renderFellowship(); }
+// finish a track flow: refresh the sheet, close, then surface any Moment of Fulfillment
+function endDev(){
+  if(devCtx && devCtx.rerender) devCtx.rerender();
+  refreshSheet(); closeDev();
+  if((S.promise||0)>=5) openMoF();
+}
+function renderDev(){
+  if(!devCtx) return;
+  const k=devCtx.kind, th=devCtx.th, f=devCtx.form, w=$('devBody');
+  if(k==='improve'){
+    $('devTitle').textContent='Improve — gain an improvement';
+    w.innerHTML=
+      '<p class="hint" style="margin:0 0 12px">This theme filled its <b>Improve</b> track. Gain an improvement, then the track resets. An improvement is usually a new <b>power tag</b> or a <b>Special Improvement</b>.</p>'
+      +'<label class="fld"><span>New power tag</span><input id="dv_pt" placeholder="e.g. Quick on my feet"></label>'
+      +'<button class="btn wide" id="dv_addpt" style="margin:4px 0 14px">＋ Gain this power tag</button>'
+      +'<button class="btn ghost wide" id="dv_sp" style="margin-bottom:8px">🔖 Choose a Special Improvement</button>'
+      +'<button class="btn ghost wide" id="dv_reset">Reset track only</button>';
+    $('dv_addpt').onclick=()=>{ const v=($('dv_pt').value||'').trim(); th.power.push({id:uid(),text:v,scratched:false}); th.improve=0; save(); toast('Improvement gained — new power tag'); endDev(); };
+    $('dv_sp').onclick=()=>{ th.improve=0; save(); const r=devCtx.rerender; closeDev(); refreshSheet(); openSpecialPicker(th, r||refreshSheet); };
+    $('dv_reset').onclick=()=>{ th.improve=0; save(); toast('Improve track reset'); endDev(); };
+  } else if(k==='milestone'){
+    $('devTitle').textContent='Milestone — the theme evolves';
+    w.innerHTML=
+      '<p class="hint" style="margin:0 0 12px">You achieved this theme\'s Quest, so it <b>evolves</b> (a transformation). Revise its identity below — its tags and Special Improvements carry over. You <b>mark Promise</b>, and the track resets.</p>'
+      +'<label class="fld"><span>Theme title</span><input id="dv_title" value="'+esc(f.title)+'"></label>'
+      +'<label class="fld"><span>Theme type / Might</span><select id="dv_type">'+typeOptionsHTML(f.type)+'</select></label>'
+      +'<label class="fld"><span>New Quest</span><input id="dv_quest" value="'+esc(f.quest)+'" placeholder="The next goal this theme pursues…"></label>'
+      +'<button class="btn wide" id="dv_evolve" style="margin-top:12px">✨ Evolve — mark Promise</button>';
+    $('dv_title').oninput=e=>f.title=e.target.value;
+    $('dv_type').onchange=e=>f.type=e.target.value;
+    $('dv_quest').oninput=e=>f.quest=e.target.value;
+    $('dv_evolve').onclick=()=>{ th.title=f.title; th.type=f.type; th.quest=f.quest; th.milestone=0; markPromise(1); toast('Theme evolved — Promise marked'); endDev(); };
+  } else if(k==='abandon'){
+    $('devTitle').textContent='Abandon — the theme is replaced';
+    const parts=tradeableParts(th);
+    let trade='';
+    if(parts.length){
+      trade='<h3 style="margin:14px 0 4px;font-size:13px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px">Trade parts for Promise</h3>'
+        +'<p class="hint" style="margin:0 0 6px">Each extra part you let go is worth <b>+1 Promise</b> (power tags beyond 3, weaknesses beyond 1, and Special Improvements).</p>';
+      parts.forEach((p,i)=>{ trade+='<label class="dv-trade"><input type="checkbox" data-i="'+i+'"'+(f.trade[i]?' checked':'')+'> '+esc(p)+'</label>'; });
+    }
+    w.innerHTML=
+      '<p class="hint" style="margin:0 0 12px">You betrayed or abandoned this theme\'s Quest, so the theme is <b>replaced</b>. It resets to a blank theme — build the new one on the sheet. You <b>mark Promise</b> (at least 1).</p>'
+      +trade+'<div class="dv-gain" id="dv_gain"></div>'
+      +'<button class="btn wide" id="dv_replace" style="margin-top:12px">♻ Replace — mark Promise</button>';
+    const upd=()=>{ const c=Object.keys(f.trade).filter(x=>f.trade[x]).length; $('dv_gain').textContent='Promise to mark: +'+(1+c); $('dv_replace').textContent='♻ Replace — mark Promise (+'+(1+c)+')'; };
+    w.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=()=>{ f.trade[cb.dataset.i]=cb.checked; upd(); });
+    upd();
+    $('dv_replace').onclick=()=>{
+      const c=Object.keys(f.trade).filter(x=>f.trade[x]).length;
+      const fresh=blankTheme(); fresh.id=th.id;          // keep id so roller references stay valid
+      Object.keys(th).forEach(key=>{ delete th[key]; });
+      Object.keys(fresh).forEach(key=>{ th[key]=fresh[key]; });
+      markPromise(1+c); toast('Theme replaced — Promise +'+(1+c)); endDev();
+    };
+  }
+}
+// ----- Moment of Fulfillment -----
+function openMoF(){ devCtx={ kind:'mof', form:{} }; renderMoF(); $('devOverlay').classList.add('show'); }
+function renderMoF(){
+  $('devTitle').textContent='🌟 Moment of Fulfillment';
+  const carry=Math.max(0,(S.promise||0)-5);
+  $('devBody').innerHTML=
+    '<p class="hint" style="margin:0 0 12px">Your Promise is full. Claim a <b>Moment of Fulfillment</b>: Promise resets'
+    +(carry?(' (carrying over <b>'+carry+'</b>)'):'')+', your Fulfillments counter goes up, and you gain a <b>Quintessence</b> — a permanent, rule-breaking quality.</p>'
+    +'<label class="fld"><span>Quintessence gained (record it)</span><textarea id="dv_q" placeholder="Name + effect of the Quintessence…"></textarea></label>'
+    +'<p class="hint" style="margin:2px 0 12px;opacity:.8">A guided Quintessence picker is coming; for now, note it here — it\'s appended to your Hero\'s Quintessences.</p>'
+    +'<button class="btn wide" id="dv_claim">Claim Moment of Fulfillment</button>'
+    +'<button class="btn ghost wide" id="dv_later" style="margin-top:8px">Not yet</button>';
+  $('dv_claim').onclick=()=>{
+    const q=($('dv_q').value||'').trim();
+    if(q) S.quintessences=(S.quintessences?S.quintessences+'\n':'')+q;
+    S.fulfillments=(S.fulfillments||0)+1;
+    S.promise=Math.max(0,(S.promise||0)-5);
+    save(); renderAll(); closeDev(); toast('Moment of Fulfillment claimed!');
+  };
+  $('dv_later').onclick=()=>closeDev();
 }
 
 // ============================================================
