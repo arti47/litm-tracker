@@ -1,0 +1,29 @@
+{
+  "_source": "Legend in the Mist Core Rulebook — worked examples of spending Power on Effects (the 'Action Grimoire'). Effect/cost wording quoted from the rulebook; sourced via NotebookLM. Rendered in the Reference tab's Action Grimoire section, grouped by scenario.",
+  "grimoire": [
+    { "action": "CLIMBING UP A LEDGE…", "cost": "1/tier", "effect": "Give yourself an advancing-up status; when you reach its Limit, you reach the top" },
+    { "action": "TAMING A WILD BEAST…", "cost": "1/tier", "effect": "Reduce the beast's wild status" },
+    { "action": "TAMING A WILD BEAST…", "cost": "1/tier", "effect": "Give the beast a friendly status" },
+    { "action": "TAMING A WILD BEAST…", "cost": "2", "effect": "Remove its ferocious tag" },
+    { "action": "ASKING ABOUT A LEGEND AT A TAVERN…", "cost": "1", "effect": "Discover new details" },
+    { "action": "ASKING ABOUT A LEGEND AT A TAVERN…", "cost": "2", "effect": "Get a local to draw you a map (create a tag)" },
+    { "action": "BANDAGE A FIDGETY ALLY…", "cost": "1/tier", "effect": "Reduce the ally's wounded status" },
+    { "action": "BANDAGE A FIDGETY ALLY…", "cost": "1", "effect": "Use an extra feat to make the bandages hold" },
+    { "action": "Examine the room", "cost": "1", "effect": "Main Effect: Discover new details" },
+    { "action": "Examine the room", "cost": "1", "effect": "Extra feat: …and avoid leaving any evidence." },
+    { "action": "Buy some fruits", "cost": "2", "effect": "Main Effect: Create fruits" },
+    { "action": "Buy some fruits", "cost": "1", "effect": "Extra feat: …and have the trader remember you fondly." },
+    { "action": "BLOCKING AN AXE STROKE (wounded-3).", "cost": "1/tier", "effect": "Lessen the Consequences" },
+    { "action": "BLOCKING AN AXE STROKE (wounded-3).", "cost": "1", "effect": "Shove the attacker back (extra feat)" },
+    { "action": "BLOCKING AN AXE STROKE (wounded-3).", "cost": "1", "effect": "Counter attack (extra feat)" },
+    { "action": "LEAPING AWAY FROM A GIANT SPIDER'S TRAP (webbed-2)", "cost": "1/tier", "effect": "Lessen the Consequences" },
+    { "action": "LEAPING AWAY FROM A GIANT SPIDER'S TRAP (webbed-2)", "cost": "1", "effect": "Grab a torch as you tumble (extra feat)" },
+    { "action": "LEAPING AWAY FROM A GIANT SPIDER'S TRAP (webbed-2)", "cost": "1/tier", "effect": "Recover from being surprised earlier" },
+    { "action": "HOLDING ON TO YOUR AUTHORITY (REMOVE royal emissary)…", "cost": "2", "effect": "Lessen the Consequences" },
+    { "action": "HOLDING ON TO YOUR AUTHORITY (REMOVE royal emissary)…", "cost": "1", "effect": "Make them reveal an unintended detail (discover)" },
+    { "action": "HOLDING ON TO YOUR AUTHORITY (REMOVE royal emissary)…", "cost": "1/tier or 2", "effect": "Gain imposing" },
+    { "action": "RESISTING A SPELL OF BEGUILEMENT (beguiled-5)…", "cost": "1/tier", "effect": "Lessen the Consequences" },
+    { "action": "RESISTING A SPELL OF BEGUILEMENT (beguiled-5)…", "cost": "1/tier", "effect": "Give your opponent shocked" },
+    { "action": "RESISTING A SPELL OF BEGUILEMENT (beguiled-5)…", "cost": "2", "effect": "Gain clarity of thought" }
+  ]
+}

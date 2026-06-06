@@ -490,6 +490,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
         <tr class="ref-row"><td>1</td><td><b>Extra feat</b> — a small bonus action, only after ≥1 Power on your main purpose.</td></tr>
         <tr class="ref-row"><td>1</td><td><b>Single-use tag</b> — make one when only 1 Power is left.</td></tr>
       </tbody></table>
+      <div id="refGrimoire"></div>
     </div>
 
     <div class="ref-sec">
@@ -707,7 +708,26 @@ function filterRef(){
   });
   const e=$('refEmpty'); if(e) e.style.display=(q && !anyVisible)?'':'none';
 }
-function renderRefData(){ renderQuintRef(); renderMightRef(); }
+function renderRefData(){ renderQuintRef(); renderMightRef(); renderGrimoireRef(); }
+function prettyScenario(s){
+  s=(s||'').replace(/[.…]+\s*$/,'').trim();              // drop trailing ellipsis/period
+  const core=s.replace(/\([^)]*\)/g,'');                  // ignore parenthetical status hints
+  if(/[a-z]/.test(core)) return s;                        // already mixed-case — leave it
+  return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase(); // sentence-case a shouty title
+}
+function renderGrimoireRef(){
+  const host=$('refGrimoire'); if(!host) return;
+  let list=[]; try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.grimoire)) list=LITM_DATA.grimoire; }catch(e){}
+  if(!list.length){ host.innerHTML=''; return; }
+  const groups=[]; const byName={};
+  list.forEach(g=>{ const k=g.action||''; if(!byName[k]){ byName[k]={name:k, spends:[]}; groups.push(byName[k]); } byName[k].spends.push(g); });
+  const rows=groups.map(grp=>{
+    const spends=grp.spends.map(s=>'<div><b>'+esc(s.cost)+'</b> — '+esc(s.effect)+'</div>').join('');
+    return '<tr class="ref-row"><td>'+esc(prettyScenario(grp.name))+'</td><td>'+spends+'</td></tr>';
+  }).join('');
+  host.innerHTML='<p class="ref-row muted" style="line-height:1.4;margin-top:8px">Worked examples from the rulebook — how Power is spent in real situations (action &amp; reaction):</p>'
+    +'<table><tbody>'+rows+'</tbody></table>';
+}
 function renderQuintRef(){
   const host=$('refQuint'); if(!host) return;
   const list=litmQuintessences();

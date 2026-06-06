@@ -21,6 +21,10 @@ if os.path.exists(spath):
 mpath=os.path.join(B,'might-table.json')
 if os.path.exists(mpath):
     data['mightTable']=json.load(open(mpath,encoding='utf-8'))['mightTable']
+# Action Grimoire worked examples (Reference tab) — Core Book via NotebookLM.
+gpath=os.path.join(B,'grimoire.json')
+if os.path.exists(gpath):
+    data['grimoire']=json.load(open(gpath,encoding='utf-8'))['grimoire']
 wiz=open(os.path.join(B,'wizard.js'),encoding='utf-8').read()
 datajs='const LITM_DATA = '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n'
 block='\n/* ===== Phase 2: creation data + wizard ===== */\n'+datajs+wiz+'\n'
