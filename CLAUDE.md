@@ -37,7 +37,8 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 
 ### Current state (verify before quoting — figures drift)
 
-Last verified: **2026-06-05** (Phase 2 + polish + Phase 5 play loop). Re-run to refresh:
+Last verified: **2026-06-06** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
+Improvements). Re-run to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -46,9 +47,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~1,528 lines / ~198 KB (includes the embedded Phase-2
+- **`character-tracker.html`**: ~1,622 lines / ~200 KB (includes the embedded Phase-2
   creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v4` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v5` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -134,7 +135,10 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `LITM_DATA` (injected) — the Phase-2 rules dataset consumed by the wizard:
   - `themebooks` — 20 types × {concept, powerQ[], weakQ[], questIdeas[]}
   - `themekits` — 20 types × ~6 kits × {name, power[], weak[], quest}  (**113 kits**)
-  - `specials` — 20 types × 5 Special Improvements {name, desc}
+  - `specials` — 20 types × Special Improvements {name, desc}. The Core Book lists **5** per
+    type, but the parser currently recovers only **4** for five types (Personality, Influence,
+    Destiny, Companion, Possessions) — see the Phase-3 data-gap follow-up. The picker shows
+    whatever is present, so this is non-fatal but incomplete.
   - `tropes` — 28 × {name, themes[3], fourth[3], backpack[]}
   - `fellowshipKits` — 6 × {name, power[], weak[], quest}
   - `relationship` — relationship-tag examples grouped in 4 categories
@@ -144,7 +148,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 ```
 { id, playerName, heroName, promise(0–5), fulfillments, quintessences, notes,
   backpack:[{text,type:'story'|'hindering',scratched}],
-  themes:[{type,title,power:[{text,scratched}],weak:[{text}],quest,improve,abandon,milestone,special}] ×4 (variable),
+  themes:[{type,title,power:[{text,scratched}],weak:[{text}],quest,improve,abandon,milestone,
+           special(free-text notes),specials:[{name,desc}]}] ×4 (variable),
   fellowship:{…same shape as a theme…},
   relationships:[{name,tag,scratched}],
   statuses:[{name,boxes:[6×bool]}],
@@ -205,7 +210,12 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
 - **Weakness tags** — add/remove (orange; reminder that invoking them marks Improve).
 - **Quest** text.
 - **Improve / Abandon / Milestone** tracks (3 pips each), per the development rules.
-- **Special Improvements / notes** free-text.
+- **Special Improvements (Phase 3)** — a real **picker** (not free text): a 🔖 modal lists the
+  improvements for the theme's type (from `LITM_DATA.specials`; 5 per type, 4 for five types
+  pending re-extraction), each with its rulebook
+  benefit; tap to add/remove (each once per theme). Chosen ones show as removable cards on the
+  card; eligibility hint ("gain one when the Improve track fills"). A separate **Notes**
+  free-text box preserves the old `special` field. Works the same on the Fellowship card.
 
 ### Fellowship
 - A full shared theme card (type, title, single-use power tags, weakness, quest, tracks,
@@ -289,17 +299,29 @@ themebooks, 20 special-improvement sets, 6 fellowship kits — parsed from the C
 - [ ] *Remaining follow-ups:* the single *Heirloom Longsword* wrapped-quest artifact; expose
       **Special Improvements** (already in `LITM_DATA.specials`) as kit-creation hints.
 
-### Phase 3 — Theme Special Improvements & Quintessences (data-complete)
-*Note: `LITM_DATA.specials` (20 types × 5 Special Improvements) is already extracted and
-embedded — Phase 3 mostly needs UI to surface and apply it.*
-- [ ] **Special Improvements** — each of the 20 theme types has exactly **5**; selectable
-      (each once) when a theme hits its 3rd Improve. Replace the free-text box with a real
-      picker that records the chosen improvement and its rule benefit.
+### Phase 3 — Theme Special Improvements & Quintessences (Special Improvements ✅ DONE 2026-06-06)
+*Note: `LITM_DATA.specials` (20 types × ~5 Special Improvements; 5 types have 4 — see data-gap
+follow-up) is already extracted and embedded. The Special-Improvements picker ships; the
+**Quintessence** half is deferred — its
+exact effect text isn't in `LITM_DATA` and couldn't be sourced from the Core Rulebook in this
+environment (the NotebookLM notebook wasn't reachable). Paste the quintessence list + effects
+to finish it.*
+- [x] **Special Improvements** — each of the 20 theme types has exactly **5**; selectable
+      (each once). Replaced the free-text box with a real **picker** (🔖 modal `#specialOverlay`,
+      `openSpecialPicker`/`renderSpecialPicker`/`toggleSpecial`, data via `litmSpecials(type)`)
+      that records the chosen improvement and its rule benefit on `theme.specials:[{name,desc}]`.
+      Chosen ones render as removable cards; a Notes box preserves the legacy `special` string.
+      Works on themes **and** the Fellowship card.
 - [ ] **Quintessence** picker at a Moment of Fulfillment — ship the named list (Beyond Luck,
       Diligent Drudge, Fumbling Master, Jack of Many Lives, Magus Magnificent, Master of
       Craft, Master of the Little Things, Nine Lives, Old Hand, Pillar of Wisdom, The Bearer,
       The Common Hero, Virtuoso, Budding/Great Thaumaturge, …) with their effects.
+      *(Blocked: needs Core-Book effect text — not yet in `LITM_DATA`.)*
 - [ ] Encode *Beyond Luck* etc. into the roller (e.g., no auto-miss on double ones).
+      *(Follows the Quintessence picker.)*
+- [ ] *Data-gap follow-up:* re-extract the **5th** Special Improvement for **Personality,
+      Influence, Destiny, Companion, Possessions** (parser dropped one each). Needs the Core
+      Book raw text + a `parse_litm.py` tweak, then `inject.py`.
 
 ### Phase 4 — Theme Development automation
 - [ ] Auto-prompt at the **3rd Improve** (gain improvement, reset track), **3rd Milestone**

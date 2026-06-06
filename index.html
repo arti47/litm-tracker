@@ -224,6 +224,23 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   border-radius: 10px; padding: 11px 13px; font-size: 15px; font-weight: 600; color: var(--ink); }
 .roster-item button.pick.active { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
 
+/* ---------- Special Improvements (Phase 3) ---------- */
+.special-item { display: flex; align-items: flex-start; gap: 8px; background: var(--bg-deep);
+  border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; }
+.special-tx { flex: 1; }
+.special-tx b { display: block; color: var(--teal); font-size: 14px; }
+.special-tx span { display: block; color: var(--ink-soft); font-size: 12.5px; line-height: 1.4; margin-top: 2px; }
+.special-item .ic { width: 30px; height: 30px; flex: none; border: none; border-radius: 8px;
+  background: var(--card-bg); font-size: 14px; color: var(--ink-soft); }
+.special-pick { display: block; width: 100%; text-align: left; background: var(--bg-deep);
+  border: 1.5px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 9px; color: var(--ink); }
+.special-pick.sel { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
+.special-pick .hd { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.special-pick .hd b { color: var(--teal); font-size: 15px; font-family: Georgia, serif; }
+.special-pick .mk { font-size: 12px; font-weight: 600; color: var(--ink-soft); white-space: nowrap; }
+.special-pick.sel .mk { color: var(--teal); }
+.special-pick .ds { font-size: 13px; color: var(--ink-soft); line-height: 1.45; margin-top: 5px; }
+
 /* Quick-ref */
 .ref h3 { color: var(--teal); margin: 14px 0 5px; font-size: 15px; }
 .ref table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -433,6 +450,16 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 </div>
 
+<!-- SPECIAL IMPROVEMENTS OVERLAY -->
+<div class="overlay" id="specialOverlay" onclick="if(event.target===this)closeSpecialPicker()">
+  <div class="sheet">
+    <h2 id="specialTitle">Special Improvements</h2>
+    <p class="hint" style="margin:-8px 0 12px">Each can be taken once per theme. Choose one whenever the theme fills its <b>Improve</b> track.</p>
+    <div id="specialList"></div>
+    <button class="btn wide" style="margin-top:10px" onclick="closeSpecialPicker()">Done</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -466,7 +493,7 @@ function blankTheme() {
   return { id: uid(), type: 'Skill or Trade', title: '',
     power: [{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],
     weak: [{id:uid(),text:''}],
-    quest: '', improve: 0, abandon: 0, milestone: 0, special: '' };
+    quest: '', improve: 0, abandon: 0, milestone: 0, special: '', specials: [] };
 }
 function blankHero() {
   return {
@@ -477,7 +504,7 @@ function blankHero() {
     themes: [blankTheme(), blankTheme(), blankTheme(), blankTheme()],
     fellowship: { type:'Companion', title:'',
       power:[{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],
-      weak:[{id:uid(),text:''}], quest:'', improve:0, abandon:0, milestone:0, special:'' },
+      weak:[{id:uid(),text:''}], quest:'', improve:0, abandon:0, milestone:0, special:'', specials:[] },
     relationships: [],
     statuses: [],
     scene: []
@@ -501,6 +528,11 @@ function loadAll() {
   if (!roster.length) { const h = blankHero(); roster = [h]; }
   // migrate any partial heroes
   roster.forEach(h => { const b = blankHero(); for (const k in b) if (h[k] === undefined) h[k] = b[k]; });
+  // migrate themes + fellowship: ensure the Special Improvements array exists (Phase 3)
+  roster.forEach(h => {
+    (h.themes||[]).forEach(t => { if(!Array.isArray(t.specials)) t.specials = []; });
+    if (h.fellowship && !Array.isArray(h.fellowship.specials)) h.fellowship.specials = [];
+  });
   activeId = localStorage.getItem(LS_ACTIVE);
   S = roster.find(h => h.id === activeId) || roster[0];
   activeId = S.id;
@@ -665,10 +697,30 @@ function themeCard(th, idx, isFellowship){
     card.appendChild(tr);
   });
 
-  // special improvements
+  // special improvements (Phase 3 — picker from LITM_DATA.specials)
+  if(!Array.isArray(th.specials)) th.specials=[];
+  const sh=document.createElement('h3'); sh.textContent='Special Improvements'; card.appendChild(sh);
+  const shint=document.createElement('p'); shint.className='hint';
+  shint.innerHTML='Each theme type offers <b>5</b>. Gain one when the theme fills its <b>Improve</b> track (3 marks). Tap to add — each can be taken once.';
+  card.appendChild(shint);
+  const slist=document.createElement('div'); slist.className='taglist';
+  if(!th.specials.length){ const e=document.createElement('p'); e.className='muted'; e.textContent='None chosen yet.'; slist.appendChild(e); }
+  th.specials.forEach((sp,i)=>{
+    const it=document.createElement('div'); it.className='special-item';
+    const tx=document.createElement('div'); tx.className='special-tx';
+    tx.innerHTML='<b>'+esc(sp.name)+'</b><span>'+esc(sp.desc||'')+'</span>';
+    const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.title='Remove';
+    del.onclick=()=>{ th.specials.splice(i,1); renderHost(); };
+    it.appendChild(tx); it.appendChild(del); slist.appendChild(it);
+  });
+  card.appendChild(slist);
+  const addsp=document.createElement('button'); addsp.className='addbtn'; addsp.textContent='＋ Choose Special Improvement';
+  addsp.onclick=()=>openSpecialPicker(th, ()=>renderHost()); card.appendChild(addsp);
+
+  // notes (free text, kept from v1 'special' field)
   const sl=document.createElement('label'); sl.className='fld'; sl.style.marginTop='10px';
-  sl.innerHTML='<span>Special Improvements / notes</span>';
-  const st=document.createElement('textarea'); st.value=th.special; st.placeholder='Special Improvements gained as the theme grows…';
+  sl.innerHTML='<span>Notes</span>';
+  const st=document.createElement('textarea'); st.value=th.special||''; st.placeholder='Other notes about this theme…';
   st.oninput=()=>{ th.special=st.value; save(); }; sl.appendChild(st); card.appendChild(sl);
 
   if(!isFellowship){
@@ -750,6 +802,48 @@ function renderScene(){
   });
 }
 function addScene(){ S.scene.push({id:uid(),text:'',type:'story',scratched:false}); renderScene(); save(); }
+
+// ============================================================
+//  SPECIAL IMPROVEMENTS PICKER (Phase 3)
+// ============================================================
+let specialCtx = null; // { th, rerender }
+function litmSpecials(type){
+  try { if(typeof LITM_DATA!=='undefined' && LITM_DATA.specials) return LITM_DATA.specials[type]||[]; }
+  catch(e){}
+  return [];
+}
+function openSpecialPicker(th, rerender){
+  specialCtx={ th:th, rerender:rerender };
+  renderSpecialPicker();
+  $('specialOverlay').classList.add('show');
+}
+function closeSpecialPicker(){ $('specialOverlay').classList.remove('show'); specialCtx=null; }
+function renderSpecialPicker(){
+  if(!specialCtx) return;
+  const th=specialCtx.th;
+  $('specialTitle').textContent=(th.type||'Theme')+' — Special Improvements';
+  const list=litmSpecials(th.type);
+  const w=$('specialList'); w.innerHTML='';
+  if(!list.length){ w.innerHTML='<p class="muted">No special improvements found for this theme type.</p>'; return; }
+  const chosen=(th.specials||[]).map(s=>s.name);
+  list.forEach(sp=>{
+    const on=chosen.indexOf(sp.name)>=0;
+    const b=document.createElement('button'); b.className='special-pick'+(on?' sel':'');
+    b.innerHTML='<div class="hd"><b>'+esc(sp.name)+'</b><span class="mk">'+(on?'✓ chosen':'＋ add')+'</span></div>'
+      +'<div class="ds">'+esc((sp.desc||'').replace(/\s+/g,' ').trim())+'</div>';
+    b.onclick=()=>toggleSpecial(th, sp);
+    w.appendChild(b);
+  });
+}
+function toggleSpecial(th, sp){
+  if(!Array.isArray(th.specials)) th.specials=[];
+  const i=th.specials.findIndex(s=>s.name===sp.name);
+  if(i>=0) th.specials.splice(i,1);
+  else th.specials.push({name:sp.name, desc:(sp.desc||'').replace(/\s+/g,' ').trim()});
+  save();
+  renderSpecialPicker();
+  if(specialCtx && specialCtx.rerender) specialCtx.rerender();
+}
 
 // ============================================================
 //  ROLLER
@@ -1238,7 +1332,7 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
       render();
     });
   }
-  function blankT(){ return {id:uid(),type:'Skill or Trade',title:'',power:[],weak:[],quest:'',improve:0,abandon:0,milestone:0,special:''}; }
+  function blankT(){ return {id:uid(),type:'Skill or Trade',title:'',power:[],weak:[],quest:'',improve:0,abandon:0,milestone:0,special:'',specials:[]}; }
 
   // ---------- Step: name ----------
   function renderName(){
@@ -1481,7 +1575,7 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
       hero.fellowship={ type:'Companion', title:k.name,
         power:k.power.slice(0,3).map(t=>({id:uid(),text:t,scratched:false})),
         weak:[{id:uid(),text:k.weak[0]||''}], quest:k.quest||'',
-        improve:0,abandon:0,milestone:0,special:'' };
+        improve:0,abandon:0,milestone:0,special:'',specials:[] };
     }
     const rels=(draft._rels||[]).filter(r=>(r.name||'').trim()||(r.tag||'').trim());
     if(rels.length) hero.relationships=rels.map(r=>({id:uid(),name:r.name||'',tag:r.tag||'',scratched:false}));
@@ -1494,9 +1588,9 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
     closeWizard();
     if(typeof toast==='function') toast('Hero created — '+(hero.heroName||'unnamed'));
   }
-  function emptyTheme(){ return {id:uid(),type:'Skill or Trade',title:'',power:[{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],weak:[{id:uid(),text:''}],quest:'',improve:0,abandon:0,milestone:0,special:''}; }
+  function emptyTheme(){ return {id:uid(),type:'Skill or Trade',title:'',power:[{id:uid(),text:'',scratched:false},{id:uid(),text:'',scratched:false}],weak:[{id:uid(),text:''}],quest:'',improve:0,abandon:0,milestone:0,special:'',specials:[]}; }
   function normTheme(th){
-    const out={id:th.id||uid(),type:th.type||'Skill or Trade',title:th.title||'',quest:th.quest||'',improve:0,abandon:0,milestone:0,special:''};
+    const out={id:th.id||uid(),type:th.type||'Skill or Trade',title:th.title||'',quest:th.quest||'',improve:0,abandon:0,milestone:0,special:'',specials:[]};
     const toTag=x=> (typeof x==='string')?{id:uid(),text:x,scratched:false}:{id:x.id||uid(),text:x.text||'',scratched:!!x.scratched};
     out.power=(th.power&&th.power.length?th.power:[]).map(toTag);
     out.weak =(th.weak&&th.weak.length?th.weak:[]).map(x=> (typeof x==='string')?{id:uid(),text:x}:{id:x.id||uid(),text:x.text||''});
