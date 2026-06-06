@@ -48,9 +48,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~1,944 lines / ~222 KB (includes the embedded Phase-2
+- **`character-tracker.html`**: ~1,985 lines / ~225 KB (includes the embedded Phase-2
   creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v8` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v9` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -319,6 +319,13 @@ deferred — they need source text not reachable here; see Roadmap Phase 7.)*
 - **Multi-hero roster** (create / switch / delete).
 - **Export / import** a hero as JSON.
 - **Light/dark** theme (manual + auto), iOS safe-area aware, installable PWA, fully offline.
+- **PWA update banner** — when the service worker installs a newer version, a bottom banner
+  ("New version ready — tap to update") appears. **Update** posts `SKIP_WAITING` to the waiting
+  worker and reloads once on `controllerchange` (guarded so it reloads exactly once); **✕**
+  dismisses it. Wired in the SW-registration block (`showUpdateBanner`/`applyUpdate`/
+  `dismissUpdate`, `#updateBanner`); detects both an already-`waiting` worker and a fresh
+  `updatefound`→`installed` transition (only when the page is already controlled, so first
+  install is silent).
 
 ---
 
@@ -436,8 +443,8 @@ app rather than bloating this one (cf. the TOR2E Loremaster companion).*
 ### Cross-cutting / tech debt
 - [ ] **Share / sync a Fellowship** — the Fellowship theme + relationship tags are shared
       across players; today each hero stores its own copy. Add export/merge of a Fellowship.
-- [ ] PWA **update banner** ("new version — tap to update") posting `SKIP_WAITING` (the SW
-      already supports the message; the page UI is not wired yet).
+- [x] PWA **update banner** ("New version ready — tap to update") posting `SKIP_WAITING` —
+      done (2026-06-06). Reloads once on `controllerchange`; first install stays silent.
 - [ ] Per-status **custom Limit** (Challenges can have Limits 1–6; Heroes are always 5).
 - [ ] Undo/redo; autosave indicator.
 

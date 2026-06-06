@@ -265,6 +265,18 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   background: var(--teal-dark); color: #fff; padding: 10px 18px; border-radius: 22px; font-size: 14px;
   z-index: 200; opacity: 0; transition: opacity .25s; pointer-events: none; }
 .toast.show { opacity: 1; }
+.update-banner { position: fixed; left: 50%; transform: translateX(-50%) translateY(20px);
+  bottom: calc(var(--safe-bot) + 16px); max-width: 92vw; z-index: 210;
+  background: var(--teal-dark); color: #fff; padding: 10px 12px 10px 16px; border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.3); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+.update-banner.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+.update-banner b { font-weight: 700; }
+.update-banner .upd-msg { line-height: 1.3; }
+.update-banner button { border: 0; border-radius: 10px; padding: 8px 12px; font-size: 14px;
+  font-weight: 700; cursor: pointer; white-space: nowrap; }
+.update-banner .upd-go { background: #fff; color: var(--teal-dark); }
+.update-banner .upd-x { background: transparent; color: #fff; opacity: .8; padding: 8px 6px; }
 </style>
 </head>
 <body>
@@ -556,6 +568,12 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 </div>
 
 <div class="toast" id="toast"></div>
+
+<div class="update-banner" id="updateBanner">
+  <span class="upd-msg"><b>New version ready</b> — tap to update.</span>
+  <button class="upd-go" onclick="applyUpdate()">Update</button>
+  <button class="upd-x" onclick="dismissUpdate()" aria-label="Dismiss">✕</button>
+</div>
 
 <script>
 "use strict";
@@ -1515,9 +1533,32 @@ loadAll();
 renderAll();
 
 
-// Service worker
+// Service worker + update banner
+let _waitingSW=null, _reloading=false;
+function showUpdateBanner(sw){ _waitingSW=sw; const b=$('updateBanner'); if(b) b.classList.add('show'); }
+function dismissUpdate(){ const b=$('updateBanner'); if(b) b.classList.remove('show'); }
+function applyUpdate(){
+  dismissUpdate();
+  if(_waitingSW){ _waitingSW.postMessage({type:'SKIP_WAITING'}); }
+  else { location.reload(); }
+}
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=> navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  // Reload once the fresh SW takes control (after SKIP_WAITING).
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(_reloading) return; _reloading=true; location.reload();
+  });
+  window.addEventListener('load',()=> navigator.serviceWorker.register('sw.js').then(reg=>{
+    if(!reg) return;
+    // A worker already waiting (page loaded from the old cache, new SW installed).
+    if(reg.waiting && navigator.serviceWorker.controller) showUpdateBanner(reg.waiting);
+    // A new worker is installing → prompt when it finishes (if we're already controlled).
+    reg.addEventListener('updatefound',()=>{
+      const nw=reg.installing; if(!nw) return;
+      nw.addEventListener('statechange',()=>{
+        if(nw.state==='installed' && navigator.serviceWorker.controller) showUpdateBanner(nw);
+      });
+    });
+  }).catch(()=>{}));
 }
 </script>
 </body>
