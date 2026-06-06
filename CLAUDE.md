@@ -48,9 +48,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,004 lines / ~226 KB (includes the embedded Phase-2
-  creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v10` (bump on every deploy)
+- **`character-tracker.html`**: ~2,043 lines / ~233 KB (includes the embedded Phase-2
+  creation dataset + the Quintessence list, ~135 KB of it the `LITM_DATA` constant).
+- **`sw.js` `CACHE_VERSION`**: `litm-v11` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -74,12 +74,15 @@ three sources in `_build/` and injected:
 - `_build/base.html` — the hand-written app shell (everything except the Phase-2 block).
 - `_build/litm-data.json` — the rules dataset (themebooks, theme kits, special improvements,
   tropes, fellowship kits, relationship tags, general store), **parsed from the Core Book**.
+- `_build/quintessences.json` — the **Quintessence** list (name + verbatim effect + a one-line
+  `mechanical` note), sourced from the Core Book via NotebookLM (not the PDF parser).
+  `inject.py` merges it into `LITM_DATA.quintessences`, so `parse_litm.py` can't clobber it.
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
-- `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `wizard.js` →
-  `character-tracker.html` **and** `index.html` (mirrors automatically).
+- `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
+  `wizard.js` → `character-tracker.html` **and** `index.html` (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -124,7 +127,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `icon.svg` + `icon-192.png` + `icon-512.png` — app icon (misty stag antlers + "LITM").
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
-  `litm-data.json`, `parse_litm.py`, `inject.py`.
+  `litm-data.json`, `quintessences.json`, `parse_litm.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -144,6 +147,10 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
   - `fellowshipKits` — 6 × {name, power[], weak[], quest}
   - `relationship` — relationship-tag examples grouped in 4 categories
   - `generalStore` — backpack item suggestions grouped in 6 categories
+  - `quintessences` (merged from `_build/quintessences.json`) — **18** × {name, effect,
+    mechanical}. Consumed by the Moment-of-Fulfillment picker (`litmQuintessences()`) and the
+    searchable Reference tab; `hasQuintessence(name)` substring-matches the hero's free-text
+    Quintessences field to drive roller encodings (currently **Beyond Luck**).
 
 ### State model (one hero)
 ```
@@ -233,10 +240,14 @@ theme fills a track, and resets the track on completion:
   extra parts (power tags beyond 3, weaknesses beyond 1, each Special Improvement), each worth
   **+1 Promise**, with a live "+N Promise" preview.
 - **Promise → Moment of Fulfillment** — reaching **5** Promise (via a development flow *or*
-  manually tapping the pips) opens the **MoF prompt** (`openMoF`): increments Fulfillments,
-  resets Promise carrying over the overflow, and captures the gained **Quintessence** as text
-  appended to the Hero's Quintessences. *(The guided Quintessence picker is still deferred —
-  see Roadmap Phase 3 — so the reward is recorded free-text for now.)*
+  manually tapping the pips) opens the **MoF prompt** (`openMoF`/`renderMoF`): increments
+  Fulfillments, resets Promise carrying over the overflow, and runs a **guided Quintessence
+  picker** (Phase 3 ✅) — a scrollable list of the **18** Core-Book Quintessences (name +
+  verbatim effect from `LITM_DATA.quintessences`); tap to choose (already-owned ones show
+  "✓ have" and are disabled), plus a custom/notes box. Claiming appends "Name — effect" (and
+  any note) to the Hero's Quintessences field. **Beyond Luck** is **encoded in the roller**:
+  when the hero has it (`hasQuintessence`), double ones no longer auto-miss and the outcome
+  shows a "✨ Beyond Luck" note.
 - Helpers: `markPromise`, `tradeableParts`, `typeOptionsHTML`, `refreshSheet`. Uses only
   existing state fields (promise/fulfillments/quintessences + per-theme tracks) — no new keys.
 
@@ -280,7 +291,8 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
 - **Situational** ± stepper for any other foe/environment tags the Narrator invokes.
 - Live **Power** readout; animated dice; outcome banner:
   - **10+** Success (no Consequences) · **7–9** Success & Consequences · **6−** Consequences
-  - Double 6 = guaranteed Success; double 1 = guaranteed Consequences (regardless of Power).
+  - Double 6 = guaranteed Success; double 1 = guaranteed Consequences (regardless of Power) —
+    unless the hero has the **Beyond Luck** Quintessence, which removes the double-ones auto-miss.
   - On success: **Power to spend** with **Rule of Minimum One**; **Push-your-luck** hint on 10+.
   - **Weakness invoked → mark Improve** reminder.
 - **Roll history** (last 20).
@@ -309,14 +321,16 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
 
 ### Reference tab — searchable (Phase 7) ✅
 A **search box** (`filterRef`) filters every reference row live; sections collapse when they
-have no match, with a "no entries match" note. Nine `.ref-sec` blocks, all rules-grounded:
+have no match, with a "no entries match" note. Ten `.ref-sec` blocks, all rules-grounded:
 **Getting started** (app onboarding — original content), **Counting Power**, **Might · Favored
 & Imperiled** (the mechanic: task-Might vs your Might → ±3/±6, grounded in the roller's Might
 control), **Roll 2d6 + Power**, **Action Grimoire — spending Power** (the Effect costs already
 enforced by the spender, with illustrative example actions), **Reactions**, **Statuses**, **Hero
-Development** (incl. Promise → Moment of Fulfillment), **Camping**. *(The Core-Book's verbatim
-example spends, the per-action Might table, the Gerrin tutorial, and the 5E crossover are
-deferred — they need source text not reachable here; see Roadmap Phase 7.)*
+Development** (incl. Promise → Moment of Fulfillment), **Quintessences** (all 18, name +
+verbatim effect — built at runtime from `LITM_DATA` via `renderQuintRef`, since the data is
+injected after boot), **Camping**. *(The Core-Book's verbatim example spends, the per-action
+Might table, the Gerrin tutorial, and the 5E crossover are deferred — they need source text
+not reachable here; see Roadmap Phase 7.)*
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
@@ -355,34 +369,34 @@ themebooks, 20 special-improvement sets, 6 fellowship kits — parsed from the C
 - [ ] *Remaining follow-ups:* the single *Heirloom Longsword* wrapped-quest artifact; expose
       **Special Improvements** (already in `LITM_DATA.specials`) as kit-creation hints.
 
-### Phase 3 — Theme Special Improvements & Quintessences (Special Improvements ✅ DONE 2026-06-06)
-*Note: `LITM_DATA.specials` (20 types × ~5 Special Improvements; 5 types have 4 — see data-gap
-follow-up) is already extracted and embedded. The Special-Improvements picker ships; the
-**Quintessence** half is deferred — its
-exact effect text isn't in `LITM_DATA` and couldn't be sourced from the Core Rulebook in this
-environment (the NotebookLM notebook wasn't reachable). Paste the quintessence list + effects
-to finish it.*
+### Phase 3 — Theme Special Improvements & Quintessences ✅ DONE (2026-06-06)
+*Special Improvements **and** the Quintessence picker now ship. The Quintessence list (18,
+name + verbatim effect) was sourced from the Core Book via NotebookLM and lives in
+`_build/quintessences.json` (merged into `LITM_DATA.quintessences` by `inject.py`).*
 - [x] **Special Improvements** — each of the 20 theme types has exactly **5**; selectable
       (each once). Replaced the free-text box with a real **picker** (🔖 modal `#specialOverlay`,
       `openSpecialPicker`/`renderSpecialPicker`/`toggleSpecial`, data via `litmSpecials(type)`)
       that records the chosen improvement and its rule benefit on `theme.specials:[{name,desc}]`.
       Chosen ones render as removable cards; a Notes box preserves the legacy `special` string.
       Works on themes **and** the Fellowship card.
-- [ ] **Quintessence** picker at a Moment of Fulfillment — ship the named list (Beyond Luck,
-      Diligent Drudge, Fumbling Master, Jack of Many Lives, Magus Magnificent, Master of
-      Craft, Master of the Little Things, Nine Lives, Old Hand, Pillar of Wisdom, The Bearer,
-      The Common Hero, Virtuoso, Budding/Great Thaumaturge, …) with their effects.
-      *(Blocked: needs Core-Book effect text — not yet in `LITM_DATA`.)*
-- [ ] Encode *Beyond Luck* etc. into the roller (e.g., no auto-miss on double ones).
-      *(Follows the Quintessence picker.)*
+- [x] **Quintessence** picker at a Moment of Fulfillment — the guided MoF picker (`renderMoF`)
+      lists all 18 Quintessences (name + verbatim effect), tap-to-choose with already-owned
+      ones disabled, plus a custom/notes box; claiming appends "Name — effect" to the Hero's
+      Quintessences. Also surfaced in the searchable Reference tab (`renderQuintRef`).
+- [x] Encode *Beyond Luck* in the roller — when the hero has it (`hasQuintessence`), double
+      ones no longer auto-miss and the outcome shows a "✨ Beyond Luck" note. *(Other
+      Quintessences with a `mechanical` note — Larger Than Life, Loyal Companion, Lucky Bastard,
+      Virtuoso, etc. — are once-per-session / contextual player choices, left as recorded text
+      rather than auto-applied; revisit if a manual-trigger UI is wanted.)*
 - [ ] *Data-gap follow-up:* re-extract the **5th** Special Improvement for **Personality,
-      Influence, Destiny, Companion, Possessions** (parser dropped one each). Needs the Core
-      Book raw text + a `parse_litm.py` tweak, then `inject.py`.
+      Influence, Destiny, Companion, Possessions** (parser dropped one each). Prompt sent to
+      NotebookLM — paste the JSON to finish. Needs a `parse_litm.py`/`litm-data.json` update
+      then `inject.py`.
 
 ### Phase 4 — Theme Development automation ✅ DONE (2026-06-06)
 Shipped as the **theme-development overlay** + **Moment of Fulfillment** prompt (see Implemented
-Features → "Theme Development automation"). The only carry-over is the Quintessence *reward*,
-which is recorded as free text until the deferred Phase-3 Quintessence picker lands.
+Features → "Theme Development automation"). The MoF reward now runs the guided **Quintessence
+picker** (Phase 3 ✅).
 - [x] Auto-prompt at the **3rd Improve** (gain improvement, reset track), **3rd Milestone**
       (theme evolves → mark Promise), **3rd Abandon** (theme replaced → mark Promise + trade
       parts for improvements). *(Also a persistent **Resolve** button when a track sits at 3.)*
@@ -391,8 +405,8 @@ which is recorded as free text until the deferred Phase-3 Quintessence picker la
       (resets Promise carrying over the overflow, bumps Fulfillments, captures a Quintessence).
 - [x] **Quests & Transformations** guided flow (evolve vs replace: new title/type/Might,
       revise tags/quest; evolve keeps tags & Special Improvements, replace resets the theme).
-- [ ] *Follow-up:* swap the free-text Quintessence capture at a Moment of Fulfillment for the
-      guided **Quintessence picker** once its data lands (depends on Phase 3's deferred half).
+- [x] *Follow-up done (2026-06-06):* the free-text Quintessence capture at a Moment of
+      Fulfillment is now the guided **Quintessence picker** (Phase 3).
 
 ### Phase 5 — Play-loop helpers (player-facing) ✅ MOSTLY DONE (2026-06-05)
 Shipped as the **Action/Reaction toggle + burn-scratch + interactive Effect-spender** (see

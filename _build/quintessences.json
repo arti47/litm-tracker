@@ -1,0 +1,95 @@
+{
+  "_source": "Legend in the Mist Core Rulebook — Quintessences (gained at a Moment of Fulfillment). Effect text quoted from the rulebook.",
+  "quintessences": [
+    {
+      "name": "Beyond Luck",
+      "effect": "You no longer automatically miss when you roll double ones.",
+      "mechanical": "Prevents automatic failure on a roll of double ones."
+    },
+    {
+      "name": "Canny One",
+      "effect": "Once per session, when the Narrator delivers Consequences or activates a Challenge's ability, you may treat them as a Threat instead, take the spotlight, and take a single action, even if you just acted. Your action must address the Threat and could even nullify it.",
+      "mechanical": null
+    },
+    {
+      "name": "Dark Horse",
+      "effect": "When you die for any reason, you may narrate your death scene, and in the process, describe any one change to your immediate surroundings or to a character present, as big and dramatic as you want it to be. Any change is subject to the approval of the Narrator and the player of any affected character. If agreed on, this change counts as a tier-6 status that cannot be lessened or reduced in any way.",
+      "mechanical": null
+    },
+    {
+      "name": "Diligent Drudge",
+      "effect": "From now on, the Improve track on all of your themes has 5 boxes instead of 3. Whenever you mark Improve for the 5th time on a theme, you gain two improvements and reset the Improve track.",
+      "mechanical": null
+    },
+    {
+      "name": "Fumbling Master",
+      "effect": "Whenever one of your weakness tags is invoked in a roll (regardless of who invoked it), you may choose to lose 2 Power and mark 2 Improve (instead of 1).",
+      "mechanical": "Optionally changes the Power penalty of an invoked weakness tag from -1 to -2."
+    },
+    {
+      "name": "Jack of Many Lives",
+      "effect": "Once per scene, you may gain as a story tag any non-item power tag you previously had in a theme you evolved or replaced. It expires at the end of the scene.",
+      "mechanical": null
+    },
+    {
+      "name": "Larger Than Life",
+      "effect": "When your action is Imperiled due having lower Might, you lose only 2 Power instead of 3, and status Consequences against you are increased by only 2 tiers instead of 3 (tag statuses are still increased by 1 tag).",
+      "mechanical": "Reduces the Power penalty of being Imperiled from -3 to -2."
+    },
+    {
+      "name": "Loyal Companion",
+      "effect": "Once per scene, when you are directly helping another Hero, you may ignore being Imperiled, or treat being Extremely Imperiled as being Imperiled.",
+      "mechanical": "Reduces the Imperiled/Extremely Imperiled Power penalty by one step (-3 Power) when helping."
+    },
+    {
+      "name": "Lucky Bastard",
+      "effect": "Once per session, when you roll a 6 or less, you may treat it as a 7, as long as you didn't roll double ones.",
+      "mechanical": "Converts a roll total of 6 or less into a 7."
+    },
+    {
+      "name": "Magus Magnificent",
+      "effect": "Whenever you take action to prepare magic (at camp or otherwise) and gain Power to spend, you may keep your Power in your backpack instead of spending it. If you still have unspent saved Power from before, it expires. You may later spend this kept Power at any time to create magic ability tags on the fly (they must relate to your preparation).",
+      "mechanical": null
+    },
+    {
+      "name": "Master of Craft",
+      "effect": "Whenever you take a crafting action while camping or sojourning, you may ignore being Imperiled by the Might of the task, or treat an Extremely Imperiled action as Imperiled.",
+      "mechanical": "Reduces the Imperiled/Extremely Imperiled Power penalty by one step (-3 Power) for crafting actions."
+    },
+    {
+      "name": "Master of the Little Things",
+      "effect": "Choose one of your Adventure or Greatness themes. When its Might would be used against you, you may tell the Narrator to treat it as one level of Might lower than it is. If you evolve or replace this theme, you may choose a new one to bear this Quintessence.",
+      "mechanical": "Treats a detrimental Might as one level lower, mitigating a -3 Power penalty."
+    },
+    {
+      "name": "Nine Lives",
+      "effect": "When you take a status that exceeds your Limit (usually tier-6), you may reduce it to your Limit at the beginning of the next scene, explaining how you escaped certain death or irreversible transformation. After you do this three times, remove this Quintessence.",
+      "mechanical": null
+    },
+    {
+      "name": "Old Hand",
+      "effect": "Choose 7 Special Improvements across all your themes.",
+      "mechanical": null
+    },
+    {
+      "name": "Pillar of Wisdom",
+      "effect": "Once per scene, when you offer valuable guidance to another Hero in an action, they may ignore being Imperiled, or treat being Extremely Imperiled as being Imperiled.",
+      "mechanical": "Reduces the Imperiled/Extremely Imperiled Power penalty by one step (-3 Power) for the guided Hero."
+    },
+    {
+      "name": "The Bearer",
+      "effect": "Whenever you take action to pack (at camp or otherwise) and gain Power to spend, you may keep your Power in your backpack instead of spending it. If you still have unspent saved Power from before, it expires. You may later spend it at any time to create item tags on the fly (they must relate to your packing).",
+      "mechanical": null
+    },
+    {
+      "name": "The Common Hero",
+      "effect": "Choose one of your Origin or Adventure themes. When using tags from this theme, you may tell the Narrator to treat it as one level of Might higher than it is. If you evolve or replace this theme, you may choose a new one to bear this Quintessence.",
+      "mechanical": "Treats a beneficial Might as one level higher, granting an additional +3 Power."
+    },
+    {
+      "name": "Virtuoso",
+      "effect": "Once per session, when you roll a 7-9, you may treat it as a 10.",
+      "mechanical": "Converts a roll total of 7-9 into a 10."
+    }
+  ]
+}

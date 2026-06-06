@@ -176,6 +176,13 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
   font-size: 11px; color: var(--ink-soft); }
 .status-meta select { padding: 2px 6px; font-size: 12px; border-radius: 6px; }
 .status-meta .lim-warn { flex: 1; color: var(--bad); font-weight: 600; }
+.q-list { display: flex; flex-direction: column; gap: 6px; max-height: 46vh; overflow: auto; margin-bottom: 4px; }
+.q-pick { text-align: left; padding: 9px 11px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--card-bg); color: var(--ink); display: flex; flex-direction: column; gap: 3px; cursor: pointer; }
+.q-pick.sel { border-color: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+.q-pick.owned { opacity: .5; }
+.q-pick .q-eff { font-size: 12px; color: var(--ink-soft); line-height: 1.35; font-weight: 400; }
+.q-pick .q-have { font-size: 11px; color: var(--teal); font-weight: 700; }
 
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
@@ -513,6 +520,8 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
       </tbody></table>
     </div>
 
+    <div id="refQuint"></div>
+
     <div class="ref-sec">
       <h3>Camping</h3>
       <p class="ref-row muted" style="line-height:1.5">Expire story tags → establish the place → each Hero takes 2 activities (3 with Consequences): <b>Rest</b> (recover statuses &amp; scratched power tags), <b>Reflect</b> (mark Improve on a theme), <b>Camp Action</b> (count Power, spend half without rolling, or roll). Then each Hero recovers a Fellowship power tag or renews one relationship tag.</p>
@@ -679,6 +688,7 @@ function showTab(name){
   $('panel-'+name).classList.add('active');
   window.scrollTo(0,0);
   if (name==='roll') renderRoller();
+  if (name==='ref') renderQuintRef();
 }
 
 // ---------- Reference search (Phase 7) ----------
@@ -695,6 +705,15 @@ function filterRef(){
     if(any) anyVisible=true;
   });
   const e=$('refEmpty'); if(e) e.style.display=(q && !anyVisible)?'':'none';
+}
+function renderQuintRef(){
+  const host=$('refQuint'); if(!host) return;
+  const list=litmQuintessences();
+  if(!list.length){ host.innerHTML=''; return; }
+  const rows=list.map(q=>'<tr class="ref-row"><td>'+esc(q.name)+'</td><td>'+esc(q.effect)+'</td></tr>').join('');
+  host.innerHTML='<div class="ref-sec"><h3>Quintessences</h3>'
+    +'<p class="ref-row muted" style="line-height:1.4">Permanent, rule-breaking qualities — gain one at each Moment of Fulfillment (Promise filled to 5).</p>'
+    +'<table><tbody>'+rows+'</tbody></table></div>';
 }
 
 // ============================================================
@@ -1183,20 +1202,37 @@ function renderDev(){
   }
 }
 // ----- Moment of Fulfillment -----
-function openMoF(){ devCtx={ kind:'mof', form:{} }; renderMoF(); $('devOverlay').classList.add('show'); }
+function litmQuintessences(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.quintessences)) return LITM_DATA.quintessences; }catch(e){} return []; }
+function hasQuintessence(name){ return (S.quintessences||'').toLowerCase().indexOf((name||'').toLowerCase())>=0; }
+
+function openMoF(){ devCtx={ kind:'mof', form:{q:null, custom:''} }; renderMoF(); $('devOverlay').classList.add('show'); }
 function renderMoF(){
   $('devTitle').textContent='🌟 Moment of Fulfillment';
   const carry=Math.max(0,(S.promise||0)-5);
+  const list=litmQuintessences();
+  const sel=devCtx.form.q;
+  const cards = list.length
+    ? list.map(q=>{ const owned=hasQuintessence(q.name); const isSel=sel===q.name;
+        return '<button type="button" class="q-pick'+(isSel?' sel':'')+(owned?' owned':'')+'" data-q="'+esc(q.name)+'"'+(owned?' disabled':'')+'>'
+          +'<b>'+esc(q.name)+(owned?' <span class="q-have">✓ have</span>':'')+'</b>'
+          +'<span class="q-eff">'+esc(q.effect)+'</span></button>'; }).join('')
+    : '<p class="hint">Quintessence list unavailable.</p>';
   $('devBody').innerHTML=
-    '<p class="hint" style="margin:0 0 12px">Your Promise is full. Claim a <b>Moment of Fulfillment</b>: Promise resets'
-    +(carry?(' (carrying over <b>'+carry+'</b>)'):'')+', your Fulfillments counter goes up, and you gain a <b>Quintessence</b> — a permanent, rule-breaking quality.</p>'
-    +'<label class="fld"><span>Quintessence gained (record it)</span><textarea id="dv_q" placeholder="Name + effect of the Quintessence…"></textarea></label>'
-    +'<p class="hint" style="margin:2px 0 12px;opacity:.8">A guided Quintessence picker is coming; for now, note it here — it\'s appended to your Hero\'s Quintessences.</p>'
+    '<p class="hint" style="margin:0 0 10px">Your Promise is full. Claim a <b>Moment of Fulfillment</b>: Promise resets'
+    +(carry?(' (carrying over <b>'+carry+'</b>)'):'')+', your Fulfillments counter goes up, and you gain a <b>Quintessence</b> — a permanent, rule-breaking quality. Pick one'+(list.length?'':' (or note it below)')+':</p>'
+    +'<div class="q-list">'+cards+'</div>'
+    +'<label class="fld" style="margin-top:10px"><span>Custom / notes (optional)</span><textarea id="dv_q" placeholder="A Quintessence not listed, or notes about how you gained it…">'+esc(devCtx.form.custom||'')+'</textarea></label>'
     +'<button class="btn wide" id="dv_claim">Claim Moment of Fulfillment</button>'
     +'<button class="btn ghost wide" id="dv_later" style="margin-top:8px">Not yet</button>';
+  $('devBody').querySelectorAll('.q-pick').forEach(b=>{ b.onclick=()=>{ devCtx.form.q=(devCtx.form.q===b.dataset.q?null:b.dataset.q); renderMoF(); }; });
+  $('dv_q').oninput=e=>{ devCtx.form.custom=e.target.value; };
   $('dv_claim').onclick=()=>{
-    const q=($('dv_q').value||'').trim();
-    if(q) S.quintessences=(S.quintessences?S.quintessences+'\n':'')+q;
+    const custom=($('dv_q').value||'').trim();
+    const chosen=devCtx.form.q;
+    const add=[];
+    if(chosen){ const q=litmQuintessences().find(x=>x.name===chosen); if(q) add.push(q.name+' — '+q.effect); }
+    if(custom) add.push(custom);
+    if(add.length) S.quintessences=(S.quintessences?S.quintessences+'\n':'')+add.join('\n');
     S.fulfillments=(S.fulfillments||0)+1;
     S.promise=Math.max(0,(S.promise||0)-5);
     save(); renderAll(); closeDev(); toast('Moment of Fulfillment claimed!');
@@ -1306,8 +1342,10 @@ function rollDice(){
     d1.classList.remove('rolling'); d2.classList.remove('rolling');
     const total=r1+r2+power;
     const dbl6=(r1===6&&r2===6), dbl1=(r1===1&&r2===1);
+    const beyondLuck = dbl1 && hasQuintessence('Beyond Luck'); // Quintessence: no auto-miss on double ones
+    const dbl1auto = dbl1 && !beyondLuck;
     let tier; // win | mixed | lose
-    if(dbl6) tier='win'; else if(dbl1) tier='lose';
+    if(dbl6) tier='win'; else if(dbl1auto) tier='lose';
     else if(total>=10) tier='win'; else if(total>=7) tier='mixed'; else tier='lose';
 
     // burn: scratch the burned tag now (it was worth +3 this roll)
@@ -1324,19 +1362,20 @@ function rollDice(){
       else { big='6− — Take it'; sub='Suffer the Consequences as-is.'; }
     } else {
       if(dbl6){ big='Success!'; sub='Double sixes — Success without Consequences.'; }
-      else if(dbl1){ big='Consequences'; sub='Double ones — Consequences without Success.'; }
+      else if(dbl1auto){ big='Consequences'; sub='Double ones — Consequences without Success.'; }
       else if(total>=10){ big='10+ Success'; sub='No Consequences.'; }
       else if(total>=7){ big='7–9 Success & Consequences'; sub='You succeed, but take a hit too.'; }
       else { big='6− Consequences'; sub='The action fails and you take the hit.'; }
       if(tier!=='lose'){ const sp=Math.max(1,power);
         detail='<div class="sub"><b>'+sp+' Power</b> to spend on Effects'+(power<=0?' (Rule of Minimum One)':'')+'.</div>';
-        if((total>=10||dbl6) && !dbl1) detail+='<div class="sub" style="opacity:.8">Push your luck: take Consequences for +1 Power.</div>';
+        if((total>=10||dbl6) && !dbl1auto) detail+='<div class="sub" style="opacity:.8">Push your luck: take Consequences for +1 Power.</div>';
         openSpend(sp,false); }
     }
     const weakNote = $('powerNum')._weak ? '<div class="sub" style="opacity:.85">⚑ Weakness invoked — mark Improve on its theme.</div>' : '';
+    const blNote = beyondLuck ? '<div class="sub" style="opacity:.85">✨ Beyond Luck — double ones no longer auto-miss.</div>' : '';
     $('outcomeBox').innerHTML = '<div class="outcome '+cls+'"><div class="big">'+big+'</div>'
       + '<div class="sub">Rolled '+r1+' + '+r2+' '+(power>=0?'+ ':'− ')+Math.abs(power)+' Power = <b>'+total+'</b></div>'
-      + '<div class="sub">'+sub+'</div>'+detail+weakNote+burnNote+'</div>';
+      + '<div class="sub">'+sub+'</div>'+detail+weakNote+blNote+burnNote+'</div>';
     rolls.unshift({t:Date.now(), r1, r2, power, total, big:(reaction?'🛡 ':'')+big, hero:S.heroName||'Hero'});
     rolls=rolls.slice(0,40); saveRolls(); renderRollHist();
     if(burnNote){ save(); renderThemes(); renderFellowship(); renderBackpack(); renderScene(); renderRoller(); }
