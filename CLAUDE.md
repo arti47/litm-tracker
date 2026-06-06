@@ -38,8 +38,8 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 ### Current state (verify before quoting — figures drift)
 
 Last verified: **2026-06-06** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
-Improvements + Phase 4 development automation + Phase 6 scene board & camp/sojourn). Re-run
-to refresh:
+Improvements + Phase 4 development automation + Phase 6 scene board & camp/sojourn + Phase 7
+searchable reference). Re-run to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -48,9 +48,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~1,878 lines / ~218 KB (includes the embedded Phase-2
+- **`character-tracker.html`**: ~1,944 lines / ~222 KB (includes the embedded Phase-2
   creation dataset, ~130 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v7` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v8` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -304,9 +304,16 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
     `scratchedTags`, `openSpend`/`doSpend`/`renderSpend`/`drawSpForm`. Form inputs persist
     across stepper re-renders (values stored on the form-state object).
 
-### Rules tab (quick reference, all from the rulebook)
-Counting Power · roll outcome tiers + special rolls · spending Power on Effects (exact costs)
-· Reactions · statuses (tier/stack/reduce/Limit) · Hero development tracks · Camping summary.
+### Reference tab — searchable (Phase 7) ✅
+A **search box** (`filterRef`) filters every reference row live; sections collapse when they
+have no match, with a "no entries match" note. Nine `.ref-sec` blocks, all rules-grounded:
+**Getting started** (app onboarding — original content), **Counting Power**, **Might · Favored
+& Imperiled** (the mechanic: task-Might vs your Might → ±3/±6, grounded in the roller's Might
+control), **Roll 2d6 + Power**, **Action Grimoire — spending Power** (the Effect costs already
+enforced by the spender, with illustrative example actions), **Reactions**, **Statuses**, **Hero
+Development** (incl. Promise → Moment of Fulfillment), **Camping**. *(The Core-Book's verbatim
+example spends, the per-action Might table, the Gerrin tutorial, and the 5E crossover are
+deferred — they need source text not reachable here; see Roadmap Phase 7.)*
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
@@ -401,14 +408,21 @@ Scene board + Camping/Sojourn shipped; only the Journey montage remains.
 - [ ] **Journey** montage helper — Vignette Challenges resolved with Quick actions. *(Still open
       — the only Phase-6 item left.)*
 
-### Phase 7 — Reference & onboarding
-- [ ] **Action Grimoire** browser — searchable example spends ("Climb a ledge", "Tame a
-      beast", "Ask about a legend at a tavern", "Bandage an ally", "Resist a spell").
-- [ ] **Might / Favored / Imperiled** explainer with the rulebook's action-Might table
-      (Climb/Archery/Sneak/Craft/Heal at Origin/Adventure/Greatness).
+### Phase 7 — Reference & onboarding ✅ MOSTLY DONE (2026-06-06)
+Shipped the **searchable Reference tab** (see Implemented Features → "Reference tab"): live
+filter, a Might/Favored/Imperiled mechanic explainer, an Action-Grimoire effects/cost browser,
+and a Getting-started onboarding guide — all grounded in rules already encoded in the app. The
+remaining items need Core-Book/notebook source text not reachable in this environment.
+- [x] **Action Grimoire** browser — searchable; built from the Effect costs the spender already
+      enforces, with illustrative example actions. *(Follow-up: the Core-Book's verbatim curated
+      example spells/spends — "Climb a ledge", "Tame a beast", etc. — need the source text.)*
+- [x] **Might / Favored / Imperiled** explainer — the mechanic (task-Might vs your Might → ±3/±6).
+      *(Follow-up: the rulebook's specific action-Might table — Climb/Archery/Sneak/Craft/Heal at
+      Origin/Adventure/Greatness — needs the source text.)*
 - [ ] Built-in **tutorial** (the Gerrin deer-stalker walkthrough) as a first-run guide.
-- [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints) — from the notebook's
-      crossover source.
+      *(Blocked: needs the Core-Book narrative.)*
+- [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
+      *(Blocked: needs the notebook's crossover source.)*
 
 ### Phase 8 — Narrator-adjacent (optional / separate companion)
 *Out of scope for a pure player app, but defined in the rules — consider a sibling Narrator

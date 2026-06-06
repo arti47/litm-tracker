@@ -395,61 +395,111 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 </section>
 
-<!-- RULES -->
+<!-- RULES / REFERENCE -->
 <section class="panel ref" id="panel-ref">
   <div class="card">
-    <h2>📖 Quick Reference</h2>
-    <h3>Counting Power</h3>
-    <table><tbody>
-      <tr><td>+1</td><td>each helpful tag (yours, foe's, environment)</td></tr>
-      <tr><td>−1</td><td>each hindering tag</td></tr>
-      <tr><td>+tier</td><td>your single highest helpful status</td></tr>
-      <tr><td>−tier</td><td>your single highest hindering status</td></tr>
-      <tr><td>+3 / +6</td><td>Favored / Extremely Favored (acting below your Might)</td></tr>
-      <tr><td>−3 / −6</td><td>Imperiled / Extremely Imperiled (acting above your Might)</td></tr>
-      <tr><td>Burn</td><td>scratch one helpful tag for +3 instead of +1 (one per roll)</td></tr>
-    </tbody></table>
-    <h3>Roll 2d6 + Power</h3>
-    <table><tbody>
-      <tr><td>10+</td><td>Success — spend your Power on Effects. No Consequences.</td></tr>
-      <tr><td>7–9</td><td>Success &amp; Consequences — spend Power, but take a hit too.</td></tr>
-      <tr><td>6−</td><td>Consequences — no Success.</td></tr>
-      <tr><td>⚅⚅</td><td>Double sixes = Success without Consequences, any Power.</td></tr>
-      <tr><td>⚀⚀</td><td>Double ones = Consequences without Success, any Power.</td></tr>
-      <tr><td>Min 1</td><td>On a Success you always have at least 1 Power to spend.</td></tr>
-      <tr><td>Push</td><td>On 10+ you may accept Consequences for +1 Power (Detailed).</td></tr>
-    </tbody></table>
-    <h3>Spending Power on Effects</h3>
-    <table><tbody>
-      <tr><td>2</td><td>Add / give / recover a tag</td></tr>
-      <tr><td>2</td><td>Scratch a tag</td></tr>
-      <tr><td>1 / tier</td><td>Give a status</td></tr>
-      <tr><td>1 / tier</td><td>Reduce a status</td></tr>
-      <tr><td>1</td><td>Discover a valuable detail</td></tr>
-      <tr><td>1</td><td>Extra feat (only after ≥1 Power on the main purpose)</td></tr>
-      <tr><td>1</td><td>Create a single-use tag (when only 1 Power is left)</td></tr>
-    </tbody></table>
-    <h3>Reactions (defending)</h3>
-    <table><tbody>
-      <tr><td>10+</td><td>Spend Power +1 on any Effect</td></tr>
-      <tr><td>7–9</td><td>Spend Power only to lessen the Consequences</td></tr>
-      <tr><td>6−</td><td>Suffer the Consequences as-is</td></tr>
-    </tbody></table>
-    <h3>Statuses</h3>
-    <table><tbody>
-      <tr><td>Tier</td><td>1 mild → 6 deadly/transformative</td></tr>
-      <tr><td>Stack</td><td>mark the incoming tier's box; if taken, spill to the next free box right. Current tier = highest marked box.</td></tr>
-      <tr><td>Reduce</td><td>move all marks left by the tiers reduced; marks below 1 are removed.</td></tr>
-      <tr><td>Limit 5</td><td>at tier 5 a Hero is overcome; tier 6 kills or transforms.</td></tr>
-    </tbody></table>
-    <h3>Hero Development (per theme)</h3>
-    <table><tbody>
-      <tr><td>Improve</td><td>mark when a weakness tag is invoked or you Reflect in camp. 3 → reset &amp; gain an improvement (usually a new power tag).</td></tr>
-      <tr><td>Abandon</td><td>mark when you ignore/betray the Quest. 3 → the theme is replaced (mark Promise).</td></tr>
-      <tr><td>Milestone</td><td>mark when you achieve the Quest. 3 → the theme evolves (mark Promise).</td></tr>
-    </tbody></table>
-    <h3>Camping</h3>
-    <p class="muted" style="line-height:1.5">Narrator expires story tags → establish the place → each Hero takes 2 activities (3 with Consequences): <b>Rest</b> (recover statuses &amp; scratched power tags), <b>Reflect</b> (mark Improve on a theme), <b>Camp Action</b> (count Power, spend half without rolling, or roll). Then each Hero recovers a Fellowship power tag or renews one relationship tag.</p>
+    <h2>📖 Reference</h2>
+    <label class="fld"><span>Search the reference</span><input type="text" id="refSearch" placeholder="e.g. burn, status, favored, camp, promise…" oninput="filterRef()"></label>
+    <p class="hint" id="refEmpty" style="display:none">No reference entries match your search.</p>
+
+    <div class="ref-sec">
+      <h3>Getting started</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>Build a Hero</td><td>Tap ☰ → <b>New Hero</b> (or 👥) for the guided wizard: pick a <b>Trope</b>, answer a <b>Themebook</b>, or start blank.</td></tr>
+        <tr class="ref-row"><td>Hero tab</td><td>Your four <b>themes</b> — each has a title, power tags (🟡), weakness tags (🟠), a <b>Quest</b>, and Improve/Abandon/Milestone tracks. The <b>Backpack</b> holds story tags; <b>Promise</b> tracks advancement.</td></tr>
+        <tr class="ref-row"><td>Tracking tab</td><td><b>Statuses</b> (tiered conditions), <b>Scene</b> story tags, the Scene board (game loop), and the <b>Camp / Sojourn</b> helper.</td></tr>
+        <tr class="ref-row"><td>Roll tab</td><td>Tap the tags &amp; status you're invoking, set your <b>Might</b>, then roll <b>2d6 + Power</b>. After a Success, spend Power in the Effects panel.</td></tr>
+        <tr class="ref-row"><td>Develop</td><td>Filling a theme track prompts you to <b>improve</b>, <b>evolve</b>, or <b>replace</b> it. Reaching <b>5 Promise</b> opens a Moment of Fulfillment.</td></tr>
+        <tr class="ref-row"><td>Camp</td><td>☰ → <b>Camp / Sojourn</b>: Rest to recover scratched tags &amp; statuses, Reflect to grow, recover a Fellowship part.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Counting Power</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>+1</td><td>each helpful tag (yours, foe's, environment)</td></tr>
+        <tr class="ref-row"><td>−1</td><td>each hindering tag</td></tr>
+        <tr class="ref-row"><td>+tier</td><td>your single highest helpful status</td></tr>
+        <tr class="ref-row"><td>−tier</td><td>your single highest hindering status</td></tr>
+        <tr class="ref-row"><td>+3 / +6</td><td>Favored / Extremely Favored (acting below your Might)</td></tr>
+        <tr class="ref-row"><td>−3 / −6</td><td>Imperiled / Extremely Imperiled (acting above your Might)</td></tr>
+        <tr class="ref-row"><td>Burn</td><td>scratch one helpful tag for +3 instead of +1 (one per roll)</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Might · Favored &amp; Imperiled</h3>
+      <p class="ref-row muted" style="line-height:1.5">Themes come in three Mights: <b>Origin</b> (ordinary) → <b>Adventure</b> (heroic) → <b>Greatness</b> (legendary). When you act, compare the <b>Might the task demands</b> to the Might you bring (your relevant theme/tag).</p>
+      <table><tbody>
+        <tr class="ref-row"><td>Matched</td><td>task is about your level — no Might modifier (0).</td></tr>
+        <tr class="ref-row"><td>Favored +3</td><td>the task is <b>below</b> your Might — you outclass it.</td></tr>
+        <tr class="ref-row"><td>Extr. Favored +6</td><td>the task is <b>far below</b> your Might.</td></tr>
+        <tr class="ref-row"><td>Imperiled −3</td><td>the task is <b>above</b> your Might — out of your depth.</td></tr>
+        <tr class="ref-row"><td>Extr. Imperiled −6</td><td>the task is <b>far above</b> your Might.</td></tr>
+        <tr class="ref-row"><td>Where</td><td>set this with the <b>Might</b> control on the Roll tab; the Narrator calls it.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Roll 2d6 + Power</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>10+</td><td>Success — spend your Power on Effects. No Consequences.</td></tr>
+        <tr class="ref-row"><td>7–9</td><td>Success &amp; Consequences — spend Power, but take a hit too.</td></tr>
+        <tr class="ref-row"><td>6−</td><td>Consequences — no Success.</td></tr>
+        <tr class="ref-row"><td>⚅⚅</td><td>Double sixes = Success without Consequences, any Power.</td></tr>
+        <tr class="ref-row"><td>⚀⚀</td><td>Double ones = Consequences without Success, any Power.</td></tr>
+        <tr class="ref-row"><td>Min 1</td><td>On a Success you always have at least 1 Power to spend.</td></tr>
+        <tr class="ref-row"><td>Push</td><td>On 10+ you may accept Consequences for +1 Power.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Action Grimoire — spending Power</h3>
+      <p class="ref-row muted" style="line-height:1.45">Costs are the rulebook's; the example actions are illustrative. The Roll tab's Effects panel applies these for you.</p>
+      <table><tbody>
+        <tr class="ref-row"><td>tier</td><td><b>Inflict a status on a foe</b> (stagger, frighten, pin) — costs its tier.</td></tr>
+        <tr class="ref-row"><td>tier</td><td><b>Reduce a status</b> on yourself or an ally — costs the tiers removed.</td></tr>
+        <tr class="ref-row"><td>2</td><td><b>Create, give, or recover a tag</b> — a story tag, a hand-off to an ally, or un-scratching a tag.</td></tr>
+        <tr class="ref-row"><td>2</td><td><b>Scratch / strip a tag</b> — remove a foe's or the scene's tag.</td></tr>
+        <tr class="ref-row"><td>1</td><td><b>Discover a detail</b> — ask the Narrator a useful question about the scene.</td></tr>
+        <tr class="ref-row"><td>1</td><td><b>Extra feat</b> — a small bonus action, only after ≥1 Power on your main purpose.</td></tr>
+        <tr class="ref-row"><td>1</td><td><b>Single-use tag</b> — make one when only 1 Power is left.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Reactions (defending)</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>10+</td><td>Spend Power +1 on any Effect</td></tr>
+        <tr class="ref-row"><td>7–9</td><td>Spend Power only to lessen the Consequences</td></tr>
+        <tr class="ref-row"><td>6−</td><td>Suffer the Consequences as-is</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Statuses</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>Tier</td><td>1 mild → 6 deadly/transformative</td></tr>
+        <tr class="ref-row"><td>Stack</td><td>mark the incoming tier's box; if taken, spill to the next free box right. Current tier = highest marked box.</td></tr>
+        <tr class="ref-row"><td>Reduce</td><td>move all marks left by the tiers reduced; marks below 1 are removed.</td></tr>
+        <tr class="ref-row"><td>Limit 5</td><td>at tier 5 a Hero is overcome; tier 6 kills or transforms.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Hero Development (per theme)</h3>
+      <table><tbody>
+        <tr class="ref-row"><td>Improve</td><td>mark when a weakness tag is invoked or you Reflect in camp. 3 → reset &amp; gain an improvement (a power tag or Special Improvement).</td></tr>
+        <tr class="ref-row"><td>Abandon</td><td>mark when you ignore/betray the Quest. 3 → the theme is replaced (mark Promise).</td></tr>
+        <tr class="ref-row"><td>Milestone</td><td>mark when you achieve the Quest. 3 → the theme evolves (mark Promise).</td></tr>
+        <tr class="ref-row"><td>Promise</td><td>marked on evolve/replace and trades. Fill 5 → a Moment of Fulfillment: reset (carry the overflow), gain a Quintessence.</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ref-sec">
+      <h3>Camping</h3>
+      <p class="ref-row muted" style="line-height:1.5">Expire story tags → establish the place → each Hero takes 2 activities (3 with Consequences): <b>Rest</b> (recover statuses &amp; scratched power tags), <b>Reflect</b> (mark Improve on a theme), <b>Camp Action</b> (count Power, spend half without rolling, or roll). Then each Hero recovers a Fellowship power tag or renews one relationship tag.</p>
+    </div>
   </div>
 </section>
 
@@ -606,6 +656,22 @@ function showTab(name){
   $('panel-'+name).classList.add('active');
   window.scrollTo(0,0);
   if (name==='roll') renderRoller();
+}
+
+// ---------- Reference search (Phase 7) ----------
+function filterRef(){
+  const q=($('refSearch').value||'').trim().toLowerCase();
+  let anyVisible=false;
+  document.querySelectorAll('#panel-ref .ref-sec').forEach(sec=>{
+    let any=false;
+    sec.querySelectorAll('.ref-row').forEach(row=>{
+      const m=!q || row.textContent.toLowerCase().indexOf(q)>=0;
+      row.style.display=m?'':'none'; if(m) any=true;
+    });
+    sec.style.display=any?'':'none';
+    if(any) anyVisible=true;
+  });
+  const e=$('refEmpty'); if(e) e.style.display=(q && !anyVisible)?'':'none';
 }
 
 // ============================================================
