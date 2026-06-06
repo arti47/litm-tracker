@@ -187,6 +187,22 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
 .tut-text p { line-height: 1.5; margin: 0 0 9px; font-size: 14px; }
 .tut-nav { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
 .tut-nav .tut-spacer { flex: 1; }
+.ag-sec { margin: 4px 0 14px; }
+.ag-sec h3 { margin: 6px 0 4px; }
+.ag-pg { font-weight: 400; color: var(--ink-soft); font-size: 12px; }
+.ag-intro { font-size: 13px; color: var(--ink-soft); line-height: 1.5; white-space: pre-wrap; margin: 0 0 8px; }
+.ag-entry { border: 1px solid var(--border); border-radius: 10px; margin: 6px 0; background: var(--bg-deep); }
+.ag-entry summary { padding: 9px 11px; font-weight: 700; cursor: pointer; list-style: none; }
+.ag-entry summary::-webkit-details-marker { display: none; }
+.ag-entry summary::before { content: "▸ "; color: var(--teal); }
+.ag-entry[open] summary::before { content: "▾ "; }
+.ag-edetail { padding: 0 11px 11px; font-size: 13px; line-height: 1.5; }
+.ag-edetail p { margin: 4px 0 8px; }
+.ag-row { margin: 5px 0; }
+.ag-lbl { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .3px; margin-right: 4px; color: var(--teal); }
+.ag-help .ag-lbl { color: var(--status-ink); }
+.ag-hind .ag-lbl { color: var(--bad); }
+.ag-ex .ag-lbl { color: var(--ink-soft); }
 
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
@@ -496,6 +512,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
         <tr class="ref-row"><td>1</td><td><b>Single-use tag</b> — make one when only 1 Power is left.</td></tr>
       </tbody></table>
       <div id="refGrimoire"></div>
+      <button class="btn wide" style="margin-top:8px" onclick="openAG()">📜 Browse the Action Grimoire (full reference)</button>
     </div>
 
     <div class="ref-sec">
@@ -544,6 +561,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="menu-item" onclick="openRoster()"><span class="em">👥</span> Switch Hero</button>
     <button class="menu-item" onclick="openCamp()"><span class="em">🏕️</span> Camp / Sojourn</button>
     <button class="menu-item" onclick="openTutorial()"><span class="em">📖</span> Tutorial (Gerrin walkthrough)</button>
+    <button class="menu-item" onclick="openAG()"><span class="em">📜</span> Action Grimoire</button>
     <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
@@ -594,6 +612,16 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   <div class="sheet">
     <h2 id="tutTitle">📖 Tutorial</h2>
     <div id="tutBody"></div>
+  </div>
+</div>
+
+<!-- ACTION GRIMOIRE BROWSER (supplement) -->
+<div class="overlay" id="agOverlay" onclick="if(event.target===this)closeAG()">
+  <div class="sheet">
+    <h2>📜 Action Grimoire</h2>
+    <p class="hint" style="margin:-8px 0 8px">A reference of typical actions from the <i>Action Grimoire</i> supplement — search, or browse by section.</p>
+    <label class="fld"><span>Search actions</span><input type="text" id="agSearch" placeholder="e.g. craft, repair, harvest, sabotage…" oninput="renderAG()"></label>
+    <div id="agBody"></div>
   </div>
 </div>
 
@@ -751,6 +779,50 @@ function renderTutorial(){
   const n=$('tut_next'); if(n) n.onclick=()=>{ tutStep++; renderTutorial(); scroll(); };
   const d=$('tut_done'); if(d) d.onclick=()=>closeTutorial();
   $('tut_close').onclick=()=>closeTutorial();
+}
+
+// ----- Action Grimoire browser (supplement catalog) -----
+function litmActionGrimoire(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.actionGrimoire)) return LITM_DATA.actionGrimoire; }catch(e){} return []; }
+function openAG(){ if(typeof closeOverlays==='function') closeOverlays(); renderAG(); $('agOverlay').classList.add('show'); }
+function closeAG(){ $('agOverlay').classList.remove('show'); }
+function agList(label,arr,cls){
+  arr=(arr||[]).filter(x=>x&&String(x).trim());
+  if(!arr.length) return '';
+  return '<div class="ag-row'+(cls?' '+cls:'')+'"><span class="ag-lbl">'+label+'</span>'+arr.map(esc).join(' · ')+'</div>';
+}
+function renderAG(){
+  const q=(($('agSearch')&&$('agSearch').value)||'').trim().toLowerCase();
+  const data=litmActionGrimoire();
+  if(!data.length){ $('agBody').innerHTML='<p class="hint">Action Grimoire data not loaded yet.</p>'; return; }
+  let html='';
+  data.forEach(sec=>{
+    const secMatch=!q || ((sec.section||'')+' '+(sec.intro||'')).toLowerCase().indexOf(q)>=0;
+    const entries=(sec.entries||[]).filter(e=>{
+      if(!q || secMatch) return true;
+      const hay=[e.name,e.explanation,e.success,e.might,(e.actionExamples||[]).join(' '),
+        ((e.power||{}).positive||[]).join(' '),((e.power||{}).negative||[]).join(' '),
+        (e.extraFeats||[]).join(' '),(e.consequences||[]).join(' ')].join(' ').toLowerCase();
+      return hay.indexOf(q)>=0;
+    });
+    const showIntro=sec.intro && (!q || secMatch);
+    if(!entries.length && !showIntro) return;
+    html+='<div class="ag-sec"><h3>'+esc(sec.section||'')+(sec.page?' <span class="ag-pg">p.'+sec.page+'</span>':'')+'</h3>';
+    if(showIntro) html+='<p class="ag-intro">'+esc(sec.intro)+'</p>';
+    entries.forEach(e=>{
+      html+='<details class="ag-entry"'+(q?' open':'')+'><summary>'+esc(e.name)+'</summary><div class="ag-edetail">';
+      if(e.explanation) html+='<p>'+esc(e.explanation)+'</p>';
+      html+=agList('e.g.',e.actionExamples,'ag-ex');
+      html+=agList('✓ helps',(e.power||{}).positive,'ag-help');
+      html+=agList('✕ hinders',(e.power||{}).negative,'ag-hind');
+      if(e.success) html+='<div class="ag-row"><span class="ag-lbl">Success</span>'+esc(e.success)+'</div>';
+      html+=agList('Extra feats',e.extraFeats);
+      html+=agList('Consequences',e.consequences);
+      if(e.might) html+='<div class="ag-row"><span class="ag-lbl">Might</span>'+esc(e.might)+'</div>';
+      html+='</div></details>';
+    });
+    html+='</div>';
+  });
+  $('agBody').innerHTML = html || '<p class="hint">No actions match “'+esc(q)+'”.</p>';
 }
 function prettyScenario(s){
   s=(s||'').replace(/[.…]+\s*$/,'').trim();              // drop trailing ellipsis/period

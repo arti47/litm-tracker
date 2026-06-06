@@ -1,0 +1,185 @@
+{
+  "_source": "Legend in the Mist — Action Grimoire (supplement). Verbatim via NotebookLM, extracted section by section. PARTIAL: filled in as sections are added. Merged into LITM_DATA.actionGrimoire by inject.py.",
+  "sections": [
+    {
+      "section": "Crafting",
+      "page": 9,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Crafting and Tinkering",
+          "actionExamples": [
+            "Build from scratch",
+            "Cobble something together",
+            "Concoct alchemical recipe",
+            "Tinker with a mechanism",
+            "Artisan handiwork",
+            "Tailor a garment",
+            "Reforge from old materials",
+            "Hone to a razor’s edge",
+            "Make from whole cloth",
+            "Construct from masterplans",
+            "Artfully embellish",
+            "Modify in the laboratory",
+            "Heat up the forge",
+            "Build a home",
+            "Finely engrave",
+            "Tan a hide",
+            "Sharpen a weapon"
+          ],
+          "explanation": "You use your trained crafting abilities to create a useful piece of equipment: a weapon, a relic, a potion, a transport, etc. Alternatively, you work on an existing piece of gear to make it perform better than before. The action could reflect a quick, tinkered assembly while at camp using materials and tools at hand or a days-long project at your workshop. For complex or time-consuming projects, the Narrator can decide to set a complete Limit. When maxed out, you gain a story tag or a theme, as decided by the Narrator. Consider Might when working on an item that would be larger than a person or affect more than one person, or on a magical artifact, or to craft or improve many items. This action is often taken while camping or sojourning. See also the Crafting Journey, Corebook Vol. II, page 194. See also Crafting Magical Items (page 65). To sell your crafted items for coin, see Selling Goods (page 74).",
+          "power": {
+            "positive": [
+              "appropriate crafting skills (e.g., weapon smithing, whittling, golem building)",
+              "quality tools",
+              "workshop",
+              "special ingredients",
+              "quality materials and resources",
+              "innovative thinking",
+              "recipes, manuals, diagrams, and schematics",
+              "mentorship or direction from a master of the craft",
+              "an apprentice or other assistant",
+              "inspiration"
+            ],
+            "negative": [
+              "distractions and stress",
+              "scarcity or insufficient materials",
+              "damage to the improved item",
+              "poor quality tools",
+              "inadequate workspace",
+              "complexity of the recipe, floorplan, or diagram"
+            ]
+          },
+          "success": "CREATE a story tag for the item, or a theme representing the item and its abilities, such as engraved elm bow, makeshift lockpicks, hidden compartment, or bronze cuirass. If you create a theme, the Narrator can add a negative story tag. BESTOW existing equipment with tags representing new features, like adding honed edge or intimidating runes to your family sword, or wax sealing your boots to make them waterproof. If this creates a theme, the Narrator can add a negative story tag. ADVANCE an ongoing project with making-progress.",
+          "extraFeats": [
+            "Adjust the item’s size or shape.",
+            "Do it quickly or in secret.",
+            "Conceal your alterations (the item does not appear to be changed).",
+            "Use fewer materials.",
+            "Craft an item of superior quality (the Narrator cannot add a negative story tag).",
+            "Make it in the style of a particular crafting guild or culture, or add your signature."
+          ],
+          "consequences": [
+            "» You waste time, break tools, or expend resources (scratch tags or short-on-coin).",
+            "» The item is faulty or flawed (add negative story tag).",
+            "» You have a work accident (scorched, wounded, bruised, cramps, painful hand, etc.).",
+            "» Your work attracts unwanted attention (Exposure).",
+            "» You activate a dangerous functionality in the artifact (Ill Tidings).",
+            "» You overwork yourself or your apprentices (exhausted, resentful, or scratch a tag)."
+          ],
+          "might": "Consider Might when working on an item that would be larger than a person or affect more than one person, or on a magical artifact, or to craft or improve many items."
+        },
+        {
+          "name": "Harvesting Ingredients",
+          "actionExamples": [
+            "Find a specific herb, mushroom, moss, etc.",
+            "Dissect a monster to obtain a specific organ, gland, or humor",
+            "Collect a specimen",
+            "Gather faerie dust on Midsummer’s Eve",
+            "Milk a Strix",
+            "Pick a mind for a specific memory",
+            "Extract a soul",
+            "Loot a boobytrapped chest, or body"
+          ],
+          "explanation": "You obtain a rare ingredient or component through a skillful process of location, identification, and collection. Consider Might if the process requires extraordinary knowledge or ability.",
+          "power": {
+            "positive": [
+              "appropriate skill such as foraging, chirurgy, or animal husbandry",
+              "appropriate lore such as botany or monster lore",
+              "steady hand",
+              "keen senses",
+              "specialized tools",
+              "suitable workspace",
+              "the target of harvesting (glade, carcass, etc.)",
+              "assistive magic"
+            ],
+            "negative": [
+              "insufficient time or room",
+              "distractions and nervousness",
+              "incomplete training or knowledge",
+              "poor tools or workspace",
+              "poor condition of the target",
+              "obstructed senses",
+              "natural or unnatural defenses of the target"
+            ]
+          },
+          "success": "QUICK You successfully obtain the ingredient. CREATE a story tag for the ingredient you collected such as a Rime Thistle extract, cockatrice venom, or a beating heart.",
+          "extraFeats": [
+            "Leave the target undisturbed and without a trace.",
+            "Harvest discreetly (no one knows you harvested).",
+            "Extract an ingredient of very fine quality.",
+            "Avoid harm to yourself or your tools while harvesting.",
+            "If possible, allow further harvesting from the same"
+          ],
+          "consequences": [],
+          "might": "Consider Might if the process requires extraordinary knowledge or ability."
+        },
+        {
+          "name": "Maintaining and Repairing Equipment",
+          "actionExamples": [
+            "Reinforce seams",
+            "Lovingly polish",
+            "Straighten a bend",
+            "Organize and count",
+            "Oil armor",
+            "Hammer out dents",
+            "Replace buckles",
+            "Resole boots",
+            "Restring a bow"
+          ],
+          "explanation": "You use your crafting skills to keep your equipment functioning by repairing, upkeeping, or replacing broken parts. This action covers serious repairs, of the sort that demand taking special care, and therefore a roll. This action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "crafting skills",
+              "repair and maintenance tools",
+              "extra supplies",
+              "workshop",
+              "having a relationship with the item",
+              "shops with the necessary parts",
+              "calm atmosphere"
+            ],
+            "negative": [
+              "distractions or inclement conditions",
+              "defect that is subtle or complex",
+              "unfamiliar equipment",
+              "poor tools or workspace",
+              "heavy damage or wear and tear",
+              "dirt, muck, or sand in the parts",
+              "The removed status or tag does not count as a negative for this action, unless it is especially egregious."
+            ]
+          },
+          "success": "RESTORE by removing negative statuses or tags and recover scratched tags of a weapon, piece of gear, transport, or artifact.",
+          "extraFeats": [
+            "Do it quietly.",
+            "The repaired damage leaves no mark or trace.",
+            "Keep the spotlight to take immediate action with"
+          ],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Sabotaging",
+          "actionExamples": [],
+          "explanation": null,
+          "power": {
+            "positive": [
+              "destructive mindset",
+              "heavy implements",
+              "weak spots"
+            ],
+            "negative": [
+              "item is fortified against tampering",
+              "item is of high quality craftsmanship",
+              "wards or other magical protections",
+              "guards watching the item"
+            ]
+          },
+          "success": "QUICK The item ceases to operate, or malfunctions in the way you intended. DISRUPT by giving negative statuses such as damaged or stuttering. If the item is big, the Narrator might decide to give it a destroy Limit. WEAKEN by removing tags from the item representing its functions, or protective statuses such as fortified. RESTORE by removing devices that afflict you such as restrained, or restricted magic.",
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        }
+      ]
+    }
+  ]
+}

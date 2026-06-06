@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,118 lines / ~269 KB (includes the embedded Phase-2 dataset +
-  Quintessence list + Might table + Action-Grimoire examples + the Gerrin tutorial, ~170 KB of
-  it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v15` (bump on every deploy)
+- **`character-tracker.html`**: ~2,190 lines / ~287 KB (includes the embedded Phase-2 dataset +
+  Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
+  the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v16` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -90,13 +90,19 @@ three sources in `_build/` and injected:
 - `_build/tutorial.json` — the Core Book's **Gerrin deer-stalker tutorial** (11 steps,
   title + verbatim text). Merged into `LITM_DATA.tutorial`; shown in the paginated tutorial
   overlay (`openTutorial`/`renderTutorial`, `#tutorialOverlay`).
+- `_build/action-grimoire.json` — the **Action Grimoire supplement** catalog (a *separate book*
+  from the Core Rulebook): sections of action entries, each with action examples, explanation,
+  Power helps/hinders, Success effects, Extra Feats, Consequences, Might. Merged into
+  `LITM_DATA.actionGrimoire`; shown in the searchable Action-Grimoire browser
+  (`openAG`/`renderAG`, `#agOverlay`). **Partial** — being filled in section by section.
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
 - `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
   `specials-override.json` + `might-table.json` + `grimoire.json` + `tutorial.json` +
-  `wizard.js` → `character-tracker.html` **and** `index.html` (mirrors automatically).
+  `action-grimoire.json` + `wizard.js` → `character-tracker.html` **and** `index.html`
+  (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -142,7 +148,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
   `litm-data.json`, `quintessences.json`, `specials-override.json`, `might-table.json`,
-  `grimoire.json`, `tutorial.json`, `parse_litm.py`, `inject.py`.
+  `grimoire.json`, `tutorial.json`, `action-grimoire.json`, `parse_litm.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -357,6 +363,17 @@ step's text is split into paragraphs and HTML-escaped. Opened from the **▶ Pla
 interactive tutorial** button in the Reference tab's Getting-started section and the **📖
 Tutorial** ☰ menu item. Reopening always resets to step 1 (no new localStorage key).
 
+### Action Grimoire browser (supplement) — 🚧 in progress
+A searchable **browser overlay** (`#agOverlay`, `openAG`/`renderAG`/`closeAG`, `litmActionGrimoire()`)
+for the standalone **Action Grimoire** supplement (a *separate book* from the Core Rulebook). Data
+in `LITM_DATA.actionGrimoire` (from `_build/action-grimoire.json`): sections of action entries, each
+rendered as a collapsible `<details>` card showing action examples, explanation, Power **helps**/
+**hinders**, **Success** effects, **Extra Feats**, **Consequences**, and any **Might** note. A search
+box filters across all entry text and auto-expands matches. Opened from a **📜 Browse the Action
+Grimoire** button in the Reference tab's Action-Grimoire section and the **📜 Action Grimoire** ☰ menu
+item. **Partial dataset** — currently only the **Crafting** section (4 entries); being filled in
+section by section (see Roadmap Phase 7). No new localStorage key.
+
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
 - **Export / import** a hero as JSON.
@@ -476,6 +493,12 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
       rules call-outs, so the text reads as the rulebook pages do.)*
 - [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
       *(Blocked: needs the notebook's crossover source.)*
+- [ ] 🚧 **Action Grimoire supplement** browser (`#agOverlay`/`renderAG`) — the standalone book's
+      full action catalog, searchable. Infrastructure + the **Crafting** section shipped
+      (2026-06-06); remaining ~18 leaf sections (Direct/Tactical Attacks, Support/Movement/Defense,
+      Information Gathering, Thievery, Survival, Navigating Danger, Recovery & Healing, the Magic
+      sections, Commerce, Community, Influence & Intrigue, Fellowship) + the prose sections are
+      being extracted section-by-section from NotebookLM and appended to `_build/action-grimoire.json`.
 
 ### Phase 8 — Narrator-adjacent (optional / separate companion)
 *Out of scope for a pure player app, but defined in the rules — consider a sibling Narrator
