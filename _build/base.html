@@ -462,6 +462,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
         <tr class="ref-row"><td>Extr. Imperiled −6</td><td>the task is <b>far above</b> your Might.</td></tr>
         <tr class="ref-row"><td>Where</td><td>set this with the <b>Might</b> control on the Roll tab; the Narrator calls it.</td></tr>
       </tbody></table>
+      <div id="refMight"></div>
     </div>
 
     <div class="ref-sec">
@@ -688,7 +689,7 @@ function showTab(name){
   $('panel-'+name).classList.add('active');
   window.scrollTo(0,0);
   if (name==='roll') renderRoller();
-  if (name==='ref') renderQuintRef();
+  if (name==='ref') renderRefData();
 }
 
 // ---------- Reference search (Phase 7) ----------
@@ -706,6 +707,7 @@ function filterRef(){
   });
   const e=$('refEmpty'); if(e) e.style.display=(q && !anyVisible)?'':'none';
 }
+function renderRefData(){ renderQuintRef(); renderMightRef(); }
 function renderQuintRef(){
   const host=$('refQuint'); if(!host) return;
   const list=litmQuintessences();
@@ -714,6 +716,16 @@ function renderQuintRef(){
   host.innerHTML='<div class="ref-sec"><h3>Quintessences</h3>'
     +'<p class="ref-row muted" style="line-height:1.4">Permanent, rule-breaking qualities — gain one at each Moment of Fulfillment (Promise filled to 5).</p>'
     +'<table><tbody>'+rows+'</tbody></table></div>';
+}
+function renderMightRef(){
+  const host=$('refMight'); if(!host) return;
+  let list=[]; try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.mightTable)) list=LITM_DATA.mightTable; }catch(e){}
+  if(!list.length){ host.innerHTML=''; return; }
+  const rows=list.map(a=>'<tr class="ref-row"><td>'+esc(a.activity)+'</td><td>'
+    +'<b>Origin</b> '+esc(a.origin)+' · <b>Adventure</b> '+esc(a.adventure)+' · <b>Greatness</b> '+esc(a.greatness)
+    +'</td></tr>').join('');
+  host.innerHTML='<p class="ref-row muted" style="line-height:1.4;margin-top:8px">Example actions at each Might — what the <i>same</i> kind of task looks like as it scales:</p>'
+    +'<table><tbody>'+rows+'</tbody></table>';
 }
 
 // ============================================================

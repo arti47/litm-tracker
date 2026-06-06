@@ -1,0 +1,41 @@
+{
+  "_source": "Legend in the Mist Core Rulebook — example actions scaled across the three Mights (Origin / Adventure / Greatness). Sourced via NotebookLM; rendered in the Reference tab's Might section.",
+  "mightTable": [
+    {
+      "activity": "Climb",
+      "origin": "Over a garden wall",
+      "adventure": "Up an icy cliff",
+      "greatness": "Out of the inverted gorges of Hell"
+    },
+    {
+      "activity": "Archery",
+      "origin": "Hunt a deer",
+      "adventure": "Hit an apple on someone's head",
+      "greatness": "Shoot an armored general from a mile away"
+    },
+    {
+      "activity": "Performance",
+      "origin": "Entertain friends at camp",
+      "adventure": "Engross a theater audience",
+      "greatness": "Make the Dark Lord weep"
+    },
+    {
+      "activity": "Sneak",
+      "origin": "Past your mom",
+      "adventure": "Past the city guards",
+      "greatness": "Past the all-seeing Sphinx"
+    },
+    {
+      "activity": "Craft",
+      "origin": "A well-made horseshoe",
+      "adventure": "A seafaring boat",
+      "greatness": "The One True Sword"
+    },
+    {
+      "activity": "Heal",
+      "origin": "A bad burn",
+      "adventure": "The plague in town",
+      "greatness": "The curse upon the land"
+    }
+  ]
+}

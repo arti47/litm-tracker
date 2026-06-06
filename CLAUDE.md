@@ -48,9 +48,9 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,043 lines / ~233 KB (includes the embedded Phase-2
-  creation dataset + the Quintessence list, ~135 KB of it the `LITM_DATA` constant).
-- **`sw.js` `CACHE_VERSION`**: `litm-v12` (bump on every deploy)
+- **`character-tracker.html`**: ~2,055 lines / ~235 KB (includes the embedded Phase-2
+  creation dataset + Quintessence list + Might table, ~136 KB of it the `LITM_DATA` constant).
+- **`sw.js` `CACHE_VERSION`**: `litm-v13` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -80,13 +80,16 @@ three sources in `_build/` and injected:
 - `_build/specials-override.json` — authoritative **Special Improvements** for the five theme
   types whose 5th entry the parser drops (Personality, Influence, Destiny, Companion,
   Possessions). `inject.py` merges these over `LITM_DATA.specials`, so all 20 types have 5.
+- `_build/might-table.json` — the **per-Might example-action table** (Climb/Archery/… at
+  Origin/Adventure/Greatness), from the Core Book via NotebookLM. Merged into
+  `LITM_DATA.mightTable`; rendered in the Reference tab's Might section (`renderMightRef`).
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
 - `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
-  `specials-override.json` + `wizard.js` → `character-tracker.html` **and** `index.html`
-  (mirrors automatically).
+  `specials-override.json` + `might-table.json` + `wizard.js` → `character-tracker.html`
+  **and** `index.html` (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -131,7 +134,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `icon.svg` + `icon-192.png` + `icon-512.png` — app icon (misty stag antlers + "LITM").
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
-  `litm-data.json`, `quintessences.json`, `specials-override.json`, `parse_litm.py`, `inject.py`.
+  `litm-data.json`, `quintessences.json`, `specials-override.json`, `might-table.json`,
+  `parse_litm.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -328,13 +332,15 @@ A **search box** (`filterRef`) filters every reference row live; sections collap
 have no match, with a "no entries match" note. Ten `.ref-sec` blocks, all rules-grounded:
 **Getting started** (app onboarding — original content), **Counting Power**, **Might · Favored
 & Imperiled** (the mechanic: task-Might vs your Might → ±3/±6, grounded in the roller's Might
-control), **Roll 2d6 + Power**, **Action Grimoire — spending Power** (the Effect costs already
+control, **plus a per-Might example-action table** from `LITM_DATA.mightTable` via
+`renderMightRef`), **Roll 2d6 + Power**, **Action Grimoire — spending Power** (the Effect costs already
 enforced by the spender, with illustrative example actions), **Reactions**, **Statuses**, **Hero
 Development** (incl. Promise → Moment of Fulfillment), **Quintessences** (all 18, name +
-verbatim effect — built at runtime from `LITM_DATA` via `renderQuintRef`, since the data is
-injected after boot), **Camping**. *(The Core-Book's verbatim example spends, the per-action
-Might table, the Gerrin tutorial, and the 5E crossover are deferred — they need source text
-not reachable here; see Roadmap Phase 7.)*
+verbatim effect), **Camping**. The Might example-table and the Quintessences list are built at
+runtime via `renderRefData` (→ `renderMightRef` + `renderQuintRef`), since `LITM_DATA` is
+injected after boot. *(The Core-Book's verbatim curated example spends, the Gerrin tutorial,
+and the 5E crossover are deferred — they need source text not reachable here; see Roadmap
+Phase 7.)*
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
@@ -443,9 +449,10 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
 - [x] **Action Grimoire** browser — searchable; built from the Effect costs the spender already
       enforces, with illustrative example actions. *(Follow-up: the Core-Book's verbatim curated
       example spells/spends — "Climb a ledge", "Tame a beast", etc. — need the source text.)*
-- [x] **Might / Favored / Imperiled** explainer — the mechanic (task-Might vs your Might → ±3/±6).
-      *(Follow-up: the rulebook's specific action-Might table — Climb/Archery/Sneak/Craft/Heal at
-      Origin/Adventure/Greatness — needs the source text.)*
+- [x] **Might / Favored / Imperiled** explainer — the mechanic (task-Might vs your Might → ±3/±6),
+      **plus the rulebook's per-Might example-action table** (Climb/Archery/Performance/Sneak/
+      Craft/Heal at Origin/Adventure/Greatness), sourced via NotebookLM into
+      `_build/might-table.json` and rendered by `renderMightRef`. ✅ (2026-06-06)
 - [ ] Built-in **tutorial** (the Gerrin deer-stalker walkthrough) as a first-run guide.
       *(Blocked: needs the Core-Book narrative.)*
 - [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
