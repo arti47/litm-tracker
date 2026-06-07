@@ -346,6 +346,95 @@
           "might": null
         }
       ]
+    },
+    {
+      "section": "Common Consequences",
+      "page": 61,
+      "intro": "The following is a list of general-use Consequences for each category of actions presented in the book, summed up here for ease of access.",
+      "lists": [
+        {
+          "heading": "Battle Consequences",
+          "items": [
+            "An enemy lands a blow or retaliates (wounded).",
+            "An enemy gets a chance to prepare or set something up (gaining a status or tag).",
+            "An enemy escapes and closes the way behind them (Blocked).",
+            "You are disarmed, or a piece of gear is damaged or lost (worn, chipped, mucked-up, or scratch a tag).",
+            "You fall prone, are knocked-back, or stumble and become off-balanced.",
+            "You are distracted or surprised.",
+            "You are forced into an inconvenient or dangerous position (exposed, surrounded, cornered).",
+            "You become angry, panicked, or otherwise emotional.",
+            "You lose your aim, your preparedness, or your cool (remove a beneficial status).",
+            "You run out of arrows, pebbles, or other ammunition (Blocked).",
+            "You get in the way of allies (in-the-way or remove beneficial status).",
+            "You harm allies, innocents, or something valuable (wounded or scratch a tag).",
+            "The battle draws unwanted attention (Exposure), or a new enemy is already arriving (New Challenge).",
+            "Something beautiful or important is damaged or destroyed in the fight (Ill Tidings).",
+            "Your mount or vehicle gets unbalanced.",
+            "Your foe or misstep forces you into something that restrains you."
+          ]
+        },
+        {
+          "heading": "Magic Consequences",
+          "items": [
+            "Your soul is sapped, your powers wane, or you exhaust your magical resources such as ingredients (drained, short-on-ingredients, or scratch a tag).",
+            "You or someone else suffers dangerous side-effects (wounded, cursed).",
+            "You disrupt helpful magic effects on yourself, your target, or nearby (remove a beneficial status or scratch a tag).",
+            "Your magic powers run rampant (III Tidings).",
+            "Your magic proves ineffective at this task (Blocked).",
+            "Your magic is very noticeable (Exposure).",
+            "You leave a magical scar in the area (cursed or story tag)."
+          ]
+        },
+        {
+          "heading": "Social Consequences",
+          "items": [
+            "You become embarrassed, frustrated, scared, angered, sad, disheartened, remorseful, heartbroken, or otherwise emotionally compromised.",
+            "You are convinced, charmed, tempted, or otherwise have your mind changed by someone else.",
+            "You end up paying more than you can afford (indebted).",
+            "You end up drinking more than you can handle (intoxicated).",
+            "The target changes their mind (reduce convinced).",
+            "The target demands something in return (scratch a tag), swearing an oath (sworn), or the completion of a task.",
+            "They grow suspicious, wary, or disinterested in you, making further engagements difficult.",
+            "You insult them or otherwise make them decide to cut ties with you, at least for now (Blocked).",
+            "You harm your reputation in town (disliked).",
+            "An enemy learns about your actions, or you reveal more than you intended (Exposure).",
+            "The target behaves in an unexpected way or reveals an unexpected advantage (add story tag)."
+          ]
+        },
+        {
+          "heading": "Travel Consequences",
+          "items": [
+            "You grow exhausted.",
+            "The long hours on the road take their toll and you become homesick, agitated, road-weary, or otherwise emotional.",
+            "Your equipment gets damaged or lost (worn, chipped, mucked-up, or scratch a tag).",
+            "You go through a thicket, climb over sharp rocks, or otherwise become bruised or filthy.",
+            "You are hurt by a hazard (wounded, burnt, poisoned, etc.).",
+            "The weather conditions are harsh (sunburned or frostbite).",
+            "You cross a muddy pool or clouds of insects (sickened).",
+            "You push your mount or transport too far (exhausted or damaged).",
+            "You become lost or are forced to backtrack (lost, or remove traverse).",
+            "You run out of food or water (short-on-supplies, hungry, thirsty, or scratch tags).",
+            "You are forced to take a longer route than you'd planned (time-passes).",
+            "You maneuver through an open area (exposed).",
+            "You run into a hazard or a barrier (New Challenge).",
+            "A path is no longer available: a bridge was raised, a ship is gone, the trail was covered by mudslide, etc. (Blocked).",
+            "Your activity raises suspicion (Exposure or increase the alarm or alert level of enemies).",
+            "You are discovered by a wild animal, monster, brigands, or a patrol (New Challenge)."
+          ]
+        },
+        {
+          "heading": "Other Consequences",
+          "items": [
+            "You are discovered, or your activity is noticed (suspicious, alarm, or Exposure).",
+            "You trigger a trap (wounded, poisoned, alarm, etc. or Blocked, Exposure, or New Challenge).",
+            "You run into a barrier (add story tags, Blocked, or a New Challenge).",
+            "The enemy starts keeping an eye on you (marked).",
+            "A plan of action or prepared item proves to be no longer relevant (scratch a tag).",
+            "The information you get is vague or part-true, part-false (Yes, but...)."
+          ]
+        }
+      ],
+      "entries": []
     }
   ]
 }

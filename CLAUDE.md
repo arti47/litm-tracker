@@ -371,8 +371,11 @@ rendered as a collapsible `<details>` card showing action examples, explanation,
 **hinders**, **Success** effects, **Extra Feats**, **Consequences**, and any **Might** note. A search
 box filters across all entry text and auto-expands matches. Opened from a **📜 Browse the Action
 Grimoire** button in the Reference tab's Action-Grimoire section and the **📜 Action Grimoire** ☰ menu
-item. **Partial dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks**
-(11 entries); being filled in section by section (see Roadmap Phase 7). No new localStorage key.
+item. Prose/reference sections (e.g. **Common Consequences**) carry an `intro` + grouped
+`lists` (heading + items) instead of action entries, rendered as bulleted lists. **Partial
+dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks** (11 entries) +
+**Common Consequences** (prose); filled in section by section (see Roadmap Phase 7). No new
+localStorage key.
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).

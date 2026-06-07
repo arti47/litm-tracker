@@ -203,6 +203,10 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
 .ag-help .ag-lbl { color: var(--status-ink); }
 .ag-hind .ag-lbl { color: var(--bad); }
 .ag-ex .ag-lbl { color: var(--ink-soft); }
+.ag-list { margin: 4px 0 10px; }
+.ag-list h4 { margin: 6px 0 3px; font-size: 13px; color: var(--teal); }
+.ag-list ul { margin: 0; padding-left: 18px; }
+.ag-list li { font-size: 13px; line-height: 1.45; margin: 2px 0; color: var(--ink-soft); }
 
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
@@ -805,9 +809,19 @@ function renderAG(){
       return hay.indexOf(q)>=0;
     });
     const showIntro=sec.intro && (!q || secMatch);
-    if(!entries.length && !showIntro) return;
+    const lists=(sec.lists||[]).map(l=>{
+      if(!q||secMatch) return l;
+      if((l.heading||'').toLowerCase().indexOf(q)>=0) return l;
+      const items=(l.items||[]).filter(it=>String(it).toLowerCase().indexOf(q)>=0);
+      return items.length ? {heading:l.heading, items} : null;
+    }).filter(Boolean);
+    if(!entries.length && !lists.length && !showIntro) return;
     html+='<div class="ag-sec"><h3>'+esc(sec.section||'')+(sec.page?' <span class="ag-pg">p.'+sec.page+'</span>':'')+'</h3>';
     if(showIntro) html+='<p class="ag-intro">'+esc(sec.intro)+'</p>';
+    lists.forEach(l=>{
+      html+='<div class="ag-list">'+(l.heading?'<h4>'+esc(l.heading)+'</h4>':'')
+        +'<ul>'+(l.items||[]).map(it=>'<li>'+esc(it)+'</li>').join('')+'</ul></div>';
+    });
     entries.forEach(e=>{
       html+='<details class="ag-entry"'+(q?' open':'')+'><summary>'+esc(e.name)+'</summary><div class="ag-edetail">';
       if(e.explanation) html+='<p>'+esc(e.explanation)+'</p>';
