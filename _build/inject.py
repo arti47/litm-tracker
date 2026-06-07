@@ -29,6 +29,10 @@ if os.path.exists(gpath):
 tpath=os.path.join(B,'tutorial.json')
 if os.path.exists(tpath):
     data['tutorial']=json.load(open(tpath,encoding='utf-8'))['tutorial']
+# Action Grimoire supplement catalog (browser overlay) — separate book via NotebookLM.
+agpath=os.path.join(B,'action-grimoire.json')
+if os.path.exists(agpath):
+    data['actionGrimoire']=json.load(open(agpath,encoding='utf-8'))['sections']
 wiz=open(os.path.join(B,'wizard.js'),encoding='utf-8').read()
 datajs='const LITM_DATA = '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n'
 block='\n/* ===== Phase 2: creation data + wizard ===== */\n'+datajs+wiz+'\n'
