@@ -51,7 +51,7 @@ As of last verification:
 - **`character-tracker.html`**: ~2,223 lines / ~291 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v16` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v20` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
