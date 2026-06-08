@@ -38,6 +38,10 @@ orpath=os.path.join(B,'oracle.json')
 if os.path.exists(orpath):
     odata=json.load(open(orpath,encoding='utf-8')); odata.pop('_source',None)
     data['oracle']=odata
+# Character Pack — 20 ready-made Heroes (separate supplement).
+ppath=os.path.join(B,'premades.json')
+if os.path.exists(ppath):
+    data['premades']=json.load(open(ppath,encoding='utf-8'))['premades']
 wiz=open(os.path.join(B,'wizard.js'),encoding='utf-8').read()
 datajs='const LITM_DATA = '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n'
 block='\n/* ===== Phase 2: creation data + wizard ===== */\n'+datajs+wiz+'\n'

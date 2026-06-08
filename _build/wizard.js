@@ -85,7 +85,8 @@
   function closeWizard(){ ov.classList.remove('show'); draft=null; }
 
   function buildSteps(){
-    if(path==='simplest'){ steps=['name','store','fellowship']; }
+    if(path==='premade'){ steps=['premade']; }
+    else if(path==='simplest'){ steps=['name','store','fellowship']; }
     else if(path==='quickest'){ steps=['name','trope','t0','t1','t2','t3','store','fellowship']; }
     else { steps=['name','d0','d1','d2','d3','store','fellowship']; } // detailed
   }
@@ -98,7 +99,8 @@
     const step=steps[stepIdx];
     // progress bar
     document.getElementById('wzProg').innerHTML=steps.map((s,i)=>`<span class="${i<=stepIdx?'on':''}"></span>`).join('');
-    if(step==='name') renderName();
+    if(step==='premade') renderPremade();
+    else if(step==='name') renderName();
     else if(step==='trope') renderTrope();
     else if(/^t\d$/.test(step)) renderKit(+step[1]);
     else if(/^d\d$/.test(step)) renderDetail(+step[1]);
@@ -111,7 +113,10 @@
     n.style.visibility=showNext?'visible':'hidden';
     n.textContent=nextLabel||'Next';
   }
-  document.getElementById('wzBack').onclick=()=>{ if(stepIdx>0){ stepIdx--; render(); } else { if(confirm('Discard this new Hero?')) closeWizard(); } };
+  document.getElementById('wzBack').onclick=()=>{
+    if(path==='premade' && draft && draft._pm!=null){ draft._pm=null; render(); return; }
+    if(stepIdx>0){ stepIdx--; render(); } else { if(confirm('Discard this new Hero?')) closeWizard(); }
+  };
   document.getElementById('wzNext').onclick=()=>nextStep();
   function nextStep(){
     if(stepIdx<steps.length-1){ stepIdx++; render(); }
@@ -126,15 +131,97 @@
       <p class="wz-sub">A Hero is four <b>themes</b>, each a set of tags + a Quest. Pick a method — you can edit everything afterward.</p>
       <button class="wz-pick" data-p="quickest"><div class="nm">⚡ Quickest — pick a Trope</div><div class="fl">Choose a ready-made recipe (3 themes + a 4th), then pick your tags from each theme's kit. Fastest way to a playable Hero.</div></button>
       <button class="wz-pick" data-p="detailed"><div class="nm">📖 Detailed — answer Themebooks</div><div class="fl">Build each theme by answering its themebook questions. Most thoughtful and personal.</div></button>
-      <button class="wz-pick" data-p="simplest"><div class="nm">✍️ Simplest — free-form</div><div class="fl">Start with a blank sheet and write your four themes yourself.</div></button>`;
+      <button class="wz-pick" data-p="simplest"><div class="nm">✍️ Simplest — free-form</div><div class="fl">Start with a blank sheet and write your four themes yourself.</div></button>
+      ${(D.premades&&D.premades.length)?`<button class="wz-pick" data-p="premade"><div class="nm">📦 Ready-made — pick a pre-built Hero</div><div class="fl">Choose one of ${D.premades.length} fully-built Heroes from the Character Pack — themes, tags, Quests, Special Improvements, and backpack all done. Edit afterward.</div></button>`:''}`;
     $b().querySelectorAll('[data-p]').forEach(btn=>btn.onclick=()=>{
       path=btn.dataset.p; stepIdx=0;
-      if(path!=='simplest'){ draft.themes=[blankT(),blankT(),blankT(),blankT()]; }
-      else { draft.themes=[blankT(),blankT(),blankT(),blankT()]; }
+      if(path==='premade'){ draft._pm=null; }
+      draft.themes=[blankT(),blankT(),blankT(),blankT()];
       render();
     });
   }
   function blankT(){ return {id:uid(),type:'Skill or Trade',title:'',power:[],weak:[],quest:'',improve:0,abandon:0,milestone:0,special:'',specials:[]}; }
+
+  // ---------- Step: premade (ready-made Hero) ----------
+  function renderPremade(){
+    document.getElementById('wzTitle').textContent='Ready-made Hero';
+    const list=D.premades||[];
+    // ----- list view (grouped by tier) -----
+    if(draft._pm==null){
+      setFoot(true,false);
+      const groups=[
+        ['dalesfolk','Dalesfolk Heroes','Ordinary folk of the Dales — a typical rustic-fantasy start (mostly Origin themes).'],
+        ['powerful','Uncanny & Powerful Beings','High-power options — spirits, a revenant, a dragon. Check with your Narrator before choosing one.']
+      ];
+      let html=`<h2 class="wz-h">Pick a ready-made Hero</h2><p class="wz-sub">A fully-built Hero — four themes with tags, Quests, Special Improvements, and a packed backpack. Tap one to preview, then create. You can edit everything afterward on the sheet.</p>`;
+      groups.forEach(([key,label,blurb])=>{
+        const items=list.map((c,i)=>[c,i]).filter(([c])=>c.tier===key);
+        if(!items.length) return;
+        html+=`<div class="wz-fld" style="margin:14px 0 2px"><span>${esc(label)}</span></div><p class="wz-note" style="margin:0 0 8px">${esc(blurb)}</p>`;
+        items.forEach(([c,i])=>{
+          html+=`<button class="wz-pick" data-i="${i}"><div class="nm">${esc(c.name)}</div><div class="fl">${esc(c.tagline)}</div></button>`;
+        });
+      });
+      $b().innerHTML=html;
+      $b().querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{ draft._pm=+b.dataset.i; render(); });
+      return;
+    }
+    // ----- preview view -----
+    const c=list[draft._pm]; if(!c){ draft._pm=null; render(); return; }
+    setFoot(true,true,'Create Hero ✓');
+    let html=`<button class="wz-pick" id="wz_pmback" style="margin-bottom:12px;padding:9px 13px"><div class="nm" style="font-size:14px">← Choose a different Hero</div></button>`;
+    html+=`<h2 class="wz-h">${esc(c.name)}</h2><p class="wz-sub">${esc(c.tagline)}</p>`;
+    if(c.quote) html+=`<div class="wz-card" style="font-style:italic;color:var(--ink-soft);font-size:13px;line-height:1.55">“${esc(c.quote)}”</div>`;
+    c.themes.forEach(t=>{
+      html+=`<div class="wz-card">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--ink-soft)">${esc(t.type)} · ${esc(mightLabel(t.type))}</div>
+        <div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--teal);margin:2px 0 7px">${esc(t.title)}</div>
+        <div class="chips">${t.power.map(p=>`<span class="chip pw">${esc(p)}</span>`).join('')}<span class="chip wk">${esc(t.weak)}</span></div>
+        <div class="wz-note"><b>Quest:</b> ${esc(t.quest)}</div>
+        <div class="wz-note" style="margin-top:5px"><b>Special — ${esc(t.special.name)}:</b> ${esc(t.special.desc)}</div>
+        <div class="wz-note" style="margin-top:5px"><b>Advancement tags:</b> ${t.advance.map(esc).join(' · ')}</div>
+      </div>`;
+    });
+    html+=`<div class="wz-card"><div class="wz-fld" style="margin-bottom:4px"><span>Backpack</span></div><div class="chips">${(c.backpack||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div></div>`;
+    if(c.examples&&c.examples.length){
+      html+=`<div class="wz-card"><div class="wz-fld" style="margin-bottom:4px"><span>Example actions</span></div><ul class="qlist">${c.examples.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+    }
+    html+=`<p class="wz-note">Creating this Hero copies all of the above onto your sheet. Descriptions, advancement tags, the quote, and these example actions are saved to the Hero's notes for reference.</p>`;
+    $b().innerHTML=html;
+    document.getElementById('wz_pmback').onclick=()=>{ draft._pm=null; render(); };
+  }
+  function commitPremade(){
+    const c=(D.premades||[])[draft._pm]; if(!c){ closeWizard(); return; }
+    const hero=blank();
+    hero.id=uid();
+    hero.playerName=draft.playerName||'';
+    hero.heroName=draft.heroName||c.name;
+    hero.themes=c.themes.map(t=>({
+      id:uid(), type:t.type, title:t.title,
+      power:(t.power||[]).map(p=>({id:uid(),text:p,scratched:false})),
+      weak:[{id:uid(),text:t.weak||''}],
+      quest:t.quest||'', improve:0, abandon:0, milestone:0,
+      special:'Background: '+(t.desc||'')+(t.advance&&t.advance.length?('\n\nAdvancement power tags (gain via Improve): '+t.advance.join(', ')):''),
+      specials:t.special?[{name:t.special.name,desc:t.special.desc}]:[]
+    }));
+    while(hero.themes.length<4) hero.themes.push(emptyTheme());
+    hero.backpack=(c.backpack||[]).map(x=>({id:uid(),text:x,type:'story',scratched:false}));
+    if(!hero.backpack.length) hero.backpack=[{id:uid(),text:'',type:'story',scratched:false}];
+    let notes=c.tagline||'';
+    if(c.quote) notes+='\n\n“'+c.quote+'”';
+    if(c.examples&&c.examples.length) notes+='\n\nExample actions:\n• '+c.examples.join('\n• ');
+    hero.notes=notes;
+    roster.push(hero); activeId=hero.id; S=hero;
+    if(typeof save==='function') save();
+    if(typeof renderAll==='function') renderAll();
+    if(typeof showTab==='function') showTab('hero');
+    closeWizard();
+    if(typeof toast==='function') toast('Hero created — '+(hero.heroName||'unnamed'));
+  }
+  function mightLabel(type){
+    const m=mightOf[type]||'';
+    return ({origin:'Origin',adventure:'Adventure',greatness:'Greatness',any:'Any Might'})[m]||m;
+  }
 
   // ---------- Step: name ----------
   function renderName(){
@@ -363,6 +450,7 @@
 
   // ---------- commit ----------
   function commit(){
+    if(path==='premade'){ commitPremade(); return; }
     // normalise tag shapes (quickest stores plain strings; sheet needs {text,scratched})
     const hero=blank();
     hero.id=uid();

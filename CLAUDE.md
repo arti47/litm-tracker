@@ -37,9 +37,9 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 
 ### Current state (verify before quoting — figures drift)
 
-Last verified: **2026-06-06** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
+Last verified: **2026-06-08** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
 Improvements + Phase 4 development automation + Phase 6 scene board & camp/sojourn + Phase 7
-searchable reference). Re-run to refresh:
+searchable reference + the Oracle + the Character-Pack ready-made Heroes). Re-run to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -48,10 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,728 lines / ~542 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,816 lines / ~655 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
-  the Action Grimoire supplement catalog + the Oracle tables, ~230 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v35` (bump on every deploy)
+  the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
+  Heroes, ~458 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v36` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -102,14 +103,22 @@ three sources in `_build/` and injected:
   creatures/persons/places + vignettes), Profile Builder steps, Challenge Action (11 Roles),
   Consequences (d66), and Revelations (d66 × 3 acts) tables. Merged into `LITM_DATA.oracle`;
   rendered on the 🔮 Oracle tab (`renderOracle`/`drawOracle`).
+- `_build/premades.json` — the **Character Pack** supplement (a *separate book*): **20 ready-made
+  Heroes**, each with a tagline, flavor quote, tier (`dalesfolk`/`powerful`), 4 fully-built themes
+  (type, title, 2 base power tags, weakness, 3 advancement power tags, quest, description, Special
+  Improvement), a backpack, and example actions. Parsed from the pack markdown by
+  `_build/parse_premades.py`. Merged into `LITM_DATA.premades`; consumed by the wizard's
+  **📦 Ready-made Hero** path (`renderPremade`/`commitPremade` in `wizard.js`).
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
+- `_build/parse_premades.py` — regenerates `premades.json` from the Character Pack markdown
+  (`python3 _build/parse_premades.py <character_pack.md> _build/premades.json`).
 - `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
   `specials-override.json` + `might-table.json` + `grimoire.json` + `tutorial.json` +
-  `action-grimoire.json` + `oracle.json` + `wizard.js` → `character-tracker.html` **and** `index.html`
-  (mirrors automatically).
+  `action-grimoire.json` + `oracle.json` + `premades.json` + `wizard.js` → `character-tracker.html`
+  **and** `index.html` (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -155,7 +164,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
   `litm-data.json`, `quintessences.json`, `specials-override.json`, `might-table.json`,
-  `grimoire.json`, `tutorial.json`, `action-grimoire.json`, `oracle.json`, `parse_litm.py`, `inject.py`.
+  `grimoire.json`, `tutorial.json`, `action-grimoire.json`, `oracle.json`, `premades.json`,
+  `parse_litm.py`, `parse_premades.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -183,6 +193,10 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
     yes/no + interpretive d66, Conflict, Premade Profile, Profile Builder, Challenge Action,
     Consequences, Revelations). Consumed by the 🔮 Oracle tab (`litmOracle()`), rendered by
     `renderOracle`/`drawOracle`; the tab is gated by **Solo Play Mode** (`litm-solo`).
+  - `premades` (merged from `_build/premades.json`) — **20** ready-made Heroes from the Character
+    Pack, each {name, tagline, quote, tier(`dalesfolk`/`powerful`), themes[4]{type,title,power[2],
+    weak,advance[3],quest,desc,special{name,desc}}, backpack[], examples[]}. Consumed by the
+    wizard's **📦 Ready-made Hero** path (`renderPremade`/`commitPremade`).
 
 ### State model (one hero)
 ```
@@ -218,6 +232,18 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
     the lettered **Power Tag Questions** and **Weakness Tag Questions**, and **Quest Ideas**,
     with inputs to turn answers into the title/power/weakness tags + Quest.
   - **✍️ Simplest** — name + blank sheet (the original v1 behavior).
+  - **📦 Ready-made** — pick one of **20 pre-built Heroes** from the **Character Pack** supplement
+    (`LITM_DATA.premades`). The picker is **grouped by tier** — *Dalesfolk Heroes* (14 ordinary
+    rustic starters) and *Uncanny & Powerful Beings* (6 high-power options: a Thaumaturge,
+    revenant, fiendhunter, spriggan, Twilight emissary, and a dragon). Tap a Hero to see a full
+    **preview** (flavor quote, all 4 themes with their power/weakness tags · Might, Quest, Special
+    Improvement, and advancement tags; backpack; example actions), then **Create Hero ✓**.
+    `commitPremade` builds a full-fidelity Hero: 4 themes (title + 2 base power tags + weakness +
+    quest + Special Improvement on `theme.specials`), backpack items as story tags, each theme's
+    description + advancement tags saved to its notes (`theme.special`), and the tagline + quote +
+    example actions saved to the Hero's Notes. Bypasses the name/store/fellowship steps (single
+    `premade` step); the Hero name defaults to the character's name and is editable on the sheet.
+    Added no new localStorage key. (`renderPremade`/`commitPremade`/`mightLabel` in `wizard.js`.)
 - **General Store** step — pick one starting **backpack** story tag from trope suggestions +
   6 curated categories (armor/weapons/shields/gear/valuables), or type your own.
 - **Fellowship** step — choose one of **6 Fellowship kits** (or skip) and build a
