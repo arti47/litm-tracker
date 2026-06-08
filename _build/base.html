@@ -198,6 +198,11 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
 .ag-entry[open] summary::before { content: "▾ "; }
 .ag-edetail { padding: 0 11px 11px; font-size: 13px; line-height: 1.5; }
 .ag-edetail p { margin: 4px 0 8px; }
+.ag-more { margin-top: 8px; border-top: 1px dashed var(--border); padding-top: 4px; }
+.ag-more > summary { font-size: 12px; font-weight: 700; color: var(--teal); cursor: pointer; list-style: none; padding: 4px 0; }
+.ag-more > summary::-webkit-details-marker { display: none; }
+.ag-more > summary::before { content: "▸ "; }
+.ag-more[open] > summary::before { content: "▾ "; }
 .ag-row { margin: 5px 0; }
 .ag-lbl { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .3px; margin-right: 4px; color: var(--teal); }
 .ag-help .ag-lbl { color: var(--status-ink); }
@@ -847,14 +852,16 @@ function renderAG(){
       const idx=flat.push(e)-1;
       html+='<details class="ag-entry"'+(q?' open':'')+'><summary>'+esc(e.name)+'</summary><div class="ag-edetail">';
       if(e.explanation) html+='<p>'+esc(e.explanation)+'</p>';
-      html+=agList('e.g.',e.actionExamples,'ag-ex');
-      html+=agList('✓ helps',(e.power||{}).positive,'ag-help');
-      html+=agList('✕ hinders',(e.power||{}).negative,'ag-hind');
-      if(e.success) html+='<div class="ag-row"><span class="ag-lbl">Success</span>'+esc(e.success)+'</div>';
-      html+=agList('Extra feats',e.extraFeats);
-      html+=agList('Consequences',e.consequences);
-      if(e.might) html+='<div class="ag-row"><span class="ag-lbl">Might</span>'+esc(e.might)+'</div>';
-      html+='<button class="btn sm ag-use" data-agi="'+idx+'" style="margin-top:6px">🎲 Use in a roll</button>';
+      html+='<button class="btn sm ag-use" data-agi="'+idx+'" style="margin:2px 0 0">🎲 Use in a roll</button>';
+      let more='';
+      more+=agList('e.g.',e.actionExamples,'ag-ex');
+      more+=agList('✓ helps',(e.power||{}).positive,'ag-help');
+      more+=agList('✕ hinders',(e.power||{}).negative,'ag-hind');
+      if(e.success) more+='<div class="ag-row"><span class="ag-lbl">Success</span>'+esc(e.success)+'</div>';
+      more+=agList('Extra feats',e.extraFeats);
+      more+=agList('Consequences',e.consequences);
+      if(e.might) more+='<div class="ag-row"><span class="ag-lbl">Might</span>'+esc(e.might)+'</div>';
+      if(more) html+='<details class="ag-more"'+(q?' open':'')+'><summary>More details</summary>'+more+'</details>';
       html+='</div></details>';
     });
     html+='</div>';
