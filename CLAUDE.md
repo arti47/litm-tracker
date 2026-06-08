@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,223 lines / ~468 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,279 lines / ~471 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v25` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v26` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -375,6 +375,7 @@ box filters across all entry text and auto-expands matches. Opened from the **�
 Grimoire** button at the top of the Rules tab and the **📜 Action Grimoire** ☰ menu item. The
 browser also hosts the Core-Book's **worked examples** (`LITM_DATA.grimoire` via
 `grimoireExamplesHTML`, grouped by scenario) as a pinned "Core Rulebook — Worked Examples" block.
+Each action card also has a **🎲 Use in a roll** button that loads it into the roller (Phase B).
 Prose/reference sections (**Common Consequences**, **General Considerations**) carry an `intro`
 + grouped `lists` (heading + items) instead of action entries, rendered as bulleted lists.
 **Complete dataset** — all **19 leaf action sections (101 entries)** ordered by page (Crafting →
@@ -506,10 +507,13 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
       full action catalog, searchable. **Complete** (2026-06-06, full PDF extraction via Gemini):
       all **19 leaf action sections (101 entries)** + the **Common Consequences** & **General
       Considerations** prose, in `_build/action-grimoire.json`.
-- [ ] **Phase B — action→roll bridge** (the payoff of the catalog): from a Grimoire action,
-      jump to the Roll tab with its Power help/hinder suggestions as a tap-checklist (option 7a,
-      no fuzzy matching), seed the spend screen with that action's Success effects + Extra Feats,
-      and surface its Consequences on a 7–9 / 6−. Player-side only. **Next up.**
+- [x] ✅ **Phase B — action→roll bridge** (2026-06-06): each Grimoire action card has a **🎲 Use
+      in a roll** button (`useAGAction`); it loads the action into `agAction` and jumps to the Roll
+      tab, where a 🎬 panel (`#agRoll`/`renderAgRoll`) shows its Power **help/hinder suggestions as
+      a tap-checklist** (each ticked = ±1 in `computePower`, alongside your real tags; no fuzzy
+      matching). After a Success the spend panel is **seeded** with the action's **Success effects**
+      (reference) + **Extra Feats** as one-tap −1-Power buttons; on a 7–9 / 6− the outcome lists the
+      action's **Consequences**. A ✕ clears the loaded action. Transient (no persistence/localStorage).
 
 ### Phase 8 — Narrator-adjacent (optional / separate companion)
 *Out of scope for a pure player app, but defined in the rules — consider a sibling Narrator
