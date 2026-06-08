@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,387 lines / ~477 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,477 lines / ~485 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v30` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v31` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -183,6 +183,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
   fellowship:{…same shape as a theme…},
   relationships:[{name,tag,scratched}],
   statuses:[{name,boxes:[6×bool],limit:1–6}],   // limit defaults to 5 (Hero); legacy/unset → 5
+  progress:[{name,goal,cur,max}],   // progress/Limit tracks (gap #4); max 2–10, complete at cur≥max
   scene:[{text,type,scratched}],
   sceneBoard:{step:-1|0|1|2, stakes, threats} }
 ```
@@ -285,6 +286,11 @@ theme fills a track, and resets the track on completion:
   killed/transformed at 6); lower it for a Challenge/foe. The Limit box is dash-outlined; the
   warning fires at `tier ≥ limit` ("taken out", or "overcome"/"killed or transformed" at the
   Hero defaults). `statusLimit(st)` falls back to 5 for legacy/unset/out-of-range values.
+- **Progress & Limits (gap #4)** — a 🎯 card of named **progress tracks** toward a **Limit**
+  (a project's *making-progress*, a chase's *catch/outrun*, *unlock*, *breakthrough*). Each has
+  a box track (Limit 2–10 via selector), tap-to-set current, an optional "when filled" goal
+  note, and a **✓ reached its Limit** flag at `cur ≥ max`. The roller's **▲ Advance** spend fills
+  these. `renderProgress`/`addProgress`/`advanceProgress`; state `progress:[{name,goal,cur,max}]`.
 - **Scene story tags** — environment/temporary tags; flip helpful/hindering; remove.
 - **Scene board (Phase 6)** — a 🎬 card with the game-loop selector (Establish → Action →
   Consequences), a **stakes** field, and a **challenges/threats** note. Persisted per hero in
@@ -310,6 +316,10 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
 - **Burn a tag** 🔥 — one helpful tag gives **+3** instead of +1 (and is flagged to scratch).
 - **Status math** — only the single highest helpful and single highest hindering status count.
 - **Might** segmented control: Extr. Imperiled −6 / Imperiled −3 / Matched / Favored +3 / Extr. Favored +6.
+- **⚖️ Might helper (gap #2)** — a collapsible under the Might control: pick the **task's Might**
+  (Origin/Adventure/Greatness) and the **Might you bring**, and the app computes the modifier
+  (`(you−task)×3`, clamped ±6) and sets the dial. A manually-tapped Might clears the helper.
+  When a Grimoire action with a Might note is loaded, the note is surfaced in the 🎬 panel.
 - **Situational** ± stepper for any other foe/environment tags the Narrator invokes.
 - Live **Power** readout; animated dice; outcome banner:
   - **10+** Success (no Consequences) · **7–9** Success & Consequences · **6−** Consequences
@@ -340,7 +350,7 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
   - **Grimoire-seeded suggestions (gap #3):** when an action is loaded (Phase B), the panel
     parses the action's **Success** text into one-tap effect buttons (`parseSuccessEffects`/
     `AG_FX`/`seedEffect`): each effect keyword maps to the right spend form pre-filled with a
-    suggested tag/status name (CREATE/BESTOW→Backpack, ENHANCE/ADVANCE→Status, RESTORE→Reduce,
+    suggested tag/status name (CREATE/BESTOW→Backpack, ENHANCE→Status, ADVANCE→Progress, RESTORE→Reduce,
     DISRUPT/INFLUENCE/ATTACK/WEAKEN/SET BACK→Other/target, DISCOVER→instant −1). The form shows
     the remaining suggestions as quick-pick chips (`spSuggChips`). The full Success text stays
     available under a "Full Success text" sub-accordion. Extra Feats remain one-tap −1 buttons.
