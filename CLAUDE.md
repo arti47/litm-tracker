@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,502 lines / ~487 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,550 lines / ~492 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v32` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v33` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -185,7 +185,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
   statuses:[{name,boxes:[6×bool],limit:1–6}],   // limit defaults to 5 (Hero); legacy/unset → 5
   progress:[{name,goal,cur,max}],   // progress/Limit tracks (gap #4); max 2–10, complete at cur≥max
   scene:[{text,type,scratched}],
-  sceneBoard:{step:-1|0|1|2, stakes, threats} }
+  sceneBoard:{step:-1|0|1|2, stakes, threats},
+  journey:{dest, max(2–10), cur, time, vignettes:[{text,done}]} }   // Journey montage (Phase 6)
 ```
 
 ---
@@ -308,6 +309,15 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
 - **4 · Recover one Fellowship part** — un-scratch a chosen Fellowship power tag *or* renew a
   scratched relationship tag.
 - A running "This camp" log; each action applies to the sheet immediately (`renderAll`).
+
+### Journey montage (Phase 6) ✅
+A guided overlay (`#journeyOverlay`, `openJourney`/`renderJourney`/`closeJourney`), opened from
+the Scene card (**🧭 Journey montage…**) and the ☰ menu. Set a **destination** and a
+**legs-to-arrival** box track (Limit 2–10, tap to set), a **⏳ time-passes** counter (the journey
+clock), and a list of **Vignette Challenges** — each row has a **🎲** (closes the overlay and jumps
+to the Roll tab for a Quick action) and a **✓** that clears the vignette and advances one leg
+(strikes it through). Reaching the leg Limit shows **✓ Arrived at <dest>**. Persisted per hero in
+`journey`; a **Reset journey** button clears it.
 
 ### Roll (the headline feature) — rule-correct **2d6 + Power**
 - Auto-collects every eligible tag from the sheet (theme titles, power tags, weakness tags,
@@ -502,7 +512,7 @@ Implemented Features → "Play loop").
       combined into Power (`helpTags`/`renderHelp`). A foe **group/Challenge's Might** is entered
       via the Situational ± stepper (hint updated). Player-side; transient, cleared on hero switch.
 
-### Phase 6 — Scene & session context (still player-side) ✅ MOSTLY DONE (2026-06-06)
+### Phase 6 — Scene & session context (still player-side) ✅ DONE (2026-06-08)
 Scene board + Camping/Sojourn shipped; only the Journey montage remains.
 - [x] **Scene tracker** — current stakes, challenges/threats in view, and the game loop
       (Establish → Action → Consequences) as a lightweight selector. Shipped as the 🎬 Scene
@@ -511,8 +521,12 @@ Scene board + Camping/Sojourn shipped; only the Journey montage remains.
       Consequences): **Rest** (un-scratch power tags + reduce statuses), **Reflect** (mark
       Improve), **Camp Action** (advisory); then recover a Fellowship power tag or renew a
       relationship tag. Shipped as `#campOverlay` (see Implemented Features → "Camping & Sojourn").
-- [ ] **Journey** montage helper — Vignette Challenges resolved with Quick actions. *(Still open
-      — the only Phase-6 item left.)*
+- [x] **Journey** montage helper (2026-06-08) — a guided overlay (`#journeyOverlay`,
+      `openJourney`/`renderJourney`/`closeJourney`) opened from the Scene card + ☰ menu: set a
+      **destination** and **legs-to-arrival** box track (Limit 2–10), a **⏳ time-passes** counter
+      (the journey clock), and a list of **Vignette Challenges** — each with a 🎲 (jump to the Roll
+      tab for a Quick action) and a ✓ that clears it and advances a leg. "✓ Arrived" at the Limit.
+      Persisted per hero in `journey`.
 
 ### Phase 7 — Reference & onboarding ✅ MOSTLY DONE (2026-06-06)
 Shipped the **searchable Reference tab** (see Implemented Features → "Reference tab"): live

@@ -421,6 +421,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <label class="fld"><span>Stakes — what's at risk right now</span><input type="text" id="sb_stakes" placeholder="e.g. reach the ford before nightfall"></label>
     <label class="fld"><span>Challenges &amp; threats in view</span><textarea id="sb_threats" placeholder="Foes, Challenges, looming Threats the Narrator has shown…"></textarea></label>
     <button class="btn wide" style="margin-top:6px" onclick="openCamp()">🏕️ Camp / Sojourn…</button>
+    <button class="btn wide ghost" style="margin-top:6px" onclick="openJourney()">🧭 Journey montage…</button>
   </div>
   <div class="card">
     <h2>🟢 Statuses</h2>
@@ -613,6 +614,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="menu-item" onclick="newHero()"><span class="em">✨</span> New Hero</button>
     <button class="menu-item" onclick="openRoster()"><span class="em">👥</span> Switch Hero</button>
     <button class="menu-item" onclick="openCamp()"><span class="em">🏕️</span> Camp / Sojourn</button>
+    <button class="menu-item" onclick="openJourney()"><span class="em">🧭</span> Journey montage</button>
     <button class="menu-item" onclick="openTutorial()"><span class="em">📖</span> Tutorial (Gerrin walkthrough)</button>
     <button class="menu-item" onclick="openAG()"><span class="em">📜</span> Action Grimoire</button>
     <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
@@ -657,6 +659,15 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <h2>🏕️ Camp / Sojourn</h2>
     <p class="hint" style="margin:-8px 0 4px">Expire the scene's tags, establish your haven, take your activities, then recover one Fellowship part.</p>
     <div id="campBody"></div>
+  </div>
+</div>
+
+<!-- JOURNEY MONTAGE OVERLAY (Phase 6) -->
+<div class="overlay" id="journeyOverlay" onclick="if(event.target===this)closeJourney()">
+  <div class="sheet">
+    <h2>🧭 Journey</h2>
+    <p class="hint" style="margin:-8px 0 4px">Run a travel montage: set your destination and how many <b>legs</b> it takes, face a <b>Vignette Challenge</b> each leg (resolve it with a Quick action), and watch the clock.</p>
+    <div id="journeyBody"></div>
   </div>
 </div>
 
@@ -733,7 +744,8 @@ function blankHero() {
     statuses: [],
     progress: [],
     scene: [],
-    sceneBoard: { step: -1, stakes: '', threats: '' }
+    sceneBoard: { step: -1, stakes: '', threats: '' },
+    journey: { dest: '', max: 3, cur: 0, time: 0, vignettes: [] }
   };
 }
 
@@ -1334,6 +1346,42 @@ $('sb_threats').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',th
 let campCtx = null; // { limit, used, log:[] }
 function openCamp(){ if(typeof closeOverlays==='function') closeOverlays(); campCtx={limit:2,used:0,log:[]}; renderCamp(); $('campOverlay').classList.add('show'); }
 function closeCamp(){ $('campOverlay').classList.remove('show'); campCtx=null; }
+
+// ----- Journey montage helper (Phase 6) -----
+function openJourney(){ if(typeof closeOverlays==='function') closeOverlays(); if(!S.journey) S.journey={dest:'',max:3,cur:0,time:0,vignettes:[]}; renderJourney(); $('journeyOverlay').classList.add('show'); }
+function closeJourney(){ $('journeyOverlay').classList.remove('show'); }
+function renderJourney(){
+  const j=S.journey; const w=$('journeyBody'); if(!w||!j) return;
+  const max=Math.min(10,Math.max(2,j.max||3)), cur=Math.min(max,Math.max(0,j.cur||0));
+  let h='<label class="fld"><span>Destination</span><input id="jr_dest" placeholder="e.g. the North Slope, above the treeline" value="'+esc(j.dest||'')+'"></label>';
+  h+='<h3 style="margin:12px 0 4px">Legs to arrival</h3><p class="hint" style="margin:0 0 6px">Tap a box to set how far you\'ve come; clearing a vignette also advances one leg.</p><div class="boxes" id="jr_boxes"></div>';
+  h+='<div class="status-meta"><span>Legs</span><select id="jr_max"></select>'+(cur>=max?'<span class="lim-warn" style="color:var(--teal)">✓ Arrived at '+esc(j.dest||'your destination')+'!</span>':'')+'</div>';
+  h+='<h3 style="margin:12px 0 4px">⏳ Time passes</h3><p class="hint" style="margin:0 0 6px">The journey\'s clock — bump it on a Consequence or an ignored road Threat.</p><div class="stepper"><button id="jr_tm">−</button><b id="jr_tv" style="font-size:18px;min-width:34px;text-align:center">'+(j.time||0)+'</b><button id="jr_tp">+</button></div>';
+  h+='<h3 style="margin:14px 0 4px">Vignette Challenges</h3><div id="jr_vigs"></div><button class="addbtn" id="jr_addv">＋ add a vignette</button>';
+  h+='<button class="btn ghost wide" id="jr_reset" style="margin-top:14px">Reset journey</button>';
+  w.innerHTML=h;
+  const bx=$('jr_boxes');
+  for(let t=1;t<=max;t++){ const b=document.createElement('button'); b.className='sbox'+(t<=cur?' on':'')+(t===max?' lim':''); b.textContent=t; b.onclick=()=>{ j.cur=(cur===t?t-1:t); save(); renderJourney(); }; bx.appendChild(b); }
+  const sel=$('jr_max'); for(let L=2;L<=10;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===max)o.selected=true; sel.appendChild(o); }
+  sel.onchange=()=>{ j.max=+sel.value; if((j.cur||0)>j.max)j.cur=j.max; save(); renderJourney(); };
+  $('jr_dest').oninput=e=>{ j.dest=e.target.value; save(); };
+  $('jr_tm').onclick=()=>{ j.time=Math.max(0,(j.time||0)-1); save(); renderJourney(); };
+  $('jr_tp').onclick=()=>{ j.time=(j.time||0)+1; save(); renderJourney(); };
+  const vw=$('jr_vigs');
+  if(!(j.vignettes||[]).length) vw.innerHTML='<p class="muted">No vignettes yet.</p>';
+  (j.vignettes||[]).forEach((v,i)=>{
+    const row=document.createElement('div'); row.className='tagrow';
+    const inp=document.createElement('input'); inp.type='text'; inp.placeholder='the challenge this leg (e.g. an icy ford, bandits, a sudden storm)'; inp.value=v.text||''; if(v.done) inp.style.textDecoration='line-through';
+    inp.oninput=()=>{ v.text=inp.value; save(); };
+    const roll=document.createElement('button'); roll.className='ic'; roll.textContent='🎲'; roll.title='Resolve with a Quick action'; roll.style.flex='none'; roll.onclick=()=>{ closeJourney(); showTab('roll'); };
+    const done=document.createElement('button'); done.className='ic'; done.textContent=v.done?'↩':'✓'; done.title=v.done?'reopen':'cleared — advance a leg'; done.style.flex='none';
+    done.onclick=()=>{ if(!v.done){ v.done=true; j.cur=Math.min(max,(j.cur||0)+1); } else v.done=false; save(); renderJourney(); };
+    const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none'; del.onclick=()=>{ j.vignettes.splice(i,1); save(); renderJourney(); };
+    row.appendChild(inp); row.appendChild(roll); row.appendChild(done); row.appendChild(del); vw.appendChild(row);
+  });
+  $('jr_addv').onclick=()=>{ (j.vignettes=j.vignettes||[]).push({id:uid(),text:'',done:false}); save(); renderJourney(); };
+  $('jr_reset').onclick=()=>{ if(confirm('Reset this journey? Clears progress, clock, and vignettes.')){ S.journey={dest:'',max:3,cur:0,time:0,vignettes:[]}; save(); renderJourney(); } };
+}
 function campRest(){
   let n=0, red=0;
   S.themes.forEach(th=>{ if(th._titleScr){th._titleScr=false;n++;} th.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} }); });
