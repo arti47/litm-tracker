@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,223 lines / ~440 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,223 lines / ~468 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v24` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v25` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -365,7 +365,7 @@ step's text is split into paragraphs and HTML-escaped. Opened from the **▶ Pla
 interactive tutorial** button in the Reference tab's Getting-started section and the **📖
 Tutorial** ☰ menu item. Reopening always resets to step 1 (no new localStorage key).
 
-### Action Grimoire browser (supplement) — 🚧 in progress
+### Action Grimoire browser (supplement) ✅ COMPLETE
 A searchable **browser overlay** (`#agOverlay`, `openAG`/`renderAG`/`closeAG`, `litmActionGrimoire()`)
 for the standalone **Action Grimoire** supplement (a *separate book* from the Core Rulebook). Data
 in `LITM_DATA.actionGrimoire` (from `_build/action-grimoire.json`): sections of action entries, each
@@ -375,12 +375,13 @@ box filters across all entry text and auto-expands matches. Opened from the **�
 Grimoire** button at the top of the Rules tab and the **📜 Action Grimoire** ☰ menu item. The
 browser also hosts the Core-Book's **worked examples** (`LITM_DATA.grimoire` via
 `grimoireExamplesHTML`, grouped by scenario) as a pinned "Core Rulebook — Worked Examples" block.
-Prose/reference sections (e.g. **Common Consequences**) carry an `intro` + grouped
-`lists` (heading + items) instead of action entries, rendered as bulleted lists. **Partial
-dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks**, **Support In Battle**, **Battlefield Movement**, **Battle Defense**,
-**Information Gathering**, **Thievery & Skulduggery**, **Survival In The Wild**, **Navigating Danger**, **Recovery & Healing**, **The Art Of Magic**, **Conjured Creatures**, **Magical Crafting**, **Using Magical Abilities**, **Commerce And Trade** (87 entries) + **Common Consequences** and
-**General Considerations** (prose); filled in section by section (see
-Roadmap Phase 7). No new localStorage key.
+Prose/reference sections (**Common Consequences**, **General Considerations**) carry an `intro`
++ grouped `lists` (heading + items) instead of action entries, rendered as bulleted lists.
+**Complete dataset** — all **19 leaf action sections (101 entries)** ordered by page (Crafting →
+Direct/Tactical Attacks → Support/Movement/Defense → Information Gathering → Thievery → Survival
+→ Navigating Danger → Recovery & Healing → the four Magic sections → Commerce → Community →
+Influence & Intrigue → Fellowship) + the 2 prose sections. No new localStorage key. *(Next:
+Phase B — the action→roll bridge.)*
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
@@ -501,15 +502,14 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
       rules call-outs, so the text reads as the rulebook pages do.)*
 - [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
       *(Blocked: needs the notebook's crossover source.)*
-- [ ] 🚧 **Action Grimoire supplement** browser (`#agOverlay`/`renderAG`) — the standalone book's
-      full action catalog, searchable. Infrastructure + **Crafting**, **Direct Attacks**,
-      **Tactical Attacks** (20 entries) + the **Common Consequences** & **General Considerations**
-      prose sections shipped (2026-06-06, full PDF extraction via Gemini); remaining ~16 leaf
-      sections (Support/Movement/Defense, Information Gathering, Thievery, Survival, Navigating
-      Danger, Recovery & Healing, the Magic sections, Commerce, Community, Influence & Intrigue,
-      Fellowship) are being extracted and appended to `_build/action-grimoire.json`. **Phase B**
-      (action→roll bridge: tap-checklist suggestions, seeded spend, consequences) is queued for
-      once the catalog is more complete.
+- [x] ✅ **Action Grimoire supplement** browser (`#agOverlay`/`renderAG`) — the standalone book's
+      full action catalog, searchable. **Complete** (2026-06-06, full PDF extraction via Gemini):
+      all **19 leaf action sections (101 entries)** + the **Common Consequences** & **General
+      Considerations** prose, in `_build/action-grimoire.json`.
+- [ ] **Phase B — action→roll bridge** (the payoff of the catalog): from a Grimoire action,
+      jump to the Roll tab with its Power help/hinder suggestions as a tap-checklist (option 7a,
+      no fuzzy matching), seed the spend screen with that action's Success effects + Extra Feats,
+      and surface its Consequences on a 7–9 / 6−. Player-side only. **Next up.**
 
 ### Phase 8 — Narrator-adjacent (optional / separate companion)
 *Out of scope for a pure player app, but defined in the rules — consider a sibling Narrator

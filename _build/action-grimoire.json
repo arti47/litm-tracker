@@ -1,5 +1,5 @@
 {
-  "_source": "Legend in the Mist — Action Grimoire (supplement). Verbatim via NotebookLM, extracted section by section. PARTIAL: filled in as sections are added. Merged into LITM_DATA.actionGrimoire by inject.py.",
+  "_source": "Legend in the Mist — Action Grimoire (supplement, a separate book from the Core Rulebook). Verbatim, extracted from the PDF via Gemini. COMPLETE: all leaf action sections + the Common Consequences / General Considerations prose. Merged into LITM_DATA.actionGrimoire by inject.py.",
   "sections": [
     {
       "section": "Crafting",
@@ -3655,6 +3655,713 @@
             "Your behavior, methods, or work practices earn you a ill-repute.",
             "A new problem crops up and threatens your work (Complication of New Challenge).",
             "You overwork yourself or your laborers (exhausted, resentful, or scratch a tag)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Community",
+      "page": 76,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Competitions",
+          "actionExamples": [
+            "Knife throwing competition.",
+            "Sparring tournaments",
+            "Debates",
+            "Game hunting for sport",
+            "Tavern gambling",
+            "Sorcery school trials",
+            "Horse race",
+            "Wizarding duel",
+            "Battle of the Bards"
+          ],
+          "explanation": "You use your skills to win a game or a competition against other competitors. Competitions can be represented by a Quick outcome, Battle actions (e.g., a play-by-play dueling match, or a fight between two arcane constructs), or the resolution rules presented here.\nEach competitor has their own win Limit, with the same maximum as the others (assuming the competition is fair). The first one to max out win is the winner. The Limit can be rephrased or even reversed as lose, if it's a game of attrition, in which case the last one standing is the winner. For zero-sum competitions, in which both sides are fighting over the same single resource (rope pulling, popular vote), use a polar Limit (Polar Statuses, Corebook Vol. I, page 170). See also Chases (page 47).",
+          "power": {
+            "positive": [
+              "relevant skills in sports, music, riding, falconry, or gambling",
+              "experience with this specific game or its analog",
+              "honed reflexes",
+              "personal drive to win.",
+              "well-maintained or bespoke gear such as a trusty horse or customized arms and armor",
+              "prowess-bolstering magics or elixirs",
+              "luck",
+              "inspiration or other motivational emotions"
+            ],
+            "negative": [
+              "stress and weariness",
+              "the challenge level, such as tough terrain or a haughty crowd to impress",
+              "cynical, indifferent, or gloom-ridden attitude.",
+              "poor quality gear",
+              "distractions and frivolities",
+              "woeful curses",
+              "star-crossed luck",
+              "interfering magic"
+            ]
+          },
+          "success": "ADVANCE with statuses to max out win, depending on the competition or game, such as winning, loved-by-the-crowd, points-scored, rounds-completed, or successful-hits.\nSET BACK to lower your opponent's winning status, if possible.\nDepending on the game you might be able to Enhance to set up your next move, Disrupt your opponent's next move, Create a shortcut, etc.",
+          "extraFeats": [
+            "Entertain onlookers.",
+            "Stop your opponent from taking a move they planned.",
+            "Gain an extra turn and keep the spotlight.",
+            "Become known as a local folk hero (if you win) or villain (if you lose)."
+          ],
+          "consequences": [
+            "Your opponent scores gains (winning).",
+            "Useful game resources are wasted or tactics become useless (scratch a tag).",
+            "Your opponent figures out your next move (Exposure).",
+            "You become tired, distressed, or confused."
+          ],
+          "might": null
+        },
+        {
+          "name": "Gathering Support and Resources",
+          "actionExamples": [
+            "Rally the people with a speech.",
+            "Source supplies for a journey",
+            "Call on your followers",
+            "Ask the family to share",
+            "Garner political support",
+            "Unlock hidden caches.",
+            "Pull strings",
+            "Cash in favors",
+            "Stockpile for a harsh winter",
+            "Build up munitions for a battle"
+          ],
+          "explanation": "This action represents working within a group to gain support for an endeavor. If the Hero is building toward a long term goal, or if handling a major threat that endangers the entire community, the Narrator can set a ready Limit or similar to represent the build-up of preparedness.",
+          "power": {
+            "positive": [
+              "contacts or relationships",
+              "charisma or other social aptitude",
+              "a helpful attitude among the people",
+              "abundant resources",
+              "somewhere to store resources",
+              "blackmail or other leverage",
+              "status or position of power",
+              "patience",
+              "coordination skills"
+            ],
+            "negative": [
+              "pessimism or fear among the people.",
+              "lack of available resources",
+              "your lackluster or outlaw reputation",
+              "ill will among stakeholders or sources of supplies",
+              "barriers in contacting the group"
+            ]
+          },
+          "success": "CREATE useful assets such as food supplies, weapons, armor, called-in favors, or local militia.\nENHANCE yourself or someone else with rallied, community-support, well-informed, or well-supplied.\nADVANCE with a status such as prepared to max out ready.",
+          "extraFeats": [
+            "Keep anyone from feeling slighted or exploited.",
+            "Shift credit or blame to someone else.",
+            "Show someone else how to do this when you're not around.",
+            "Keep the spotlight to make use of the support."
+          ],
+          "consequences": [
+            "You burn bridges with your allies (scratch a social tag).",
+            "The supplies or other resources are inferior (add a negative story tag) or won't last long.",
+            "The community resents you (unwelcomed).",
+            "Someone vying for the same support makes themselves known (New Challenge).",
+            "You are forced to reveal details you'd rather not (Exposure).",
+            "It will take a while before the resources are ready (Yes, but...).",
+            "The resources or supplies need to be acquired elsewhere (Blocked)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Leadership",
+          "actionExamples": [
+            "Lead by example",
+            "Point and yell a lot.",
+            "Refer back to the plan",
+            "Inspire allies.",
+            "Rally troops",
+            "Bolster resolve",
+            "Command subordinates",
+            "Play battle song"
+          ],
+          "explanation": "You use your charisma, rank, command skills, musical talent, rhetorical skills, or useful knowledge to lift your allies' spirits and improve their tactical performance.\nConsider Might when commanding a large group.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "charisma",
+              "rank or authority",
+              "performance and oratory",
+              "tactical skills",
+              "communication spells.",
+              "camaraderie",
+              "devotion or zeal",
+              "inspiring song or speech",
+              "mood-altering magic"
+            ],
+            "negative": [
+              "self-doubt",
+              "fear or confusion",
+              "internal strife.",
+              "supernaturally fearsome opponents.",
+              "opponents' unrelenting attacks",
+              "impaired communication, e.g., due to loud noises"
+            ]
+          },
+          "success": "ENHANCE your allies with a positive status such as coordinated-movement, working-efficiently, unshakable-resolve, or barrage-ready. If anyone defies your command, acts against you or your allies, or otherwise breaks away from the group, they do not benefit from this status any longer. If they fall back in, they might benefit from it again, depending on context.\nRESTORE to reduce a negative emotional or tactical status on your allies, such as disheartened, lousy-mood, battlefield-chaos, panicked, exposed, or surprised.\nINFLUENCE to give your allies a compelling status that would make them follow your commands such as obedient, sticking-to-the-plan, or holding-the-line.",
+          "extraFeats": [
+            "Reposition the entire group (e.g., charge or fall back).",
+            "Prevent the group from dispersing or despairing.",
+            "Keep everyone on their toes and prevent harm to the group.",
+            "Misdirect your opponents' attention.",
+            "Grant the spotlight to an ally to act immediately."
+          ],
+          "consequences": [
+            "Your Fellowship or group becomes less coordinated or confident in their abilities (confused-orders).",
+            "Your Fellowship or group blunders into difficulties, enemies, or monsters (New Challenge).",
+            "Your leadership skills can no longer help the situation (scratch a tag or Blocked).",
+            "Someone has faltering faith (one or more allies become disheartened).",
+            "The plan has some holes in it (vulnerable position).",
+            "Your opponents act or attack while you speak (wounded).",
+            "Your opponents learn your tactics and weak points (Exposure)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Social Gatherings",
+          "actionExamples": [
+            "Breaking bread",
+            "Tavern carousing",
+            "Sharing war stories",
+            "Playing a musical instrument.",
+            "Sitting at camp with companions",
+            "Attending a festival",
+            "Paying funerary respects.",
+            "Joining in a silly game",
+            "Snowball fight.",
+            "Visiting the harvest faire",
+            "Dancing around a bonfire",
+            "Idle gossiping"
+          ],
+          "explanation": "Attending a formal or informal social event or leisure activity can be a great way to unite with a community, learn their ways, or just set yourself at ease. You Enhance yourself or others by garnering positive mood or reputation statuses, Bestow relationship tags, Restore away negative tags and statuses, and Discover more about your company.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "friendly attendees",
+              "equipment for activities.",
+              "positive attitude",
+              "the support of the community.",
+              "auspicious stars",
+              "an appropriate location",
+              "the right mood for joviality"
+            ],
+            "negative": [
+              "ill-tempered crowd",
+              "poor weather for event.",
+              "insufficient attendance",
+              "someone spoiling the fun.",
+              "wrong equipment, food, or other necessities",
+              "aloofness"
+            ]
+          },
+          "success": "ENHANCE yourself or someone else with at-ease, happy, accepted, or tipsy.\nBESTOW relationship tags on yourself or others such as close friend, admiration, protege (or conversely, envious).\nRESTORE to remove negative social or mental statuses, such as outcast, suspected, sad, homesick, ill-repute, or lonely.\nDISCOVER new details about the host, the attendants, or the community and culture.",
+          "extraFeats": [
+            "Enjoy yourself without getting too carried away.",
+            "Party without disturbing the neighbors.",
+            "Avoid bumping into someone at the event.",
+            "Ensure the attendance of a specific person."
+          ],
+          "consequences": [
+            "The party ends early (Blocked).",
+            "You are too fixated on your problems to enjoy yourself (distracted, gloomy).",
+            "You run into someone who you'd rather not meet (New Challenge).",
+            "The event only makes your problems seem worse (increase the tier of a negative social or mood status; only if there was no Success)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Stir the Community",
+          "actionExamples": [
+            "Titillating whispers",
+            "Anonymous pamphlet.",
+            "Rabble rousing",
+            "Manipulative public speech",
+            "Crying the news",
+            "Start a rumor",
+            "Spread propaganda",
+            "Poison the water with magical swaying salts",
+            "Appeal to the local folk.",
+            "Make a performance or throw an event they will talk about for weeks"
+          ],
+          "explanation": "You stimulate and steer conversations in the community through public appearances, gossip, crier reports, or scribed pamphlets. This can have hard to predict effects, but you whisper or shout these news or rumors with a specific goal in mind. How you present the information, the channels you use to spread it, and the particular facts you highlight can help in achieving your desired outcome.\nConsider Might when taking this action, as it usually affects large groups.",
+          "power": {
+            "positive": [
+              "effective, explosive, or sensational content",
+              "contacts",
+              "paid criers",
+              "influence over a large community.",
+              "reputation as someone in the know.",
+              "high-quality forgery",
+              "spirits that can whisper in people's dreams"
+            ],
+            "negative": [
+              "reputation as a liar or forger",
+              "anonymity",
+              "disliked by the court or rumor mill",
+              "information is hard to believe",
+              "public proclamations to the contrary"
+            ]
+          },
+          "success": "INFLUENCE a large number of people with a compelling status such as angry-at-the-Queen, suspicious-of-outsiders, excited-for-the-Hooded-Scoundrel, or just generally paranoid.",
+          "extraFeats": [
+            "The effect is long lasting.",
+            "Stay anonymous or be recognized as a leader.",
+            "Make someone else look like the source.",
+            "Use the masses to block a Threat, e.g., prevent your assassination - for now."
+          ],
+          "consequences": [
+            "You harm your reputation (ill-repute).",
+            "The group or organization most affected by your meddling comes after you (marked).",
+            "You make a sworn enemy (Complication).",
+            "You lose control of the narrative and/or how people react to it (Complication)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Teaching and Training",
+          "actionExamples": [
+            "Lead by example",
+            "Instruct an underling",
+            "Run drills",
+            "Give a lecture",
+            "Teach a class.",
+            "Mentor an apprentice",
+            "Implant a memory.",
+            "Bestow wisdom",
+            "Tell an instructive tale by the fire"
+          ],
+          "explanation": "You pass along knowledge or practice to someone, granting them understandings and skills they did not have before.\nConsider Might if teaching large groups or extraordinarily profound or nuanced subject matter.",
+          "power": {
+            "positive": [
+              "teaching skills or experience",
+              "place of learning.",
+              "receptive or gifted student",
+              "teaching tools",
+              "books on the subject.",
+              "charts and diagrams",
+              "illustrations of the subject",
+              "recent experience with the topic"
+            ],
+            "negative": [
+              "disinterest in teaching",
+              "difficult student.",
+              "distractions from learning",
+              "memory problems.",
+              "conditions or magic affecting the mind",
+              "obscure or confusing topic"
+            ]
+          },
+          "success": "BESTOW a tag representing the abilities or lessons passed on, such as marksmanship, army formations, dragon weaknesses, or fiery finger spell.",
+          "extraFeats": [
+            "The student enjoys the learning process.",
+            "The student is a quick learner.",
+            "The student barely notices you teaching them.",
+            "You avoid getting burned out or burning out your student.",
+            "It goes smoothly, and no one gets hurt."
+          ],
+          "consequences": [
+            "You ruin your relationship with the student (disliked or scratch relationship tags).",
+            "Your teaching approach simply doesn't work (Blocked; only if there was no Success).",
+            "Your student gets hurt or hurts you or someone else (wounded, burned, rattled, etc.).",
+            "You or your student burn out or lose confidence in your own abilities (scratch a tag).",
+            "Your student unleashes magical forces beyond their control (New Challenge or Ill Tidings)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Influence & Intrigue",
+      "page": 81,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Deception",
+          "actionExamples": [
+            "Mislead",
+            "Manipulate",
+            "Impersonate",
+            "Weave falsehoods",
+            "Dishonestly seduce",
+            "Sweet talk",
+            "Lure in",
+            "Lie convincingly",
+            "Employ disguise, trickery, or illusion"
+          ],
+          "explanation": "You use cunning lies and deceptions, possibly including a disguise, to make someone feel or behave in a specific way: open a locked door, ignore the mistake, stop paying attention to something, accept you as a noble lady, or tell you something they don't realize they shouldn't have.\nDuring a fight, see Feinting and Distracting Attacks (page 21). To spread false rumors see Stir the Community (page 80). If you're using Deception to gather information, see Asking Around (page 35).",
+          "power": {
+            "positive": [
+              "skill at lying",
+              "disguises",
+              "relationship with target",
+              "knowledge of the person being impersonated.",
+              "mumming experience",
+              "dim lighting, loud room, or other distractions",
+              "magical glamor, illusion, or masking",
+              "distracted target"
+            ],
+            "negative": [
+              "target's suspicion and alertness.",
+              "the target's knowledge of the situation, you, or the impersonated person",
+              "well-lit area",
+              "lie detection magic.",
+              "your honesty, code of honor, or naivete"
+            ]
+          },
+          "success": "QUICK The target behaves as desired.\nINFLUENCE your target with a compelling status. For example, you can give them trusting or intrigued to lure them into a trap, or make them friendly to you, or enraged at someone else. This can be used to counter a polar status, such as giving them complacent to reduce their alert (Polar Statuses, Corebook Vol. I, page 170) or to max out a Limit in order to overcome a Challenge, such as convince.",
+          "extraFeats": [
+            "The target won't remember you.",
+            "The target will remember you well.",
+            "Convince them to do one more thing.",
+            "Make them follow complicated instructions.",
+            "Others nearby also fall for the act or at least can't tell if you're lying.",
+            "You have an exit plan in case things go awry."
+          ],
+          "consequences": [
+            "The target sees through the attempt and becomes hostile, attacks, or raises the alarm (only if there was no Success).",
+            "The target is suspicious and demands more proof.",
+            "The target falls for your deception, but reacts in an unexpected way (Complication).",
+            "You become nervous or feel a pang of guilt.",
+            "You are deceived yourself and don't realize it until it's too late (Complication).",
+            "Your lies reach unwanted ears (Exposure)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Employ a Catspaw",
+          "actionExamples": [
+            "Task a court attendant",
+            "Pay someone to do it",
+            "Acquire an acolyte",
+            "Bribe the right official",
+            "Scour the local tavern for hirelings.",
+            "Entitle one of your lessers.",
+            "Post a call to adventurers"
+          ],
+          "explanation": "You use your coin, contacts, or political leverage to get something done, usually to acquire something you want or to hurt someone else. The effects of your manipulations can be material, social, or even changes to the law of the land at the highest levels, depending on your Might. In any case, you're not directly responsible for them - your underling or catspaw is.\nThe Narrator can decide the third party you're acting through is considered an ally under your control and have you play them in a scene from which your Hero is absent (Ally Actions, Corebook Vol. I, page 164).",
+          "power": {
+            "positive": [
+              "coin to spend",
+              "network of contacts or spies.",
+              "relationship with specific lords and ladies",
+              "political position",
+              "charisma, persuasiveness, or cunning",
+              "experience with courtly intrigue.",
+              "information pertaining to the task",
+              "resources to aid your underling",
+              "an existing servant to employ in this task"
+            ],
+            "negative": [
+              "the target's resources, people, and influence.",
+              "incompetence or limitations of people working for you.",
+              "insolvency",
+              "specific challenges in the job"
+            ]
+          },
+          "success": "QUICK The job is done.\nVARIES All Effects can be used through this action, with the proper tags.\n• Attack with a hired arsonist and burn a warehouse; have a rival assassinated.\n• Disrupt a rival gang by cutting off their suppliers (lacking-supplies); pile court grievances upon a rival.\n• Influence a community so they are excited to gather for an event; get someone to offer a quest to a rival adventurer to get them out of the realm.\n• Weaken a political rival by killing off their court patron; cut funding to a rival spymaster.\n• Bestow a protective blessing on the grove; get to test the latest crossbow designs.\n• Create smuggled weapons for your gang, build a bridge over Shimmer River, or get a personal member access to the thieves guild.\n• Enhance the navy with tactical-preparedness; get the traders talking about you to become popular.\n• Restore the old smithy by having workers remove the demolished status; get a priest to remove the curse from the temple.\n• Advance your campaigning to become the leader of the monastery.\n• Set Back a growing-crime-wave status that's on a local-chaos Limit.\n• Discover dirty secrets the local lord keeps for themselves.",
+          "extraFeats": [
+            "Secure discretion from parties involved or ensure your catspaw can't be connected with you.",
+            "Negotiate cleverly so they can't ask for more coin."
+          ],
+          "consequences": [
+            "Your henchman botches the job, or it gets only half done (Yes, but...).",
+            "A bridge is burned and the contact or ally is lost, at least for now (scratch a tag).",
+            "The job has an unwanted side effect (add a negative story tag).",
+            "A rival retaliates (short-on-coin, cursed, ill-repute, scratch tags, etc.).",
+            "Your target won't forget any time soon (marked).",
+            "Your hireling hikes the price (short-on-coin)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Making an Impression",
+          "actionExamples": [
+            "Charm",
+            "Act tough",
+            "Make a big entrance.",
+            "Impressive handshake",
+            "Yes, that is a signed manuscript",
+            "Throw coin around",
+            "Show off",
+            "Activate a magnificent fireworks display.",
+            "Brandish a weapon"
+          ],
+          "explanation": "You conduct or express yourself in a way that will make a desired impression on those present. Consider Might when impressing a large crowd or audience.",
+          "power": {
+            "positive": [
+              "charisma and charm",
+              "looking good",
+              "exuding competence",
+              "appropriate emotion",
+              "fashion, luxury items, or other impressive finery",
+              "display of powers or abilities.",
+              "magical aura or glamor",
+              "accompanying music, cheer, or cries of anguish"
+            ],
+            "negative": [
+              "social awkwardness",
+              "inappropriate appearance",
+              "bad standing with target",
+              "unbecoming qualities.",
+              "qualities that are a warning sign to the target",
+              "obvious flaws or weaknesses",
+              "anything interfering with or vying for the target's attention"
+            ]
+          },
+          "success": "QUICK The target is impressed.\nINFLUENCE the target with a status, most likely for use in upcoming social actions against them, such as attracted, beguiled, awed, admiring, wary, or fascinated.\nBESTOW or ENHANCE yourself with drawing attention, talk of the town, intimidating, attractive, or the like.",
+          "extraFeats": [
+            "Draw attention away from someone else.",
+            "Time well the triggering of the attention-grabbing moment.",
+            "Make people remember or forget a specific detail."
+          ],
+          "consequences": [
+            "You come out looking like a fool or are mocked (embarrassed; only if there was no Success).",
+            "You make the opposite impression (threatened instead of appeased; only if there was no Success).",
+            "Some other individual or group gets a different impression of you.",
+            "You ruin your fancy gown, carriage, or hairdo, or find out it's useless here (scratch a tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Persuasion",
+          "actionExamples": [
+            "Convince",
+            "Haggle over a price",
+            "Threaten or intimidate",
+            "Have a heart-to-heart.",
+            "Rile up",
+            "Bribe",
+            "Calm a hothead",
+            "Talk sense into someone",
+            "Make a case or present an argument",
+            "Charm, mesmerize, or beguile.",
+            "Negotiate"
+          ],
+          "explanation": "You interact with a target to make them do something that they currently or normally wouldn't do: let you through, deliver a package, accept a bitter truth, let something slide, etc. You may achieve this by altering their state of mind, making them feel a certain emotion, or making them accept your point of view; by being forceful or assertive; or by being genuine or honest. For dishonest or subversive manipulation, see Deception (page 81).\nHaggling over the price of goods can be a prep action to Making a Purchase (page 72). In this case, you Enhance yourself or your companions with sway.",
+          "power": {
+            "positive": [
+              "social skills",
+              "leverage",
+              "attractiveness",
+              "knowledge of or connection to the target",
+              "useful information to bring up",
+              "logical arguments",
+              "emotional pressure",
+              "bribe or gifts",
+              "appropriate atmosphere",
+              "supporting appearance",
+              "mind control or suggestive magics"
+            ],
+            "negative": [
+              "bad reputation",
+              "hostile or strained relationship with the target",
+              "loud noises",
+              "undermining appearance",
+              "social awkwardness",
+              "belonging to a social circle or faction opposed by the target"
+            ]
+          },
+          "success": "QUICK The target behaves as planned.\nENHANCE yourself or your Fellowship with sway or some other social advantage in an interaction.\nINFLUENCE your target with a compelling status such as convinced, relaxed, terrified, or infuriated. This can be used to counter a polar status, such as giving them friendly to reduce their hostile (Polar Statuses, Corebook Vol. I, page 170) or to max out a Limit in order to overcome a Challenge, such as threaten.",
+          "extraFeats": [
+            "The target will remember you.",
+            "The target won't remember you.",
+            "Convince them to do one more thing.",
+            "Make them follow complicated instructions.",
+            "Get yourself invited someplace.",
+            "Leave a lasting good impression.",
+            "You maintain your sway for a while longer."
+          ],
+          "consequences": [
+            "The target refuses your requests and ends the discussion, for now (Blocked).",
+            "The target's mental state changes in an unintended way (emotional status).",
+            "The target is willing, but demands something in return, or a favor.",
+            "This costs you your leverage.",
+            "The target changes their mind (reduce previously gained convinced; only if there is no Success).",
+            "The target tries to convince you to the contrary (convinced).",
+            "You reveal something you shouldn't have (Exposure)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Resisting Social or Emotional Manipulation",
+          "actionExamples": [
+            "Maintain composure",
+            "Ignore hostility",
+            "Laugh it off",
+            "Reassert dominance",
+            "Resist temptation",
+            "Stay steady",
+            "Resist interrogation"
+          ],
+          "explanation": "You keep from losing control of yourself in the face of manipulation, social pressure, a terrifying revelation, an exciting opportunity, tempting magical power, or any other interaction or surge of emotion. This is a reaction used to lessen the tier of negative social, emotional, or mental statuses, or to avoid related story tags.\nSee also Mental and Physical Resilience and Recovery (page 52).",
+          "power": {
+            "positive": [
+              "willful or indignant personality.",
+              "unshakable composure or sense of self",
+              "support of friends or allies",
+              "a free or enlightened mind",
+              "experience, street smarts, or wisdom",
+              "under scrutiny of superiors.",
+              "recalling your duty.",
+              "honor code"
+            ],
+            "negative": [
+              "other negative emotions",
+              "low self-esteem or self-image",
+              "emotional vulnerability",
+              "stakes in the social situation",
+              "it's personal",
+              "leverage they have on you.",
+              "easily tempted or riled up"
+            ]
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Preparing an Approach",
+          "actionExamples": [
+            "Practice your cover story",
+            "Remember your goals or quest",
+            "Steel your resolve",
+            "Obscure intentions",
+            "Bolster your confidence",
+            "Measure your words",
+            "Reassess tactics"
+          ],
+          "explanation": "You take a moment to rearrange your thoughts before engaging with another person.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "strong character and discipline.",
+              "being an emotional chameleon",
+              "honesty",
+              "self-deception.",
+              "coaching and supportive skills",
+              "important memories or role models",
+              "creative instincts",
+              "a memento to evoke emotions",
+              "the presence of a friend"
+            ],
+            "negative": [
+              "confusion or stress",
+              "distractions",
+              "mental rigidity or habits",
+              "overconfidence",
+              "negative emotions"
+            ]
+          },
+          "success": "ENHANCE yourself or an ally with a helpful emotional or social status, such as convincing, hiding-my-intentions, resolute, entertaining, never-fear, one-for-all, or secretive.",
+          "extraFeats": [
+            "Keep the spotlight for a follow-up action."
+          ],
+          "consequences": [
+            "Your thoughts and memories also make you ashamed, angry, afraid, confused, etc.",
+            "You neglect or push aside some irrelevant part of yourself (scratch a tag).",
+            "You end up frazzled or tired.",
+            "Your face betrays your hidden emotional turmoil (Exposure; only if there was no Success)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Fellowship",
+      "page": 86,
+      "intro": "Your Fellowship is not just a random collection of individuals, it's a coherent group whose members can help each other out.\nBeyond the actions listed below, remember you can also be Helping Each Other (Corebook Vol. I, page 158).",
+      "entries": [
+        {
+          "name": "Helping and Supporting",
+          "actionExamples": [
+            "Lending coin towards an endeavor.",
+            "Offer advice",
+            "Point out problems.",
+            "Share information",
+            "Maintain gear",
+            "Prepare food and drink.",
+            "Sing a jovial song",
+            "Teach a cantrip"
+          ],
+          "explanation": "You take action to assist another Hero in an action they are about to take, providing guidance, resources, or just moral support for their efforts. More than one Hero can help, each with their own action, if there is time and if it would benefit the final action.\nIf you are only casually helping while they do the action, you can invoke one of your tags to provide them with Power (Helping Each Other, Corebook Vol. I, page 158).\nTo prepare yourself, see Preparing an Attack (page 27) and Preparing an Approach (page 85). To help during a fight, see Assisting an Ally (page 24).\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "relationship tags",
+              "background in mentorship.",
+              "being a people person",
+              "skills relevant to the task at hand",
+              "useful spells or equipment for the job",
+              "rapport with your ally",
+              "appropriate resources"
+            ],
+            "negative": [
+              "difficulty coordinating or getting together",
+              "different goals",
+              "language barriers",
+              "distractions",
+              "hot heads.",
+              "know-it-alls"
+            ]
+          },
+          "success": "BESTOW and ENHANCE to give your ally a status representing your help such as hefty-purse, highly-informed, dripping-with-confidence, or at-home-in-highborn-society, or a tag such as treasury funds, poisoned dagger, I'll be there, or spell of freezing feet.",
+          "extraFeats": [
+            "The benefits of your support last longer.",
+            "Your assistance is promptly ready, allowing you to give them the spotlight immediately."
+          ],
+          "consequences": [
+            "You also give some bad advice (add a negative tag or status in a different topic).",
+            "Your own resources are depleted (scratch a tag or get winded or short-on-coin).",
+            "The items gathered are not quite what was intended (slightly change the tags).",
+            "One of you isn't happy about this (change a relationship tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Fellowship Preparations",
+          "actionExamples": [
+            "Hatch a plan",
+            "Agree on the rules",
+            "Discuss tactics",
+            "Look over the maps.",
+            "Meet in the war room",
+            "Talk it through at a tavern",
+            "Pace around the grounds",
+            "Train for a specific task"
+          ],
+          "explanation": "You work with your Fellowship to come up with a plan of action for a job or activity and possibly prepare and train for it.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "information gathered on the enemy",
+              "agreed-upon goals",
+              "relationship tags",
+              "analytical and planning skills",
+              "map of the region",
+              "inside assistance",
+              "tactical skills.",
+              "methodical approach"
+            ],
+            "negative": [
+              "faulty information",
+              "inability to coordinate",
+              "impulsive mentality",
+              "time pressure.",
+              "defiance of authority",
+              "drunkenness or other intoxication"
+            ]
+          },
+          "success": "BESTOW your Fellowship with a number of tags representing likely approaches, tactics, backup plans, or escape routes you might employ such as stay close, spells blazing, no innocents harmed, or smoke bomb retreat.",
+          "extraFeats": [
+            "The plan is flexible (a tag could be slightly changed before being applied).",
+            "Prevent a major series or adventure Threat from manifesting, for now."
+          ],
+          "consequences": [
+            "The plan is full of holes (confused-orders or in-the-way).",
+            "The plan is leaked to your enemies (Exposure).",
+            "Fellowship infighting (scratch Fellowship tags or rephrase relationship tags)."
           ],
           "might": null
         }
