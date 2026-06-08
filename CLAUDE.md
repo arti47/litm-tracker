@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,223 lines / ~413 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,223 lines / ~440 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v23` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v24` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -378,7 +378,7 @@ browser also hosts the Core-Book's **worked examples** (`LITM_DATA.grimoire` via
 Prose/reference sections (e.g. **Common Consequences**) carry an `intro` + grouped
 `lists` (heading + items) instead of action entries, rendered as bulleted lists. **Partial
 dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks**, **Support In Battle**, **Battlefield Movement**, **Battle Defense**,
-**Information Gathering**, **Thievery & Skulduggery**, **Survival In The Wild**, **Navigating Danger**, **Recovery & Healing**, **The Art Of Magic**, **Conjured Creatures** (70 entries) + **Common Consequences** and
+**Information Gathering**, **Thievery & Skulduggery**, **Survival In The Wild**, **Navigating Danger**, **Recovery & Healing**, **The Art Of Magic**, **Conjured Creatures**, **Magical Crafting**, **Using Magical Abilities**, **Commerce And Trade** (87 entries) + **Common Consequences** and
 **General Considerations** (prose); filled in section by section (see
 Roadmap Phase 7). No new localStorage key.
 

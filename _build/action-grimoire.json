@@ -3062,6 +3062,605 @@
       ]
     },
     {
+      "section": "Magical Crafting",
+      "page": 65,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Crafting Magical Items",
+          "actionExamples": [
+            "Brew a sleeping potion",
+            "Create a protective talisman",
+            "Bind elemental spirits to a weapon",
+            "Engrave runes onto a wooden staff.",
+            "Coat arrows in sacred silver",
+            "Paint the wind god's silhouette on a ship's sails",
+            "Distill a healing draught",
+            "Trap a winter storm inside a glass bead",
+            "Inscribe a warding glyph"
+          ],
+          "explanation": "You use your magical abilities and general crafting skills to create an item possessing magical power.\nYou might combine ingredients or raw materials to create a new item or imbue an existing object, perhaps one already possessing some magic. Most magical crafting represents methodical work in a suitable environment, such as a workshop or a ceremonial space, and unique materials. However, some small and simple items can be created in the field or on the trail, given the right tools and skills.\nFor items that are single-use by nature, such as potions that need to be quaffed or a spell imbued into a talisman that is discharged when used, see also Consumable Story Tags, Corebook Vol. I, page 165.\nFor complex or time-consuming projects, the Narrator can decide to set a complete Limit. When maxed out, you gain a tag or a theme, as decided by the Narrator.\nConsider Might when creating a large or powerful item.\nFor the mundane aspect of crafting items, see Crafting and Tinkering (page 11). To obtain rare ingredients needed for your magical item, see Harvesting Ingredients (page 12). See also the Crafting Journey, Corebook Vol. II, page 194.",
+          "power": {
+            "positive": [
+              "appropriate magical abilities (magical scribing, herbalism, spirit binding)",
+              "crafting skills (e.g., weapon smithing, charm carving, golem construction)",
+              "magical ingredients (alchemical reagents, animal parts, ore from a fallen star).",
+              "materials resonant with this specific kind of magic",
+              "magically charged tools or location",
+              "assistance by mentors or initiated apprentices"
+            ],
+            "negative": [
+              "existing item ill-suited for this kind of magic.",
+              "existing magic interferes with new magic",
+              "materials or items are of low-quality",
+              "poor conditions or workspace",
+              "lack of required time"
+            ]
+          },
+          "success": "CREATE a story tag or a theme representing the item and its abilities, such as cloak of shadow, banner of courage, potion of foresight, or bottled lightning. If you create a story theme, the Narrator can add a negative story tag.\nBESTOW an existing item with story tags representing new qualities, like adding fire resistant or blazing light to your chain shirt. If this creates a theme, the Narrator can add a negative story tag.\nADVANCE an ongoing project with making-progress.",
+          "extraFeats": [
+            "Complete the work quickly or in secret.",
+            "Use fewer materials.",
+            "Hide the item's magical properties, or make them evident.",
+            "Add an aesthetic flourish, perhaps a personal signature.",
+            "Add conditions to the magical quality, like a command word or a restriction on the location or time of day it can be used."
+          ],
+          "consequences": [
+            "You waste time, break tools, or expend resources (scratch tags, time-passes, or short-on-coin).",
+            "The item has unintended magical qualities (add a negative story tag).",
+            "You have an accident while crafting (poisoned, slowed, drained, curse of pain, etc.).",
+            "Your magic attracts unwanted attention (Exposure)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Creating a Permanent Enchantment",
+          "actionExamples": [
+            "Curse the land",
+            "Sanctify holy ground.",
+            "Bless a bloodline",
+            "Deny magic in the region",
+            "Imbue a permanent light source.",
+            "Make a tree sentient",
+            "Permanently change your eye color"
+          ],
+          "explanation": "You use your magic to permanently change a place or a thing, imbuing it with new aspects. \"Permanent\" typically means \"for a long while\" but not necessarily forever. Enchantments can usually be broken or dispelled (Dispelling Magic, page 55), returning the target to its previous state.\nThe Narrator can decide the enchantment requires an involved ritual; see Magical Rituals (page 57).\nMaking an enchantment permanent by itself is a Mighty action, often at one level of Might higher than creating the same enchantment without permanence (greatness enchantments may require a more involved ritual, more time, or more resources to be made permanent). This may be circumvented with very rare ingredients or a special site. Consider Might also if the enchantment grants powerful abilities, affects a large area or target, or will be difficult to break. Tags created with such a long-term enchantment should last at least until the next Sojourn.\nTo enchant an item so that it gains magical powers, see Crafting Magical Items (page 65).",
+          "power": {
+            "positive": [
+              "powers of enchanting or cursing",
+              "familiarity with the target",
+              "magical assistants",
+              "ritual implements.",
+              "the item or place being enchanted",
+              "appropriate sacrifice"
+            ],
+            "negative": [
+              "existing contradictory permanent magic",
+              "magic effects that are in conflict",
+              "the target is resistant to change or magic"
+            ]
+          },
+          "success": "CREATE magical effect tags, such as waterfall illusion.\nENHANCE or DISRUPT to add statuses to the area, like diminished-magics or sacred.",
+          "extraFeats": [
+            "Make the magic hard to see, sense, or detect.",
+            "Cast the enchantment without anyone noticing.",
+            "Add impressive or threatening visual or auditory effects.",
+            "Add a secondary effect to the enchantment.",
+            "Avoid backlash."
+          ],
+          "consequences": [
+            "The enchantment affects only some of the target or area (Yes, but...).",
+            "Your enchantment's effect is reversed (only if there was no Success).",
+            "The spell depletes other magical effects (scratch a tag, reduce magical status, or drained).",
+            "Unexpected entities or forces manifest (New Challenge)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Investigating a Magical Item",
+          "actionExamples": [],
+          "explanation": "To understand the capabilities of a magical item, see Researching a Topic (page 36) and Sensing and Scrutinizing Magic (page 60).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Using Magical Abilities",
+      "page": 67,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Casting a Spell",
+          "actionExamples": [
+            "Uttering an invocation.",
+            "Waving your wand",
+            "Whispering a silent prayer",
+            "Tapping into your inner power",
+            "Weaving an enchantment",
+            "Cursing or hexing someone",
+            "Chanting a mystical mantra",
+            "Making a charm",
+            "Drawing a rune, glyph, or sign",
+            "Casting divinatory bones, beads, or twigs"
+          ],
+          "explanation": "Using a magical art can have many different Effects, as described in the subsequent entries of this section. In addition to the tags, extra feats, and Consequences listed in each specific action, consider also the following.\nThe particularities of each form of magic are defined by its tags and additional considerations described under Fundamentals of Magic (Corebook Vol. I, page 198). While it is ultimately up to the Narrator, casting a spell often requires a specific tag that describes it, and it can be further empowered by broader tags that describe your ability. However, if you have only broad tags, the Narrator may require you to take a prep action by Finding and Focusing on a Specific Ability (page 56).",
+          "power": {
+            "positive": [
+              "specific ability at this particular spell.",
+              "general magical aptitude or skill",
+              "magical specializations",
+              "appropriate tools",
+              "conditions favorable for your magic",
+              "appropriate tactics"
+            ],
+            "negative": [
+              "distractions and interruptions",
+              "conditions that weaken or hinder your magic",
+              "magical resistance or opposition",
+              "wards against magic",
+              "lack of sufficient time, ingredients, mobility, audibility, and such"
+            ]
+          },
+          "success": null,
+          "extraFeats": [
+            "Conceal your spell or make a show of it.",
+            "Prevent side effects, or avoid or delay paying the price, for now.",
+            "Cast it quickly, and take a follow-up action (keep the spotlight).",
+            "Stop someone from countering your spell."
+          ],
+          "consequences": [
+            "You suffer the side effects of magic (corrupted, exhausted, drained, cursed).",
+            "Something or someone nearby is unintentionally affected by your spell or its side effects (give a status).",
+            "You lose the ability to cast the same spell, or it becomes ineffective (scratch a specific tag).",
+            "You are spent or weakened (scratch a broad tag).",
+            "You pay a price for using magic (scratch a tag, Blocked, or Ill Tidings).",
+            "You are discovered or recognized as the source of the spell (Exposure)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Aiding Others with Magic",
+          "actionExamples": [
+            "Bless with bear's strength, cat's stealth or wolf's senses",
+            "Imbue weapons with flame, and armor with hardness",
+            "Chant to lift spirits, quicken reactions, or ward off fear",
+            "Conjure a weapon or useful tool"
+          ],
+          "explanation": "See Assisting an Ally (page 24), Improvising Weapons (26), Leadership (page 78), and also Granting Abilities to People or Items (page 68).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Attacking with Magic",
+          "actionExamples": [
+            "Cast a tongue of flames",
+            "Lay a hex of sickness.",
+            "Animate a tree to strike with a limb",
+            "Bind in magical chains",
+            "Chant a spell of slumber",
+            "Cause a held torch to flare.",
+            "Tear with spectral animal claws"
+          ],
+          "explanation": "See Direct Attacks (page 17) and Tactical Attacks (page 20).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Divination or Magical Senses",
+          "actionExamples": [
+            "Detect danger with enhanced senses.",
+            "Foretell fortunes",
+            "Listen to the winds.",
+            "Psychometry",
+            "Etch a glyph of forewarning",
+            "Read minds",
+            "Scry through a mirror"
+          ],
+          "explanation": "See Scrutinizing the Battlefield (page 28), Scouting and Guarding (page 49), and Information Gathering (page 35).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Granting Abilities to People or Items",
+          "actionExamples": [
+            "Make or toss a potion",
+            "Coat sword with flames",
+            "Giant's strength enchantment.",
+            "Blessing of accuracy",
+            "Protective charm.",
+            "Eyes of the eagle",
+            "Adorn with illusionary disguise"
+          ],
+          "explanation": "You create a magical effect on the fly, temporarily enhancing your own abilities or those of an ally, or conjuring a magical item that lasts for a short while. To create a being, see Conjuring a Creature (page 64).\nConsider Might when granting abilities that are extraordinary or all-powerful.",
+          "power": {
+            "positive": [
+              "enchantment abilities",
+              "familiarity with the target",
+              "suitable or receptive target",
+              "appropriate expertise (medicine, herbalism, weapon-forging).",
+              "well-equipped and suitable workspace",
+              "a magical moment, such as midnight",
+              "a place of magic"
+            ],
+            "negative": [
+              "recipient's contradictory features",
+              "poor quality items or ingredients.",
+              "conditions detrimental to your magic"
+            ]
+          },
+          "success": "BESTOW an ability tag such as bat wings, long leap, giant size, intangible, blessing of the nymph, etc\nCREATE tags representing a magical object or effect, such as arcane shield, or add a tag to an existing item such as adding beast claws to steel gauntlets or poison arrows to hunting bow, or features such as strikes true, dragon-slaying, and the like. If this creates a theme, the Narrator can add a negative story tag.\nENHANCE with a status such as hasted, blessed-aim, warded, or hidden.",
+          "extraFeats": [
+            "The new abilities or items last longer.",
+            "Grant the target the ability to switch new powers on and off.",
+            "Keep (or give) the spotlight to act immediately with the new power.",
+            "Make the new ability impressive or concealed."
+          ],
+          "consequences": [
+            "The new ability comes with inherent flaws (add negative tags).",
+            "The target is adversely affected by the new ability (e.g., pained, cursed, addicted, or scratch a tag).",
+            "The target is disfigured or transformed into something unintended (add a negative story tag).",
+            "You spend your magical power, for now (drained or scratch its tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Healing with Magic",
+          "actionExamples": [
+            "Healing touch",
+            "Calming whispers",
+            "Blessed blood.",
+            "Troll regeneration.",
+            "Concocting an antidote",
+            "Banishing the evil spirit of a disease",
+            "Undo a curse",
+            "Free a mind from hypnotic grip",
+            "Remove a magical parasite.",
+            "Cure a legendary disease",
+            "Heal a tainted soul"
+          ],
+          "explanation": "If you're healing a natural condition, see Treating Injuries and Other Conditions (page 53).\nOtherwise, you use magical powers to cure a supernatural condition. Consider Might if you are healing extraordinary supernatural maladies or grave wounds.",
+          "power": {
+            "positive": [
+              "healing powers",
+              "connection to the target.",
+              "blessings on the target",
+              "experience with the condition or the magic behind it",
+              "medicinal items",
+              "materials that defy the malicious magic, such as salt or runes.",
+              "environment conducive to the curing and to healing"
+            ],
+            "negative": [
+              "the condition itself (when healing oneself or if it is an aggressive condition)",
+              "target's continued contact with the cause of the condition",
+              "healing ability that is not made to heal the cause of the condition"
+            ]
+          },
+          "success": "RESTORE to remove harmful statuses and tags.\nDISCOVER to understand the malady better or pinpoint its cause, magical or otherwise.",
+          "extraFeats": [
+            "Contain the condition temporarily (if it's a Challenge)."
+          ],
+          "consequences": [
+            "The patient is left with complications (add negative tags or statuses).",
+            "The condition spreads to you or those nearby (Complication).",
+            "You have exhausted what your healing could do in this case (Blocked)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Moving and Evading with Magic",
+          "actionExamples": [
+            "Flight",
+            "Magical transportation.",
+            "Silent step",
+            "Traveling through or as an element",
+            "Travel between shadows",
+            "Underwater breathing",
+            "Spiderwalking"
+          ],
+          "explanation": "See Moving Around the Battlefield (page 30), Travel and Wayfinding (page 50), and Sneaking and Hiding (page 40).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Manipulating Others with Magic",
+          "actionExamples": [
+            "Impress with divine majesty.",
+            "Project an aura of fear",
+            "Beguile with sorcerous charm",
+            "Make someone forget",
+            "Uncanny bestial allure",
+            "Influence emotions",
+            "Enter dreams"
+          ],
+          "explanation": "See Deception (page 81), Persuasion (page 84), and Making an Impression (page 83).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Protecting with Magic",
+          "actionExamples": [
+            "Elemental shield",
+            "Leap out of the way.",
+            "Wards or blessings",
+            "Intangibility",
+            "Deflect with magical force",
+            "Monstrous hide"
+          ],
+          "explanation": "See Battle Defense (page 32), Warding (page 61), and Dispelling Magic (page 55).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Shapeshifting and Transformations",
+          "actionExamples": [
+            "Become invisible",
+            "Assume a were-form",
+            "Grow bark on your skin.",
+            "Mimic the appearance or abilities of others",
+            "Shrink down to a tiny size",
+            "Become incorporeal"
+          ],
+          "explanation": "See Granting Abilities to People or Items (page 68).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Shaping the Environment with Magic",
+          "actionExamples": [
+            "Cover the ground with ice",
+            "Shape the earth",
+            "Animate plants",
+            "Summon strong winds.",
+            "Summon a cloud of insects",
+            "Create deep darkness"
+          ],
+          "explanation": "You use your magic to alter objects and conditions around you, or conjure new ones. See also Creating and Removing Hazards and Obstacles (page 48).\nConsider Might when affecting a large area.",
+          "power": {
+            "positive": [
+              "powers of shaping or creation",
+              "familiarity with the location",
+              "abundance of the desired material or element"
+            ],
+            "negative": [
+              "opposing or contradicting conditions such as weather",
+              "toughness or durability of materials transformed"
+            ]
+          },
+          "success": "CREATE environment tags that represent what you have conjured or what scene elements you have transformed, possibly into a story theme, such as mounting snow banks with unnatural silence and deeply disturbing, or a wall of trees that is very thick, or unhallowed ground that drains vitality. If you create a theme, the Narrator can add a negative story tag.\nWEAKEN to remove tags of unwanted elements in the environment.",
+          "extraFeats": [
+            "Make a show out of it.",
+            "Shape it precisely.",
+            "Move something from the scene to your hand.",
+            "Move to somewhere else in the scene.",
+            "Block someone's path or clear a path for someone.",
+            "Keep the option to reverse it at will."
+          ],
+          "consequences": [
+            "Your shaping adds or eliminates something you didn't intend (add negative tags or scratch tags).",
+            "Your shaping unintentionally blocks a path or course of action (Blocked).",
+            "An ally or an innocent is caught in your shaping (restrained or wounded).",
+            "The change you created triggered something unintended like an avalanche or a collapse (Complication)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Commerce And Trade",
+      "page": 72,
+      "intro": "As in a story or in a movie, in Legend in the Mist the exact coin balance that a character has to their name is never discussed directly. Instead, a character's earthly belongings are measured by their general wealth, represented by their tags, and means, represented by a status.\nWealth: A Hero's general wealth, their ability to spend, is determined by their themes, tags, and Might: power tags such as pile of coins, wealthy, merchant holdings, aristocratic lifestyle (usually as part of an Possessions, Circumstance, or Dominion theme) or weakness tags such as penniless or spends it all in one place. A character with no specific wealth theme or tags is considered to have a typical wealth as befitting their backstory.\nMeans: A Hero's current means how much available funds or valuables they can spend relative to their general wealth - is by default typical to their wealth. A king can make purchases as Simple actions that a street urchin would never be able to afford, no matter what they try.\nTemporary windfall or losses, relative to one's wealth, can be represented by positive statuses, such as a hefty-purse or a negative status such as short-on-coin, indebted, or depleted-hoard. These statuses can affect trade actions as well as some social interactions. They expire once the Hero has had enough time to replenish their available funds through regular work or accessing their general wealth, or as their regular day-to-day expenses even out their available assets.\nIf a means status reaches tier 6, the Narrator may opt to permanently change the Hero's wealth by adding or removing power or weakness tags, or entire relevant themes, perhaps of a different Might level.\nTreasure, earned fees, and rewards: When the Fellowship gains a sudden windfall, by finding ancient coins or getting paid for a successful quest, this can be represented by a means status given for the Fellowship as a whole, or individually. Valuables such as finely crafted objects, artwork, or jewelry can also be made into story tags if they can't be easily liquidated, or if the Heroes wish to keep them; they are scratched if later turned into means (e.g., by selling them).\nCommercial assets: Permanent commercial tags, such as trade goods, local inn, or successful market stall represent a long term investment. They can be used to generate specific assets by Creating story tags, such as bank funds or a bag of coins, or grant a means status. Scratching commercial tags indicates the character is cut off from their assets. For power tags, this is temporary; only replacing a theme or a tier- 6 status could permanently cut off a Hero from an asset represented by a power tag.",
+      "entries": [
+        {
+          "name": "Making a Purchase",
+          "actionExamples": [
+            "Acquire travel supplies.",
+            "Rent accommodations for the Fellowship.",
+            "Buy that thoroughbred horse you always wanted",
+            "Buy rare ingredients",
+            "Purchase magic beans",
+            "Book transport or passage.",
+            "Pay for a feast",
+            "Buy stolen goods off the back of a cart",
+            "Procure a rare tome",
+            "Have armor or clothing tailored for you",
+            "Peruse the local market"
+          ],
+          "explanation": "You use your financial assets to procure an item or service by paying for it in coin or with credit owed to the merchant, if they agree to it.\nThis is a Simple outcome if the purchase is straightforward, and you attempt to acquire what is reasonably accessible for your character at their wealth, means, and current locality. It is a Quick or Detailed outcome if the purchase is uncertain, complicated, illegal, involves negotiations, etc.\nConsider Might if purchasing for a group or purchasing something large or far beyond or well within your means.\nIf you are funding something together as a Fellowship, see Helping and Supporting (page 86) to create and combine a single means status (hefty-purse) to assist with this action. If you want to have sway over the seller to help offset the price, see Persuasion (page 84).\nSee also the Provisioning Journey, Corebook Vol. II, page 196.",
+          "power": {
+            "positive": [
+              "wealth and means",
+              "assets to barter",
+              "negotiation skills.",
+              "good standing with the seller",
+              "leverage",
+              "familiarity with the item or the market.",
+              "good reputation in town",
+              "buying at the right place and/or the right time"
+            ],
+            "negative": [
+              "lack of coin",
+              "seller's deception and haggling skills.",
+              "bad reputation",
+              "bad standing with the seller or supplier",
+              "item at low supply or rare",
+              "honesty and naivete.",
+              "item is illegal or taboo here",
+              "wrong part of town"
+            ]
+          },
+          "success": "SIMPLE or QUICK You get what you want. The Narrator may provide story tags.\nCREATE story tags describing the purchased item or service.",
+          "extraFeats": [
+            "Purchase discreetly.",
+            "Leave no ledger trail.",
+            "Have it delivered to a place of your choice.",
+            "Avoid buying a cat in a bag.",
+            "Prevent any trouble during the transaction.",
+            "Control your spending or limit the price you're willing to pay."
+          ],
+          "consequences": [
+            "It's a significant expense (short-on-coin, indebted).",
+            "You overextend your wealth or reputation (scratch a tag).",
+            "Word about the deal gets around (Exposure).",
+            "You become known for purchasing illicit or inferior quality goods (ill-repute).",
+            "The seller gets antsy, upset, or belligerent and refuses further trade (Blocked).",
+            "The item you get has some undesired aspect (add negative story tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Selling Goods",
+          "actionExamples": [
+            "Sell your produce on market day",
+            "Sell loot",
+            "Hawk trinkets or artifacts",
+            "Put your gear up for sale",
+            "Fence a stolen item",
+            "Auction a masterpiece",
+            "Sell off your mansion",
+            "Make a bailment for your wedding ring"
+          ],
+          "explanation": "You sell items or goods you possess to improve your financial situation. If this is a routine transaction, the Narrator can resolve this Simply (Simple Actions With Power To Spend, Corebook, Volume I, page 157).\nIf the item sold is represented by a tag, you should burn it for Power. You cannot sell a power tag, but if it represents a current supply of an item (e.g., bushel of apples, confiscated goods), you may burn it for Power to indicate selling its recent output. If your Power tag generates items but isn't an item (the village smithy), the Narrator may require a prep action to create tags for specific items to sell. You may sell items in your possession not represented by a tag, but these will yield no Power for the action.\nThe Narrator may limit the Effects you can use depending on what you are selling and your wealth level. For example, as a wealthy minister of coin you may not be able to sell your feather quill to get hefty-purse-3 because such an item won't normally generate enough money to grant such a status at your wealth level.",
+          "power": {
+            "positive": [
+              "the item tag",
+              "its desirable feature tags.",
+              "negotiation skills",
+              "good standing with the buyer.",
+              "leverage",
+              "familiarity with the item or the market.",
+              "good reputation in town",
+              "selling at the right place and/or the right time to the right people"
+            ],
+            "negative": [
+              "item's flaw or low quality",
+              "buyer's deception and haggling skills.",
+              "bad reputation as a seller or in town.",
+              "bad standing with the buyer",
+              "honesty and naivete"
+            ]
+          },
+          "success": "ENHANCE by gaining hefty-purse.\nCREATE for yourself an asset tag, if you barter or trade items.",
+          "extraFeats": [
+            "Do it discreetly.",
+            "Leave no ledger trail.",
+            "Ensure a smooth and trouble-free transaction."
+          ],
+          "consequences": [
+            "The sale falls through (Blocked only if there was no Success).",
+            "The negotiations exhaust you (frustrated or exhausted).",
+            "You realise the \"buyer\" is luring you into a trap (Complication).",
+            "You get swindled, selling for an amount of coin that barely justifies your efforts (scratch the item tag without getting anything back; only if there was no Success).",
+            "You get ill-repute for selling inferior quality or illicit goods, being inflexible, or setting your prices too high.",
+            "The buyer conditions the completion of the deal with additional favors or kickbacks (Yes, but...)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Working and Conducting Business",
+          "actionExamples": [
+            "Taking on odd jobs",
+            "Operating a shop, tavern, or tea house",
+            "Trade goods with the merchants guild",
+            "Gamble to earn money",
+            "Clear a basement of rats or monsters.",
+            "Work as a server, assistant, or apprentice.",
+            "Collect tax, offerings, or fees for lodging.",
+            "Beg for alms",
+            "Work a market as a cutpurse"
+          ],
+          "explanation": "You generate income through work, operating a business, or otherwise collecting payment. This could be a specific day-to-day action, one of many needed for the upkeep of the operation, or an entire period (day, week, months, etc.) of generating income captured in a single roll, especially if you are sojourning.\nConsider Might if you are trading on a large scale or working in extreme conditions, such as monster hunting.",
+          "power": {
+            "positive": [
+              "appropriate skills for the work undertaken.",
+              "good tools",
+              "favorable timing or location for the job",
+              "guidance from a manual or a master",
+              "additional laborers.",
+              "useful knowledge or connections",
+              "negotiation skills",
+              "good relationship with employer or customer"
+            ],
+            "negative": [
+              "challenging factors for performing the work",
+              "unfavorable conditions, timing, or location.",
+              "poor tools",
+              "insufficient or troublesome laborers.",
+              "employer or customer's deception and haggling skills",
+              "honesty and naivete"
+            ]
+          },
+          "success": "QUICK You've completed the current task in your line of work or commerce activity.\nENHANCE by gaining hefty-purse.",
+          "extraFeats": [
+            "Finish the work with some time to spare (keep the spotlight).",
+            "Avoid exhaustion or accidents for yourself or your laborers.",
+            "Avoid breaking tools or wasting supplies.",
+            "Make sure you're paid well and on time.",
+            "Complete your work in peace, without anyone bothering you.",
+            "Gain something neat as a by-product.",
+            "Gain the appreciation of your community or neighbors."
+          ],
+          "consequences": [
+            "Your customer or employer promises to pay you later (replace your hefty-purse with indebted on your customer or employer).",
+            "You waste time, break tools, or expend resources (scratch tags or short-on-coin).",
+            "You have a work accident (wounded, bruised, cramps, painful hand, etc.).",
+            "Your behavior, methods, or work practices earn you a ill-repute.",
+            "A new problem crops up and threatens your work (Complication of New Challenge).",
+            "You overwork yourself or your laborers (exhausted, resentful, or scratch a tag)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
       "section": "General Considerations",
       "page": 8,
       "intro": "Always-Relevant Tags and Statuses\nAlmost every action requires you to pay attention to what you're doing and be able to perceive your surroundings. For this reason, tags and statuses like darkness, heavy fog, loud crowd, distracted, pained, etc. can negatively affect most actions. Likewise, stamina statuses like tired, winded, or exhausted or mental statuses like light-headed or distressed can affect any action that requires effort or focus.\n\nCamp & Sojourn Actions\nThe following repeats the list of suggested camp actions (Camping & Sojourns, Corebook Vol. I, page 179), referring to their Action Grimoire counterparts.\n\nTime Matters\nDifferent actions take different amounts of time to perform: a swordstroke is quick, while climbing a hill can take minutes if not hours.\nAs the Heroes take actions in a scene, time marches ever forward, and its passing can trigger events in the Heroes' lives. For example, searching the site of an old temple could take a good while, and as the Heroes are searching, the devils from the basements below may notice their presence, or the rogue sorcerer who searches the same ruin for an ancient relic could get closer to completing their nefarious goal.\nWhen Establishing or re-Establishing a scene, the Narrator can always make Threats related to the passage of time, such as, \"You've spent a lot of time climbing the side of the mountain; the sun is going down ominously.\" Later, they can deliver Consequences such as time-passes on a progress Limit (Corebook Vol. I, page 169) such as coming-storm, enchantment-fading, or speak-now-or-forever-hold-your-peace.\nThe Narrator can also explain the introduction of a Complication as arising due to an action taking longer than intended. For example, a Hero who is conducting a forbidden ritual at a graveyard could find themselves blackmailed by a stray vagabond who's noticed their unusual project and wants something in return for their silence.\nAn action's manner of performance can also affect its timing: an exceptionally well-performed negotiation could be completed quicker than usual, while a botched negotiation could burn precious daylight, often for naught. The Narrator can allow the use of an extra feat to guarantee a speedy execution.",
