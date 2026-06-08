@@ -870,6 +870,1073 @@
       ]
     },
     {
+      "section": "Support In Battle",
+      "page": 24,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Assisting an Ally",
+          "actionExamples": [
+            "Shout a warning",
+            "Cast a helpful spell",
+            "Hand a potion",
+            "Pull a team-up maneuver",
+            "Reposition together"
+          ],
+          "explanation": "You provide an ally with a momentary advantage or boost. Several Fellowship members can help together, each making their own assistance roll, as separate actions. Assistance can also be provided during another Hero's action by invoking one of your tags (Helping Each Other, Corebook Vol. I, page 158).\nTo treat wounds during battle, see Treating Injuries and Other Conditions (page 53). To help outside of battle, see Helping and Supporting (page 86). See also Granting Abilities to People or Items (page 68), Invigoration (page 51), and Crafting and Tinkering (page 11). To prepare yourself, see Preparing an Attack (page 27).",
+          "power": {
+            "positive": [
+              "Relationship and Fellowship tags",
+              "relevant equipment",
+              "battle maneuvering skills",
+              "tactical skills",
+              "camaraderie and leadership",
+              "blessings"
+            ],
+            "negative": [
+              "confusion",
+              "internal strife",
+              "opponent's preparedness to prevent the assist",
+              "communication difficulties",
+              "large distance between you and the ally"
+            ]
+          },
+          "success": "ENHANCE to give your ally alert, good-fortune, got-your-back, protected-flank, resolute, etc.\nBESTOW to give your ally makeshift weapon, protective winds, or enshrouding mists.",
+          "extraFeats": [
+            "Prevent being attacked during the assist.",
+            "Position yourself to protect your ally.",
+            "Hide intentions from opponents.",
+            "Extend the spotlight and give it to your ally."
+          ],
+          "consequences": [
+            ">>> Your opponent attacks you or the ally (wounded).",
+            ">>> You hinder your ally (negative status instead or in addition to positive; only if there was no Success).",
+            ">> You exhaust yourself or run out of supplies (scratch a tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Assuming a Battle Stance",
+          "actionExamples": [
+            "Adopt a swordplay stance",
+            "Go into a rage",
+            "Fight defensively",
+            "Battle dance",
+            "Mystical trance",
+            "Act as a bodyguard",
+            "Mark your prey",
+            "Ready yourself for battle"
+          ],
+          "explanation": "You change your posture, focus, or demeanor in order to gain certain advantages in battle. A \"stance\" can be anything that significantly skews your capabilities in battle, such as favoring defensiveness over aggressiveness, focusing on one target at the expense of others, or a type of movement that favors one specific kind of attack.",
+          "power": {
+            "positive": [
+              "the stance",
+              "specialized weapons",
+              "mental focus",
+              "specialization in a battle tactic or behavior",
+              "personality trait"
+            ],
+            "negative": [
+              "exhaustion",
+              "physical or mental restraints",
+              "target's countering maneuver",
+              "energy block",
+              "distracting environment"
+            ]
+          },
+          "success": "ENHANCE to gain a status such as battle-rage, defensive-stance, warrior-aspect, or hunter's-guile. This status stays for as long as you maintain the stance. It is helpful for any action within its scope, while hindering any other action. For example, hunter's-guile helps guileful actions but hinder brute force actions, such as picking up a heavy stone and using it to attack a foe forcefully, unless you first exit the stance, losing the status in the process.\nA Hero can exit a stance during their spotlight, usually without requiring an action to do so. Even so, the status remains in effect until the scene is re-Established, so it can still affect their reactions.\nCREATE a tag for the kinds of capabilities you've unlocked by assuming this stance, such as defensive combatant, disarming moves, or intimidating posture.",
+          "extraFeats": [
+            "Keep the spotlight for a stance-appropriate follow-up action.",
+            "Improve position.",
+            "Draw or stow weapons.",
+            "Grab a useful object.",
+            "Strike an impressive pose."
+          ],
+          "consequences": [
+            ">>> Your opponent maneuvers while you assume your stance (surrounded, or they gain a positive status).",
+            ">>> You suffer physical, mental, or mystical strain (strained or similar, or scratch a tag).",
+            ">>> You take a status that will go into effect when you exit the stance (e.g., disoriented)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Improvising Weapons",
+          "actionExamples": [
+            "Pick up a discarded weapon",
+            "Pull a weapon out of a bag",
+            "Smash a bottle",
+            "Conjure a weapon",
+            "Distribute armaments"
+          ],
+          "explanation": "You grab something in your vicinity to serve as a weapon, or create a temporary weapon from nearby resources or using magic. This can be a prep action (Indirect Tags and Prep Actions, Corebook Vol. I, page 153).\nIf there's no danger or chance of failure, this is a Simple action. If finding, making, or forming the item into a weapon requires time, skill, or effort, this should be a Quick action. As a Detailed action, spend Power to Create specific tags.",
+          "power": {
+            "positive": [
+              "resourcefulness",
+              "desperation",
+              "nearby rocks or tree branches",
+              "toolkit",
+              "a stocked armory, alchemical laboratory, or storehouse",
+              "item conjuring powers",
+              "weapon-dispensing allies"
+            ],
+            "negative": [
+              "physical obstacles (object is secured, chained, or buried)",
+              "hindered vision or manual dexterity",
+              "lack of creativity or willingness to break things",
+              "desolate or otherwise empty surroundings"
+            ]
+          },
+          "success": "SIMPLE or QUICK You grab an item which is already a tag in the scene, or acquire a weapon which the Narrator can make into a tag.\nCREATE a story tag representing the new weapon, or a theme representing the item and its abilities, such as bar stool, broken blade, heavy rock, jagged, etc. If you create a theme, the Narrator can add a negative story tag.",
+          "extraFeats": [
+            "Keep the spotlight to immediately attack.",
+            "Remain unnoticed and hide the weapon on you.",
+            "Break or don't break something as part of retrieving the weapon.",
+            "Deliver the weapon to a beleaguered ally."
+          ],
+          "consequences": [
+            ">>> You draw attention (Exposure).",
+            ">> There's nothing useful left in the armory or the lab runs out of ingredients (Blocked).",
+            ">>> You cause unintended damage while grabbing the object.",
+            ">>> You strain (winded) or harm (wounded) yourself.",
+            ">>> The weapon has an unwanted feature (a negative tag) (Complication)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Preparing an Attack",
+          "actionExamples": [
+            "Aim carefully",
+            "Charge an enemy",
+            "Prepare to pounce",
+            "Swing overhead",
+            "Draw arcane power",
+            "Begin a haymaker",
+            "Raise weapon to strike"
+          ],
+          "explanation": "You use your skills, tools, and perhaps an opportunity to hang back for another beat and prepare for a devastatingly powerful or precise attack. See also Preparing an Approach (page 85).",
+          "power": {
+            "positive": [
+              "favorite maneuver",
+              "martial discipline",
+              "controlled breathing",
+              "marksmanship",
+              "energy channeling",
+              "safe position",
+              "snuck up behind them"
+            ],
+            "negative": [
+              "confusion or stress",
+              "harassing opponents",
+              "being rushed",
+              "crowded battlefield",
+              "unstable terrain"
+            ]
+          },
+          "success": "ENHANCE yourself with a helpful status, such as aiming, momentum, heavy-strikes, magically-empowered, or ready-to-charge.",
+          "extraFeats": [
+            "Keep the spotlight to attack immediately.",
+            "Prevent being attacked during the preparation.",
+            "Remain unnoticed.",
+            "Draw their attention."
+          ],
+          "consequences": [
+            ">> Your opponent attacks while you're preparing (wounded).",
+            ">> Your opponent also has time to prepare (gain positive tactical status).",
+            ">>> You focus too much on the action (distracted).",
+            ">>> An unaddressed Threat manifests while you prepare.",
+            ">> You draw attention to yourself (Complication)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Preparing for a Fight",
+          "actionExamples": [
+            "Sharpening weapons",
+            "Donning armor",
+            "Contemplating the coming battle",
+            "Applying oils",
+            "Consuming potions",
+            "Casting protective spells",
+            "Praying"
+          ],
+          "explanation": "Combat preparation may involve any of the following. If there's ample time and the action is routine for the Hero, the Narrator can allow it to be resolved as Simple (Simple Actions With Power To Spend, Corebook, Volume I, page 157).\nâ¢ To sharpen your weapons, apply oils, and tighten armor and shield belts, see Crafting and Tinkering (page 11), and keep your gear in good order with Maintaining and Repairing Equipment (page 13).\nâ¢ To don armor, draw a weapon, or string a bow is a Simple action if you have enough time. Performing these actions with expediency or under pressure is a Quick action.\nâ¢ To consume special concoctions, potions, or substances before battle, see Invigoration (page 51) or Granting Abilities to People or Items (page 68).\nâ¢ To pray, focus your mind, remember why you fight, or steel your nerves, see Mental and Physical Resilience and Recovery (page 52).\nâ¢ To rub a lucky charm, ask for divine protection, or chant protective invocations, see Taking Cover or Erecting a Barrier (page 33).\nâ¢ To enter a battle stance or adopt a fighting form, see Assuming a Battle Stance (page 25).\nâ¢ To muster your allies, see Leadership (page 78), Gathering Support and Resources (page 77), or Conjuring a Creature (page 64).\nâ¢ To prepare a plan of action with your Fellowship, see Fellowship Preparations (page 87).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Scrutinizing the Battlefield",
+          "actionExamples": [
+            "Peek out of cover",
+            "Consult your guardian spirit",
+            "Employ tactical thinking",
+            "Sense the life force of combatants",
+            "Size up a fighting style",
+            "Identify weaponry",
+            "Notice a weakness"
+          ],
+          "explanation": "You survey the battlefield to gather or surmise valuable insights such as your opponent's numbers, position, tactics, objectives, intentions, or capabilities. When fighting one on one, this could be used to notice fighting styles, magical gear, or even level of confidence. If appropriate, the Narrator may reveal specific information from the Challenge Profile such as Might, tags, Limits, Consequences, and Specials to reflect the knowledge gained by a Hero.",
+          "power": {
+            "positive": [
+              "sharp senses",
+              "supernatural senses",
+              "tactical training",
+              "sense-enhancing gear, such as a spyglass",
+              "superior position",
+              "experience with similar foes or situations",
+              "relevant lore"
+            ],
+            "negative": [
+              "poor visibility",
+              "opponent's speed or cover",
+              "unique tactics, behaviors, or abilities",
+              "obscure fighting style"
+            ]
+          },
+          "success": "QUICK You learn the most valuable details.\nDISCOVER specific information you're looking for.\nDISRUPT your opponent with weakness tags such as gap in armor, slow left hook, or same old tricks.",
+          "extraFeats": [
+            "Keep your target unaware that you have this information.",
+            "Keep the spotlight to act on the new information immediately.",
+            "Use the information to circumvent a Threat posed by the target."
+          ],
+          "consequences": [
+            ">> You are attacked while scrutinizing (wounded or off-balanced).",
+            ">> The target changes their tactics, gaining a new status or tag.",
+            ">>> You arrive at the wrong conclusion (only if there was no Success).",
+            ">> You expose yourself to danger (exposed).",
+            ">> Your ability to survey the battlefield becomes ineffective or impaired (scratch a tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Treating Injuries",
+          "actionExamples": [],
+          "explanation": "See page 53.",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Coordinated Attacks",
+          "actionExamples": [],
+          "explanation": "Fellowship members can act in coordination by using actions such as Assisting an Ally (page 24), Feinting and Distracting Attacks (page 21), Impairing Attacks (page 23), or Leadership (page 78) helping teammates or hindering opponents to prepare a devastating follow-up attack.\nIn addition to the tags, extra feat and Consequences listed in each specific action, consider also the following.",
+          "power": {
+            "positive": [
+              "protectiveness",
+              "mentor or apprentice relationship",
+              "supporting attitude",
+              "military rank",
+              "advantageous positioning",
+              "appropriate tactics"
+            ],
+            "negative": [
+              "internal distrust or discord",
+              "bad timing",
+              "no line of sight between allies",
+              "poor or untrained coordination",
+              "wrong tactics"
+            ]
+          },
+          "success": null,
+          "extraFeats": [
+            "Hide your involvement.",
+            "Make an ally look impressive when they charge.",
+            "Draw attention to yourself.",
+            "Keep opponents in place for the attack.",
+            "Switch positions with an ally.",
+            "Extend the spotlight and give it to your ally."
+          ],
+          "consequences": [
+            ">>> You get separated (Complication).",
+            ">>> Your opponents get reinforced to match your numbers.",
+            ">> You miscommunicate (confused, in-the-way)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Battlefield Movement",
+      "page": 29,
+      "intro": "For crossing terrain and other kinds of movement outside of battle, see Exploration & Survival actions (page 41) and Sneaking and Hiding (page 40).",
+      "entries": [
+        {
+          "name": "Forcing an Opponent to Move",
+          "actionExamples": [
+            "Push or pull a target",
+            "Present an obstacle",
+            "Force a target back",
+            "Employ fancy footwork",
+            "Throw a target",
+            "Menace a target"
+          ],
+          "explanation": "You use physical strength, earth-shaking magic, intimidation, tactical maneuvering, or any combination of these in order to move your target or force them to move to where you want them to be.",
+          "power": {
+            "positive": [
+              "physical strength",
+              "tactical advantage",
+              "taunting skills",
+              "quick movement",
+              "appropriate weapon",
+              "intimidating look",
+              "advantageous terrain",
+              "telekinetic spell"
+            ],
+            "negative": [
+              "limited mobility",
+              "target's quickness or robustness",
+              "target's wings or climbing appendages",
+              "disadvantageous terrain"
+            ]
+          },
+          "success": "QUICK You move your target or force them to move to the desired location.\nDISRUPT with a tag or status that represents the hindering nature of your target's new position, such as exposed back, neck deep water, prone, or corrupted (e.g., if pushed into a demon's maleficent miasma).\nWEAKEN by removing a beneficial tag or status such as concealed, commanding position, aiming, or magically-empowered (e.g., if pushed away from place of power).",
+          "extraFeats": [
+            "Place them in between you and a threat.",
+            "Cause them to drop something.",
+            "Keep the spotlight and follow-up with an attack.",
+            "Prevent being attacked during the movement.",
+            "Knock the target off of their mount."
+          ],
+          "consequences": [
+            ">>> The target forces you to move (exposed).",
+            ">>> You fall down (prone).",
+            ">>> The target attacks you (wounded).",
+            ">>> The target hunkers down against further attempts (dug-in).",
+            ">> You draw unwanted attention to yourself."
+          ],
+          "might": null
+        },
+        {
+          "name": "Moving Around the Battlefield",
+          "actionExamples": [
+            "Reposition",
+            "Dash",
+            "Leap",
+            "Swing on a rope",
+            "Tumble and roll",
+            "Attain the high ground",
+            "Hide and sneak",
+            "Get behind",
+            "Fly around on your broom",
+            "Spur horse on",
+            "Charge"
+          ],
+          "explanation": "You move to a desired position while facing opposition, danger, or difficulty, or move under pressure, for example when under fire, maneuvering in tight spaces, racing to beat time, moving while injured, not sure where to go, etc. Your desired position can be a specific position on the battlefield such as \"on top of the open trapdoor\" or a relative position such as \"above my opponent\".\nIn many cases, moving around the battlefield does not require a roll - you narrate moving together with another action (Common Simple Actions, Corebook Vol. I, page 152). If you are moving to take cover, see Taking Cover or Erecting a Barrier (page 33). If you are traversing through a hazard represented by a tag or status, see Travel and Wayfinding (page 50).",
+          "power": {
+            "positive": [
+              "fortitude",
+              "quickness",
+              "athleticism",
+              "invisibility",
+              "wings",
+              "grappling hook",
+              "magical transportation",
+              "handholds",
+              "map of the area (for a military unit)"
+            ],
+            "negative": [
+              "hesitation",
+              "injuries",
+              "opponent's alertness and senses",
+              "enemy scouts",
+              "physical barriers",
+              "rough terrain hazards",
+              "environmental opposition (e.g., crosswinds)",
+              "enemy scouts (for a military unit)"
+            ]
+          },
+          "success": "QUICK You arrive at the desired destination.\nENHANCE yourself with a status that represents the benefit of your new position such as improved-position, clear-shot, high-ground, out-of-sight, blocking-the-path, charging, etc.",
+          "extraFeats": [
+            "Avoid being attacked on the way.",
+            "Keep the spotlight to take a follow-up action when you arrive.",
+            "Take someone else with you.",
+            "Make an impressive entrance."
+          ],
+          "consequences": [
+            ">>> The path is blocked (Blocked; only if there was no Success).",
+            ">>>> You come under attack or suffer from a hazard on the way (wounded).",
+            ">>> You are ambushed at your destination (surprised).",
+            ">>> You drop something on the way (scratch a tag).",
+            ">>> You fall down (prone) or off something tall (concussed).",
+            ">> An enemy also maneuvers (gains a status or story tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Mounted and Transport Battle",
+          "actionExamples": [
+            "Calm a spooked horse",
+            "Pilot a ship on the sea",
+            "Stay on a winged steed",
+            "Control an ox cart on a winding road"
+          ],
+          "explanation": "Your mount or transport is usually represented by a tag that you can add to any action it can help you with, such as charging (Preparing an Attack, page 27), running someone over (Hand-to-Hand Attacks, page 18), pushing someone back (Forcing an Opponent to Move, page 29), or flying over a bulwark (Moving Around the Battlefield, page 30).\nThe Hero riding, driving, or piloting usually takes actions and reactions on behalf of their ride, since they are the one in control of it.\nA mount or a transport can be Created when Making a Purchase (page 72), Conjuring a Creature (page 64), or Crafting and Tinkering (page 11).\nMany mounts can get agitated, scared, harried, or otherwise emotional during a fight, leading to them possibly running wild and possibly getting injured or lost. Actions that Enhance, Restore, and Influence could be used to tend to them in battle when they get hurt or scared, such as through Treating Injuries and Other Conditions (page 53) or Animal Kinship and Handling (page 43).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Retreating From Battle",
+          "actionExamples": [
+            "Tactical withdrawal",
+            "Run for your life",
+            "Escape a dangerous scene",
+            "Let us away!",
+            "Teleport out"
+          ],
+          "explanation": "In many situations, getting out of a scene is a Simple action. If there are unaddressed Threats, escaping means that the Narrator gets to inflict Consequences as normal, representing the Heroes' focus on getting away over acting in response to the Threats present. These Consequences might be one last attack (wounded, bleeding, scorched, or similar), equipment snatched or left behind (scratch tags), harm from the environmental (shocked, cursed, or similar), harm from the escape itself (tired, bruised, or similar), personal cost or aftermath (frustrated, sorrowful, disheartened, homesick, or similar), etc. Consequences might even come during the next scene or later, in the form of marked, ill-repute, lost, or similar, representing fallout from leaving things hanging.\nIf escaping poses a dramatic challenge, a roll may be required. See Moving Around the Battlefield (page 30) or Travel and Wayfinding (page 50). If enemies pursue the PCs, set up a Chase (page 47).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Engaged",
+          "actionExamples": [],
+          "explanation": "To make in-battle movement more difficult - thus placing more emphasis on maneuverability and defensive tags - consider using the engaged status to represent being in melee with an opponent that is actively trying to harm you.\nBeing engaged does not help with attacks against the opponent, but it does hinder attempts to move away from them. This makes moving away always dangerous, and never Simple.\nEngaged can also affect ranged attacks, making it more difficult to hit the intended target. In addition to hindering the attack, it also adds the possible Consequence of hitting your ally.",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Battle Defense",
+      "page": 32,
+      "intro": "A Hero with the right tags can combine different defenses in the same reaction roll. See also Dispelling Magic (page 55) and Warding (page 61) for other forms of defense that can be in handy in battle.",
+      "entries": [
+        {
+          "name": "Blocking or Soaking an Attack",
+          "actionExamples": [
+            "Parry",
+            "Raise shield",
+            "Trust in your armor",
+            "Brace for impact",
+            "Take it on the chin.",
+            "Absorb with a spell of protection",
+            "Divine or mystical intervention"
+          ],
+          "explanation": "You rely on passive means (such as bodily constitution or armor) or the ability to actively block an attack to protect yourself from harm in a reaction roll. You can raise a shield, activate a magic item, or otherwise move to brace for the incoming harm, or simply rely on your toughness and armor.\nBeing surprised may prevent the use of active defensive tags, as well as count as a negative status for this reaction. Conversely, in some cases you might even be able to lessen attacks you are unaware of, using passive defensive tags such as armored hide.\nIf your rolled total is 10 or higher, you can use some of your Power to notice something important (Discover), turn the situation in your favor (Enhance), or bounce back from a bad position (Restore). If you have the ability, you could even absorb the energy of the attack to empower yourself (Enhance) or regenerate (Restore), or reflect the attack back to the attacker or to another target (Attack).",
+          "power": {
+            "positive": [
+              "armor or thick skin",
+              "physical durability or constitution",
+              "cover",
+              "pain tolerance",
+              "large size.",
+              "shielding magic",
+              "parrying weapon.",
+              "opponent's restricted movement",
+              "natural barriers",
+              "poor visibility"
+            ],
+            "negative": [
+              "attacker's quickness and skill",
+              "attacker's weapons",
+              "attacker's superior position",
+              "weak points and vulnerabilities",
+              "intangible or invisible attacker.",
+              "caught unawares"
+            ]
+          },
+          "success": "LESSEN the Effects of the attack or harm.\nDISCOVER a valuable detail about your opponent or their fighting style and abilities.\nENHANCE by giving yourself a sudden advantage such as momentum, parrying, or emboldened.\nRESTORE by recovering from a tough spot, removing distracted, distressed, or off-balanced.",
+          "extraFeats": [
+            "Counterattack (keep the spotlight).",
+            "Draw your weapon, raise your shield, or reach for a useful tool.",
+            "Block your opponent's path or push them back."
+          ],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Dodging an Attack",
+          "actionExamples": [
+            "Duck",
+            "Jump back",
+            "Leap out of the arrow's path",
+            "Roll with it",
+            "Fly away",
+            "Flow around the attack",
+            "Lead the attack around you.",
+            "Become incorporeal"
+          ],
+          "explanation": "You move in order to avoid harm with a reaction roll to lessen Consequences. This represents using any of your natural and enhanced movement abilities capable of putting distance between you and the incoming harm, moving around harm, or having harm move around or through you.\nBeing surprised may prevent the use of active defensive tags, as well as count as a negative status for this reaction.\nIf your rolled total is 10 or higher, you can use some of your Power to notice something important (Discover), turn the situation in your favor (Enhance), or bounce back from a bad position (Restore).",
+          "power": {
+            "positive": [
+              "sharp or enhanced senses",
+              "speed and reflexes.",
+              "survival instinct",
+              "poor visibility",
+              "flexibility",
+              "battle experience or training",
+              "someone to push you out of the way",
+              "ethereality and incorporeality"
+            ],
+            "negative": [
+              "attacker's quickness and skill",
+              "attacker's weapons",
+              "attacker's superior position",
+              "area attacks",
+              "slowness",
+              "limited movement capabilities",
+              "caught unawares"
+            ]
+          },
+          "success": "LESSEN the Effects of the attack or harm.\nDISCOVER a valuable detail about your opponent or their fighting style and abilities.\nENHANCE by giving yourself a sudden advantage such as momentum, evasive, or emboldened.\nRESTORE by recovering from a tough spot, removing distracted, distressed, or surrounded.",
+          "extraFeats": [
+            "Regain your initiative and counterattack (keep the spotlight).",
+            "Move to a different position in the battlefield.",
+            "Draw your weapon, raise your shield, or reach for a useful tool."
+          ],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Taking Cover or Erecting a Barrier",
+          "actionExamples": [
+            "Fall prone",
+            "Camouflage",
+            "Duck behind a wall",
+            "Summon a mystical barrier",
+            "Pile up furniture",
+            "Conjure a wall of stone",
+            "Call upon spirits or deities to protect you"
+          ],
+          "explanation": "You find a safe spot, move to a defensive position, create magical protection, or otherwise use your abilities to improve your protective capabilities to physically block harm.",
+          "power": {
+            "positive": [
+              "heavy objects or barriers (e.g., loose stacked barrels)",
+              "thick undergrowth",
+              "higher ground",
+              "small body",
+              "quick thinking",
+              "self-preservation instincts.",
+              "camouflage",
+              "defensive or concealing magic"
+            ],
+            "negative": [
+              "flimsy objects or barriers",
+              "small space.",
+              "opponent's sharp senses or quick movement"
+            ]
+          },
+          "success": "QUICK You find or create cover, averting an incoming Threat, for now.\nCREATE OR ENHANCE a tag or status such as camouflaged, magically-shielded, dug-in, barred door, or barricades, with the aim of helping your next action to lessen incoming harm or move across dangerous terrain unharmed (Moving Around the Battlefield, page 30). If you add tags to your cover and make it into a theme, such as perfect lookout position, the Narrator can add a negative story tag.",
+          "extraFeats": [
+            "Find cover further away from danger.",
+            "Find an alternative path to advance.",
+            "Leave something behind.",
+            "Take something or someone with you.",
+            "Reach cover undetected.",
+            "Misdirect your opponent."
+          ],
+          "consequences": [
+            ">>> The cover you found does not provide actual protection (exposed, only if there was no Success).",
+            ">>> The cover is temporary, and expires after one use (Yes, but...).",
+            ">>> The cover introduces a new hazard or opponent (New Challenge).",
+            ">>> The enemy knows you're here (Exposure)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Information Gathering",
+      "page": 35,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Asking Around",
+          "actionExamples": [
+            "Ask around the village",
+            "Chew the fat",
+            "Visit a pub",
+            "Chat up the street vendors",
+            "Bribe a city guard.",
+            "Tap spy network",
+            "Gossip with courtiers.",
+            "Threateningly question"
+          ],
+          "explanation": "You get out to where people are talking and invest the time, sweat, and resources to locate up-to-date tidings on your current subject of interest.\nThe quality of your findings depends on the choice of where to go and who to talk with - a tavern frequented by jousting enthusiasts will have a lot of scuttlebutt about whose horse is injured, and less about the current political play for the regency of the realm. Strictly secret information is unlikely to be available.",
+          "power": {
+            "positive": [
+              "personal charm",
+              "intimidation",
+              "know your way around",
+              "public credibility",
+              "coin to slip into a pocket or buy a round",
+              "favors owed by others",
+              "membership in a relevant order, religion, trade guild, or social class"
+            ],
+            "negative": [
+              "poor reputation",
+              "grating personality",
+              "fear and mistrust",
+              "cultural or linguistic barriers",
+              "obscure or hidden information",
+              "dangerous district of town"
+            ]
+          },
+          "success": "QUICK You gather the most pertinent information.\nDISCOVER to get answers to specific questions.\nCREATE tags based on the information you collect, such as vicious rumor, local map, or leverage on the duke.",
+          "extraFeats": [
+            "Do it quietly.",
+            "Circulate your own rumor, message, or warning.",
+            "Take action based on the intel to avert a Threat."
+          ],
+          "consequences": [
+            "The information is vague or part-true, part-false (Yes, but...).",
+            "You antagonize your contact (Blocked).",
+            "Someone learns about your questioning (Exposure).",
+            "You run into an old enemy (New Challenge).",
+            "You become inebriated or get to owe a favor.",
+            "You misstep and cause trouble (unwelcomed or ill-repute)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Researching a Topic",
+          "actionExamples": [
+            "Consult with a mentor or expert",
+            "Spend the day in a library or temple archives",
+            "Riffle through old missives",
+            "Explore forbidden tomes from the black market",
+            "Converse with a demon",
+            "Scry clairvoyantly.",
+            "Receive intel from a spymaster"
+          ],
+          "explanation": "You search for information about a topic of interest.\nBy default, you're scouring a place of learning to get some lore on something, but this action can also cover reading through books you carry, recalling knowledge, and divination magic. It can also require an involved examination of many sources of information.\nThis is a Simple outcome if the answer is easily accessible for your character at their level of understanding and current locality. It is a Quick or Detailed outcome if the search is difficult, involved, or dangerous due to pressing time or resistance, or if the answers are hidden, obscure, banned, difficult to understand, etc.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "expertise in relevant areas of lore",
+              "relevant background",
+              "research or literacy skills",
+              "knowledge of related tales",
+              "extensive library",
+              "privileged archive access",
+              "scrying magics",
+              "fluency in relevant languages"
+            ],
+            "negative": [
+              "the subject is mysterious",
+              "target has protective or obstructive magics",
+              "information is considered dangerous or taboo",
+              "small library to search",
+              "books are huge, deteriorated, or incomplete",
+              "outdated or obscure language"
+            ]
+          },
+          "success": "SIMPLE or QUICK You gather the most pertinent information. The Narrator may provide story tags.\nDISCOVER answers to specific questions.\nCREATE tags based on the information you collect, such as cure for the blight, map of the sewers, weather ritual, demon's true name, or knowledge of dragons' banes.",
+          "extraFeats": [
+            "Information is complete, including eye witness accounts or writings by renowned authors.",
+            "Discover who last researched the topic here.",
+            "Information hints at a useful counter to a Threat.",
+            "Leave a hidden message or hint."
+          ],
+          "consequences": [
+            "The information is riddled with inaccuracies, falsities, and part-truths (Yes, but...).",
+            "You alert the target of your search or an interested party (Exposure).",
+            "You get sidetracked or lost down a rabbit hole of lore (time-passes or distracted).",
+            "You get tired or burned out (scratch knowledge tags).",
+            "You get a threatening missive or find a hidden footnote telling you to back off (Complication).",
+            "You are exposed to menacing knowledge (scared, cursed)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Searching Around",
+          "actionExamples": [
+            "Quickly glance around the room",
+            "Search thoroughly for treasure and hints",
+            "Look for hidden passages",
+            "Read a place's aura.",
+            "Listen to the forest.",
+            "Dig through refuse",
+            "Look around for evidence",
+            "Deduce what happened here"
+          ],
+          "explanation": "You look around your immediate surroundings and use your skills, knowledge, and tools in order to extract useful information.\nThis is a Simple outcome if you're merely perceiving the obvious, or if you can take your time (Common Simple Actions, Corebook Vol. I, page 152). It is a Quick or Detailed outcome if you attempt to notice details that are obscured or hidden, or are in danger or under time pressure.\nSee also Improvising Weapons (page 26).",
+          "power": {
+            "positive": [
+              "alertness",
+              "sharp senses",
+              "supernatural senses",
+              "deduction skills",
+              "familiarity with the location.",
+              "divination",
+              "helpful companion animal",
+              "support from scouts or other allies",
+              "source of light"
+            ],
+            "negative": [
+              "bad lighting",
+              "messy area",
+              "deliberately hidden objects",
+              "camouflage",
+              "illusions",
+              "intrusive smells.",
+              "features that are dangerous or disgusting to touch.",
+              "constant interruptions",
+              "long time since a significant event occurred here"
+            ]
+          },
+          "success": "SIMPLE or QUICK You notice relevant details. The Narrator may provide story tags.\nDISCOVER answers to specific questions.\nCREATE tags based on features and items you find such as healing potion, traces of poison, or bronze key.",
+          "extraFeats": [
+            "Do it quickly.",
+            "Remain unnoticed.",
+            "Avoid triggering traps.",
+            "Leave no evidence of being there.",
+            "Leave a hidden message or hint."
+          ],
+          "consequences": [
+            "The search takes a long time (time-passes).",
+            "You spring a trap (wounded, poisoned, cursed, or similar).",
+            "You're spotted by a party of interest (Exposure).",
+            "An item you find has some downsides (add story tag).",
+            "The item you were after is in the hands of someone else (Complication).",
+            "The evidence you find or the deductions you make are vague or part-true, part-false (Yes, but...)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Spying",
+          "actionExamples": [
+            "Follow from a distance",
+            "Shadow.",
+            "Eavesdrop.",
+            "Watch through a spyglass.",
+            "Scry via a looking glass",
+            "Keep an eye out",
+            "Read someone's fortune",
+            "Stalk like a prowler",
+            "Loiter and hark",
+            "Bind an invisible spirit to keep watch"
+          ],
+          "explanation": "You tail someone with the intention of learning what they're up to, possibly over an extended period of time. The Narrator decides the level of detail you gather based on your methods.\nUnlike a chase (Chases, page 47), you're not trying to intercept or stop them, but rather to watch over them at a distance and discover their activities. Also unlike a chase, a tail has no Limit or built in endgame.",
+          "power": {
+            "positive": [
+              "good observation or hearing",
+              "stealth abilities.",
+              "dark clothes",
+              "tracking skills",
+              "hiding place",
+              "tracking animal",
+              "silence spell",
+              "vantage point",
+              "knowledge of the target's plans or habits",
+              "patience.",
+              "nondescript appearance",
+              "distractions around the target"
+            ],
+            "negative": [
+              "noticeable physical features",
+              "poor vision or hearing",
+              "target's alertness",
+              "target's personal guards.",
+              "target's disguise",
+              "target's familiarity with you",
+              "being marked",
+              "distractions around you",
+              "too slow to keep up"
+            ]
+          },
+          "success": "QUICK You gain current information on their whereabouts and/or activities.\nDISCOVER specific details. You can also ask to be notified when something changes in their routine or when a specific event or behavior takes place. If you are eavesdropping, you could learn what they've been talking about, with each Power spent revealing a major topic or secret revealed.\nDISRUPT the target with a tailed, watched, or marked status, which supports your future spying actions against them.",
+          "extraFeats": [
+            "The target won't become suspicious for a while.",
+            "Remain unnoticed (by others).",
+            "Have a fast exit strategy, in case you are made.",
+            "Lurk close enough to make a follow-up attack, if necessary."
+          ],
+          "consequences": [
+            "You lose your target (Blocked; only if there was no Success).",
+            "The target gets suspicious (alert) or notices you (Exposure).",
+            "You lose track of the target for a time, during which anything could have happened.",
+            "The information you get on the target is muffled, incomplete, or spotty (Yes, but...).",
+            "The target is more protected or informed than you realized (Complication).",
+            "Maintaining the tail becomes taxing (bored, cramps, short-on-coin)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Thievery & Skulduggery",
+      "page": 38,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Burglary",
+          "actionExamples": [
+            "Pick a lock",
+            "Bust down a door",
+            "Blast through a wall",
+            "Employ siege engine.",
+            "Break a window.",
+            "Apply acid to hinges",
+            "Crowbar open a hatch",
+            "Dispel wards",
+            "Magically walk through a wall"
+          ],
+          "explanation": "You use tools and physical or magical aptitude to bypass, destroy, or disable the obstruction barring passage or access to what's beyond. Typically, this should be a Detailed outcome only if there's some importance to the time it takes for the obstacle to be removed.",
+          "power": {
+            "positive": [
+              "lockpicking skills",
+              "brute strength",
+              "proper break-in tools",
+              "explosives",
+              "battering ram",
+              "acid or fire source",
+              "destructive spells",
+              "intangibility powers"
+            ],
+            "negative": [
+              "heavy door",
+              "complicated lock",
+              "multiple locks.",
+              "protective enchantments",
+              "traps.",
+              "thick walls"
+            ]
+          },
+          "success": "QUICK The obstruction is bypassed and you gain entry.\nDISRUPT the obstruction with a negative status such as lockpicked, busted, crumbling, etc, against an appropriate Limit such as unlock, destroy, or breach.\nWEAKEN by removing tags representing functions, such as reinforced, or protective statuses such as warded.",
+          "extraFeats": [
+            "You do it quietly.",
+            "The obstacle remains after you pass, e.g., you lock the door again.",
+            "There is no trace of your passing.",
+            "You keep the spotlight for a follow-up action.",
+            "You grab an item that's inside.",
+            "The damage lasts longer or is hard to bypass."
+          ],
+          "consequences": [
+            "This obstacle is beyond your capabilities (Blocked; only if there was no Success).",
+            "Your activity raises suspicion (alarm) or guards close in on your location (Exposure).",
+            "Your gear is damaged (add story tag) or supplies get used up (scratch a tag).",
+            "Your harm yourself or trigger a trap (sprained-wrist, wounded, poisoned).",
+            "You embarrass yourself.",
+            "You leave an obvious mark (Complication).",
+            "Your tools break (scratch a tag).",
+            "You become engrossed in the work and lose track of time or of the environment (distracted or time-passes)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Disguises and Forgeries",
+          "actionExamples": [
+            "Create a disguise",
+            "Put on heavy makeup.",
+            "Forge credentials or documents",
+            "Doctor the ledgers.",
+            "Set a whole new identity.",
+            "Create a copy of a masterpiece",
+            "Alter a formal decree",
+            "Put on the guard's armor"
+          ],
+          "explanation": "You use your crafting or dress skills and attention to detail to create a physical deception of some kind, either disguising yourself, creating forged credentials to fool officials, or creating recreations of objects that give a false impression. You might even forge great works of art, in order to fool the masses or make off with coin.\nSee Deception (page 81) for when your disguise or forgery is put to the test.",
+          "power": {
+            "positive": [
+              "forgery skills",
+              "makeup kit",
+              "big wardrobe.",
+              "artist's tools",
+              "existing document to modify or copy",
+              "knowledge of the impersonated target or forged content",
+              "artistic talent"
+            ],
+            "negative": [
+              "target's alertness or knowledge of subject.",
+              "prevalence of fraud in this culture or region.",
+              "subject's unique features or complexity",
+              "looking nothing like them",
+              "inadequate tools or materials.",
+              "distractions to your concentration"
+            ]
+          },
+          "success": "CREATE tags such as convincing disguise, perfect replica, forged lineage papers, or false evidence.",
+          "extraFeats": [
+            "Complete the work quickly.",
+            "Make the deception last longer."
+          ],
+          "consequences": [
+            "You have some inaccuracies that could be recognised by an expert (Complication).",
+            "You accidentally destroy the item you're doctoring or copying (Blocked).",
+            "The forgery process takes a long time (time-passes)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Sending Secret Messages",
+          "actionExamples": [
+            "Thieves' cant",
+            "Mimicked animal call.",
+            "Smoke signal",
+            "Ring temple bells in a specific order",
+            "Encode a missive",
+            "Send a trusted courier",
+            "Message in a bottle",
+            "Wind-whisper spell"
+          ],
+          "explanation": "You use your communication, mimicry, or cypher skills to get a message to someone without others intercepting it. If encrypting a message for delivery, you can Enhance the message with hidden. Should the message be intercepted, make a reaction and roll with this status to avoid having the message deciphered.",
+          "power": {
+            "positive": [
+              "cyphers and secret languages",
+              "animal call skills.",
+              "smuggler experience",
+              "knowledge of enemy methods",
+              "familiarity with guards",
+              "message spell"
+            ],
+            "negative": [
+              "alert",
+              "detailed or long-winded message.",
+              "long distance to the recipient",
+              "an inattentive recipient.",
+              "distractions or interference",
+              "skill of rival decipherer"
+            ]
+          },
+          "success": "QUICK You deliver the message undetected, or at least not intercepted.\nENHANCE the message with the hidden status.",
+          "extraFeats": [
+            "Avoid being discovered, for now.",
+            "Hide an additional note alongside the message.",
+            "Deliver it to a second recipient.",
+            "Throw off would-be snoopers with a false lead."
+          ],
+          "consequences": [
+            "Your activity raises suspicion (alarm), or you are discovered (Exposure).",
+            "Your signal or sound is recognizably yours (Exposure).",
+            "The message receiver is marked.",
+            "The drafting of the message takes time or the message has to be re-sent (time-passes).",
+            "You make the wrong sound or signal (receiver becomes confused).",
+            "You do not receive the expected counter-signal (Ill Tidings)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Stealing",
+          "actionExamples": [
+            "Cutting the purse",
+            "Highway robbery",
+            "Pickpocket",
+            "Smash and grab",
+            "Sleight of Hand",
+            "Beggar's trick",
+            "Grave robbing.",
+            "Coin clipping",
+            "Horse rustling"
+          ],
+          "explanation": "You use quick fingers, strength of arms, promise of violence, or cleverness to rob, steal, or make some ill-begotten coin. As a Quick action, you could grab something such as an item or a story tag controlled by someone else. Otherwise, use Detailed action to Create tags or statuses for wealth or specific items.",
+          "power": {
+            "positive": [
+              "skill at pickpocketing",
+              "agility",
+              "intimidating face, physique, or posture",
+              "experience on the streets",
+              "many wealthy targets",
+              "the victim is physically close by.",
+              "distracted or beguiled victim",
+              "poorly guarded treasures"
+            ],
+            "negative": [
+              "victim's suspicion and alertness",
+              "guards or other security precautions",
+              "witnesses",
+              "no clear escape route",
+              "lack of wealthy or foolish victims to prey on"
+            ]
+          },
+          "success": "QUICK You acquire an item in the scene.\nCREATE a story tag for an item you are making off with, or a more general wealth tag.\nENHANCE yourself with hefty-purse representing being flush with coin.",
+          "extraFeats": [
+            "The theft isn't immediately noticed.",
+            "You place a different item instead of what you stole.",
+            "The victim won't remember your features.",
+            "You escape quickly.",
+            "The theft goes down quietly (no one else notices you)."
+          ],
+          "consequences": [
+            "The victim or someone around becomes suspicious (alarm) or hostile.",
+            "The victim is suspicious and may follow you.",
+            "The item you stole is not what you thought it was (rephrase or add a story tag).",
+            "You get nervous or lose confidence (scratch a tag).",
+            "You can't fence the stolen goods, so now you have them as a tag rather than as coin.",
+            "You can't resist leaving a calling card or other clues to your identity (infamous)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Sneaking and Hiding",
+          "actionExamples": [
+            "Hide.",
+            "Observe unseen",
+            "Camouflage",
+            "Skulk underground",
+            "Rooftop hopping.",
+            "Sneak up on someone",
+            "Move silently or while invisible",
+            "Sneak between shadows"
+          ],
+          "explanation": "You avoid being spotted or found. You might be moving silently, staying still, using cover, finding hidden paths, or using magic that provides invisibility or creates darkness. To follow a target unnoticed, see Tracking (page 45) or Spying (page 37). To sneak up on a target, see also Surprise Attacks (page 19).",
+          "power": {
+            "positive": [
+              "A small silhouette",
+              "camouflaged outfit",
+              "invisibility magic",
+              "dense foliage",
+              "lots of nooks and crannies.",
+              "crowded street",
+              "lots of distractions",
+              "piled trash and debris",
+              "darkness"
+            ],
+            "negative": [
+              "sentry's sharp senses and alertness",
+              "scouts and patrols",
+              "open terrain",
+              "loud terrain such as knee-deep water or creaking wood",
+              "torches or other light sources",
+              "noonday sun",
+              "many people who might spot you"
+            ]
+          },
+          "success": "QUICK You remain unnoticed, or arrive at your destination without being noticed.\nENHANCE yourself with hidden.\nDISRUPT your target with surprised, when you attempt to catch them unawares.",
+          "extraFeats": [
+            "Bring someone with you.",
+            "Keep the spotlight to act immediately again."
+          ],
+          "consequences": [
+            "You are spotted at the least convenient time (only if there was no Success).",
+            "You end up not exactly where you wanted.",
+            "You leave something behind (scratch a tag).",
+            "You are spotted and remembered (marked) (only if there was no Success).",
+            "You are not spotted, but something you did makes a sentry suspicious or raises the alarm.",
+            "You get nervous."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
       "section": "General Considerations",
       "page": 8,
       "intro": "Always-Relevant Tags and Statuses\nAlmost every action requires you to pay attention to what you're doing and be able to perceive your surroundings. For this reason, tags and statuses like darkness, heavy fog, loud crowd, distracted, pained, etc. can negatively affect most actions. Likewise, stamina statuses like tired, winded, or exhausted or mental statuses like light-headed or distressed can affect any action that requires effort or focus.\n\nCamp & Sojourn Actions\nThe following repeats the list of suggested camp actions (Camping & Sojourns, Corebook Vol. I, page 179), referring to their Action Grimoire counterparts.\n\nTime Matters\nDifferent actions take different amounts of time to perform: a swordstroke is quick, while climbing a hill can take minutes if not hours.\nAs the Heroes take actions in a scene, time marches ever forward, and its passing can trigger events in the Heroes' lives. For example, searching the site of an old temple could take a good while, and as the Heroes are searching, the devils from the basements below may notice their presence, or the rogue sorcerer who searches the same ruin for an ancient relic could get closer to completing their nefarious goal.\nWhen Establishing or re-Establishing a scene, the Narrator can always make Threats related to the passage of time, such as, \"You've spent a lot of time climbing the side of the mountain; the sun is going down ominously.\" Later, they can deliver Consequences such as time-passes on a progress Limit (Corebook Vol. I, page 169) such as coming-storm, enchantment-fading, or speak-now-or-forever-hold-your-peace.\nThe Narrator can also explain the introduction of a Complication as arising due to an action taking longer than intended. For example, a Hero who is conducting a forbidden ritual at a graveyard could find themselves blackmailed by a stray vagabond who's noticed their unusual project and wants something in return for their silence.\nAn action's manner of performance can also affect its timing: an exceptionally well-performed negotiation could be completed quicker than usual, while a botched negotiation could burn precious daylight, often for naught. The Narrator can allow the use of an extra feat to guarantee a speedy execution.",
