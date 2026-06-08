@@ -223,6 +223,8 @@ details.ag-sec[open] > summary::before { content: "▾ "; }
 .ag-roll { border: 1px solid var(--teal); border-radius: 10px; padding: 10px 12px; margin: 0 0 12px; background: var(--bg-deep); }
 .ag-roll h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .3px; color: var(--ink-soft); }
 .ag-spend { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 4px; }
+.ag-fx { display: flex; flex-wrap: wrap; gap: 5px; margin: 2px 0; }
+.ag-fx button.modchip { cursor: pointer; }
 .ref-sec { border: 1px solid var(--border); border-radius: 10px; margin: 8px 0; padding: 2px 12px; background: var(--bg-deep); }
 .ref-sec > h3 { cursor: pointer; user-select: none; margin: 10px 0; }
 .ref-sec > h3::before { content: "▾ "; color: var(--teal); font-size: 12px; }
@@ -1704,6 +1706,43 @@ function reduceStatusByAmt(st,amt){
   renderStatuses(); save();
 }
 // ----- Effect spender -----
+// ----- Parse a Grimoire action's Success text into one-tap spend effects (gap #3) -----
+const AG_FX={
+  CREATE:{type:'bag', label:'＋ Create tag'}, BESTOW:{type:'bag', label:'＋ Give tag'},
+  ENHANCE:{type:'status', label:'▲ Enhance (status)'}, ADVANCE:{type:'status', label:'▲ Advance (status)'},
+  RESTORE:{type:'reduce', label:'▼ Restore (reduce status)'},
+  DISRUPT:{type:'other', label:'◆ Disrupt (target status)'}, INFLUENCE:{type:'other', label:'◆ Influence (target status)'},
+  ATTACK:{type:'other', label:'◆ Attack (target status)'}, WEAKEN:{type:'other', label:'◆ Weaken (target)'},
+  'SET BACK':{type:'other', label:'▼ Set back (target)'}, DISCOVER:{type:'detail', label:'🔍 Discover · 1'}
+};
+function agSugg(seg){
+  const pats=[/such as ([^.]+)/i, /give (?:your ally|yourself|them|the target|your target|your opponent|your allies|the beast|the bandits)\s+([a-z][^.]+)/i,
+    /gain(?:ing)? ([a-z][\w' -]+)/i, /\bwith ([a-z][\w' -]+)/i, /removing ([^.,]+)/i];
+  for(const p of pats){ const m=seg.match(p); if(m){
+    return m[1].split(/,| or | and /i).map(x=>x.replace(/\betc\.?/ig,'').replace(/[.;:()]/g,'').replace(/\s+/g,' ').trim())
+      .filter(x=>x && x.length>1 && x.length<32).slice(0,6); } }
+  return [];
+}
+function parseSuccessEffects(success){
+  if(!success) return [];
+  const kw=Object.keys(AG_FX).sort((a,b)=>b.length-a.length).map(k=>k.replace(' ','\\s+'));
+  const re=new RegExp('\\b('+kw.join('|')+')\\b','g');
+  let m, idx=[]; while((m=re.exec(success))){ idx.push({kw:m[1].replace(/\s+/g,' ').toUpperCase(), at:m.index}); }
+  return idx.map((it,i)=>{ const seg=success.slice(it.at, i+1<idx.length?idx[i+1].at:undefined);
+    return {effect:it.kw, type:AG_FX[it.kw].type, label:AG_FX[it.kw].label, sugg:agSugg(seg)}; });
+}
+function seedEffect(e){
+  if(!e) return;
+  const s=(e.sugg&&e.sugg[0])||'';
+  if(e.type==='detail'){ doSpend(1,'discovered'+(s?' — '+s:' a detail')); spend._form=null; renderSpend(); return; }
+  if(e.type==='bag') spend._form={type:'bag', text:s};
+  else if(e.type==='status') spend._form={type:'status', tier:1, name:s};
+  else if(e.type==='reduce') spend._form={type:'reduce', amt:1};
+  else spend._form={type:'other', amt:1, text:e.effect+(s?': '+s:'')};
+  spend._form._sugg=e.sugg||[];
+  renderSpend();
+  const sf=$('spForm'); if(sf&&sf.scrollIntoView) sf.scrollIntoView({block:'nearest'});
+}
 function openSpend(total,isReaction){ spend={total:total,remaining:total,reaction:isReaction,log:[],_form:null}; renderSpend(); }
 function closeSpend(){ spend=null; $('spendBox').innerHTML=''; }
 function doSpend(cost,label,apply){
@@ -1726,19 +1765,28 @@ function renderSpend(){
   const E=[['status','＋ Status'],['reduce','− Status'],['bag','＋ Backpack'],['recover','Recover'],['detail','Detail · 1'],['feat','Feat · 1'],['other','Other…']];
   h+='<div class="seg">'+E.map(e=>'<button onclick="spForm(\''+e[0]+'\')"'+(spend._form&&spend._form.type===e[0]?' class="on"':'')+'>'+e[1]+'</button>').join('')+'</div>';
   h+='<div id="spForm"></div>';
+  let fx=[];
   if(agAction && !spend.reaction){
-    h+='<div class="ag-spend">';
-    if(agAction.success){ h+='<p class="hint" style="margin:8px 0 2px"><b>'+esc(agAction.name)+'</b> — Success Effects</p>'
-      +'<p class="muted" style="font-size:12px;line-height:1.4">'+agAction.success.split(/\n+/).map(esc).join('<br>')+'</p>'; }
-    if(agAction.extraFeats.length){ h+='<p class="hint" style="margin:6px 0 2px">Extra feats · 1 Power each</p><div>'
+    fx=parseSuccessEffects(agAction.success);
+    h+='<div class="ag-spend"><p class="hint" style="margin:8px 0 2px"><b>'+esc(agAction.name)+'</b> — suggested effects (tap to set up)</p>';
+    if(fx.length){ h+='<div class="ag-fx">'+fx.map((e,i)=>'<button class="modchip" data-fx="'+i+'">'+esc(e.label)+'</button>').join('')+'</div>'; }
+    if(agAction.extraFeats.length){ h+='<p class="hint" style="margin:6px 0 2px">Extra feats · 1 Power each</p><div class="ag-fx">'
       +agAction.extraFeats.map((f,i)=>'<span class="modchip" data-feat="'+i+'">'+esc(f)+' <span class="v">−1</span></span>').join('')+'</div>'; }
+    if(agAction.success) h+='<details class="ag-more" style="margin-top:6px"><summary>Full Success text</summary>'+fmtText(agAction.success)+'</details>';
     h+='</div>';
   }
   if(spend.log.length) h+='<p class="hint" style="margin-top:8px">Spent: '+spend.log.map(esc).join(' · ')+'</p>';
   h+='</div>';
   box.innerHTML=h;
   box.querySelectorAll('[data-feat]').forEach(c=>{ c.onclick=()=>{ if(doSpend(1,'extra feat — '+agAction.extraFeats[+c.dataset.feat])) renderSpend(); }; });
+  box.querySelectorAll('[data-fx]').forEach(c=>{ c.onclick=()=>seedEffect(fx[+c.dataset.fx]); });
   drawSpForm();
+}
+function spSuggChips(w,f,field){
+  if(!f._sugg || f._sugg.length<2) return;
+  w.insertAdjacentHTML('beforeend','<p class="hint" style="margin:8px 0 2px">Suggested:</p><div class="ag-fx">'
+    +f._sugg.map((s,i)=>'<button class="modchip'+(f[field]===s?' help':'')+'" data-sg="'+i+'">'+esc(s)+'</button>').join('')+'</div>');
+  w.querySelectorAll('[data-sg]').forEach(c=>{ c.onclick=()=>{ f[field]=f._sugg[+c.dataset.sg]; drawSpForm(); }; });
 }
 function drawSpForm(){
   const w=$('spForm'); if(!w||!spend._form) return; const f=spend._form, r=spend.remaining;
@@ -1750,6 +1798,7 @@ function drawSpForm(){
     $('sp_tm').onclick=()=>{ f.tier=Math.max(1,f.tier-1); drawSpForm(); };
     $('sp_tp').onclick=()=>{ f.tier=Math.min(6,f.tier+1); drawSpForm(); };
     $('sp_apply').onclick=()=>{ const nm=(f.name||'').trim(); if(!nm){toast('Name the status');return;} if(doSpend(f.tier,'gave '+nm+'-'+f.tier,()=>giveStatusTier(nm,f.tier))){ spend._form=null; renderSpend(); } };
+    spSuggChips(w,f,'name');
   } else if(f.type==='reduce'){
     if(!S.statuses.length){ w.innerHTML='<p class="hint" style="margin-top:8px">No statuses to reduce.</p>'; return; }
     const opts=S.statuses.map((s,i)=>{ const ti=s.boxes.lastIndexOf(true)+1; return '<option value="'+i+'"'+(f.sel===i?' selected':'')+'>'+esc(s.name||'(unnamed)')+'-'+ti+'</option>'; }).join('');
@@ -1766,6 +1815,7 @@ function drawSpForm(){
       +'<button class="btn sm" id="sp_apply">Apply · −'+cost+' Power</button>';
     $('sp_bt').oninput=e=>f.text=e.target.value;
     $('sp_apply').onclick=()=>{ const t=(f.text||'').trim(); if(!t){toast('Name the tag');return;} if(doSpend(cost,'added '+t,()=>{ S.backpack.push({id:uid(),text:t,type:'story',scratched:false}); renderBackpack(); save(); })){ spend._form=null; renderSpend(); } };
+    spSuggChips(w,f,'text');
   } else if(f.type==='recover'){
     const sc=scratchedTags(); if(!sc.length){ w.innerHTML='<p class="hint" style="margin-top:8px">No scratched tags to recover.</p>'; return; }
     w.innerHTML='<label class="fld" style="margin-top:10px"><span>Recover a scratched tag</span><select id="sp_rc">'+sc.map(t=>'<option value="'+t.id+'">'+esc(t.label)+'</option>').join('')+'</select></label>'
