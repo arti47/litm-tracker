@@ -207,6 +207,11 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
 .ag-list h4 { margin: 6px 0 3px; font-size: 13px; color: var(--teal); }
 .ag-list ul { margin: 0; padding-left: 18px; }
 .ag-list li { font-size: 13px; line-height: 1.45; margin: 2px 0; color: var(--ink-soft); }
+.ref-sec { border: 1px solid var(--border); border-radius: 10px; margin: 8px 0; padding: 2px 12px; background: var(--bg-deep); }
+.ref-sec > h3 { cursor: pointer; user-select: none; margin: 10px 0; }
+.ref-sec > h3::before { content: "▾ "; color: var(--teal); font-size: 12px; }
+.ref-sec.collapsed > h3::before { content: "▸ "; }
+.ref-sec.collapsed > *:not(h3) { display: none !important; }
 
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
@@ -446,11 +451,13 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 <!-- RULES / REFERENCE -->
 <section class="panel ref" id="panel-ref">
   <div class="card">
-    <h2>📖 Reference</h2>
-    <label class="fld"><span>Search the reference</span><input type="text" id="refSearch" placeholder="e.g. burn, status, favored, camp, promise…" oninput="filterRef()"></label>
-    <p class="hint" id="refEmpty" style="display:none">No reference entries match your search.</p>
+    <h2>📖 Rules</h2>
+    <p class="hint" style="margin:-2px 0 8px">Core player rules. For <b>what you can do</b> — actions, effects &amp; consequences — open the 📜 Action Grimoire.</p>
+    <button class="btn wide" style="margin:0 0 10px" onclick="openAG()">📜 Open the Action Grimoire</button>
+    <label class="fld"><span>Search the rules</span><input type="text" id="refSearch" placeholder="e.g. burn, status, favored, camp, promise…" oninput="filterRef()"></label>
+    <p class="hint" id="refEmpty" style="display:none">No rules match your search.</p>
 
-    <div class="ref-sec">
+    <div class="ref-sec" data-open>
       <h3>Getting started</h3>
       <table><tbody>
         <tr class="ref-row"><td>Build a Hero</td><td>Tap ☰ → <b>New Hero</b> (or 👥) for the guided wizard: pick a <b>Trope</b>, answer a <b>Themebook</b>, or start blank.</td></tr>
@@ -504,8 +511,8 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     </div>
 
     <div class="ref-sec">
-      <h3>Action Grimoire — spending Power</h3>
-      <p class="ref-row muted" style="line-height:1.45">Costs are the rulebook's; the example actions are illustrative. The Roll tab's Effects panel applies these for you.</p>
+      <h3>Spending Power on Effects</h3>
+      <p class="ref-row muted" style="line-height:1.45">After a Success, the Roll tab's Effects panel applies these for you. Worked examples live in the 📜 Action Grimoire.</p>
       <table><tbody>
         <tr class="ref-row"><td>tier</td><td><b>Inflict a status on a foe</b> (stagger, frighten, pin) — costs its tier.</td></tr>
         <tr class="ref-row"><td>tier</td><td><b>Reduce a status</b> on yourself or an ally — costs the tiers removed.</td></tr>
@@ -515,8 +522,6 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
         <tr class="ref-row"><td>1</td><td><b>Extra feat</b> — a small bonus action, only after ≥1 Power on your main purpose.</td></tr>
         <tr class="ref-row"><td>1</td><td><b>Single-use tag</b> — make one when only 1 Power is left.</td></tr>
       </tbody></table>
-      <div id="refGrimoire"></div>
-      <button class="btn wide" style="margin-top:8px" onclick="openAG()">📜 Browse the Action Grimoire (full reference)</button>
     </div>
 
     <div class="ref-sec">
@@ -739,22 +744,33 @@ function showTab(name){
   if (name==='ref') renderRefData();
 }
 
-// ---------- Reference search (Phase 7) ----------
+// ---------- Rules tab: collapsible sections + search ----------
+function attachRefAccordion(){
+  document.querySelectorAll('#panel-ref .ref-sec').forEach(sec=>{
+    const h=sec.querySelector(':scope > h3');
+    if(h && !h._acc){ h._acc=1; h.onclick=()=>sec.classList.toggle('collapsed'); }
+  });
+}
 function filterRef(){
-  const q=($('refSearch').value||'').trim().toLowerCase();
+  const q=(($('refSearch')&&$('refSearch').value)||'').trim().toLowerCase();
   let anyVisible=false;
   document.querySelectorAll('#panel-ref .ref-sec').forEach(sec=>{
+    const h=sec.querySelector(':scope > h3');
+    const headMatch=!q || (h && h.textContent.toLowerCase().indexOf(q)>=0);
     let any=false;
     sec.querySelectorAll('.ref-row').forEach(row=>{
-      const m=!q || row.textContent.toLowerCase().indexOf(q)>=0;
+      const m=headMatch || row.textContent.toLowerCase().indexOf(q)>=0;
       row.style.display=m?'':'none'; if(m) any=true;
     });
-    sec.style.display=any?'':'none';
-    if(any) anyVisible=true;
+    const show=!q ? true : (any||headMatch);
+    sec.style.display=show?'':'none';
+    if(q){ sec.classList.toggle('collapsed', !show); if(show) sec.classList.remove('collapsed'); }
+    else { sec.classList.toggle('collapsed', !sec.hasAttribute('data-open')); }
+    if(show) anyVisible=true;
   });
   const e=$('refEmpty'); if(e) e.style.display=(q && !anyVisible)?'':'none';
 }
-function renderRefData(){ renderQuintRef(); renderMightRef(); renderGrimoireRef(); }
+function renderRefData(){ renderQuintRef(); renderMightRef(); attachRefAccordion(); filterRef(); }
 
 // ----- Tutorial overlay (Phase 7 — the Core Book's Gerrin walkthrough) -----
 let tutStep=0;
@@ -797,8 +813,7 @@ function agList(label,arr,cls){
 function renderAG(){
   const q=(($('agSearch')&&$('agSearch').value)||'').trim().toLowerCase();
   const data=litmActionGrimoire();
-  if(!data.length){ $('agBody').innerHTML='<p class="hint">Action Grimoire data not loaded yet.</p>'; return; }
-  let html='';
+  let html=grimoireExamplesHTML(q);   // Core-Book worked examples first
   data.forEach(sec=>{
     const secMatch=!q || ((sec.section||'')+' '+(sec.intro||'')).toLowerCase().indexOf(q)>=0;
     const entries=(sec.entries||[]).filter(e=>{
@@ -844,18 +859,22 @@ function prettyScenario(s){
   if(/[a-z]/.test(core)) return s;                        // already mixed-case — leave it
   return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase(); // sentence-case a shouty title
 }
-function renderGrimoireRef(){
-  const host=$('refGrimoire'); if(!host) return;
+// Core-Book worked examples, rendered inside the Action Grimoire browser (filtered by q).
+function grimoireExamplesHTML(q){
   let list=[]; try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.grimoire)) list=LITM_DATA.grimoire; }catch(e){}
-  if(!list.length){ host.innerHTML=''; return; }
+  if(!list.length) return '';
   const groups=[]; const byName={};
   list.forEach(g=>{ const k=g.action||''; if(!byName[k]){ byName[k]={name:k, spends:[]}; groups.push(byName[k]); } byName[k].spends.push(g); });
-  const rows=groups.map(grp=>{
-    const spends=grp.spends.map(s=>'<div><b>'+esc(s.cost)+'</b> — '+esc(s.effect)+'</div>').join('');
-    return '<tr class="ref-row"><td>'+esc(prettyScenario(grp.name))+'</td><td>'+spends+'</td></tr>';
-  }).join('');
-  host.innerHTML='<p class="ref-row muted" style="line-height:1.4;margin-top:8px">Worked examples from the rulebook — how Power is spent in real situations (action &amp; reaction):</p>'
-    +'<table><tbody>'+rows+'</tbody></table>';
+  const filtered=groups.filter(grp=>{ if(!q) return true;
+    const hay=(grp.name+' '+grp.spends.map(s=>(s.cost||'')+' '+(s.effect||'')).join(' ')).toLowerCase();
+    return hay.indexOf(q)>=0; });
+  if(!filtered.length) return '';
+  return '<div class="ag-sec"><h3>Core Rulebook — Worked Examples</h3>'
+    +'<p class="ag-intro">How Power is spent in real situations (verbatim from the Core Rulebook).</p>'
+    +filtered.map(grp=>'<details class="ag-entry"'+(q?' open':'')+'><summary>'+esc(prettyScenario(grp.name))+'</summary><div class="ag-edetail">'
+      +grp.spends.map(s=>'<div class="ag-row"><b>'+esc(s.cost)+'</b> — '+esc(s.effect)+'</div>').join('')
+      +'</div></details>').join('')
+    +'</div>';
 }
 function renderQuintRef(){
   const host=$('refQuint'); if(!host) return;

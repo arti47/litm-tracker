@@ -48,7 +48,7 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,190 lines / ~287 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,223 lines / ~291 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
 - **`sw.js` `CACHE_VERSION`**: `litm-v16` (bump on every deploy)
@@ -340,20 +340,22 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
     `scratchedTags`, `openSpend`/`doSpend`/`renderSpend`/`drawSpForm`. Form inputs persist
     across stepper re-renders (values stored on the form-state object).
 
-### Reference tab — searchable (Phase 7) ✅
-A **search box** (`filterRef`) filters every reference row live; sections collapse when they
-have no match, with a "no entries match" note. Ten `.ref-sec` blocks, all rules-grounded:
-**Getting started** (app onboarding — original content), **Counting Power**, **Might · Favored
-& Imperiled** (the mechanic: task-Might vs your Might → ±3/±6, grounded in the roller's Might
-control, **plus a per-Might example-action table** from `LITM_DATA.mightTable` via
-`renderMightRef`), **Roll 2d6 + Power**, **Action Grimoire — spending Power** (the Effect costs
-enforced by the spender, **plus the Core-Book's verbatim worked examples** grouped by scenario
-from `LITM_DATA.grimoire` via `renderGrimoireRef`), **Reactions**, **Statuses**, **Hero
-Development** (incl. Promise → Moment of Fulfillment), **Quintessences** (all 18, name +
-verbatim effect), **Camping**. The Might example-table, Action-Grimoire examples, and the
-Quintessences list are built at runtime via `renderRefData` (→ `renderMightRef` +
-`renderGrimoireRef` + `renderQuintRef`), since `LITM_DATA` is injected after boot. *(The 5E
-crossover is deferred — it needs a source not reachable here; see Roadmap Phase 7.)*
+### Rules tab — core player rules, collapsible (Phase 7) ✅
+The Rules tab (`#panel-ref`, titled **📖 Rules**) holds **core player rules only** — all Action
+Grimoire content lives in the 📜 Action Grimoire browser (a launch button + ☰ menu item open it).
+Each `.ref-sec` is a **collapsible accordion** (tap the `<h3>` to toggle; `attachRefAccordion`
+wires the headers, `filterRef` manages open/collapsed state). Collapsed by default except the
+one marked `data-open` (**Getting started**). A **search box** (`filterRef`) expands and shows
+only matching sections (matching the heading or any `.ref-row`), with a "no rules match" note.
+Sections: **Getting started** (onboarding + tutorial button), **Counting Power**, **Might ·
+Favored & Imperiled** (mechanic + the per-Might example table from `LITM_DATA.mightTable` via
+`renderMightRef`), **Roll 2d6 + Power**, **Spending Power on Effects** (the Effect costs the
+spender enforces — worked examples moved to the Grimoire), **Reactions**, **Statuses**, **Hero
+Development**, **Quintessences** (all 18, via `renderQuintRef`), **Camping**. `renderRefData`
+builds the data-driven sections (`renderQuintRef` + `renderMightRef`) at runtime, then
+`attachRefAccordion` + `filterRef`. The Core-Book's verbatim **worked examples** (`LITM_DATA.grimoire`,
+grouped by scenario via `grimoireExamplesHTML`) now render **inside the Action Grimoire browser**.
+*(The 5E crossover is deferred — it needs a source not reachable here; see Roadmap Phase 7.)*
 
 ### Tutorial — the Gerrin walkthrough (Phase 7) ✅
 A paginated **tutorial overlay** (`#tutorialOverlay`, `openTutorial`/`renderTutorial`/
@@ -369,9 +371,11 @@ for the standalone **Action Grimoire** supplement (a *separate book* from the Co
 in `LITM_DATA.actionGrimoire` (from `_build/action-grimoire.json`): sections of action entries, each
 rendered as a collapsible `<details>` card showing action examples, explanation, Power **helps**/
 **hinders**, **Success** effects, **Extra Feats**, **Consequences**, and any **Might** note. A search
-box filters across all entry text and auto-expands matches. Opened from a **📜 Browse the Action
-Grimoire** button in the Reference tab's Action-Grimoire section and the **📜 Action Grimoire** ☰ menu
-item. Prose/reference sections (e.g. **Common Consequences**) carry an `intro` + grouped
+box filters across all entry text and auto-expands matches. Opened from the **📜 Open the Action
+Grimoire** button at the top of the Rules tab and the **📜 Action Grimoire** ☰ menu item. The
+browser also hosts the Core-Book's **worked examples** (`LITM_DATA.grimoire` via
+`grimoireExamplesHTML`, grouped by scenario) as a pinned "Core Rulebook — Worked Examples" block.
+Prose/reference sections (e.g. **Common Consequences**) carry an `intro` + grouped
 `lists` (heading + items) instead of action entries, rendered as bulleted lists. **Partial
 dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks** (11 entries) +
 **Common Consequences** (prose); filled in section by section (see Roadmap Phase 7). No new
