@@ -1,0 +1,2066 @@
+{
+ "_source": "LITM Character Pack supplement (20 ready-made Heroes)",
+ "premades": [
+  {
+   "name": "Bumbler",
+   "tagline": "An Incompetent Beekeeper and Meadery Owner, Hanging On By Sheer Luck",
+   "quote": "By the Lady, mister Alderman, I didn't mean to knock over the baker's flour! I mean it was just there all of a sudden, and before I knew it we were all covered in white powder. No, that has nothing to do with yesterday's incident. That barrel of rainwater shouldn't have rolled down the hill, I didn't intend for that to happen. I know, I know, the Wise One is still patching up poor Hyacinth. I've sent her honey to apologize. You know how it is - I'm so sorry. Come by the meadery and we'll drink to better days. That's Good Ol' Bumbler for ya...!",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Trait",
+     "title": "Walking Disaster",
+     "power": [
+      "Topple something down",
+      "Narrowly escape harm"
+     ],
+     "weak": "Not in my control",
+     "advance": [
+      "Accidental cushioning",
+      "Others trip around me",
+      "Do serious damage"
+     ],
+     "quest": "I guess I am just a big ole bumbler.",
+     "desc": "It's a known fact in the village: if Bumbler comes your way, better turn around and mind your step. Everywhere Bumbler goes stacks collapse and barrels roll, people trip and ladders fall. And to spare everyone, she somehow walks away unscathed. For all her towering form, wide frame, and clumsy gait, nothing of the devastation she sows ever seems to catch up to her.",
+     "special": {
+      "name": "Moment to Shine",
+      "desc": "Once per session, when you act using tags from this theme, you may ignore being Imperiled, or treat being Extremely Imperiled as being Imperiled."
+     }
+    },
+    {
+     "type": "Skill or Trade",
+     "title": "Beekeeper",
+     "power": [
+      "Sense tiny environmental changes",
+      "Gentle touch"
+     ],
+     "weak": "Slow worker",
+     "advance": [
+      "Identify who holds power",
+      "Agitate the bees",
+      "Flora of the Dales"
+     ],
+     "quest": "One day, this'll be the most famous apiary of our dale!",
+     "desc": "Sensitive and gentle, Bumbler is an experienced beekeeper, owner of the Golden Meadows Apiary. She knows how to care for these yellow-and-tan ambrosia-giving insects, sensitive to every little change in temperature, humidity, and light around, and knowing their hierarchy and power structures (and by proxy, those of human groups and cliques). She is also knowledgeable of every flower and plant a bee can find in the Dales, its flavor and properties.",
+     "special": {
+      "name": "Resourceful",
+      "desc": "When you camp or sojourn, if you dedicate your time to preparing or crafting something using your skill, you may create an extra story tag in addition to the usual benefits."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Meadows Meadery",
+     "power": [
+      "Jugs of frothing mead!",
+      "High-pressure barrels"
+     ],
+     "weak": "Bumbler's not around",
+     "advance": [
+      "Throw a celebration",
+      "Maintenance and repairs",
+      "Well-known seal of quality"
+     ],
+     "quest": "This place is where I feel I'm at my best.",
+     "desc": "Along with the Golden Meadows Apiary, Bumbler inherited a meadery, and continues to practice the brewing of fermented honey beverages. The spacious shed holds dozens of barrels along the walls, while at the center Bumbler hosts her customers on a straw-strewn packed dirt floor with a few tree stumps for seats and tables. Locals love to celebrate and laugh here, as long as everyone survives the night without bruise.",
+     "special": {
+      "name": "Quartermaster",
+      "desc": "Members of your Fellowship may treat Jugs of frothing mead! as if it were in their backpack, as long as it is possible for you to hand it to them and let them use it."
+     }
+    },
+    {
+     "type": "Circumstance",
+     "title": "Village Fool",
+     "power": [
+      "Ignore ridicule or shame",
+      "Get away with anything"
+     ],
+     "weak": "The butt of many pranks",
+     "advance": [
+      "Outcasts and oddballs",
+      "See through their masks",
+      "Tell them to back off"
+     ],
+     "quest": "If I laugh with them, maybe they'll forgive everything I've broken...",
+     "desc": "Sadly, folk around Bumbler mock her clumsiness at her expense. She doesn't care - her bees and meadery are more important to her than what people say - and so she reclaimed this status, to make people laugh or to take liberties others would not for fear of their reputation. But like with her mead, she's feeling some bubbling pressure fermenting in her, secretly fearing the day when enough will be enough.",
+     "special": {
+      "name": "Expected Role",
+      "desc": "Once per session, before you take a social action befitting a village fool, you may gain amusing-2."
+     }
+    }
+   ],
+   "backpack": [
+    "A bee's nest (occupied)",
+    "A jar of honey",
+    "Netted cape and cowl",
+    "Hammer and nails",
+    "Fragile pottery",
+    "Rehearsed retort",
+    "Bellows smoker"
+   ],
+   "examples": [
+    "Really make a mess: Walking Disaster + Topple something down + High-pressure barrels = POWER 3. Give broken, stunned, or sticky.",
+    "Blow off social norms: Village Fool + Ignore ridicule or shame + Get away with anything = POWER 3. Lessen convinced or humiliated.",
+    "Sense danger before it lands: Walking Disaster + Narrowly escape harm + Sense tiny environmental changes = POWER 2. Discover, or lessen wounded.",
+    "Throw a party: Meadows Meadery + Jugs of frothing mead! + Village Fool = POWER 3. Give happy or intoxicated."
+   ]
+  },
+  {
+   "name": "Finn The Red Marshal",
+   "tagline": "A Strapping Young Constable Protecting a Sleepy Village and Dreaming of Glory",
+   "quote": "Stack the firewood... Help build the dam... Go fetch Old Trilla's goat... Oh, I'm sick of it! Is that what I have been preparing for? For this I broke my nose and lost a tooth in the training grounds? I'm ready for so much more than helping these farmers through yet another winter. What a bore! They say Stormhelm is fighting a war on the northern frontier. What acts of valor they must see! I mean, I don't want war to come here... I, I want everyone to be safe. But... is it so wrong to want to become the hero I know I can be?!",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Devotion",
+     "title": "Protector of the Dales",
+     "power": [
+      "The Red Armor",
+      "Stand watch"
+     ],
+     "weak": "Burden of responsibility",
+     "advance": [
+      "Reassuring presence",
+      "Know these lands",
+      "Loyal riding horse"
+     ],
+     "quest": "I am sworn to guard this land and its people.",
+     "desc": "Finn is a new arrival at the village: a Red Marshal assigned to keep the peace and safety of the Dalish people, taking over from his retired predecessor. Everyone knows nothing ever happens in this quiet little dale, but nevertheless he often struts around in his a-little-too-shiny Red Armor: a practical boiled leather vest that also serves as symbol of his station and a reminder of the responsibility he bears.",
+     "special": {
+      "name": "Bodyguard",
+      "desc": "When your Devotion or a person representing it takes a Consequence, you may take it instead of them (and possibly react to it), if the Narrator deems it possible."
+     }
+    },
+    {
+     "type": "Skill or Trade",
+     "title": "Martial Training",
+     "power": [
+      "Swordsmanship",
+      "Rally comrades"
+     ],
+     "weak": "Experienced foes",
+     "advance": [
+      "Practiced footwork",
+      "Iron focus",
+      "Archery"
+     ],
+     "quest": "Training keeps me ready for whatever may come.",
+     "desc": "After volunteering to join the Red Marshals, Finn apprenticed at Fort Gherdorn, their Barleytown barracks, spending years of rigorous arms training. He learned to wield swords, knives, axes and bows, or fight bare-handed, practicing in the sanded courtyard until he was bloody. He also learned to read missives and write reports. Today, he wonders what it was all for: it seems these skills will never truly be put to good use.",
+     "special": {
+      "name": "Learn from My Mistakes",
+      "desc": "Once per scene, when you act using tags from this theme and don't Succeed, mark Improve on this theme."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Athletic",
+     "power": [
+      "Brute strength",
+      "Runner's stamina"
+     ],
+     "weak": "This is gonna hurt later",
+     "advance": [
+      "Climbing",
+      "Hardened physique",
+      "All-terrain trekker"
+     ],
+     "quest": "I'll race you!",
+     "desc": "A Red Marshal's duty involves not only preparing for battle but also patrolling through the hills and woods, saving a stray farm animal from a deep ravine, or helping farmers to stack hay bales. Strapping and vigorous, Finn has the natural stamina and strength to help the people of his dale - and his training has only improved these abilities.",
+     "special": {
+      "name": "Moment to Shine",
+      "desc": "Once per session, when you act using tags from this theme, you may ignore being Imperiled, or treat being Extremely Imperiled as being Imperiled."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Aspiring Local Hero",
+     "power": [
+      "Feign courage",
+      "A villager's shield"
+     ],
+     "weak": "Rash",
+     "advance": [
+      "Shortcuts to greatness",
+      "Seize attention",
+      "Village folk's blessing"
+     ],
+     "quest": "No one remembers",
+     "desc": "In his heart, Finn dreams of becoming a renowned hero, and so he seeks adventure and jumps head first whenever the opportunity presents itself to show his mettle. While this has earned him the respect of some folk, others see him as a brash fool obsessed with glory. It seems a hero is in there, somewhere, but Finn must first find what truly matters to him most.",
+     "special": {
+      "name": "Lasting Impression",
+      "desc": "Once per scene, when you take a social action and Succeed, you may give a lasting tag to everyone you affect with this action."
+     }
+    }
+   ],
+   "backpack": [
+    "A good sword",
+    "Hemp rope",
+    "Green quilted gambeson",
+    "Old seeing glass",
+    "Soothing salve",
+    "Whetstone",
+    "Bread",
+    "eggs",
+    "and cheese"
+   ],
+   "examples": [
+    "Land a swordstroke: Protector of the Dales + Martial Training (Swordsmanship) + Athletic (Brute strength) = POWER 4. Give wounded.",
+    "Protect a Dalesperson: Quick Outcome + Aspiring Local Hero (A villager's shield) = POWER 3. Quick Outcome or lessen wounded.",
+    "Climb a ledge: Athletic + Brute strength = POWER 2. Quick Outcome.",
+    "Resist fear: Aspiring Local Hero + Feign courage + Protector of the Dales = POWER 3. Lessen or remove scared."
+   ]
+  },
+  {
+   "name": "Gerrin The Deerstalker",
+   "tagline": "A Spirited Woodland Huntsman Dedicated Above All to His Family",
+   "quote": "Shhhh... quiet. Can you hear it... It's everywhere. The forest. It has its own life, its own breath. Sometimes I sit here alone, like this, and just fall into it. It feels like plunging into a chilly, clear pond. I'm somehow more awake, more... here. I can hear every critter squeak and every reindeer huff. And deeper, the crawling and teeming in every rotten log and every creaking branch. And I can hear the wind, ruffling the leaves like my mother used to ruffle my hair. This forest is alive, and we are nothing but its lucky houseguests.",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Circumstance",
+     "title": "Deer Stalker",
+     "power": [
+      "Stealthy step",
+      "Keen senses"
+     ],
+     "weak": "Loner",
+     "advance": [
+      "Living off the land",
+      "Quiet communion",
+      "Trade game and furs"
+     ],
+     "quest": "I must safeguard the delicate balance of the forest.",
+     "desc": "High in the tree-covered mountains of Hartland, deep in the Shady Forest, there lives a young deer stalker named Gerrin. Leading the simple life of a hunter, he sets out every day deep into the woods to hunt and provide for his family. Sometimes he's gone for days at a time, living under the dense canopy in solitary tranquility. For he loves the forest and respects it, and guards it as a steward.",
+     "special": {
+      "name": "Comfort Zone",
+      "desc": "When you camp or sojourn in the forest, you may recover one scratched power tag in addition to any other benefits."
+     }
+    },
+    {
+     "type": "Skill or Trade",
+     "title": "Skilled With a Bow",
+     "power": [
+      "Father's yew bow",
+      "Rapid second arrow"
+     ],
+     "weak": "Close combat",
+     "advance": [
+      "Take aim",
+      "Swat away attacks",
+      "Hobbling shot"
+     ],
+     "quest": "Every arrow I loose is a choice.",
+     "desc": "Before he left their home on a matter of importance he never explained, Gerrin's father gave him a well-crafted carved bow made out of the boughs of a yew tree, sacred and known for its protective properties. \"It will serve you well, but only if you master it,\" said Father. Since then, Gerrin has practiced without ceasing, honing his archery further and further, and gaining a reputation among the woodland hunters.",
+     "special": {
+      "name": "Learn from My Mistakes",
+      "desc": "Once per scene, when you act using tags from this theme and don't Succeed, mark Improve on this theme."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Spirited Youth",
+     "power": [
+      "Untapped fierceness",
+      "Tough it out"
+     ],
+     "weak": "Family is my soft spot",
+     "advance": [
+      "Do something unexpected",
+      "Made of sterner stuff",
+      "Contagious joy of life"
+     ],
+     "quest": "Never surrender to darkness or despair.",
+     "desc": "Since the day he was born, Gerrin had a special spark to him. His mother told him many times that she's seen it in his eyes as a child and that the local Wise One had always looked at him differently - approvingly, perhaps, but also with a touch of concern. Gerrin grew up to be a fierce boy, unyielding and stubborn, but with a great force of life. Something within him shines through.",
+     "special": {
+      "name": "Unshakeable",
+      "desc": "Once per scene, when you react to lessen social or emotional Consequences and get a total result of 7 or above, you may spend all your Power to completely avoid all Consequence Effects."
+     }
+    },
+    {
+     "type": "Devotion",
+     "title": "Devoted to Family",
+     "power": [
+      "Inner compass",
+      "Hard-headed"
+     ],
+     "weak": "Good listener",
+     "advance": [
+      "Lend a helping hand",
+      "Chippie's little traps",
+      "Grandpa's tales of old"
+     ],
+     "quest": "Whatever may come, I'll be there for them.",
+     "desc": "Gerrin lives in a mountainside cabin with his mother, grandfather, and little brother Chippie. Except for his forest forays and for a special annual trip they take to the nearby hamlet of Hartwood, these three are his entire world. His mother's wise advice and knowing looks, his grandfather's ramblings about ancient kingdoms, and Chippie's little pranks and stunts - he cherishes these things above all else.",
+     "special": {
+      "name": "Goes Both Ways",
+      "desc": "Once per session, if the object of your Devotion is near, you may gain a story tag representing aid granted by them, such as an item, encouragement, knowledge, or direct help."
+     }
+    }
+   ],
+   "backpack": [
+    "Protective charm",
+    "Extra quiver of arrows",
+    "Whistling signal arrow",
+    "Hunter's knife",
+    "Oilskin cloak",
+    "Bedroll",
+    "Snowshoes"
+   ],
+   "examples": [
+    "Fire an arrow: Skilled with a Bow + Father's yew bow = POWER 2. Give wounded or hobbled.",
+    "Track quarry: Deer Stalker + Stealthy step + Keen senses = POWER 3. Advance find or catch.",
+    "Find new strength within: Spirited Youth + Untapped fierceness + Devoted to Family = POWER 3. Remove despaired or gain invigorated.",
+    "Endure the elements: Spirited Youth + Tough it out = POWER 2. Lessen cold, tired, or sick."
+   ]
+  },
+  {
+   "name": "Gorna And Truffles",
+   "tagline": "A Gregarious Cook and His Porcine Pal, Out to Taste Every Dish in the Dales",
+   "quote": "Come on, it'll be fun! Truffles caught a scent this morning - real strong, too. Might be wild ginger, might be some mushroom nobody's ever seen before! I mean, who knows what's out there? That's the best part! We find it, I cook it, we eat it - simple as that. And if it tries to bite us first... well, Truffles bites harder. You grow up in Barleytown like me, you learn fast how to sniff out the good stuff. Trust me, you won't forget this meal. So? You in? I've got a spare fork!",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Skill or Trade",
+     "title": "Self-taught Cook",
+     "power": [
+      "Sharpened cleaver",
+      "Feel-good food"
+     ],
+     "weak": "Cooking needs time to perfect",
+     "advance": [
+      "Start a fire",
+      "Barter for ingredients",
+      "Invent my own recipes"
+     ],
+     "quest": "I have to taste every cooking ingredient and dish in the Dales.",
+     "desc": "A traveling cook of not yet twenty years, hailing from the Dalish town of Barleytown, Gorna never apprenticed but rather learned through trial and error. He knows that his greatest creations are yet to come - one day he will cook something truly miraculous - but to get there he is determined to taste every ingredient and dish in the Dales, and beyond.",
+     "special": {
+      "name": "Resourceful",
+      "desc": "When you camp or sojourn, if you dedicate your time to cooking, you may gain an extra story tag in addition to the usual benefits."
+     }
+    },
+    {
+     "type": "Companion",
+     "title": "Truffles the Giant Boar",
+     "power": [
+      "Sniffing out scents and tracks",
+      "Strong and sturdy"
+     ],
+     "weak": "Glutton",
+     "advance": [
+      "Harnessed food cart",
+      "Sharp tusks",
+      "Adorable antics"
+     ],
+     "quest": "Truffles is my boy, I'll never abandon or hurt him.",
+     "desc": "Truffles, an oversized truffle boar, likely a runaway from Fairpoint, found Gorna while he was foraging for ingredients in the woods. After Gorna shared a delectable meal with Truffles, the boar led him to a buried cache of rare mushrooms, and has been following him around since then, constantly hungry and fiercely protective.",
+     "special": {
+      "name": "Everyone's Best Friend",
+      "desc": "Once per session, when Truffles helps another member of your Fellowship, you may invoke only tags from this theme, forgo rolling, and get a Success without Consequences."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Friendly Charm",
+     "power": [
+      "Offer to break bread",
+      "Naturally cheerful"
+     ],
+     "weak": "Cute is not always enough",
+     "advance": [
+      "Get them to talk",
+      "A friend in every village",
+      "Obtain new recipes"
+     ],
+     "quest": "There's nothing that a good meal with friends can't fix.",
+     "desc": "Gorna's natural cheer and youthful smile are hard to resist, and so he easily makes friends wherever he travels in the Dales. When things get hairy, what often saves his skin is cracking a joke and pulling out a tasty pastry or steaming pie, usually enough to steer the conversation to more agreeable appetites.",
+     "special": {
+      "name": "Adaptable Persona",
+      "desc": "Once per session, when you take an action using tags from this theme and get only Consequences, you may choose to Succeed as well."
+     }
+    },
+    {
+     "type": "People",
+     "title": "Big Town Boy",
+     "power": [
+      "Marketplace savvy",
+      "Rally a crowd"
+     ],
+     "weak": "Inept in the wild",
+     "advance": [
+      "Knows every street",
+      "Underhanded dealings",
+      "Rumors and tales of the Dales"
+     ],
+     "quest": "I'll always come back to Barleytown.",
+     "desc": "Barleytown's bustling streets, and especially its markets, shaped Gorna, making him the loud, creative, affable boy he is today, and not nearly as gullible as some of the Dales' village folk. On the flipside, he hasn't spent much time in the wild and prefers to stick to the roads when traveling. One day, he hopes to return to his town, settle down, and start a family.",
+     "special": {
+      "name": "True To My Tribe",
+      "desc": "You are an exemplary member of Barleytown folk. Once per scene, when acting according to your People's habits, culture, or traditions would put you at risk or disadvantage and you still choose to do so, you may mark Improve on this theme."
+     }
+    }
+   ],
+   "backpack": [
+    "Worn iron skillet",
+    "Rare fungi",
+    "Bundle of dried herbs",
+    "Herbacious meat pie",
+    "Jam-filled scones",
+    "Steamy leek stew",
+    "Cobblebones (Dalish game)"
+   ],
+   "examples": [
+    "Prepare a meal in the field: Self-Taught Cook + Sharpened cleaver + Feel-good food + [Appropriate ingredient tag] = POWER 3 OR 4. Create dish tags, or remove hungry.",
+    "Truffles protects Gorna: Truffles the Giant Boar + Strong and sturdy = POWER 2. Lessen wounded.",
+    "Entice someone with tasty food: Friendly Charm + Offer to break bread + [Appropriate dish tag] = POWER 2 OR 3. Give friendly or convinced.",
+    "Shop/forage for ingredients: Big Town Boy + Marketplace savvy OR Truffles the Giant Boar + Sniffing out scents and tracks = POWER 2. Create ingredient tags."
+   ]
+  },
+  {
+   "name": "Higgins Two-Shells",
+   "tagline": "A Stalwart Yet Battle-weary Bard, in Search for Peace That Would Bring Back His Love",
+   "quote": "Oh, mine love for me awaits; Beyond ford, slope, and crag; Upon us smiles no fate; A pair of tangled stags; Our people are at war From Highland cross to Dale; Upon the Rushing fords; They rush their blood to spill; My love is bound in chains; and I was cast adrift; I weary now of glory tales, pray death or peace come swift.",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Circumstance",
+     "title": "Woodward of Cedargate",
+     "power": [
+      "Stalwart in body and spirit",
+      "Woodland tracker"
+     ],
+     "weak": "Lacking offensive tactics",
+     "advance": [
+      "Hold a defensive line",
+      "Train local militia",
+      "Carry heavy gear"
+     ],
+     "quest": "I will defend Cedargate against any invader.",
+     "desc": "Higgins is one of the Woodwards of Cedargate, defenders who have been tirelessly staving off invaders from the Craggen Highlands at the western edge of the Dales. Because of his forbidden affair with one of the Highlanders, he was sent (or exiled) into the Dalish heartland to tell the tale and raise support for Cedargate's plight, which ought to concern all Dalespeople.",
+     "special": {
+      "name": "Familiar Matters",
+      "desc": "There are things everyone in your situation knows. Once per scene, you may ask the Narrator for one important detail about a subject related to your Circumstance."
+     }
+    },
+    {
+     "type": "Skill or Trade",
+     "title": "Battle Chanter",
+     "power": [
+      "Invigorate for battle",
+      "Mirthful tune"
+     ],
+     "weak": "Inclement weather",
+     "advance": [
+      "Glorifying ballads",
+      "Bellowing commands",
+      "Mournful honorary dirge"
+     ],
+     "quest": "An unsung battle is an affront to the fallen.",
+     "desc": "Short of stature but deep of voice, Higgins put his beautiful, bellowing singing to use among the Woodwards as a battle chanter, conveying orders, lifting morale, and sowing fear in the enemy. Off the battlefield, his touching and sonorous ballads honoring fallen friends and recording acts of glory penetrate even the hardest of hearts.",
+     "special": {
+      "name": "Rehearsed Technique",
+      "desc": "Whenever you burn Battle Chanter for Power, you gain 3 Power as normal and may also forgo rolling the dice and treat the dice roll total as 7 (before adding Power)."
+     }
+    },
+    {
+     "type": "Devotion",
+     "title": "Peace for Odrid",
+     "power": [
+      "Sympathy for foes",
+      "Understands loss"
+     ],
+     "weak": "Ostracized",
+     "advance": [
+      "Fond memories of Odrid",
+      "Honorable acts",
+      "Prison breaks"
+     ],
+     "quest": "I must bring peace to Cedargate, if I'm ever to see Odrid again.",
+     "desc": "Hearing a handsome voice carrying over the battlefield, Higgins fell in love with his foe, a man named Odrid, a Highlander War-Crier. Alas, no Woodward nor raider would allow love for an enemy to flourish. Odrid was imprisoned and Higgins sent to wander the Dales for a year. He now seeks a way to bring peace to their warring people - the only way he'll ever see his love again.",
+     "special": {
+      "name": "Deeply Committed",
+      "desc": "Your dedication fills you with purpose. Once per scene, when you take action to pursue this theme's Quest, you may first gain committed-2, which expires after that action."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Twin Shields",
+     "power": [
+      "Shield bash",
+      "Defensive press forward"
+     ],
+     "weak": "Hesitates to spill blood",
+     "advance": [
+      "Echo my voice",
+      "Quick pick up",
+      "Wedge and disarm"
+     ],
+     "quest": "More needless bloodshed won't get us anywhere.",
+     "desc": "By taking up a second shield, to represent his dedication to peace, Higgins breaks with Woodward tradition - and not for the first time. With his diminutive stature, Higgins can barely be seen behind his two massive cedar shields, but his control of these beastly bulwarks is impressive, earning him the nickname Two-Shells.",
+     "special": {
+      "name": "Durable",
+      "desc": "Once per session, you can prevent Consequence that would scratch Twin Shields or give your shields a status of tier 3 or less."
+     }
+    }
+   ],
+   "backpack": [
+    "Honed wood axe",
+    "Rivets for shield repairs",
+    "Memorized tavern song",
+    "Chewing leaves",
+    "Sweet Cedargate maple",
+    "Green hooded cowl",
+    "Tongue-loosening mead"
+   ],
+   "examples": [
+    "Rally allies with song: Stalwart in body and spirit + Battle Chanter (Invigorate for battle) = POWER 3. Give heartened.",
+    "Protect with shields: Woodward of Cedargate (Stalwart in body and spirit) + Twin Shields = POWER 3. Lessen wounded.",
+    "Make peace: Peace For Odrid + Sympathy for foes + Understands loss = POWER 3. Give friendly.",
+    "Bash with shields: Woodward of Cedargate (Stalwart in body and spirit) + Twin Shields (Shield bash) = POWER 4. Give stunned or prone."
+   ]
+  },
+  {
+   "name": "Jayne Tinkerplate",
+   "tagline": "A Fledgling Sellsword Set On Changing Her Stars and to Hell With the Naysayers!",
+   "quote": "Name's Jayne. Built my armor from scrap and my life from the ground up. Some folks said I wasn't meant for a sword or a story - said a lot of things, really. I smiled, honed sharper edges, and kept walking. Too green to fight up north, but I won't miss the next chance. I fight loud, I fight proud, and if I take a hit, I just laugh louder. Every job toughens me, every scar sings my name a little clearer. Stick with me. I'll patch you up, crack a joke, and maybe we'll carve out the legend they said I couldn't have.",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Devotion",
+     "title": "Change My Stars",
+     "power": [
+      "Strong will",
+      "Fiery rhetoric"
+     ],
+     "weak": "Restless",
+     "advance": [
+      "Strike the first blow",
+      "Seek danger",
+      "Can't be ignored"
+     ],
+     "quest": "They will write ballads about me!",
+     "desc": "For as long as she can remember, Jayne has felt a call to greatness. A child to a penniless family of tinkers from the South Province of Stormhelm, she didn't feel like she fit into the role which seemed to have been written for her in the stars. Feisty and single-minded, she decided to set out on a journey to rewrite her fate, letting nothing stand in her way.",
+     "special": {
+      "name": "Unwavering",
+      "desc": "Once per session, when a tag in this theme would be scratched for any reason, you may keep it unscratched instead."
+     }
+    },
+    {
+     "type": "Circumstance",
+     "title": "Rookie Sellsword",
+     "power": [
+      "Swing wide and hard",
+      "A purse of Dalish iron"
+     ],
+     "weak": "Wet behind the ears",
+     "advance": [
+      "Mercenary camaraderie",
+      "Fight shoulder to shoulder",
+      "Rough battle tactics"
+     ],
+     "quest": "Learn by doing.",
+     "desc": "Dreams of glory are all well and good, but Jayne needs to eat, so she took on work as a novice sellsword. Knowing the terrible war in the north would chew up a rookie like her, she made for the quiet backwater of the Dales. She still swings too slow and is easily outmaneuvered by skilled foes, but that's better than most hillfolk can boast.",
+     "special": {
+      "name": "Trudging Along",
+      "desc": "Once per scene, you may ignore a humiliated status of tier 3 or lower."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Reforged Arms",
+     "power": [
+      "Notched blade",
+      "Piecemeal armor"
+     ],
+     "weak": "Rough appearance",
+     "advance": [
+      "Easy to fix",
+      "Scavenge useful things",
+      "Tinker's insights"
+     ],
+     "quest": "These shoddy arms will fall apart if I don't work on them every day.",
+     "desc": "Armor, sword, and shield are more than Jayne could afford when she took up the life of a sellsword, so she decided to put her skill to use and forge her own panoply. She scavenged discarded arms from an old battlefield and crafted herself a new skin and a new identity.",
+     "special": {
+      "name": "I'm Keeping This",
+      "desc": "Choose one of your backpack tags and move it to this theme, it becomes a power tag. Once per session, you may return this tag to your backpack and pick a different one to move to this theme."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Cheerful Resolve",
+     "power": [
+      "Laugh off danger",
+      "Inspiring cheer"
+     ],
+     "weak": "Underestimate my foes",
+     "advance": [
+      "Cutting taunts",
+      "Topple the strong",
+      "Contagious smile"
+     ],
+     "quest": "The best way to deal with bullies is to keep laughing.",
+     "desc": "Jayne's chosen name, gender, and heroic dreams have always ruffled the feathers of bigger and stronger people who demanded she stay in the box they planned out for her. But she's learned not to let jeers or taunts get to her and to stare bullies right in the face. Building from these experiences, there's little nowadays that can sour her mood.",
+     "special": {
+      "name": "Infectious Personality",
+      "desc": "When you camp or sojourn, you may give another Hero a story tag describing an aspect of your Personality. If such a tag already exists from a previous activation, it expires."
+     }
+    }
+   ],
+   "backpack": [
+    "Mother's necklace",
+    "Bent knife",
+    "Field tent",
+    "Cooking kit",
+    "Lucky token",
+    "Tough leather patches",
+    "Local contact"
+   ],
+   "examples": [
+    "Strike true: Reforged Arms + Notched blade + Rookie Sellsword + Swing wide and hard = POWER 4. Give wounded.",
+    "Raise morale: Fiery rhetoric + Cheerful Resolve + Inspiring cheer = POWER 3. Give encouraged or confident.",
+    "Withstand a blow: Reforged Arms + Piecemeal armor = POWER 2. Lessen wounded.",
+    "Dispel fear: Strong will + Cheerful Resolve + Laugh off danger = POWER 3. Lessen worried or scared."
+   ]
+  },
+  {
+   "name": "Kelvis",
+   "tagline": "A Simple Farmer and Farrier Searching for His Missing Wife and Daughter",
+   "quote": "I remember their faces when they waved goodbye for the last time. Pali was giggly and beaming, Nelsie gave me a knowing look and rolled her eyes with half a smile. But, is that the truth? Or was she frowning? Was her smile in fact wry and bitter? Could she have known somehow we'll never see each other again? No, no, I can't let myself think that. I have to find them. I need to find them. I may only be a simple farmer, but if I find out someone has taken them from me, by the Lady, there will be hell to pay.",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Devotion",
+     "title": "Have You Seen My Family?",
+     "power": [
+      "Searching and asking",
+      "Never give up"
+     ],
+     "weak": "Always preoccupied",
+     "advance": [
+      "Pali's rabbit rag doll",
+      "Family memories",
+      "Ritual of safe return"
+     ],
+     "quest": "Soon, I WILL have them back.",
+     "desc": "Three years ago, life stopped for Kelvis Goodsteed. His loving wife, Nelsie, and their ten-year-old daughter, Pali, disappeared without a trace. That morning, he was working in the field by their farmhouse and waved to them as they went to forage and pick flowers in the woods nearby. He never saw them again. He's been searching for them since, with the help of folk from his Dale, but to no avail.",
+     "special": {
+      "name": "Deeply Committed",
+      "desc": "Your dedication fills you with purpose. Once per scene, when you take action to pursue this theme's Quest, you may first gain committed-2, which expires after that action."
+     }
+    },
+    {
+     "type": "Circumstance",
+     "title": "Farmer Turned Farrier",
+     "power": [
+      "Animal husbandry",
+      "Hammers and axes"
+     ],
+     "weak": "Nasty gossip",
+     "advance": [
+      "Prudent and frugal",
+      "They take pity on me",
+      "Forge and repair weapons"
+     ],
+     "quest": "When they're back, we'll all return to the farm together.",
+     "desc": "While he was searching, Kelvis's farm fell to disrepair. He abandoned it and took up work as a farrier so that he could leave at any time to pursue a rumor or sighting about his family. Meanwhile, people in the village speak of him in hushed voices. Did his wife and child leave him, or flee? Did they eat poisoned berries? Did some vile Creature devour them? Or were they Creatures themselves?",
+     "special": {
+      "name": "Familiar Matters",
+      "desc": "There are things everyone in your situation knows. Once per scene, you may ask the Narrator for one important detail about a subject related to your Circumstance."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Healthy As a Horse",
+     "power": [
+      "Good stamina",
+      "Strong hammering arm"
+     ],
+     "weak": "Hard to miss",
+     "advance": [
+      "Resist poison and disease",
+      "Quick to recover",
+      "Stocky build"
+     ],
+     "quest": "I'm no good to anyone if I can't be on my feet.",
+     "desc": "Farm-raised and big-boned, Kelvis was always a man of considerable size, but three years of smithing have beaten his body into shape, giving him arms like logs and a swing that can fell a bull in one blow - or so goes the chatter in the local tavern. He rarely falls ill and recovers quickly if he does, which served him in his tireless travels to search for his family.",
+     "special": {
+      "name": "Pull Through",
+      "desc": "Once per session, when you roll with tags from this theme, you may ignore any negative physical or emotional status of tier 3 or lower."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Honest As the Day Is Long",
+     "power": [
+      "Intervene against injustice",
+      "Encourage to be good"
+     ],
+     "weak": "Can't tell a lie",
+     "advance": [
+      "Pillar of the community",
+      "See through manipulation",
+      "Sense trouble"
+     ],
+     "quest": "What's fair is fair, what's true is true.",
+     "desc": "Kelvis is an exemplar of that typical Dalish wholesomeness. Despite having been dealt a bad hand, he holds fast to a simple worldview: living together with others and living with oneself in peace only truly works when one is honest, fair, and seeks out what they feel in their heart is right. Discord, selfishness, and injustice can only thrive where folks have lost their natural sense of what's true.",
+     "special": {
+      "name": "Big Personality",
+      "desc": "When you burn power tags from this theme for Power, they add 4 Power instead of 3."
+     }
+    }
+   ],
+   "backpack": [
+    "Rope and heavy pitons",
+    "Blackened leather gloves",
+    "Horseshoes",
+    "Handwoven scarf",
+    "Tankard of spiced cider",
+    "A haunting nursery rhyme",
+    "Small metal cage"
+   ],
+   "examples": [
+    "Work hard and long: Farmer Turned Farrier (Animal husbandry) + Healthy as a Horse (Good stamina) = POWER 3. Create item tags or advance completed.",
+    "Swing a tool at some fool: Hammers and axes + Strong hammering arm + Intervene against injustice = POWER 4. Give stunned or wounded.",
+    "Give a good talking to: Honest as the Day is Long + Intervene against injustice + Encourage to be good = POWER 3. Give inspired or compliant.",
+    "Search for family: Have You Seen My Family? + Searching and asking + Never give up = POWER 3. Discover new details."
+   ]
+  },
+  {
+   "name": "Koto Pondskimmer",
+   "tagline": "A River-faring Fisherman and Local Brigand, Sailing Through Life Without a Care",
+   "quote": "Whelp, it ain't your day, sweetheart. Don't mind the spear, it's for fishing, of course. But I didn't catch much up around the dam last few days, and I could really use a handout. Whatcha got over there? That seems like a hefty little purse. Iron for horseshoes, huh? I bet that'll trade well. Same as that lovely necklace. Surely you wouldn't mind helping a destitute fella in need?",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Skill or Trade",
+     "title": "River Rat",
+     "power": [
+      "Deft boatsman",
+      "Spy from the water"
+     ],
+     "weak": "Stuck on dry land",
+     "advance": [
+      "Expert diver",
+      "Boat building and repairs",
+      "Strong fishing net"
+     ],
+     "quest": "Life on the water is the only life for me.",
+     "desc": "Koto lives alone on a raft, following the fishing catch (and other, less savory opportunities) with the seasons along the Dales' rivers, ponds, lakes, and waterways. The water is his home and his one true love: swimming, diving, fishing, and basking in the sun are all he ever needs. Whenever things get too complicated, Koto burns down his raft and moves elsewhere, builds a new raft, and starts afresh.",
+     "special": {
+      "name": "Deft Remedy",
+      "desc": "Once per session, when you use tags from this theme and roll a total of 6 or less, you may reroll the dice and take the new result instead."
+     }
+    },
+    {
+     "type": "Circumstance",
+     "title": "Unscrupulous Brigand",
+     "power": [
+      "Makeshift spear",
+      "Intimidation"
+     ],
+     "weak": "Growing notoriety",
+     "advance": [
+      "Hideouts and safe havens",
+      "Assess purse and valuables",
+      "A band of brigands"
+     ],
+     "quest": "I never truly hurt anyone.",
+     "desc": "When fishing isn't going so well, Koto turns to harassing Dalish passersby and relieving them of some valuables. Hopping out from under a bridge or threatening to puncture a ferry, he knows how to make his poor victims scared enough to part with their belongings. He has no intention of hurting them, but every now and then he has to make true on his threats and thump someone.",
+     "special": {
+      "name": "Comfort Zone",
+      "desc": "When you camp or sojourn in a hideout or safe haven, you may recover one scratched power tag in addition to any other benefits."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Frighteningly Quick",
+     "power": [
+      "Good balance",
+      "Snatch something"
+     ],
+     "weak": "Nowhere to run",
+     "advance": [
+      "Knife juggling",
+      "Wiggle out of bonds",
+      "Nimble fighter"
+     ],
+     "quest": "I bet I can grab that before you can.",
+     "desc": "Koto's lifestyle hinges on his natural speed and agility. When he was little growing up in the village of Lastford, no one could ever snatch his attached tail off in a game of Foxtail, and he always bested the other kids. This nimbleness carried well into his adult life of boating and banditry, allowing him to stay one step ahead of both the rapid current, hull-shattering rocks, and his well-padded farmer prey.",
+     "special": {
+      "name": "Made for This",
+      "desc": "Once per scene, you may ignore restrained when you act."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Carefree Rogue",
+     "power": [
+      "Handsome devil",
+      "Smooth talker"
+     ],
+     "weak": "Reckless",
+     "advance": [
+      "Do my own thing",
+      "Daring acts",
+      "Play a mellow serenade"
+     ],
+     "quest": "Never worry about tomorrow.",
+     "desc": "The other thing that keeps Koto afloat, especially when others are involved, is his roguish charm. Sometimes his smitten victims practically hand him their purse with pining doe eyes, and his smooth talking got him out of a bind more than once. Koto knows it's his freedom they desire (well, that and his dashing looks) - he is beholden to none and intends to stay this way.",
+     "special": {
+      "name": "Infectious Personality",
+      "desc": "When you camp or sojourn, you may give another Hero a story tag describing an aspect of your Personality (expiring any previous tag created this way)."
+     }
+    }
+   ],
+   "backpack": [
+    "Whittled kanabo club",
+    "Hidden raft nearby",
+    "Bag of stolen goods",
+    "Stinking batch of fish",
+    "Dashing silk sash",
+    "Fishing rod",
+    "Jug of ale"
+   ],
+   "examples": [
+    "Rob someone: Unscrupulous Brigand + Makeshift spear + Intimidation + Frighteningly Quick = POWER 4. Gain heavy-purse or stolen item tags.",
+    "Fight someone: Unscrupulous Brigand + Makeshift spear + Frighteningly Quick = POWER 3. Give Wounded.",
+    "Charm someone: Carefree Rogue + Handsome devil + Smooth talker = POWER 3. Give charmed.",
+    "Pilot a boat: River Rat + Deft boatsman + Good balance = POWER 3. Quick Outcome."
+   ]
+  },
+  {
+   "name": "Mistle Salthill",
+   "tagline": "A Morose Vagabond, Bound to Wander Among Graves and Keep the Dead Asleep",
+   "quote": "Storm's coming. Ach, it's all the same to me. Listen, I was just at the dolmen at Magpie Top. Don't let your children play there. There's... something there, restless. I put it back to sleep. The bandage? Don't mind that. All a part o' the trade. It'll sleep now, for maybe a moon or two. I'll be back this way before that. I have to swing by Salthill again for supplies and... If the snows are too heavy for travel, make a wreath of rowan and hang it on your door. And don't go out at night.",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Skill or Trade",
+     "title": "Ranger of Ruins",
+     "power": [
+      "Cross-country march",
+      "Sword for safety"
+     ],
+     "weak": "Delved too deep",
+     "advance": [
+      "Find and dismantle traps",
+      "Camping expert",
+      "Keen hearing"
+     ],
+     "quest": "Never leave a grave restless, never linger at a place at peace.",
+     "desc": "Mistle is a Bone Tender, a vagabond who goes from grave to barrow, oathbound to ensure that the dead remain asleep. She marches through hills, valleys, and forests, all across the Dales and through the year, in all weather, visiting the grave sites assigned to her by her mentor. She compensates for inclement weather and unexpected delays with selfless rigor, knowing well the dangers of any restless soul rising.",
+     "special": {
+      "name": "Learn from My Mistakes",
+      "desc": "Once per scene, when you act using tags from this theme and don't Succeed, mark Improve on this theme."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Banisher's Pack",
+     "power": [
+      "Spirit-revealing incense",
+      "A flute to lull the dead"
+     ],
+     "weak": "Not easily replaced",
+     "advance": [
+      "Talisman against malign influence",
+      "Revenant-burning decoction",
+      "Easy-access straps"
+     ],
+     "quest": "Always check your pack twice or there won't be a next check.",
+     "desc": "Unlike other Bone Tenders, who sing the Twilight Lullaby to lull the dead to sleep, Mistle never could hold a note. Instead, she relies on a handcarved flute and an assortment of talismans, charms, and potions, sourced from her mentor and other Wise Ones and recluses. These items spell life or death for her when she ventures into a cursed burial mound or a gloomy graveyard, so she values preparedness above all.",
+     "special": {
+      "name": "Just The Thing",
+      "desc": "Once per session, you may gain a story tag that represents something useful you have on you or that you have access to, or a new use for your items."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Weathered",
+     "power": [
+      "Saved by experience",
+      "Ignore pain and exhaustion"
+     ],
+     "weak": "Jaded",
+     "advance": [
+      "Bandage wounds",
+      "Resist temptation",
+      "Repress feelings"
+     ],
+     "quest": "There is no feel. There is no need. There is only the trail.",
+     "desc": "Years on the trail have hardened Mistle and made her resilient and clever. Her mistakes, burnt on her skin with countless scars and marks that will never heal, were hard-earned, her payment for the advantage of experience. She doesn't mind the howling wind or bitter cold sleet, and has dragged herself over mountain passes with a sprained ankle more than once. Whatever her oath calls for, she can handle.",
+     "special": {
+      "name": "Pull Through",
+      "desc": "Once per session, when you roll with tags from this theme, you may ignore any negative physical or emotional status of tier 3 or lower."
+     }
+    },
+    {
+     "type": "Devotion",
+     "title": "My Mentor, Yelizaveta",
+     "power": [
+      "Old Gwyrdolan inscriptions",
+      "Inspiring resourcefulness"
+     ],
+     "weak": "She's not here",
+     "advance": [
+      "Remnants of the Old Kingdom",
+      "Solemn meditation",
+      "Fight blind"
+     ],
+     "quest": "As long as Yelizaveta's words echo in me, she is with me.",
+     "desc": "A native of Salthill, Mistle became a Bone Tender under the tutelage of her odd mentor, Yelizaveta. Though most Bone Tenders travel in pairs, Yelizaveta works the haunted tunnels of the salt mines alone, and has similarly sent Mistle into the Dales on her own. In everything she does, Mistle recalls her teacher's instructions as if she were there with her, wishing Yelizaveta could be there in the flesh.",
+     "special": {
+      "name": "Catch Me When I Fall",
+      "desc": "Once per session, when you act with the object of your Devotion or a person representing it at your side, and the outcome is only Consequences, you may choose to Succeed as well."
+     }
+    }
+   ],
+   "backpack": [
+    "Iron buckler",
+    "Jerky",
+    "Heavy straw cape",
+    "A beautiful flower",
+    "Good quality rope",
+    "Torch and flint",
+    "Darkness-binding skull"
+   ],
+   "examples": [
+    "Explore a ruin or grave site: Ranger of Ruins + My Mentor, Yelizaveta + Spirit-revealing incense = POWER 3. Discover new details.",
+    "Lull a restless spirit: Ranger of Ruins + A flute to lull the dead = POWER 2. Give banished or laid-to-rest.",
+    "Shrug off hardship: Weathered + Ignore pain and exhaustion = POWER 2. Lessen tired or wounded.",
+    "Search pack for useful item: Banisher's Pack + Saved by experience + Inspiring resourcefulness = POWER 3. Create item tags."
+   ]
+  },
+  {
+   "name": "Old Man Carlo",
+   "tagline": "A Kindly Old Cobbler Who Thought of Peaceful Retirement Until He Met a Pixie",
+   "quote": "Yes, I've been 'round these parts before, nigh on two decades ago, I reckon. That was before I met, erm, my, erm, little apprentice. Back then I was wearing that good sturdy set of suede traveling boots. Fortunate to have strong boots in this area, 'cause of the snakes. Around that tree line, bandits used to set up for an ambush. I ran into one back then and had to talk him down from taking my whole load of leather. We had a nice chat and shared a bit of dinner in the end. Good lad.",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Personality",
+     "title": "Kindly Old Man",
+     "power": [
+      "Life-changing forgiveness",
+      "Hard-earned wisdom"
+     ],
+     "weak": "Aches and pains",
+     "advance": [
+      "Comforting smile",
+      "Tales of my youth",
+      "Earning trust"
+     ],
+     "quest": "It can be solved with kindness.",
+     "desc": "A well-loved figure in his village, Carlo has been called \"Old Man\" since his youth, more for his paternal personality than his age. Eventually, time has caught up with his moniker, and his body. Thoughtful and caring, he is known for his sage advice and for giving others a second chance, and convincing them to give themselves a second chance, too.",
+     "special": {
+      "name": "Big Personality",
+      "desc": "When you burn power tags from this theme for Power, they add 4 Power instead of 3."
+     }
+    },
+    {
+     "type": "Skill or Trade",
+     "title": "Longtime Cobbler",
+     "power": [
+      "Strong steady hands",
+      "Scrutinize gait and tracks"
+     ],
+     "weak": "This can't be hurried",
+     "advance": [
+      "Artisan's toolkit",
+      "Craft other leather items",
+      "Charm of swift-footedness"
+     ],
+     "quest": "Make something special for every person I care for.",
+     "desc": "By trade, Carlo is a cobbler and makes shoes for everyone in his dale, selling also to visiting wayfarers and peddlers. He can tell a lot about someone just by looking at the way they walk, their shoes, or their tracks. Over the years, he's experimented with other crafts, making leather aprons and jerkins, backpacks and belts, but his greatest joy still remains fitting someone for the perfect footwear.",
+     "special": {
+      "name": "Resourceful",
+      "desc": "When you camp or sojourn, if you dedicate your time to preparing or crafting something using your skill, you may gain an extra story tag in addition to the usual benefits."
+     }
+    },
+    {
+     "type": "Companion",
+     "title": "Axiliat, My Pixie Helper",
+     "power": [
+      "A touch of good luck",
+      "Spy and report"
+     ],
+     "weak": "Causes a panic",
+     "advance": [
+      "Timely warning",
+      "Fly and fetch",
+      "Hide in my jacket"
+     ],
+     "quest": "Friendship is a dance of give and take.",
+     "desc": "One morning, after a long night toiling away on an order, Carlo awakened at his workbench to find his unfinished work completed. This went on for several weeks, until Carlo and his wife lay in wait and caught the mysterious \"helper\": a pixie, which he named Axiliat. Though Axiliat only communicates with shrieks and gurgles, the two have become fast friends. For her help, Axiliat gets all the milk and honey she desires.",
+     "special": {
+      "name": "Perfect Positioning",
+      "desc": "Once per session, you can declare your Companion is positioned anywhere in the scene as long as they could get there, and give them a tier-2 status representing their advantageous position."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Retirement Plan",
+     "power": [
+      "Saved a small fortune",
+      "Loaded crossbow"
+     ],
+     "weak": "Unforeseen problems",
+     "advance": [
+      "Fortified cabin",
+      "Preserved foods",
+      "Warding glyphs"
+     ],
+     "quest": "I'm going to live out the rest of my life right here.",
+     "desc": "Carlo is a wise man and he knows sooner or later someone, or something, will come for Axiliat. But he is too old to wait running, so he's been hoarding provisions, some coin, and even an old Helmian crossbow, not knowing what to expect. Come what may, he will stand his ground - and until then, enjoy a quiet life on the porch with his wife and his pixie friend.",
+     "special": {
+      "name": "Just The Thing",
+      "desc": "Once per session, you may gain a story tag that represents something useful you have on you or that you have access to, or a new use for your items."
+     }
+    }
+   ],
+   "backpack": [
+    "Perfect walking boots",
+    "Sturdy leather coat",
+    "Bird costume for Axiliat",
+    "Hefty mallet",
+    "Favor from a customer",
+    "Enchantment against accidents",
+    "Milk and honey"
+   ],
+   "examples": [
+    "Craft custom shoes: Longtime Cobbler + Strong steady hands + Axiliat, My Pixie Helper + A touch of good luck = POWER 4. Create shoe tags.",
+    "Listen to people's woes: Kindly Old Man + Hard-earned wisdom = POWER 2. Create advice tags.",
+    "Give sage advice: Kindly Old Man + Life-changing forgiveness + Hard-earned wisdom = POWER 3. Give friendly or remove disheartened.",
+    "Defend home and family: Retirement Plan + Loaded crossbow + Strong steady hands = POWER 3. Give threatened or wounded."
+   ]
+  },
+  {
+   "name": "Rags",
+   "tagline": "A Curious Puppeteer Whose Street Shows Foretell Unexpected Fates",
+   "quote": "Gather 'round folk, young and old, sharp or dull. Rags and their friends are going to tell you a tale. What tale? Rags knows not, for the story comes to Rags only when the time is right and not before. Some tales are of forgotten kingdoms and some are of realms yet to be seen. Some are of things soon to be upon us. Listen close and learn lessons dear and precious. Once upon a time, in a kingdom far far away...",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Skill or Trade",
+     "title": "Passionate Puppeteer",
+     "power": [
+      "Skilled ventriloquist",
+      "Nimble fingers"
+     ],
+     "weak": "Bashful when not performing",
+     "advance": [
+      "Distract my audience",
+      "Experienced wood-carver",
+      "Tales of forgotten history"
+     ],
+     "quest": "Never interrupt a good story.",
+     "desc": "Cast out from their master, family, and village many years ago after rejecting an apprenticeship as a carpenter, Rags turned to storytelling and entertaining. They have learned the deviously difficult art of ventriloquism, throwing their voice to entertain and distract, and used what little they've learned as a carpenter and a wealth of creativity to craft beautiful wooden puppets with which they tell their marvelous tales.",
+     "special": {
+      "name": "Deft Remedy",
+      "desc": "Once per session, when you use tags from this theme and roll a total of 6 or less, you may reroll the dice and take the new result instead."
+     }
+    },
+    {
+     "type": "Magic",
+     "title": "Prophetic Storytelling",
+     "power": [
+      "Foretell doom",
+      "Glimpses of the future"
+     ],
+     "weak": "Lost in a trance",
+     "advance": [
+      "Counter fate weaving hexes",
+      "Reveal past events",
+      "Foresee immediate danger"
+     ],
+     "quest": "My tales always come true. You just have to understand how.",
+     "desc": "By casting their mind and voice into the roles of so many characters, Rags sometimes feels they are leaving their body, plunging into a deep and obscure void. The story then takes over and receives a resounding and prophetic meaning. With the years, Rags noticed these plays often came true, and has learned to put their trust in what the puppets show them.",
+     "special": {
+      "name": "Reputation Precedes",
+      "desc": "Whenever you meet a character for the first time, you may give them a new status at the Narrator's discretion."
+     }
+    },
+    {
+     "type": "Past",
+     "title": "Been to Every Dale",
+     "power": [
+      "Roadside rumors",
+      "Know my way around"
+     ],
+     "weak": "Insular or remote hamlets",
+     "advance": [
+      "Hand-drawn cart",
+      "A keepsake from every Dale",
+      "Wary and alert"
+     ],
+     "quest": "I call no place my home.",
+     "desc": "Rags is a true vagabond, rambling from village to village, ever seeking new audiences or returning to old ones. Most places accept them as a fun diversion from biting labors, but some fear Rags' strange tales and odd ways. In their travels, Rags has learned to keep an eye out for trouble and an ear out for rumors, and they always keep a small memento from each place they visit.",
+     "special": {
+      "name": "Lessons Learned",
+      "desc": "Once per session, when you roll a total of 6 or less, you may explain how this situation is familiar to you from your Past, reroll the dice, and take the new result."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Enigmatic Drifter",
+     "power": [
+      "Sneaky and underhanded",
+      "Emotionally impenetrable"
+     ],
+     "weak": "Difficult to trust",
+     "advance": [
+      "Crowded places",
+      "Unsettling gaze",
+      "Avoided and overlooked"
+     ],
+     "quest": "The less you know about me, the better.",
+     "desc": "Rags is a walking mystery, their inscrutable face and veiled eyes reveal nothing of what they are feeling or thinking. Many would have liked to know more about them but Rags likes to keep their cards close to their chest and has learned to act furtively even when no one is watching. While useful for an entertainer on the road, it nevertheless makes them harder to trust.",
+     "special": {
+      "name": "Unshakeable",
+      "desc": "Once per scene, when you react to lessen social or emotional Consequences and get a total result of 7 or above, you may spend all your Power to completely avoid all Consequence Effects."
+     }
+    }
+   ],
+   "backpack": [
+    "Hand-crafted dummy",
+    "Old backup puppets",
+    "Colorful clothes",
+    "Sharpened carving knife",
+    "Bottle of aged wine",
+    "Hat full of small coins",
+    "Old map"
+   ],
+   "examples": [
+    "Perform a puppet show: Passionate Puppeteer + Skilled ventriloquist + Nimble fingers = POWER 3. Give amused or distracted.",
+    "Pick up local secrets: Been to Every Dale + Roadside rumors + Sneaky and underhanded = POWER 3. Discover new details.",
+    "Reveal a future: Passionate Puppeteer + Prophetic Storytelling + Glimpses of the future + Foretell doom (to a foe) = POWER 3 OR 4. Discover, give forewarned, or give fated.",
+    "Protect my secrets: Enigmatic Drifter + Emotionally impenetrable = POWER 2. Lessen exposed or gain mysterious."
+   ]
+  },
+  {
+   "name": "Rosamund The Wise One",
+   "tagline": "An Aging Recluse Versed in the Oldways. a Sage and Apothecary for Her Dale",
+   "quote": "What are you doing here, you fool? You didn't come all the way up for nothing so spit it out. Oh, that wretched little weasel, what's she gotten herself into now? Blue fingertips? Eyes rolling in sockets? Hmmm. Not good. Something put a spell on her. Oh, don't you start whimpering now. Go and pick that red flower there, yes. I'll get a remedy cooking. It takes an hour to brew and I need to apply it myself, make sure that thing leaves when it exits her body. Get your cart ready. If we're not there by sundown - that child will be worse than dead.",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Skill or Trade",
+     "title": "Apothecary",
+     "power": [
+      "Medicine bag",
+      "Quick diagnosis"
+     ],
+     "weak": "Poor bedside manners",
+     "advance": [
+      "Respected physician",
+      "Wondrous concoctions",
+      "Forage for ingredients"
+     ],
+     "quest": "Well, I couldn't just leave them sick!",
+     "desc": "An old, traditional Dalish, Rosamund has been the primary physician of Ravenhome for many years, despite living in the woods on the edge of the dale some distance away from the village. When someone in the dale falls ill or stumbles into a bush of poison brambles, they send for her. Rosamund knows a remedy for just about any ailment, but her gruff attitude is no balm for the soul.",
+     "special": {
+      "name": "Rehearsed Technique",
+      "desc": "Whenever you burn medicine bag for Power, you gain 3 Power as normal and may also forgo rolling the dice and treat the dice roll total as 7 (before adding Power)."
+     }
+    },
+    {
+     "type": "Magic",
+     "title": "Oldways Practitioner",
+     "power": [
+      "Ancient Dalish lore",
+      "Wards and protections"
+     ],
+     "weak": "Invocations must be spoken",
+     "advance": [
+      "Strength in spirit",
+      "Banishing rites",
+      "See the Unseen"
+     ],
+     "quest": "I should find a worthy apprentice to whom the Oldways shall pass.",
+     "desc": "Rosamund also serves as the reluctant local Wise One, a mystical mediator with the Unseen. She is a disciple of the Oldways, a collection of traditions and ritual practices passed down through generations, able to sense otherwordly influences, invite protective and benevolent auras, and banish malicious Creatures of Twilight. But this old teaching is slowly fading out of memory, and the aging Wise One may be one of its last followers.",
+     "special": {
+      "name": "Scholar of Magic",
+      "desc": "Once per scene, when you see someone practicing magic of the same kind you practice, you may ask the Narrator for one valuable detail about the magic they're performing."
+     }
+    },
+    {
+     "type": "Circumstance",
+     "title": "Outland Recluse",
+     "power": [
+      "Twilight encounters",
+      "Tough cookie"
+     ],
+     "weak": "Grumpy",
+     "advance": [
+      "Hideaway",
+      "Self-sufficient",
+      "Woodland companions"
+     ],
+     "quest": "I am better out here.",
+     "desc": "Despite her sense of responsibility, Rosamund has never really liked people; she left Ravenhome for a rustic cabin in the woods. Living alone with the dangers of the wild has tempered her and taught her to rely on herself, but the solitude has done little for her disposition. It doesn't help that at times, she comes upon strange and wondrous Creatures in the woods that only sight beyond sight can reveal.",
+     "special": {
+      "name": "Familiar Matters",
+      "desc": "There are things everyone in your situation knows. Once per scene, you may ask the Narrator for one important detail about a subject related to your Circumstance."
+     }
+    },
+    {
+     "type": "Past",
+     "title": "Seen a Thing Or Two",
+     "power": [
+      "Storyteller",
+      "Can't fool me"
+     ],
+     "weak": "Old bones",
+     "advance": [
+      "Trusty walking stick",
+      "Cautious",
+      "Stubborn rebuff"
+     ],
+     "quest": "It's hard to surprise an old soul.",
+     "desc": "Rosamund has too little patience to let wear and tear slow her down. Proud of the wisdom and knowledge she accumulated over the years, she secretly enjoys the admiration it brings her. Don't get her started on one of her tales: she may not like to hear other's chatter but she certainly likes to retell old stories. Savvy villagers also know not to try to excuse themselves, as lying to the old witch rarely fares well.",
+     "special": {
+      "name": "Vivid Memory",
+      "desc": "Once per session, when a weakness tag from this theme is invoked, you may reveal one important detail from your Past and gain an appropriate story tag or a tier-2 emotional status."
+     }
+    }
+   ],
+   "backpack": [
+    "Focusing wand of hazel",
+    "A small cauldron",
+    "Poison-neutralizing balm",
+    "Wide straw hat",
+    "Charm against accident",
+    "Warm knitted sweater",
+    "Dried fruit bag"
+   ],
+   "examples": [
+    "Diagnose a condition: Apothecary + Quick diagnosis + Oldways Practitioner + Seen a Thing or Two = POWER 4. Discover new details.",
+    "Recall important lore: Oldways Practitioner + Ancient Dalish lore + Storyteller = POWER 3. Discover new details.",
+    "Banish an unwanted spirit: Oldways Practitioner + Wards and protections + Twilight encounters = POWER 3. Give banished.",
+    "Concoct medicine: Apothecary + Medicine bag = POWER 2. Create medicine tag."
+   ]
+  },
+  {
+   "name": "Seede Apple Picker",
+   "tagline": "A Rascally Orphan Working As a Farmhand, Pranking the People of Ravenhome",
+   "quote": "*APPLE CRUNCHING* ... See, if you pull it here and tie this around like this, it'll fly right into the alderman's face when he opens the barn door. Naw, don't worry, it's a rotten apple - it'll splatter all over him, ha! What do you mean, you're not sure? Come onnnnn, you can't chicken out on me now. Anyway you know they're gonna pin the blame on me. That's the price of all these notches on my belt. I probably got every person in the dale at least once. Quick, hide! I hear him coming! Oh, this is gonna be gooood!...",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "People",
+     "title": "Ravenhome Raised",
+     "power": [
+      "Run of the place",
+      "Seeking kinship"
+     ],
+     "weak": "Belongs nowhere",
+     "advance": [
+      "Ravenhome spirit",
+      "Ears to the grapevine",
+      "Healthy as a horse"
+     ],
+     "quest": "It's the backside of nowhere, but it's home.",
+     "desc": "Abandoned somewhere in the Ravensdale fields at a young age and adopted by the people of Ravenhome, Seede has known nowhere else her entire life. Almost every family in the dale had a hand at raising her, until she was old enough to help as a farmhand. Eating at different dinner tables over the years has taught her that while Ravenhome is her home, it may not be where she truly belongs.",
+     "special": {
+      "name": "Stand Out",
+      "desc": "You are an unusual member of your People. Once per scene, when you act against your People's habits, culture, or traditions and get both a Success and Consequences, you may choose not to take the Consequences."
+     }
+    },
+    {
+     "type": "Personality",
+     "title": "Rascal",
+     "power": [
+      "Prankster",
+      "Finders keepers"
+     ],
+     "weak": "Can't sit still",
+     "advance": [
+      "Great excuses",
+      "Light-footed",
+      "Cunning wit"
+     ],
+     "quest": "It's never a bad time for a prank!",
+     "desc": "Feeling that life pulled a prank on her, Seede feels it's only just to balance the scales. A true troublemaker, she finds the small mishaps of others entertaining: setting them up to stumble, slip, misplace their tools, and get into trouble with an angry elder. Her pranks often catch up to her but that hasn't stopped her yet.",
+     "special": {
+      "name": "Adaptable Persona",
+      "desc": "Once per session, when you take an action using tags from this theme and get only Consequences, you may choose to Succeed as well."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Scrappy",
+     "power": [
+      "Roll with a blow",
+      "Unkempt charm"
+     ],
+     "weak": "Never listens",
+     "advance": [
+      "Lunge at them",
+      "Resourceful",
+      "Dig my heels in"
+     ],
+     "quest": "You're not the boss of me!",
+     "desc": "Having had to fend for herself for as long as she can remember, Seede has learned to roll with life's punches and make ends meet when she has to. She became indignant and indomitable, too much trouble for most adults to bother with. But falling from snapped tree branches, wrestling with pigs in the mud, and arguing with grown-ups three times her size has made her incredibly tough and brave for her age.",
+     "special": {
+      "name": "Made For This",
+      "desc": "Once per scene, you may ignore a status of fear or discouragement when you act."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Bushel of Apples",
+     "power": [
+      "Strong throw",
+      "Deft hands"
+     ],
+     "weak": "Only goes so far",
+     "advance": [
+      "Highly nutritious",
+      "Low hanging fruit",
+      "Orchardist"
+     ],
+     "quest": "Simple solutions work best.",
+     "desc": "Does Seede grab fruit off the trees as she walks by? Does she carry a sack of partly rotting apples? Or hide them in her pockets? Who knows. Somehow she always seems to have more of them at hand, and she uses apples in the most creative ways: as throwing projectiles, as a slipping hazard for running adults, or as weights for a nasty trap. And of course, she's constantly snacking on them.",
+     "special": {
+      "name": "Favorite Piece",
+      "desc": "Once per session, you may burn Bushel of Apples for Power without scratching it."
+     }
+    }
+   ],
+   "backpack": [
+    "Firecracker",
+    "Empty sacks",
+    "Paring knife",
+    "Jug of cider",
+    "Sling",
+    "Hemp twine",
+    "Wooden whistle"
+   ],
+   "examples": [
+    "Pelt someone with apples: Bushel of Apples + Strong throw + Deft hands + Prankster = POWER 4. Give stunned, prone, or tangled.",
+    "Survive a hit or fall: Scrappy + Roll with a blow = POWER 2. Lessen wounded or stunned.",
+    "Steal something: Rascal + Finders keepers + Deft hands = POWER 3. Quick Outcome or create item tag.",
+    "Set up someone to slip: Rascal + Deft hands = POWER 3. Give stunned or distracted."
+   ]
+  },
+  {
+   "name": "Siondelle Cairnmaker",
+   "tagline": "A Wild-at-heart Pilgrim, Fleeing a Nefarious Past Life to Search for the Unseen",
+   "quote": "Here, one stone on top of the other. We build a cairn, a shrine, a marker for our prayers and desires. With each pebble, a blessing: May this home know no terror, may this field bear fair bounty. May that which belongs beyond the bounds there remains, and may the boons of this land are never stolen. Now, tie a ribbon... light a candle... and pass your hands thrice over the capstone. There, it is done. Can you feel it? The Twilight recedes from this place... Now, let us speak of my payment...",
+   "tier": "dalesfolk",
+   "themes": [
+    {
+     "type": "Circumstance",
+     "title": "Roving Pilgrim",
+     "power": [
+      "Console and reassure",
+      "Assess an unnatural problem"
+     ],
+     "weak": "Socially shunned",
+     "advance": [
+      "Inquire about news and rumors",
+      "Experienced wayfarer",
+      "Know when they're lying"
+     ],
+     "quest": "The more olden shrines I visit, the more I'll know of the gathering darkness.",
+     "desc": "Siondelle is a traveling follower of the Oldways, offering her shrine-building, prayer, and ritual services to villages on the trail, who pay with food and iron coins to sleep without fear of the Unseen. But of late, the unnatural incidents she sees increase: Creatures become bolder, haunts tougher to keep out. In these darkening times, she brings unexpected hope to the hopeless.",
+     "special": {
+      "name": "Trudging Along",
+      "desc": "Once per scene, you may ignore a tired status of tier 3 or lower."
+     }
+    },
+    {
+     "type": "Magic",
+     "title": "Cairncraft",
+     "power": [
+      "Warding cairns",
+      "Shrine-tending ritual"
+     ],
+     "weak": "Chaotic environments",
+     "advance": [
+      "Shrines of healing",
+      "Sturdy construction",
+      "Wrathful hexing cairns"
+     ],
+     "quest": "To build a cairn is to balance the Seen and the Unseen.",
+     "desc": "Born in the swamps amidst all manner of Creatures and perils, Siondelle learned the Oldways art of cairnmaking from her father. Her stone-made shrines can protect a home or yard from trouble, avert accidents, scare or punish intruders, repel Unseen evils and even capture them. She decorates them with ribbons, paints, and carvings that befit their purpose, and tends to them by lighting a candle or whispering an old rhyme.",
+     "special": {
+      "name": "Rote Technique",
+      "desc": "Once per session, when you use your Magic in a way you've used it before and get only Consequences, you may Succeed as well."
+     }
+    },
+    {
+     "type": "Past",
+     "title": "Soddenmore Troublemaker",
+     "power": [
+      "Scams and cons",
+      "Wild as the wind"
+     ],
+     "weak": "Known to the Red Marshals",
+     "advance": [
+      "Pickpocket",
+      "Fast-talking to fools",
+      "Seductive"
+     ],
+     "quest": "Never forget to let your wildness out.",
+     "desc": "Siondelle has no concept of piety; her wildness is a part of her spirit, her magic. In her youth, she used her guiles to swindle dryfooted peddlers and wayfarers passing through the Soddenmore swamps, and did her fair share of pilfering, smuggling, and fencing. She finds that when dealing with tight-fisted villagers or the cunning spirits of the Unseen, her unscrupulous methods still serve her well.",
+     "special": {
+      "name": "Face From the Past",
+      "desc": "Once per session, when you meet a character from your Past for the first time in the game, you may describe how your last meeting went and give them an appropriate tier-2 status."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Twilight Sensitivity",
+     "power": [
+      "Instinctive recoil",
+      "Sense its intentions"
+     ],
+     "weak": "Attracts Creatures of Twilight",
+     "advance": [
+      "Windworn pebble for focus",
+      "Sense its source",
+      "Prophetic dreams"
+     ],
+     "quest": "There is something inside me I don't yet understand, but I will.",
+     "desc": "The Unseen, or the Twilight, as it is often called in the Dales, has always haunted and fascinated Siondelle. Since she was a child, she could sense the presence of invisible forces, sending shivers all over her skin. Today, having more experience to draw from, she can discern the nature of what lurks in the Twilight and sense what it wants, or touch a moss-covered shrine and feel the quiet power gathering within it.",
+     "special": {
+      "name": "Innate Sense",
+      "desc": "Once per session, you can ask the Narrator for an important detail that you can intuit thanks to your Trait."
+     }
+    }
+   ],
+   "backpack": [
+    "Windbeaten cloak",
+    "Restorative tonic",
+    "Hidden dagger",
+    "Pebbles and skipping stones",
+    "Shortbow and quiver",
+    "Good walking stick",
+    "Black wax candle"
+   ],
+   "examples": [
+    "Build a warding cairn: Cairncraft + Warding cairns + Shrine-tending ritual = POWER 3. Create cairn tag or give warded.",
+    "Swindle a customer: Soddenmore Troublemaker + Scams and cons + Roving Pilgrim + Console and reassure = POWER 4. Give convinced or gain heavy-purse.",
+    "Avoid harm born of Twilight: Twilight Sensitivity + Instinctive recoil = POWER 2. Lessen the Consequences.",
+    "Sense a haunting: Assess an unnatural problem + Twilight Sensitivity + Sense its intentions = POWER 3. Discover new details."
+   ]
+  },
+  {
+   "name": "Bogomil",
+   "tagline": "A Magician of Considerable Power Plotting a Quest That Will Change the World",
+   "quote": "Listen to me carefully, you lot of inbred hillfolk. I did not come all the way from the Whitecloak Mountains to your swampy backwater to trade ballads with you. I haven't the slightest interest in what your great-grandfather had for breakfast the day he died. Pay attention, because the fate of your home is at stake. Tell me unusual things. People with uncanny abilities. Places of a strange nature. Little practitioners of your folk magic. Leave no detail out - but stay on point. Do this, and I will leave here without one of you becoming my next albino raven.",
+   "tier": "powerful",
+   "themes": [
+    {
+     "type": "Magic",
+     "title": "Art of Projection",
+     "power": [
+      "Expulsion of force",
+      "Emanate aegis"
+     ],
+     "weak": "Slow and quiet magic",
+     "advance": [
+      "Weave enchantments",
+      "Art of Cloaking",
+      "Instill thoughts"
+     ],
+     "quest": "A Thaumaturge never stops learning.",
+     "desc": "A flesh-and-blood Thaumaturge from the Wanderlands, Bogomil commands a heartstopping presence that exudes a terrible gravity, such as is never seen in the Dales. Though he's versed in many spells and \"powers\", his chief interest lies in projecting the full might of his spirit to create intense emotions, shocking impressions, forceful gales, explosive blasts, and even shielding barriers. Most of these are invisible - unless, that is, you see what he wants you to see.",
+     "special": {
+      "name": "Inspired Ingenuity",
+      "desc": "Once per session, when you use your Magic to achieve a goal in a way you never have before, you may mark Improve on this theme."
+     }
+    },
+    {
+     "type": "Prodigious Ability",
+     "title": "Intrepid Voyager",
+     "power": [
+      "Seasoned man-at-arms",
+      "Find a way through"
+     ],
+     "weak": "Uncouth and crusty",
+     "advance": [
+      "Good instincts",
+      "Rugged tenacity",
+      "Practical planner"
+     ],
+     "quest": "We must prepare for the return of the powers that caused the War.",
+     "desc": "For decades, Bogomil has scoured the Wanderlands in search of a deeper understanding of the fate of Old Gwyrdolin. He has visited ruins in the hearts of swamps, battled monsters and warlords, and scaled the treacherous Whitecloak Mountains. These journeys have left their mark on him, forged him into a fearless traveler. Today, few can match him in tenacity or breadth of experience when it comes to exploring these ferocious badlands.",
+     "special": {
+      "name": "Discerning Eye",
+      "desc": "Once per session, when you have time and access to observe someone's action or work, you may learn three valuable details about them through your Ability."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Tablets of Druwynn",
+     "power": [
+      "Reveal a true hero",
+      "Staff of Projection"
+     ],
+     "weak": "Vague wording",
+     "advance": [
+      "Thaumaturgical Arts",
+      "Convince them it's true",
+      "Seeking power"
+     ],
+     "quest": "I believe the answers are in the Dales.",
+     "desc": "After an especially perilous expedition, Bogomil found a set of ancient tablets engraved with a prophecy, along with a gemstone that taught him the Art of Projection (which he has set on his staff). Though vague, the tablets pointed at the backwater of the Dales, where great power was allegedly sequestered, waiting for the day it will awaken to prevent utter oblivion. He set out to unravel this mystery.",
+     "special": {
+      "name": "Favorite Piece",
+      "desc": "Once per session, you may burn Staff of Projection for Power without scratching it."
+     }
+    },
+    {
+     "type": "Companion",
+     "title": "Rhiog, the Albino Raven",
+     "power": [
+      "Shared senses",
+      "Ethereal and elusive"
+     ],
+     "weak": "Too far away",
+     "advance": [
+      "Escape death",
+      "Lightning claws",
+      "Reunite and revive"
+     ],
+     "quest": "This will only work if I let go and try new things.",
+     "desc": "Bogomil is always accompanied by his familiar, an imposing albino raven named Rhiog. To the naked eye, Rhiog seems like a flesh and blood bird, albeit sinister and spine-chilling. In fact, Rhiog is Bogomil's experiment in projecting his spirit as a living, independent being. Rhiog helps by watching his back or spying on others. If ever either of them were spent, Rhiog could return into him and both would be revived.",
+     "special": {
+      "name": "Reliable Ally",
+      "desc": "Once per session, when you act alongside your Companion and get only Consequences, you may scratch a tag in this theme to Succeed as well."
+     }
+    }
+   ],
+   "backpack": [
+    "Traveling cloak and hood",
+    "Steel sword",
+    "Spirit-deepening potion",
+    "Ring of Vanishing",
+    "A bag of Dalish coin"
+   ],
+   "examples": [
+    "Project his inner force: Art of Projection + Expulsion of force + Staff of Projection = POWER 3. Give terrified, paralyzed or wounded.",
+    "Create an invisible shield: Art of Projection + Emanate aegis + Staff of Projection = POWER 3. Give shielded or warded.",
+    "Discover a path in/out: Intrepid Voyager + Find a way through + Rhiog the Albino Raven + Shared senses = POWER 4. Discover new details.",
+    "Spy through Rhiog: Rhiog the Albino Raven + Shared senses + Ethereal and elusive = POWER 3. Discover new details."
+   ]
+  },
+  {
+   "name": "Daunt Of House Mattina",
+   "tagline": "A Gallant Mystery Knight Seeking to Uphold the Motto of His Fallen Noble House",
+   "quote": "I am the only survivor. I only remember the screams and the terror. I woke up surrounded by the ruined armor of my fallen comrades, buried underneath toppled stone. We were all nothing but bones, and they lay deathly still. Yet I could walk, I could speak. The horrors that destroyed House Mattina and the entire capital, they cannot be allowed to destroy this last haven of peace. Perhaps that is why I live, to keep our ancient oaths. Though my presence may inspire fear, though my comrades may be long dead, my will remains - and so does my task.",
+   "tier": "powerful",
+   "themes": [
+    {
+     "type": "Uncanny Being",
+     "title": "Revenant",
+     "power": [
+      "Nothing hurts anymore",
+      "Terror-striking presence"
+     ],
+     "weak": "Haunting visions",
+     "advance": [
+      "Walk through solid objects",
+      "Memories of olden days",
+      "Consume blood for vigor"
+     ],
+     "quest": "Why did I return?",
+     "desc": "Daunt was a proud guard for a noble Gwyrdolan family when he died during the War of the Thaumaturges. Hundreds of years later, he has awoken as a restless wight, a corporeal ghost. His memories of his demise and resurrection are hazy, but his will to fight for the ideals of his house remains. An inexplicable feeling drew him from the Marshes of Sunken Gwyrdolin to the Dales, but why?",
+     "special": {
+      "name": "Self Discovery",
+      "desc": "Once per session, when you discover a new detail about your origin, your qualities, or your abilities, mark Improve on this theme."
+     }
+    },
+    {
+     "type": "Duty",
+     "title": "Protector Against the Dark",
+     "power": [
+      "Never falter or waver",
+      "Hunt down corruption"
+     ],
+     "weak": "Devouring righteousness",
+     "advance": [
+      "Protect the innocent",
+      "Resist temptation",
+      "Glory to Gwyrdolin!"
+     ],
+     "quest": "House Mattina, a bulwark against darkness!",
+     "desc": "In the Old Kingdom of Gwyrdolin, House Mattina was a proud noble house dedicated to the hunting of evil Thaumaturges and their twisted creations. Sworn to protect the Kingdom from such corrupting influences, Daunt continues his vigil against Creatures of Twilight, demons, restless dead, and any other monsters that threaten the Dales, albeit with an unusual degree of hungry zeal, even for him.",
+     "special": {
+      "name": "Grim Determination",
+      "desc": "Once per session, when you act to advance this theme's Quest and suffer Consequences, you may gain consuming-drive-2 before your reaction."
+     }
+    },
+    {
+     "type": "Prodigious Ability",
+     "title": "Honor Guard Knight",
+     "power": [
+      "Lance master",
+      "Fight against many"
+     ],
+     "weak": "Backstabs",
+     "advance": [
+      "Mace and sword form",
+      "Always vigilant",
+      "Vanguard tactics"
+     ],
+     "quest": "A knight who does not train will fall in his next battle.",
+     "desc": "As an Honor Guard, Daunt was trained in the art of war and his talent with a lance is unrivaled. In life, new recruits would look to him for instruction and guidance, and even in death he remains a cut above the rest. But his training was designed for doing battle in formation with his comrades. Now that he fights alone, there is no one to watch his back.",
+     "special": {
+      "name": "Create an Opening",
+      "desc": "Once per session, when you use tags from this theme and Succeed, you may create a free tier-2 status representing an opportunity you create for an ally through your action."
+     }
+    },
+    {
+     "type": "Possessions",
+     "title": "Gwyrdolan Plate Armor",
+     "power": [
+      "Mystery knight helmet",
+      "Incorrodable"
+     ],
+     "weak": "Hard to repair",
+     "advance": [
+      "Immovable bastion",
+      "Shield others with my body",
+      "Brilliantly polished"
+     ],
+     "quest": "I must never take this suit of armor off.",
+     "desc": "The fabled Thaumaturgical metals of Old Gwyrdolin were all lost in the Marshes during the War. Daunt, who hides his unliving presence in a full suit of Gwyrdolan plate, looks like a walking visitor from the ancient past. He vaguely recalls the mighty enchantments invested in such suits, and often wonders if this is the reason his spirit endured and whether taking off his armor would also spell his doom.",
+     "special": {
+      "name": "Durable",
+      "desc": "Once per session, you can prevent Consequence Effects that would scratch Gwyrdolan Plate Armor or give it a status of tier 3 or less."
+     }
+    }
+   ],
+   "backpack": [
+    "Handy shortsword",
+    "Heavy bogwood shield",
+    "A waterskin full of blood",
+    "Lovely-smelling flowers and herbs",
+    "Polishing cloth",
+    "House Mattina's sable banner",
+    "Old Kingdom amber coin"
+   ],
+   "examples": [
+    "Absorb a blow: Revenant + Nothing hurts anymore + Gwyrdolan Plate Armor + Mystery knight helmet = POWER 4. Lessen wounded.",
+    "Attack an evil creature: Protector Against the Dark + Honor Guard Knight + Lance master = POWER 3. Give wounded.",
+    "Resist corruption: Protector Against the Dark + Never falter or waver + Honor Guard Knight = POWER 3. Lessen beguiled or corrupted.",
+    "Avoid being unmasked: Honor Guard Knight + Gwyrdolan Plate Armor + Mystery knight helmet = POWER 3. Quick Outcome."
+   ]
+  },
+  {
+   "name": "Gaelle",
+   "tagline": "A Highland Hunter Who Made a Pact for a Sword That Can Slay Monsters",
+   "quote": "This sword... I've given up everything for this sword. It is worth it. It will give hope to my people, stranded in this forsaken highland where relentless monstrous fiends ravage our camps. But the hunt... the hunt is never-ending. I kill one of them or a hundred, it matters not. The sword and its master want more. Ever since I closed my knuckles around its hilt, I have felt its thirst. It wants to fulfill its destiny, to cleanse the land of horrid creatures and twisted beasts. I don't care. If that's what it takes, I'll pile a mountain of monster skulls at this witch-bastard's feet.",
+   "tier": "powerful",
+   "themes": [
+    {
+     "type": "Duty",
+     "title": "Fiendhunter Pact",
+     "power": [
+      "Pick up a trail",
+      "Find a weakness"
+     ],
+     "weak": "Marked by a strange sigil",
+     "advance": [
+      "Outland survivalist",
+      "Gruesome trophies",
+      "Absolutely ruthless"
+     ],
+     "quest": "It's not over until I've brought back every trophy.",
+     "desc": "Gaelle's Highland people were at a loss when she made the pact. Their land was becoming more and more feral. Monstrous creatures were pushing them out, crawling out of the ground and swooping from the sky. When the stranger offered her a sword that could slay these beasts, she didn't hesitate. \"But bring me their heads as trophies,\" he said. She did, but every time he asked for more. \"Bigger, next time.\"",
+     "special": {
+      "name": "Painful Lessons",
+      "desc": "Once per session, when you act using tags from this theme and suffer Consequences, you may mark Improve on this theme."
+     }
+    },
+    {
+     "type": "Relic",
+     "title": "Twilight's Bane",
+     "power": [
+      "Devastating stroke",
+      "Track a quarry it tasted"
+     ],
+     "weak": "Guided by its master's will",
+     "advance": [
+      "Obsidian sharp",
+      "never dulls",
+      "Glows in bitter darkness",
+      "Siphon supernatural power"
+     ],
+     "quest": "The sword dulls if not washed in monster blood.",
+     "desc": "In exchange for her commitment, Gaelle was loaned Twilight's Bane, an ornate broadsword marked with strange runes along its blade. Its edge slices through monstrous beasts like tallow, and the sword seems to drink their unnatural essence. Once it tastes a Creature's flesh, it glows brighter as it nears them again, allowing Gaelle to find her quarry faster.",
+     "special": {
+      "name": "Sentinel",
+      "desc": "You may gain parrying-2 once per session, when you are in imminent danger."
+     }
+    },
+    {
+     "type": "Past",
+     "title": "Echoes of the Wild",
+     "power": [
+      "Focused meditation",
+      "Loved by animals"
+     ],
+     "weak": "Ashamed of abandoning her path",
+     "advance": [
+      "Commune with nature",
+      "At home in the wilderness",
+      "Concoctions and remedies"
+     ],
+     "quest": "I once sacrificed everything for my folk. I'd do it again.",
+     "desc": "Gaelle was once her clan's druidess and communer with nature, but the stranger demanded that she give it all up. Still, when Gaelle sits in the wild, she can feel herself collecting, like a broken pot coming together. The animals around her, the sod beneath her toes, the sounds of nature all seem to fill and rejuvenate her, whispers of her past life calling to her.",
+     "special": {
+      "name": "Not Letting Go",
+      "desc": "Whenever you burn a tag from this theme for Power, you can mark Abandon on any other theme instead of marking that tag as scratched."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Brazen Aggression",
+     "power": [
+      "Doesn't take no for an answer",
+      "High pain tolerance"
+     ],
+     "weak": "Abrasive",
+     "advance": [
+      "Break an obstacle down",
+      "Unsubtle negotiator",
+      "Full-body tackle"
+     ],
+     "quest": "If you want something in life, you have to take it. No hesitation.",
+     "desc": "The stranger didn't pick Gaelle by chance. It takes a special kind of person to strike a deal like the one Gaelle did. There is nothing Gaelle won't do, no risk she won't take, to get exactly what she wants. Those who stand in her way - monster, man, or creature - beware!",
+     "special": {
+      "name": "Pull Through",
+      "desc": "Once per session, when you roll with tags from this theme, you may ignore any negative physical or emotional status of tier 3 or lower."
+     }
+    }
+   ],
+   "backpack": [
+    "Animal hide jerkin",
+    "Bundle of healing herbs",
+    "Salted meat",
+    "Hunter's javelin",
+    "Bead necklace",
+    "Warm fur cloak",
+    "Polished knucklebones"
+   ],
+   "examples": [
+    "Track down a monster: Fiendhunter Pact + Pick up a trail + Track a quarry it tasted = POWER 3. Advance find.",
+    "Find its weakness: Fiendhunter Pact + Find a weakness = POWER 2. Give weak spot.",
+    "Prepare for a hunt: Fiendhunter Pact + Echoes of the Wild + Focused meditation = POWER 3. Remove emotional status, gain focused.",
+    "Skewer through the heart: Twilight's Bane + Devastating stroke + Brazen Aggression + [weak spot] = POWER 3 OR 4. Give wounded."
+   ]
+  },
+  {
+   "name": "GlintFallow",
+   "tagline": "A Grumpy and Greedy Creature, Remnant of Bygone Times, Looking for a New Home",
+   "quote": "GlintFallow gots no home. GlintFallow gots a nice home, before, stinky and wet and full of old rocks, under the hill, with nice shrivelled roots overhead. There GlintFallow gots nice treasures, pretty treasures. When Glint looks at them, Glint remembers. Remembers the stars, remembers the beautiful days, days of gold. But they tooks it from me! That wretched foul man, thinks he so mighty, so... magickkk. Now GlintFallow gots no home. Must finds home, and pretty treasures to remember. And all them people, Glint will revenge, Glint makes them scream and not want more. You see.",
+   "tier": "powerful",
+   "themes": [
+    {
+     "type": "Uncanny Being",
+     "title": "Spriggan",
+     "power": [
+      "Strength of a giant",
+      "Bringer of foul weather"
+     ],
+     "weak": "Wits clouded by anger",
+     "advance": [
+      "Grow huge",
+      "Hex with misfortune",
+      "Regenerate and regrow"
+     ],
+     "quest": "I... wants... revenge!",
+     "desc": "In a dank cave, cooled with roots and mossy stones, there lived a creature called GlintFallow. All wadded sinews and twisted flesh, frightening to behold and mean of spirit, there he sat for countless years, fuming over a wrong he could not recall. His anger made storms break out, milk curdle, and cattle fall dead. He ate the few who entered his cave. And so it was for the longest time.",
+     "special": {
+      "name": "Expressive Form",
+      "desc": "Once per session, at any one point, you may gain frightening-2."
+     }
+    },
+    {
+     "type": "Duty",
+     "title": "Treasure Hunter",
+     "power": [
+      "Burrow into the ground",
+      "Knack for hidden things"
+     ],
+     "weak": "Impatient",
+     "advance": [
+      "Hates grave robbers",
+      "Deal with other Creatures",
+      "Smash silly traps"
+     ],
+     "quest": "I needs me a new hoard and a hidden place to dwell in.",
+     "desc": "Recently, another woe has befallen GlintFallow: some fellow with eyes that flashed with fire drove him out of his underground ruin and stole his treasured bundle of mementos from a bygone age. GlintFallow was cast out to wander the sunlit land of hills and valleys, which only made him more bitter. He now searches for a new ruin to call home and new ancient treasures to pore over in the dark.",
+     "special": {
+      "name": "Unstoppable",
+      "desc": "Once per scene, when you take an action to pursue this theme's Quest using tags from this theme and get both a Success and Consequences, you may choose not to take the Consequences."
+     }
+    },
+    {
+     "type": "Knowledge",
+     "title": "Flashes of a Bygone Age",
+     "power": [
+      "Recognize an olden Creature",
+      "Recognize an olden place"
+     ],
+     "weak": "Dazed by flashbacks",
+     "advance": [
+      "Celestial spirits",
+      "See through disguise",
+      "Kingdom of Gwyrdolin"
+     ],
+     "quest": "If I remember them, coulds I remember me?",
+     "desc": "No man lives now who remembers GlintFallow's fall. 'Twas in the Golden Age of mankind, when marvelous vine-decorated halls were built amidst high woodlands, where the Children of the Stars visited and taught them the secrets of the world's song. GlintFallow himself remembers but flashes, momentary visions from a bygone age, when he comes across one of these ancient places or ancient souls.",
+     "special": {
+      "name": "Flashes of Insight",
+      "desc": "When you encounter for the first time a place, object, creature or phenomenon that your Knowledge applies to, you may ask the Narrator to give you one valuable detail about it."
+     }
+    },
+    {
+     "type": "Skill or Trade",
+     "title": "Mean Trickery",
+     "power": [
+      "Vengeful",
+      "Stealing and grabbing"
+     ],
+     "weak": "Tricked the wrong person",
+     "advance": [
+      "Poison traps",
+      "Wicked pranks",
+      "Cunning lies"
+     ],
+     "quest": "Suffer not fools. Fools should suffer.",
+     "desc": "Through centuries untold, GlintFallow has played cruel tricks on the unsuspecting and the arrogant folk who lived by his cave. He taught them well the bite of thorns and the sting of poison so that they may learn GlintFallow is woe incarnate! \"Hold to your children,\" he would whisper to himself, \"for GlintFallow may hide them from you in the night.\"",
+     "special": {
+      "name": "Practice Makes Perfect",
+      "desc": "You may scratch a tag from this theme at any time to gain hidden-2."
+     }
+    }
+   ],
+   "backpack": [
+    "Poison ivy vine",
+    "Gnarly cudgel",
+    "Thieving squirrel",
+    "Hoarded silver",
+    "Abandoned grave robber's tools",
+    "Doublet of bark and roots",
+    "A memory of [a monster]"
+   ],
+   "examples": [
+    "Unleash a vindictive storm: Spriggan + Bringer of foul weather + Vengeful = POWER 3. Give wet, cold, or bolt-stricken.",
+    "Search a place: Treasure Hunter + Knack for hidden things = POWER 2. Discover new details.",
+    "Grab someone: Spriggan + Strength of a giant + Stealing and grabbing = POWER 3. Give restrained.",
+    "Recognize another creature: Flashes of a Bygone Age + Recognize an olden Creature = POWER 2. Discover new details."
+   ]
+  },
+  {
+   "name": "Kinsi",
+   "tagline": "A Peculiar Peddler in the Market for Old Trinkets, Baubles, and Heirlooms",
+   "quote": "My my, that is a very pretty carving of your forebear, how elaborate! Sadly, there is no market for it now in Barleytown. Here, let me see that little knife. How peculiar. That pristine glint. How did you come by it? Your grandmother received it as an heirloom, you say.... From before the War! Now that's almost as ancient as I am - hahaha! Hmmm, I might have a buyer for it in Fairpoint. Let's talk about the price... Ten coins, don't be daft! It's hardly worth ten hardtack meals. How about five? You'll take it, yesss? Gooood, goooood....",
+   "tier": "powerful",
+   "themes": [
+    {
+     "type": "Uncanny Being",
+     "title": "Twilight Emissary",
+     "power": [
+      "Uncannily deft",
+      "Mystical awareness"
+     ],
+     "weak": "Lesser among my kind",
+     "advance": [
+      "What one knows all know",
+      "Lightning reflexes",
+      "Suddenly unnerving"
+     ],
+     "quest": "I am an Emissary of the Emerald Branch...",
+     "desc": "Unbeknownst to anyone in the Dales, Kinsi is no mortal being. They are an Emissary of the Aldenweald, a creature called BaubleFisher, sent by the impoverished Lords of the Emerald Branch to retrieve the many gifts they booned humankind before the War of the Thaumaturges, a few of which have made their way to the Dales. A potent spirit in disguise, they possess sight beyond sight and speed beyond mortal ken.",
+     "special": {
+      "name": "Strive to Belong",
+      "desc": "Once per session, when you watch another Hero perform a mundane action, you may gain a story tag describing your imitation or understanding of them."
+     }
+    },
+    {
+     "type": "Relic",
+     "title": "Pack of Wondrous Trinkets",
+     "power": [
+      "Identify a magical item",
+      "Brooch of Invisibility"
+     ],
+     "weak": "Obsessive hoarder",
+     "advance": [
+      "Coat of Endurance",
+      "Magic beans",
+      "Beads of Explosion"
+     ],
+     "quest": "... The purpose of my being is to retrieve the gifts lost to mankind...",
+     "desc": "In the form of a human peddler, Kinsi travels the Dales in search of magical treasures they can bring back to their people. They have already recovered a few magical artifacts, none of which are harmless duds. They care little for the power they're amassing, only for its value in restoring their fallen kin. Still, it's nice to have a few tricks up their sleeve when things get dicey.",
+     "special": {
+      "name": "Momentary Bearer",
+      "desc": "Once per session, you can let another player use power tags from this theme, provided they can access and use your Relic for their action."
+     }
+    },
+    {
+     "type": "Influence",
+     "title": "Silver Tongue",
+     "power": [
+      "Compelling offers",
+      "Speak like a Dalesperson"
+     ],
+     "weak": "Bend the truth a little",
+     "advance": [
+      "Stronger against the absentminded",
+      "Disarming cordiality",
+      "Oldways protective charms"
+     ],
+     "quest": "... None must know my true self.",
+     "desc": "Kinsi's flesh and blood shell was graced with a hypnotic, silky voice that would make easy their work when bargaining for old heirlooms. Despite appearances, the Dales are not without protection, and to succeed in their noble quest, Kinsi must be able to speak as the Dalish do, and avoid Marshals and Oldways witches alike. Their words are thus laced with Aldenweald guile, pleasing to the ears and hearts of the unaware.",
+     "special": {
+      "name": "Friends Everywhere",
+      "desc": "When you enter a settlement for the first time, you gain a useful contact there. You may name them and define their relationship with you at the Narrator's discretion."
+     }
+    },
+    {
+     "type": "People",
+     "title": "Dalish At Heart",
+     "power": [
+      "Tavern carousing",
+      "Fields and meadows"
+     ],
+     "weak": "Afraid to truly commit",
+     "advance": [
+      "Friends on the Peddler's Path",
+      "Can handle a pitchfork",
+      "Show compassion"
+     ],
+     "quest": "I care for these people, deeply.",
+     "desc": "Like all their kin and despite the woes of the War, Kinsi feels a deep responsibility for humankind. Made to roam the Dales, they love the Dalish above all other folk and wish to see them thrive. After many decades trudging this land, they've started to feel as if they truly belong here. If they don't keep this feeling in check, it could spell their fall from the Aldenweald's grace.",
+     "special": {
+      "name": "Wisdom Handed Down",
+      "desc": "You command the lore of the Dales. Once per scene, you may ask the Narrator for one important detail from an area of knowledge possessed by the Dalish."
+     }
+    }
+   ],
+   "backpack": [
+    "Lantern of Haunting Visions",
+    "Self-Tying Rope",
+    "Arrow-Stopping Wand",
+    "A ring of iron coins",
+    "Words of hypnotic sleeping",
+    "A good tavern song",
+    "Candied fruits"
+   ],
+   "examples": [
+    "Sense a nearby \"gift\": Mystical awareness + Identify a magical item = POWER 2. Discover new details.",
+    "Pretend to be Dalish: Silver Tongue + Speak like a Dalesperson + Dalish at Heart = POWER 3. Quick Outcome.",
+    "Trade for a \"gift\": Silver Tongue + Compelling offers = POWER 2. Create \"gift\" tag or give convinced.",
+    "Quickly swipe an item: Twilight Emissary + Uncannily deft = POWER 2. Quick Outcome or create item tag."
+   ]
+  },
+  {
+   "name": "Gullencry",
+   "tagline": "A Magnificent Dragon Fascinated By the Little Lives of Human Critters",
+   "quote": "Yes mortal, I am indeed a dragon. I have been one all along and quite frankly I'm surprised you didn't notice sooner. My bearing and intellect point to a being far superior to yourself. Mine is a soul grand and eternal. Now, let's go back to pretending I'm one of you. Introduce me to that leader-king over there. What's his deal?",
+   "tier": "powerful",
+   "themes": [
+    {
+     "type": "Monstrosity",
+     "title": "Dragon of the East Wind",
+     "power": [
+      "Winged flight",
+      "Claws and teeth"
+     ],
+     "weak": "Cut off from the source",
+     "advance": [
+      "Fearsome majesty",
+      "Scaley hide",
+      "Blow blistering heat"
+     ],
+     "quest": "I am the celestial incarnate.",
+     "desc": "For a thousand thousand years, Gullencry has roamed the skies, the embodiment of the blistering East Wind. Nations and lands bowed before her eternal being, a confluence of celestial and earthly forces so marvelous and terrifying that mortals would wilt in her presence. But in the last few centuries, her sense of purpose was lost, her guiding star gone, all because of a war waged below, on the earth. She swooped down to investigate.",
+     "special": {
+      "name": "Display of Force",
+      "desc": "Once per session, when you act using tags from this theme and Succeed without Consequences, your incredible display gives a tier-3 status representing amazement, respect, or fear to a crowd of impressionable onlookers or one observer not easily impressed."
+     }
+    },
+    {
+     "type": "Magic",
+     "title": "Words of Power",
+     "power": [
+      "BURN",
+      "BEGONE"
+     ],
+     "weak": "Some Words burn in the throat",
+     "advance": [
+      "SPIRIT",
+      "PROTECT",
+      "MORTAL"
+     ],
+     "quest": "Let us see what words of power the feeble mortals have discovered.",
+     "desc": "There are sounds - one could call them words - known only to the celestial host, that when invoked correctly by a creature as powerful as Gullencry, let loose the raw power of the Heavens upon the world. Gullencry remembers a few of those, though their power seems dimmer than it once was. Nevertheless, she is curious to find more. Perhaps the mortals have stumbled upon some, over the centuries.",
+     "special": {
+      "name": "Ward Breaker",
+      "desc": "Once per session, when you act against someone warded against your Magic and Succeed, you may scratch a tag or reduce by two tiers a status representing their defense, in addition to the normal outcome."
+     }
+    },
+    {
+     "type": "Trait",
+     "title": "Fetching Mortal Form",
+     "power": [
+      "Appetite for worldly pleasures",
+      "Nimble and athletic"
+     ],
+     "weak": "Eyes like burning rubies",
+     "advance": [
+      "Feel mortal feelings",
+      "More muscles!",
+      "Fake mortal soul"
+     ],
+     "quest": "I'm eager to feel how their little bodies work.",
+     "desc": "To better understand this mortal war and its ramifications for the celestial realm, Gullencry has spent several decades on a mountaintop, discovering how to shape her form into that of a mortal human person. What a strange shape and a puny voice! She has yet to perfect the form, however, and so her blistering fire can still be seen in her eyes. Surely no one will notice such a tiny imperfection.",
+     "special": {
+      "name": "Shifting Form",
+      "desc": "Once per session, you may replace one of this theme's power tags (except the title tag) with a new tag that represents a change in your natural abilities and qualities."
+     }
+    },
+    {
+     "type": "Devotion",
+     "title": "Spectator of Mortals",
+     "power": [
+      "Inquire about mortal affairs",
+      "Befriend mortals"
+     ],
+     "weak": "Their morality baffles me",
+     "advance": [
+      "Join their petty fights",
+      "Respect for mortality",
+      "Pet mortal"
+     ],
+     "quest": "I must learn their ways to understand their War.",
+     "desc": "With her useful new body, Gullencry can now walk among mortal societies to learn more about them and understand what all the fuss is about. Why do they behave like this? What have they done to make the stars fall to the earth? Best to become as one and watch what they do. Maybe even keep their company, until she truly gets the hang of it.",
+     "special": {
+      "name": "Goes Both Ways",
+      "desc": "Once per session, if the object of your Devotion is near, you may gain a story tag representing aid granted by them, such as an item, encouragement, knowledge, or direct help."
+     }
+    }
+   ],
+   "backpack": [
+    "A puny mortal sword",
+    "A delicious cake",
+    "Collapsible spyglass",
+    "A lovely dress",
+    "Word of Power: SLEEP",
+    "Bag full of bacon",
+    "Tasty-looking horse"
+   ],
+   "examples": [
+    "Swoop from above: Dragon of the East Wind + Winged flight + Claws and teeth = POWER 3. Give Wounded.",
+    "Enjoy pasttime with a mortal: Fetching Mortal Form + Appetite for worldly pleasures + Befriend mortals = POWER 3. Give friendly.",
+    "Scare away mortals: Dragon of the East Wind + Words of Power + BEGONE = POWER 3. Give terrified.",
+    "Ask about a mortal matter: Spectator of Mortals + Inquire about mortal affairs = POWER 2. Discover new details."
+   ]
+  }
+ ]
+}
