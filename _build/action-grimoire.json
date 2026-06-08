@@ -1937,6 +1937,1131 @@
       ]
     },
     {
+      "section": "Survival In The Wild",
+      "page": 43,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Animal Kinship And Handling",
+          "actionExamples": [
+            "Soothe a distressed animal",
+            "Build trust with a beast",
+            "Show you mean no harm",
+            "Teach new tricks",
+            "Practice falconry.",
+            "Release the hounds"
+          ],
+          "explanation": "You make an emotional connection with an animal, affecting its emotional state, building a shared understanding and trust, or teaching it to follow your commands.\nWhen hurt or pressed, any animal can be frightened, which could hinder its ability to respond, move, or act with confidence. This action could also be used to Restore (remove) that status.\nForming a long-term connection with an animal could require you to Advance on a bond Limit. A wild nature makes it harder to ease the animal's instincts.\nSee also Teaching and Training (page 80).",
+          "power": {
+            "positive": [
+              "animal training skills",
+              "relationship with the animal",
+              "patience",
+              "calming presence",
+              "respect toward living things",
+              "harness, bridle, or saddle",
+              "treats.",
+              "similar animal features",
+              "telepathic or empathetic magic",
+              "enchantment spells"
+            ],
+            "negative": [
+              "emotional state of the animal",
+              "threatening or chaotic environment",
+              "danger to animal's offspring",
+              "wild instincts",
+              "mythological or otherwise magical creature",
+              "injury to creature"
+            ]
+          },
+          "success": "INFLUENCE with emotional statuses guiding the animal's course of action, such as protective, vigilant, or courageous.\nRESTORE to remove frightened or other negative emotional statuses from an animal.\nADVANCE by adding bonded statuses to max out bond.\nCREATE a a story tag for the creature or BESTOW the abilities it gained during training.",
+          "extraFeats": [
+            "The animal is loyal to your companions as well and protective of them.",
+            "The beast chooses to follow you even if not yet fully accustomed to your presence.",
+            "The creature recognizes and remembers several different signals you use to direct it.",
+            "The animal dislikes someone you taught it to hate.",
+            "The creature brings you items it finds, whether through foraging, hunting, or curiosity."
+          ],
+          "consequences": [
+            "In a moment of fear or instinct, the animal lashes out with its natural defenses (wounded).",
+            "You are thrown from the beast's back (prone).",
+            "The animal flees out of fear or uncertainty (Blocked).",
+            "The animal eats some of your provisions (scratch a tag).",
+            "The animal becomes more frightened.",
+            "The beast reverts to its instincts (wild)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Living off the Land",
+          "actionExamples": [
+            "Foraging",
+            "Fishing",
+            "Hunting",
+            "Collecting useful herbs",
+            "Scavenging from ruins.",
+            "Finding or building shelter",
+            "Igniting a fire.",
+            "Locating or dowsing for water"
+          ],
+          "explanation": "You use your skills at searching or survival in the wild to gather useful things and set up better conditions for yourself.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "survival skills",
+              "acute or supernatural senses.",
+              "proper tools",
+              "nature magic",
+              "outdoorsmanship.",
+              "experience in these conditions",
+              "knowledge of the terrain",
+              "useful environment features"
+            ],
+            "negative": [
+              "bad weather",
+              "dangerous flora or fauna.",
+              "detrimental terrain features",
+              "purposely-hidden items",
+              "deceiving features or illusions"
+            ]
+          },
+          "success": "CREATE tags for the items or things you find or put together.\nENHANCE with positive statuses for your current stocks and supplies, such as stocked-up-on-supplies, food-on-hand, or plenty-of-healing-herbs.",
+          "extraFeats": [
+            "Avoid dangers or violent confrontations.",
+            "Leave no trace of having been there.",
+            "Keep your fire or encampment hidden."
+          ],
+          "consequences": [
+            "You stumble, set off a trap, or are ambushed (wounded).",
+            "You expose yourself to a hazard (poisoned, weakened, etc.).",
+            "The items you acquire are flawed (add negative tags).",
+            "The items you acquire are of poor quality and may not last long (Yes, but...).",
+            "Someone notices you while you scavenge (Exposure).",
+            "You break something or are forced to leave it behind (scratch a tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Losing a Tail",
+          "actionExamples": [],
+          "explanation": "When someone is tracking or following you, you can shake them off with speed, stealth, guile, or maneuverability. You use your skills or surroundings in order to keep the observer back while you move to a hidden or far away spot, preventing them from following you.\nSee also Spying (page 37). If you are trying to hide, see Sneaking and Hiding (page 40).\nThis action uses the reverse of the positive and negative tags for Tracking. As with Tracking, this could be a Chase (page 47).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": "RESTORE by removing a status such as tracked.\nSET BACK by giving the status losing-them if this is a chase.",
+          "extraFeats": [
+            "You end up somewhere safe, for now.",
+            "You make the trackers go in a circle or to a location you decide.",
+            "You avoid attracting attention or expose yourself to danger."
+          ],
+          "consequences": [
+            "You get turned around (lost).",
+            "You get restrained or slowed due to the terrain and can't move as fast.",
+            "Your suspicious movements attract attention (wary or New Challenge).",
+            "You end up somewhere you never intended to go (introduce a Vignette or Journey).",
+            "You lose something important in the scuffle (scratch a tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Setting a Trap",
+          "actionExamples": [
+            "Fasten snare",
+            "Lay tripwire.",
+            "Plant an alchemical bomb",
+            "Rig a steel bear trap.",
+            "Place a detonating rune on a door"
+          ],
+          "explanation": "You carefully place a trap that will hopefully surprise your intended target. Consider Might when laying multiple traps or a trap that affects a greater area.\nInstead of rolling when you set the trap, you explain what type of trap you set and what would trigger it.\nWhen your trap would trigger, you get the spotlight for a moment and roll to see if it works as intended.\nOnce the trap is set but before it is triggered, it can count as a Threat; the Narrator can have it triggered by unintended targets, such as an innocent or an ally (Ill Tidings).",
+          "power": {
+            "positive": [
+              "trap setting skills",
+              "the trap tag itself (if any)",
+              "camouflage materials",
+              "rune spell.",
+              "alchemical explosives kit",
+              "skill at hunting",
+              "familiarity with the location",
+              "a location conducive to hiding a trap.",
+              "target's confusion, distraction, or sensory limitations"
+            ],
+            "negative": [
+              "open space",
+              "target's alertness",
+              "target's trap detection skills or magic",
+              "target's armor, reflexes, and other protections against the trap's effects"
+            ]
+          },
+          "success": "QUICK The trap works, such as by ringing a bell, casting an alarm spell, distracting a foe and making them fumble their action, or collapsing a passageway and blocking it.\nVARIES Attack for traps that give a harmful status such as wounded, electrocuted, or poisoned, or Disrupt for traps that give a hindering status such as ensnared, distracted, or prone. Other Effects may include Weaken to break armor or inflict a curse, Create to summon a creature, or Discover to scry the target and magically reveal its weak points.",
+          "extraFeats": [
+            "Disrupt the target's intended action, potentially addressing its Threat.",
+            "The result is extra flashy or very quiet.",
+            "The trap is not yet spent and can be triggered again."
+          ],
+          "consequences": [
+            "Your trap goes off prematurely or the target dodges in time (only if there was no Success).",
+            "The target becomes more alert.",
+            "The target spots other traps you have set or figures out your intentions or position (Exposure).",
+            "You've put a lot into that trap, and now you're running out (scratched tags)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Stalking Prey",
+          "actionExamples": [],
+          "explanation": "See Sneaking and Hiding, page 40.",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Tracking",
+          "actionExamples": [
+            "Notice scattered leaves",
+            "Trace footprints",
+            "Game stalking",
+            "Follow the hounds",
+            "Scour the countryside",
+            "Spiritually possess a bird of prey",
+            "Scry with a mirror"
+          ],
+          "explanation": "You search for a target, following clues to their location left within the environment.\nThe Narrator can decide to play this as a Chase (page 47), using the lose-tail/catch-up Limit.",
+          "power": {
+            "positive": [
+              "hunting or tracking skills",
+              "knowledge of the land or its wildlife",
+              "target left unique marks.",
+              "scent-tracking animal",
+              "fresh tracks",
+              "muddy conditions.",
+              "known game trails",
+              "target is clumsy or large"
+            ],
+            "negative": [
+              "the target is hidden",
+              "target is native or typical to the area",
+              "target is light of foot",
+              "target leaves no scent or tracks (intangible, incorporeal, etc)",
+              "bare terrain or river in the way",
+              "weather washed away tracks"
+            ]
+          },
+          "success": "QUICK Learn the path the target took, or catch up to them.\nDISCOVER clues about the target's location, their makeup, or recent activities.\nWEAKEN to remove hidden or similar status from a target trying to hide themself from you.\nADVANCE the status caught-up if this is a chase.",
+          "extraFeats": [
+            "You do it quickly.",
+            "You avoid attracting attention or expose yourself to danger.",
+            "You end up in a good position."
+          ],
+          "consequences": [
+            "The target becomes more alert or spots you (Exposure).",
+            "You fall in a trap set by the target (wounded or losing-them).",
+            "Weather conditions make further tracking harder (add weather tag).",
+            "You get turned around (lost).",
+            "You end up somewhere you never intended to go (introduce a Vignette or Journey)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Escaping a Trap, Ambush, or Hazard",
+          "actionExamples": [
+            "Leaping out of the way",
+            "Pulling your limb back.",
+            "Dodging",
+            "Catching the mechanism in the nick of time",
+            "Stopping just before you step in it",
+            "Sheer luck or miracle.",
+            "Being protected by an invisible force",
+            "Receiving a forewarning"
+          ],
+          "explanation": "When a trap, ambush, or unexpected hazard is sprung on you, you rely on reflexes, vigilance, prior warning, or forces unseen to save you from harm and to regain your bearings.\nConsider Might if the trap, ambush, or hazard is truly formidable and requires extraordinary ability to escape.\nIf the trap or hazard is harmful, you may add to your reaction any applicable forms of defense, such as armor or protective wards; see Blocking or Soaking an Attack (page 32). If you wish to get out of a trap that ensnared you, see Sabotaging (page 14).\nIf your rolled total is 10 or higher, you can use some of your Power to notice something important about the trap, ambush, or hazard (Discover).",
+          "power": {
+            "positive": [
+              "being alert",
+              "vigilance",
+              "reflexes and agility.",
+              "keen senses",
+              "prior warning",
+              "knowledge of traps and mechanisms.",
+              "luck",
+              "protective wards",
+              "guardian spirits or divine blessing",
+              "premonitions and visions"
+            ],
+            "negative": [
+              "hidden traps or ambushers",
+              "stealthy ambushers",
+              "poor visibility",
+              "superior trap mechanism.",
+              "camouflage",
+              "invisibility",
+              "magical trap"
+            ]
+          },
+          "success": "LESSEN the Effects of the trap or being surprised by an ambush.\nDISCOVER a valuable detail about the trap, the ambush, your opponent, or the environment.",
+          "extraFeats": [
+            "Regain your initiative and act immediately (keep the spotlight).",
+            "Spot additional traps or ambushes nearby.",
+            "Draw your weapon or a useful tool.",
+            "Warn or signal an ally of the trap or ambush."
+          ],
+          "consequences": [],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Navigating Danger",
+      "page": 47,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Chases",
+          "actionExamples": [
+            "After them!",
+            "Keep them in sight",
+            "Follow their path",
+            "Cut them off",
+            "Take a shortcut",
+            "Spur the horses",
+            "Run across rooftops",
+            "Weave through the crowd",
+            "Knock over obstacles",
+            "Drop caltrops"
+          ],
+          "explanation": "A chase scene is usually Detailed, revolving around the catch/outrun polar Limit. When outrun maxes out, the fleeing party manages to escape its pursuer(s), ending the chase for the time being. When catch maxes out, the pursuer catches the fleeing party and ends the chase by blocking their escape or otherwise preventing them from running away. The Narrator determines the Limit's maximum as a measure of how lengthy they want the scene to be and the stakes at hand.\nOutrun hinders actions affected by distance, such as most ranged attacks, intimidation, communication, or noticing small details. The Narrator may rule that as long as this outrun exists it is impossible to perform close combat actions, such as hand-to-hand attacks or grabbing items.\nNot all chase actions are about running, riding, piloting ships, etc.; you may also take action to impede your opponent or empower yourself.",
+          "power": {
+            "positive": [
+              "burst of speed",
+              "survival instincts",
+              "powerful leap",
+              "mount or transport",
+              "your opponent's discord or slowness",
+              "elevated position",
+              "obstacles blocking your opponent",
+              "familiarity with the area",
+              "cover and hiding places (when fleeing)"
+            ],
+            "negative": [
+              "exhaustion of self or mount",
+              "opponent is hidden or disguised",
+              "limited visibility",
+              "dense crowds.",
+              "movement challenges like a winding path, narrow alleyway, or muddy ground",
+              "bad weather.",
+              "opponent's knowledge of the area"
+            ]
+          },
+          "success": "ADVANCE to add catch or outrun statuses to max out catch/outrun.\nDISRUPT your opponent with a hindering tag or status such as tight path, icy terrain, fallen boulder. unbalanced, or hobbling.\nENHANCE yourself with fast, invigorated, or hastened.\nLESSEN to prevent your opponent from gaining on you.",
+          "extraFeats": [
+            "Block a specific path for them.",
+            "Avoid an upcoming obstacle.",
+            "Change your position relative to them.",
+            "Direct the chase to a specific area.",
+            "Keep the spotlight for a quick attack.",
+            "Have them lose track of you for a moment."
+          ],
+          "consequences": [
+            "There's an obstacle in your path (e.g., bales of hay).",
+            "They circumvent an obstacle in their path (remove tags).",
+            "You lose precious time (opponent is catching-up or fleeing).",
+            "You run into a barrier or obstacle (bruised, unbalanced, or add a story tag).",
+            "You lose speed (reduce fast) or they speed up (gain fast).",
+            "You maneuver through an open area (exposed)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Creating and Removing Hazards and Obstacles",
+          "actionExamples": [
+            "Ignite the barrel",
+            "Dig a hole in the floor",
+            "Release a swarm of bees",
+            "Break animal cages",
+            "Clear the caltrops.",
+            "Cut the undergrowth",
+            "Calm the spirits",
+            "Disperse the fog with magic"
+          ],
+          "explanation": "You alter your environment or introduce something new to create a hazard or an obstacle (to make life difficult for someone else, presumably), or in an attempt to remove one. Once created, anyone might be affected by the hazard, be they friend or foe, unless it is very short-lived (see also Area Attack, page 17). Removing hazards typically requires special preparation or ability in the form of tools or magic.\nConsider Might when creating or removing something bigger than one person or over a large area.",
+          "power": {
+            "positive": [
+              "resourcefulness and inventiveness",
+              "wilderness skills.",
+              "engineering skills",
+              "lantern oil",
+              "a tool such as a spade or siege engine",
+              "alchemical explosives",
+              "environmental features such as a tar barrel or hornet's nest",
+              "destructive glee",
+              "elemental magic"
+            ],
+            "negative": [
+              "the hazard or obstacle itself",
+              "structural durability preventing the obstacle from being created or dismantled",
+              "obstructions or distance between you and the target area"
+            ]
+          },
+          "success": "CREATE obstacle or hazard tags such as slippery pool, stinking cloud, distracting noise, or open pit, potentially with hidden, spreading quickly, or the like.\nDISRUPT foes with harmful environmental statuses such as burning, muddy, or cursed.\nWEAKEN to remove obstacle or hazard tags such as big boulder, buzzing swarm, or caltrops, or statuses such as heavy-shadows or windy. Once you remove all relevant tags or status tiers, the hazard is either completely gone or incapable of harming anyone.",
+          "extraFeats": [
+            "Shape precisely the area affected by the hazard.",
+            "Set up a safe area inside the hazard.",
+            "Move around or across the hazard before or after it's created.",
+            "Time precisely the creation of the hazard.",
+            "Draw attention.",
+            "Avoid getting yourself or someone else harmed by the hazard's creation."
+          ],
+          "consequences": [
+            "You or your gear get hurt in the process (corroded, electrocuted, bruised, bleeding, entangled, poisoned, weakened, impeded, etc.).",
+            "You end up caught in the hazard or behind the obstacle (Complication).",
+            "Equipment gets damaged (add story tags) or supplies used up (scratch a tag).",
+            "The hazard expands or changes shape (Complication).",
+            "A different obstacle appears."
+          ],
+          "might": null
+        },
+        {
+          "name": "Scouting and Guarding",
+          "actionExamples": [
+            "Scout ahead",
+            "Explore ancient ruins",
+            "Speak with the land using magic.",
+            "Study local structures, flora, fauna, or geology",
+            "Guard an encampment or facility",
+            "Patrol a defensive line",
+            "Watch over a caravan.",
+            "Stay alert"
+          ],
+          "explanation": "You use your senses, skills, and tools to keep your bearing or identify new threats. This can be while exploring or while standing guard. If appropriate, the Narrator may reveal specific information from the Challenge Profile such as Might, tags, Limits, Consequences, and Specials to reflect knowledge gained.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "acute or supernatural senses",
+              "alertness",
+              "stealth.",
+              "spyglass, sextant, or other surveying tools",
+              "guidance or protection of local spirits",
+              "tales, rumors, or maps about this locale, its hazards, and its inhabitants.",
+              "alarm magic",
+              "high ground or vantage point"
+            ],
+            "negative": [
+              "sensory obstructions such as darkness, fog, high winds, loud noise, or heavy rain",
+              "camouflage",
+              "hidden traps or dangers",
+              "sneakiness of targets.",
+              "deceiving features and illusions"
+            ]
+          },
+          "success": "QUICK You gather the most pertinent information or notice a Threat in time to prevent it from catching you or your allies off guard.\nDISCOVER specific information, such as the best path to a destination, imminent threats around, the main attributes of the most dangerous threat, entrances and exits, and the main features of the area (number of floors, hidden chambers, and the like).\nENHANCE yourself with alert to improve future scouting and possibly lessen surprise attacks.",
+          "extraFeats": [
+            "Notice a Threat in time to prevent it from catching you or your allies off guard.",
+            "Keep the spotlight to act on the information you gathered.",
+            "Remain undetected.",
+            "Leave no tracks.",
+            "Secretly communicate your findings to allies."
+          ],
+          "consequences": [
+            "Some of the information is unclear or requires further scouting (Yes, but...).",
+            "You fail to notice a nearby danger (surprised or wounded).",
+            "You wander off too far (lost).",
+            "You exhaust your senses or surveying tools (scratch a tag).",
+            "Instead of becoming alert, you daydream or doze off (distracted or time-passes).",
+            "The obstacles ahead are worse than you thought (add bulwark, sentries, anti-magic circle, etc.)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Sneaking Past a Threat",
+          "actionExamples": [],
+          "explanation": "See Sneaking and Hiding (page 40).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Travel and Wayfinding",
+          "actionExamples": [
+            "Navigating the wilderness.",
+            "Overland journeying",
+            "Marching an army.",
+            "Finding your way back",
+            "Following game trails",
+            "Getting your bearings.",
+            "Follow the map.",
+            "Retrace your steps",
+            "Avoid or make way around a hazard"
+          ],
+          "explanation": "You make your way through a region trying not to get lost. If you are already lost, you might work to figure out where you are or how to get back to somewhere more familiar. This action could be used to make your way around a Threat in a Journey, finding a longer, perhaps safer route.",
+          "power": {
+            "positive": [
+              "navigation skills",
+              "a map",
+              "rumors about local dangers",
+              "experience in this region or on this kind of terrain",
+              "appropriate gear for conditions and terrain",
+              "carrying light gear",
+              "mount or transport",
+              "sufficient provisions for journey"
+            ],
+            "negative": [
+              "featureless landscape",
+              "stars and celestial bodies not visible",
+              "illusory or confusing terrain",
+              "carrying heavy gear",
+              "insufficient provisions.",
+              "harsh weather conditions.",
+              "large group"
+            ]
+          },
+          "success": "QUICK You make it to the next major stop on your journey, perhaps even completing it, avoiding any Consequences from Journey Threats.\nDISCOVER the major steps in how to get to where you want to go, or what's in the way.\nENHANCE yourself with knows-the-way, helpful in lessening Consequences on the journey.\nRESTORE to remove the lost status.",
+          "extraFeats": [
+            "Keep good time.",
+            "Avoid a major monster or danger in the region.",
+            "Keep from pushing too much physically.",
+            "Get back to a specific location you remember.",
+            "Note the lay of the land, for next time you travel here."
+          ],
+          "consequences": [
+            "See Travel Consequences, page 6."
+          ],
+          "might": null
+        },
+        {
+          "name": "Withstanding and Preparing for Environmental Conditions",
+          "actionExamples": [
+            "Withstand a heat blast",
+            "Resist a swarm of biting insects",
+            "Cope with seasickness",
+            "Endure freezing cold",
+            "Hold your breath when drowning.",
+            "Survive dehydration",
+            "Get your sea legs",
+            "Get your second wind while marching"
+          ],
+          "explanation": "You attempt to withstand the harm inflicted by an environmental hazard or make preparations to deal with harsh conditions.\nTo avoid sudden or immediate danger, such as leaping out of the way of a trap or grabbing a ledge before falling off a cliff, see also Blocking or Soaking an Attack (page 32) and Dodging an Attack (page 33).\nPreparing for the conditions of a journey is an action often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "resourcefulness and inventiveness",
+              "wilderness skills.",
+              "quickness, instincts, and reaction speed",
+              "survival gear and supplies",
+              "natural or magical resistance to these conditions.",
+              "guidance or protection of local spirits",
+              "harm-preventing spells or abilities",
+              "experience in this terrain",
+              "appropriate shelter"
+            ],
+            "negative": [
+              "the condition's tag itself",
+              "slowness, grogginess, or apathy",
+              "gear that is detrimental for surviving this hazard.",
+              "vulnerability to these conditions",
+              "wrath or disapproval of local spirits"
+            ]
+          },
+          "success": "LESSEN harmful statuses or tags as a reaction.\nENHANCE yourself or a travel companion with a protective status such as steady, hardened, covered-up, steeled-against-elements.",
+          "extraFeats": [
+            "Prevent an environmental Threat from manifesting.",
+            "Keep your gear in good order."
+          ],
+          "consequences": [
+            "You lose heart due to the constant strains (despaired).",
+            "Your preparations cost a lot of time, money, or resources (time-passes, short-on-coin, short-on-supplies)",
+            "The conditions ahead are worse than you thought (add story tag or status)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Recovery & Healing",
+      "page": 51,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Invigoration",
+          "actionExamples": [
+            "Cooking a delicious meal",
+            "Liquid courage",
+            "Potions of power",
+            "Sprinkling pixie dust.",
+            "Rubbing a lucky charm",
+            "Herbal remedies"
+          ],
+          "explanation": "You use a good meal, a strong drink, helpful herbs, magical ingredients, elixirs made from parts of certain monsters, or some folk treatment to improve someone's capabilities or mood. The treatment could be just quaffing a tincture or it could be as complex and involved as a stay at an infirmary or a wizard's sanctum.\nSince invigorators are usually consumable, it is common to burn them for Power (Consumable Story Tags, Corebook Vol. I, page 165).\nFor giving an inspirational boost, see Leadership (page 78). For giving someone a boost during a battle, see also Assisting an Ally (page 24).\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "cooking or brewing skills",
+              "appropriate food and beverage",
+              "appropriate supplies",
+              "magical potions",
+              "kitchen equipment",
+              "skill at administering the invigorator"
+            ],
+            "negative": [
+              "addiction or tolerance for ingredients used",
+              "low quality ingredients",
+              "substances or magic effects in conflict",
+              "purifying enchantments"
+            ]
+          },
+          "success": "BESTOW and ENHANCE yourself or someone else with pleasantly-full, confident, empowered-strikes, creative-thoughts, ogre's strength, animal magnetism, uncanny hearing, etc.",
+          "extraFeats": [
+            "Make it last longer or shorter.",
+            "Avoid side effects or aftermath.",
+            "Invigorate someone without drawing attention.",
+            "Quickly stow the invigorator and draw something else."
+          ],
+          "consequences": [
+            "You become addicted or get a stomach-ache.",
+            "You are temporarily afflicted by severe side effects (sickened, can't-breathe, overconfident, cursed, or twitchy).",
+            "You have lasting side effects (e.g., weakened vitality, hallucinations, frequent muttering, or scratch tags).",
+            "Someone sees you imbibing (Exposure).",
+            "You become tolerant to the substance and cannot use it again soon (Blocked)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Mental and Physical Resilience and Recovery",
+          "actionExamples": [
+            "Trust in your fortitude",
+            "Show force of will",
+            "Endure a poison",
+            "Steel against disease.",
+            "Balance the humors",
+            "Solemn meditation.",
+            "Resist mind control.",
+            "Walk under moonlight.",
+            "Regenerate",
+            "Set the bone"
+          ],
+          "explanation": "You overcome a condition with which you are afflicted, whether by resisting it or recovering from it over time. It may be physical, like a broken bone, a poison, or a disease; mental, such as guilt, pain, psychic control, resurfaced emotions, or a recurrence of madness; or a combination of both, such as torture.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "hardiness",
+              "nerves of steel",
+              "fortitude and resilience",
+              "strong resistance to the malady",
+              "calm mind",
+              "psychic defenses or emotional armor.",
+              "meditation training",
+              "regenerative powers",
+              "resting in a haven",
+              "blessings and guardian entities",
+              "help from friends or healers"
+            ],
+            "negative": [
+              "the condition itself",
+              "physical or mental issues that keep you from functioning, such as physical weakness or despair",
+              "the source of the condition or issue",
+              "sensitivities and vulnerabilities.",
+              "dark or demonic forces eroding your psyche"
+            ]
+          },
+          "success": "LESSEN incoming statuses or story tags of a condition when you are first afflicted by it.\nRESTORE to remove a debilitating tag or status when you take action to recover from a condition.\nBESTOW or ENHANCE to give yourself tags and statuses that represent temporarily-elevated constitution or newly-gained strength, such as poison resistance, steadfast heart, tamed emotions, stalwart frame, or merry-disposition, full-of-vigor, or hale-of-health.",
+          "extraFeats": [
+            "Recover faster than normal.",
+            "Ignore the next Threat to afflict you with the same source (venom, spell, etc.)"
+          ],
+          "consequences": [
+            "You suffer from further injuries (get a different status or negative tag; only if there was no Success).",
+            "You are weary from the healing process (exhausted or scratch tags).",
+            "You get a foul-mood due to the long healing period, embarrassed by the malady, angry at the gods, or argumentative with the healers."
+          ],
+          "might": null
+        },
+        {
+          "name": "Treating Injuries and Other Conditions",
+          "actionExamples": [
+            "Provide healing treatment.",
+            "Perform chirurgy with a hot knife",
+            "Apply balm or ointment",
+            "Stitch up wounds.",
+            "Wisewoman visit",
+            "Have a heart to heart.",
+            "Support someone through crisis"
+          ],
+          "explanation": "You use your abilities to treat a harmful condition such as an injury or a personal issue. While some issues can be treated in the field or on the job, other, more stubborn problems may require someone with healing powers, extended rest and care, or a period of training to adapt to one's new condition; see Mental and Physical Resilience and Recovery (page 52).\nSee also Healing with Magic (page 68).\nA harmful status or tag being removed does not count as negative for this action, unless you are treating yourself or it is particularly aggressive or stubborn.\nWhen using this action to discover the source of an ailment, bear in mind that some causes might seem merely superstitious, such as a demon or witch's curse. The magical rules of your setting determine what's reasonable, but the successful use of this action should reveal actual causes, not just convenient scapegoats.\nThis action is often taken while camping or sojourning.",
+          "power": {
+            "positive": [
+              "healing training",
+              "alchemy equipment.",
+              "herbs and poultices",
+              "aid of a trained physician.",
+              "a sterile environment",
+              "healing magic.",
+              "the target's regenerative attributes",
+              "good blessings",
+              "care by a loved one",
+              "wisdom and sociability"
+            ],
+            "negative": [
+              "battlefield conditions",
+              "unhygienic conditions.",
+              "mental or social pressure",
+              "other health conditions"
+            ]
+          },
+          "success": "RESTORE to remove the harmful tag or status.\nDISCOVER to understand the ailment better or pinpoint its source.",
+          "extraFeats": [
+            "Complete the treatment faster or allow for a speedy recovery.",
+            "Leave no scars or treatment side-effects.",
+            "Prevent wounds from reopening, for now.",
+            "Prevent infections, nightmares, etc.",
+            "Move the patient while treatment is ongoing.",
+            "Prevent the condition from spreading to others.",
+            "Prevent the condition from doing more harm (e.g., ongoing poison)."
+          ],
+          "consequences": [
+            "The patient's state deteriorates or they suffer from further injuries (increase status or add tags; only if there was no Success).",
+            "Your method of treatment proves ineffective (Blocked; only if there was no Success).",
+            "The treatment takes a lot of supplies, such as wrappings or medicinal herbs to treat (scratch a tag or short-on-supplies).",
+            "You are overworked (frustrated, tired, or distracted).",
+            "The illness spreads to you (gain the status afflicting them)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "The Art Of Magic",
+      "page": 55,
+      "intro": null,
+      "entries": [
+        {
+          "name": "Dispelling Magic",
+          "actionExamples": [
+            "Counter a spell",
+            "Break an enchantment.",
+            "Dampen a magic power",
+            "Release someone from magical bonds",
+            "Fight fire with fire.",
+            "Fight fire with ice",
+            "Disperse malign forces"
+          ],
+          "explanation": "You use your magical powers or arcane knowledge to stop a magic power from activating, nullify an existing one, or dampen magical ability.\nIn some cases the Narrator can reintroduce a magical power that was canceled as Consequences. Challenges, in particular, are likely to be able to restore lost abilities.\nConsider Might when attempting to nullify the magic of much greater or weaker magic workers, or one affecting a large area.\nWhen dispelling as a reaction, if your rolled total is 10 or higher, you can use some of your Power to learn this spell (Create), absorb its magical energy (Enhance), or reflect it back to the attacker or to another target (Attack), depending on the rules of magic in your setting.",
+          "power": {
+            "positive": [
+              "magical skills",
+              "skill at countering or disenchantment",
+              "knowledge of, or power over, some supernatural forces",
+              "abilities or attitude that perfectly counter the target ability",
+              "the opposite element to what's being countered (earth vs. air, fire vs. water, etc.).",
+              "implements"
+            ],
+            "negative": [
+              "persistent magic",
+              "the target's magical skills or force of spirit",
+              "the raw power of the effect",
+              "place of power",
+              "magical nexuses or ley lines reinforcing existing magic"
+            ]
+          },
+          "success": "WEAKEN or RESTORE to remove tags and statuses representing magic or originating from them, such as door-binding spell, giant's strength, warded, or cursed.\nDISRUPT the target with statuses that hinder the use of magic powers such as dampened-magic, cut-off-from-the-divine, or muted. These are treated as helpful when lessening the Consequences they're affecting.\nLESSEN to reduce Effects of a power just as it is being activated.",
+          "extraFeats": [
+            "Entirely block the target from using a specific ability, for now.",
+            "Keep the spotlight to act immediately.",
+            "Avoid magical backlash.",
+            "Counter or dispel magic discreetly."
+          ],
+          "consequences": [
+            "Your own magic is sapped (scratch a tag or drained).",
+            "The target effect grows stronger (only if there was no Success).",
+            "You are unable to dispel this power again, for now (Blocked).",
+            "There are undesired side-effects, such as magical backlash (drained, wounds, cursed).",
+            "You disrupt helpful magic effects on yourself, your target, or nearby (reduce a status or scratch a tag).",
+            "You leave a magical scar on the area (corrupted)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Finding and Focusing on a Specific Ability",
+          "actionExamples": [
+            "Find the right spell in the grimoire",
+            "Pick the right vial from the bandolier",
+            "Grab the right magic item from the bag",
+            "Prepare a spell or a prayer",
+            "Attune your aura.",
+            "Discover a novel use or a hidden feature or your magical abilities"
+          ],
+          "explanation": "You take a moment to tap into a specific magical ability or resource. This is a common prep action used with a broad magic tag to generate a more specific magical story tag (Indirect Tags and Prep Actions, Corebook Vol. I, page 153).\nSee also Granting Abilities to People or Items (page 68).",
+          "power": {
+            "positive": [
+              "your broad or indirectly relevant tag.",
+              "attributes that can speed the process such as focused, meticulously organized, adaptable",
+              "features that can assist the search such as self-flipping grimoire, assistant"
+            ],
+            "negative": [
+              "distractions and confusion",
+              "slowness and inefficiency"
+            ]
+          },
+          "success": "CREATE a story tag representing the specific ability or item you want, such as fireball spell, levitation bead, or protective incantation, possibly making it into a theme with additional features such as wide area, channel divine magic, or silent casting. If you create a theme, the Narrator can add a negative story tag.",
+          "extraFeats": [
+            "Hide your prepared ability.",
+            "Keep the spotlight to use the new ability immediately."
+          ],
+          "consequences": [
+            "The ability you gain is flawed or comes with strings attached (add negative tag).",
+            "You panic or lose your head (panicked, distracted).",
+            "This is the last ability you'll gain for a while (scratch the broad tag).",
+            "This ability comes at the expense of another (scratch a specific tag).",
+            "There are dangerous side effects to the creation (a negative status)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Making a Magical Discovery",
+          "actionExamples": [
+            "Experiment with new magic.",
+            "Study a supernatural creature",
+            "Commune with the divine",
+            "Observe the flow of magic",
+            "Devise a magical theory",
+            "Plumb the depths of the universe.",
+            "Develop a new spell"
+          ],
+          "explanation": "By experimenting with magical objects, alchemical substances, spellcraft, or harvested materials with magical properties, you work towards discovering an all-new application of magic. You endeavor to invent a new kind of magic or magical application, deepen your mystical understanding, or discover the underlying principles of the magical world.\nThis could involve Discovering the existing rules of magic in your world (see The Secrets of Magic, Corebook Vol. II, page 80) or the detailed ways in which the rules of magic work. Experimentation could lead you to learning the Vulnerability of a monster or a means of warding off faeries.\nConsider Might depending on how deep you go with your mystical explorations. The closer you come to the secrets at the heart of creation or magic itself, the Mightier the action.\nThe Narrator can set a breakthrough Limit. Upon maxing out the Limit, you discover or invent what you've been working towards.",
+          "power": {
+            "positive": [
+              "meditations and rituals",
+              "a retreat, sanctum, or laboratory",
+              "ancient mystical writings",
+              "inventiveness and nonconformity",
+              "intuition",
+              "mentorship by sages or otherworldly beings",
+              "rare ingredients to test with",
+              "magical creature being studied",
+              "past mystical experiences"
+            ],
+            "negative": [
+              "distractions and interruptions.",
+              "flawed understanding of the magical underpinnings",
+              "poor guidance",
+              "interfering magics",
+              "fear of the unknown.",
+              "inhibitions"
+            ]
+          },
+          "success": "DISCOVER properties, magical rules, Vulnerabilities, or other underlying truths of magic.\nCREATE new story tags of magical abilities you previously had no access to, such as soul transmigration powers.\nADVANCE a status such as experimentation or making-progress.",
+          "extraFeats": [
+            "Conduct experiments without drawing too much attention (strange smells, weird effects, etc.).",
+            "Develop a minor application of your new knowledge.",
+            "Prevent any unintended side-effects or explosions.",
+            "Avoid angering the spirits.",
+            "Refrain from having your mind break from the profundity of knowledge."
+          ],
+          "consequences": [
+            "The creatures or people you're testing on are harmed (guilt or scratch a tag).",
+            "The entities you examine or commune with become enraged or demand a favor.",
+            "You cause an explosion or other disastrous event (scratch a tag, burned, etc.).",
+            "You come upon a setback in your work (lose tiers of experimentation or making-progress, only if there was no Success).",
+            "Some of the things you learn are vague or only half true (Yes, but...).",
+            "Your new spell, power, or substance is faulty (add a negative story tag).",
+            "Someone learns about your discovery (Exposure).",
+            "Your discovery attracts individuals or beings who enforce the secrecy of this knowledge (New Challenge)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Resisting Magic",
+          "actionExamples": [
+            "Disbelieve illusion or beguilement",
+            "Resist corruption, dark despair, or a hex",
+            "Resist transfiguration",
+            "Break out of paralysis or hypnosis",
+            "Endure malevolent forces or magically-induced pain",
+            "Push out a spirit or spiritual force",
+            "Escape mental bonds"
+          ],
+          "explanation": "You resist a magical influence with simple willpower, clarity of mind, or specialized magic of your own. The exact qualities that are required to resist this magic are determined by the Narrator.\nConsider Might if this magic is far beyond your capacity to resist.\nIf your rolled total is 10 or higher, you can use some of your Power to notice something important about the magic that accosted you (Discover).\nWhen blocking or dodging destructive magic, see Battle Defense (page 32), and when avoiding a magical trap see Escaping a Trap Ambush, or Hazard (page 46). To get rid of a magical entity, see Banishing a Conjured Creature (page 62).",
+          "power": {
+            "positive": [
+              "force of spirit",
+              "defiance",
+              "conviction.",
+              "devotion",
+              "clarity of thought",
+              "purity of heart",
+              "physical constitution and stamina",
+              "counterspells and protective wards or charms",
+              "insight into the magical force you are resisting"
+            ],
+            "negative": [
+              "the qualities of the magical force such as deceptive, overwhelming, or insidious magic.",
+              "physical, emotional, and mental fragility"
+            ]
+          },
+          "success": "LESSEN the incoming Effects of magic.\nDISCOVER a valuable detail about this magic, its user, its source, Vulnerabilities, or particularities.\nRESTORE the negative Effects of magic as you push back its influence, such as paralyzed or charmed.",
+          "extraFeats": [
+            "Regain your initiative and act immediately (keep the spotlight).",
+            "Prevent this specific magic from affecting you again, for now.",
+            "Push back against the source of this magic, preventing them from using a specific ability.",
+            "Escape compulsion momentarily to communicate to others that you are under magical attack."
+          ],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Sensing and Scrutinizing Magic",
+          "actionExamples": [
+            "Read an invisible aura",
+            "Sense unseen forces",
+            "Listen to an item's whispers.",
+            "Examine magical workings",
+            "Recall your arcane instruction",
+            "Cite old lore",
+            "Divine the presence of spirits or fateful machinations"
+          ],
+          "explanation": "You examine a person, place, item, phenomenon, or force and attempt to use your knowledge of magic, powers of perception, or magical senses to discern what magical powers are at play. If you use mundane research instead, see Information Gathering (page 35).\nYou may discover new details about the magical effect at hand, including a sense of what triggers it, what its source is, what is its area or sphere of influence, and what might negate it. If it is an item, you may learn its capabilities, source of power, command words, who last possessed it, etc.\nThe Narrator may decide to set an unlocked Limit, requiring the Hero to spend time studying the magical effect. When unlocked is maxed out, you unlock all the secrets of the magic studied.\nConsider Might when dealing with rare or powerful magic.",
+          "power": {
+            "positive": [
+              "intuition and uncanny senses",
+              "arcane or mystical knowledge",
+              "magic detection tricks, cantrips, or items",
+              "awareness-enhancing substances",
+              "relevant historical knowledge",
+              "magical crafting skills (for items)",
+              "qualities that resonate with the target's magic",
+              "sage advisors"
+            ],
+            "negative": [
+              "the item or effect is mysterious or hidden",
+              "distractions",
+              "illusions or other deceptions",
+              "the real power is suppressed",
+              "the effect or item is missing a piece"
+            ]
+          },
+          "success": "QUICK You understand the magical effect and its powers.\nDISCOVER specific details about the magical effect or item.\nADVANCE with making-progress.",
+          "extraFeats": [
+            "Keep from touching or activating the item or effect.",
+            "Immediately act on the insights you gained (keep the spotlight)",
+            "Prevent or counter the activation of a specific magical effect you have revealed.",
+            "Immediately announce to others or signal about this magic."
+          ],
+          "consequences": [
+            "You get the wrong impression or false visions, leading to partly incorrect conclusions.",
+            "Other magic items around you are disrupted (scratch a tag).",
+            "You unleash defensive magics within the item (cursed).",
+            "You are set back in your research (reduce making-progress) or your current approach is exhausted (Blocked)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Warding",
+          "actionExamples": [
+            "Protective circle",
+            "Fortify thoughts",
+            "Salt across the doorstep",
+            "Gesture the mark of a deity.",
+            "Whisper a prayer.",
+            "Present a warding sign",
+            "Create a magical trap",
+            "Ward a doorway against intruders"
+          ],
+          "explanation": "You use your magic or understanding of the supernatural to limit a particular kind of magic power or magical energy in general, and prevent it from harming you. Magic powers activated against warded people or things, or within a warded area, are hindered by this status.\nIf your ward is not only protective but also active - reflecting the magical fire back, attempting to banish an offending ghost, or covering the intruder with spirit dust - explain what it can do and what would trigger it. When the ward triggers, you get the spotlight for a moment and roll to see if it works as intended, with warded acting as a beneficial status.\nSee also Setting a Trap (page 44).\nConsider Might when warding a large area, large groups, or against uniquely powerful forces.\nTo stop an immediate magical effect, see Dispelling Magic (page 55). To get rid of a magical entity, see Banishing a Conjured Creature (page 62).",
+          "power": {
+            "positive": [
+              "force of spirit",
+              "warding rites",
+              "knowledge of local spirits",
+              "useful ley lines or ambient magical energy.",
+              "appropriate magical implements",
+              "items, symbols, or chants that are anathema to the affected entities"
+            ],
+            "negative": [
+              "vulnerability to specific magic",
+              "a strong presence of an opposing spirit or magical effect",
+              "distractions and interruptions",
+              "conditions that erode the ward (rain against markings, presence of many ghosts, etc.)"
+            ]
+          },
+          "success": "ENHANCE the target with warded. Specify what the ward repels, see page 55.\nVARIES Attack with banish against magical creatures or drain magic users of Power, Disrupt with ensnared or distracted, Weaken to remove beneficial abilities, Create to summon a creature, or Discover to scry the target and magically reveal its weak points.",
+          "extraFeats": [
+            "You cast the ward without being noticed.",
+            "The ward is either flashy or unseen.",
+            "The ward lasts longer.",
+            "Affected magical creatures can't perceive what is warded.",
+            "Magically mark the target without their knowing so you sense where they are or what their condition is.",
+            "Disrupt the target's intended action, potentially addressing its Threat.",
+            "Also force the target to move back, or prevent it from moving further."
+          ],
+          "consequences": [
+            "The ward will not last as long as it should (Yes, but...).",
+            "The ward harms the warded, as long as it is active (dazed, sickend, enfeebled, can't speak).",
+            "The ward attracts the attention of other magical dangers (Exposure or New Challenge).",
+            "The ward works both ways, keeping certain magical creatures in (if undesired).",
+            "Placing the ward requires more power or resources (scratch a tag).",
+            "The ward has a weak spot (add a negative story tag)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
+      "section": "Conjured Creatures",
+      "page": 62,
+      "intro": "Magic can be used to summon, enchant, animate, or materialize creatures, and many magic users do so often as servants, companions, and minions can be very useful in carrying out tasks. \"Conjuring\" refers here to the act of calling forth the creature, whether it is out of thin air, through animating materials or objects, or by attracting the right being. The result is called a \"conjured creature\" or a \"conjuration\", that is a creature that is in the scene through magic, whether it is a spirit made corporeal, a summoned beast, or an animated flying sword. Certain monsters, magical beings, and otherworldly entities in your series - such as ghosts, demons, godlings, and such - can be considered \"conjured creatures\" even if the magic that created them has taken place long ago and they are now assumed a permanent part of the setting. Other magical beings - such as magical races that migrated into your world - may not be considered \"conjured creatures\", even if they are from another realm, if they are not actively sustained in your world by magic.\nTaking Action with a Conjured Entity or Companion\nA conjured entity you control, or any creature represented by the Companion theme, are allies represented by one or more tags. Depending on its form and capabilities, such a creature can perform or assist with almost any action. If it's sentient, it could even engage in Social Interactions (page 70). If the creature's assistance is directly helpful to an action, such as when a brown bear helps break down a door, simply add its relevant tags to the action as positive tags. If it has any negative tags, those might apply in the same action or possibly others; a rowdy bear is hard to keep calm when a low profile is required. Intelligent and semi-intelligent creatures can act on their own, based on their disposition and your orders. Either way, the player of the Hero controlling the creature rolls for its actions, and might need to share the spotlight with it. See Ally Actions, Corebook Vol. I, page 164.",
+      "entries": [
+        {
+          "name": "Banishing a Conjured Creature",
+          "actionExamples": [
+            "Make a banishing sign",
+            "Exorcism ritual.",
+            "Cleanse magical or spiritual corruption.",
+            "Unravel an elemental's form",
+            "Undo a curse animating the dead",
+            "Force a spirit to leave the physical world"
+          ],
+          "explanation": "You use your magic to eliminate the very force responsible for animating, summoning, or otherwise maintaining a conjured creature, and disperse its mystical energies. This could send a physical being back to where it came from, exorcise a being possessing another, or dispel the magic animating an object. Conjurations and supernatural otherworldly beings have a banish Limit. Once this Limit is maxed, the target dissipates, leaves, or its enchantment breaks.\nSee also Dispelling Magic (page 55) and Warding (page 61).",
+          "power": {
+            "positive": [
+              "force of spirit",
+              "magical skills",
+              "applicable wards incantations and abjurations",
+              "medium powers.",
+              "experience with this specific type of creature",
+              "magic suited for banishment or destruction of this type of creature",
+              "things abhorrent to the target (salt, religious symbolism, a cheerful song, and the like)"
+            ],
+            "negative": [
+              "active resistance from the magic that created or summoned the target",
+              "target's willpower, fortitude, or size",
+              "objects or spiritual fetters that bind the target to the area",
+              "distractions",
+              "banishment resistance"
+            ]
+          },
+          "success": "ATTACK by giving a banished status.",
+          "extraFeats": [
+            "Ward a possessed person or area against this type of conjuration, for now.",
+            "Keep the conjuration focused on you.",
+            "Momentarily bind the target from using a specific ability.",
+            "Perform the banishment without being noticed.",
+            "Control the destination of the banished conjuration.",
+            "Don't let up and keep the spotlight to continue the banishment."
+          ],
+          "consequences": [
+            "The banishing is interrupted (reduce banished that was previously gained, only when there was no Success).",
+            "The conjuration retaliates (wounded, terrified, cursed, or other Consequences from its Challenge Profile).",
+            "The conjuration grows in power (empowered) or gains additional powers (gain tags).",
+            "Your powers are exhausted or proven ineffective (scratch a tag or Blocked).",
+            "You lose your concentration (exhausted or drained).",
+            "You attract the attention of the conjuration, the source of its summoning or animating, or other creatures like it (Exposure or New Challenge).",
+            "The conjuration vanishes but its presence remains (gains hidden)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Commanding or Binding a Conjured Creature",
+          "actionExamples": [
+            "Cast a binding spell",
+            "Draw a circle of binding",
+            "Offer tribute",
+            "Speak with authority.",
+            "Outsmart in conversation",
+            "Send mental commands",
+            "Attune to its resonance",
+            "Speak its true name",
+            "Appease a furious godling"
+          ],
+          "explanation": "You use your magical abilities or conversation skills to force or cajole a conjured creature into following your commands. Creatures you summon or create yourself are normally already under your control, unless that control is weakened or lost due to Consequences. The Narrator can decide to give the conjuration a bound Limit. When maxed, the creature comes fully under your control. The Narrator then gives you a story theme to represent the creature, if one does not already exist.\nSee also Animal Kinship and Handling (page 43), Deception (page 81), and Persuasion (page 84).",
+          "power": {
+            "positive": [
+              "force of spirit",
+              "appropriate magical skills and items.",
+              "negotiation skills",
+              "aligned goals",
+              "experience with this specific type of creature",
+              "magic suitable for binding this type of creature",
+              "qualities you share with the target or its origin",
+              "existing relationship with the target",
+              "offerings or sacrifices",
+              "appropriate authority",
+              "knowledge of spirit law"
+            ],
+            "negative": [
+              "the target's master's force of will or magical aptitude",
+              "your past antagonism with the target or its type",
+              "the target's recalcitrance or force of will.",
+              "distractions",
+              "your social quirks"
+            ]
+          },
+          "success": "QUICK You force or convince the target to do one thing within the scope of the scene.\nINFLUENCE with a compelling status such as bound, controlled, helpful, grudging-respect, or sympathetic. This is a helpful status for resisting any actions the conjuration takes in defiance of your wish.",
+          "extraFeats": [
+            "The target follows you around for a while longer, or performs one more task for you.",
+            "The target holds you in high esteem or is proactively helpful.",
+            "Keep the target focused on you.",
+            "Perform the command without being noticed.",
+            "Momentarily bind the target from using a specific ability.",
+            "Block someone else from attempting to take control, for now.",
+            "Don't let up and keep the spotlight to continue your influence."
+          ],
+          "consequences": [
+            "The target flees the scene (Blocked).",
+            "The target retaliates (wounded, terrified, cursed, or other Consequences from its Challenge Profile).",
+            "The target becomes harder to command (willful or angered) or you lose your hold on it (reduce bound, only if there was no Success).",
+            "You attract the attention of the target's summoner, its current master, or other creatures like it (Exposure or New Challenge)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Conjuring a Creature",
+          "actionExamples": [
+            "Enchant a carriage to move by itself.",
+            "Manifest an illusory animal",
+            "Call forth spirits in seance",
+            "Summon hellhounds",
+            "Animate the dead",
+            "Call upon the fey inhabiting the ancient glade"
+          ],
+          "explanation": "You use magic to summon, materialize, or animate a creature. The creature might be mindless or intelligent, and is usually under your control by default, or at the very least, favorable to you and your intentions.\nConsider Might if you summon more than one conjuration, a large one, or a powerful one.\nThis action creates an ally which remains in the scene and can then be called upon in various subsequent actions. If you summon a conjuration for a single task, such as attacking a foe or revealing secrets to you, see Using Magical Abilities (page 67).",
+          "power": {
+            "positive": [
+              "conjuration powers",
+              "being present at the location inhabited by the creature",
+              "appropriate items, implements, and offerings",
+              "a relevant place of power (a ritual chamber, ley line, etc)",
+              "a favorable time of day or date",
+              "experience with or knowledge of this type of creature and their desires"
+            ],
+            "negative": [
+              "wards against magical summoning.",
+              "magical dampening",
+              "setting or situation repellent to this type of creature",
+              "creature's reluctance or animosity, if relevant"
+            ]
+          },
+          "success": "QUICK You create a creature, and the Narrator decides on its story tags or theme.\nCREATE story tags or a story theme representing the creature and its abilities; the Narrator can add a negative story tag, as normal. For example, you might summon a laughing pixie with tags like small and elusive, magically contagious laughter, and cooperative. Successive actions can be taken to conjure additional creatures or to add attributes to existing ones.",
+          "extraFeats": [
+            "The creature remains here or remains subservient for longer.",
+            "Summon the creature in an advantageous position.",
+            "Summon the creature without being noticed.",
+            "Keep the spotlight to act immediately as the creature."
+          ],
+          "consequences": [
+            "You lose some or all control of the creature (conjuration gains unruly, defiant, hostile, fading etc.).",
+            "The creature shows typical yet unwanted characteristics or flaws (add negative tags).",
+            "The creature can't quite do what you wanted it to (slightly alter story tags created).",
+            "Additional effects or creatures are conjured, not under your control (Complication).",
+            "The creature's presence in the scene is fleeting (lasts for only a turn or two) (Yes, but...)."
+          ],
+          "might": null
+        }
+      ]
+    },
+    {
       "section": "General Considerations",
       "page": 8,
       "intro": "Always-Relevant Tags and Statuses\nAlmost every action requires you to pay attention to what you're doing and be able to perceive your surroundings. For this reason, tags and statuses like darkness, heavy fog, loud crowd, distracted, pained, etc. can negatively affect most actions. Likewise, stamina statuses like tired, winded, or exhausted or mental statuses like light-headed or distressed can affect any action that requires effort or focus.\n\nCamp & Sojourn Actions\nThe following repeats the list of suggested camp actions (Camping & Sojourns, Corebook Vol. I, page 179), referring to their Action Grimoire counterparts.\n\nTime Matters\nDifferent actions take different amounts of time to perform: a swordstroke is quick, while climbing a hill can take minutes if not hours.\nAs the Heroes take actions in a scene, time marches ever forward, and its passing can trigger events in the Heroes' lives. For example, searching the site of an old temple could take a good while, and as the Heroes are searching, the devils from the basements below may notice their presence, or the rogue sorcerer who searches the same ruin for an ancient relic could get closer to completing their nefarious goal.\nWhen Establishing or re-Establishing a scene, the Narrator can always make Threats related to the passage of time, such as, \"You've spent a lot of time climbing the side of the mountain; the sun is going down ominously.\" Later, they can deliver Consequences such as time-passes on a progress Limit (Corebook Vol. I, page 169) such as coming-storm, enchantment-fading, or speak-now-or-forever-hold-your-peace.\nThe Narrator can also explain the introduction of a Complication as arising due to an action taking longer than intended. For example, a Hero who is conducting a forbidden ritual at a graveyard could find themselves blackmailed by a stray vagabond who's noticed their unusual project and wants something in return for their silence.\nAn action's manner of performance can also affect its timing: an exceptionally well-performed negotiation could be completed quicker than usual, while a botched negotiation could burn precious daylight, often for naught. The Narrator can allow the use of an extra feat to guarantee a speedy execution.",
