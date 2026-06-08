@@ -5,7 +5,7 @@
 //   • Updates do NOT auto-activate; the page may post SKIP_WAITING when ready.
 // Bump CACHE_VERSION on any deploy so old caches are garbage-collected on activate.
 
-const CACHE_VERSION = 'litm-v26';
+const CACHE_VERSION = 'litm-v27';
 const PRECACHE = [
   './',
   './index.html',
