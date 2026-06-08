@@ -225,6 +225,12 @@ details.ag-sec[open] > summary::before { content: "▾ "; }
 .ag-spend { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 4px; }
 .ag-fx { display: flex; flex-wrap: wrap; gap: 5px; margin: 2px 0; }
 .ag-fx button.modchip { cursor: pointer; }
+.might-help { margin: 8px 0 4px; border: 1px solid var(--border); border-radius: 10px; padding: 2px 12px 10px; background: var(--bg-deep); }
+.might-help > summary { padding: 9px 0; font-weight: 700; font-size: 13px; color: var(--teal); cursor: pointer; list-style: none; }
+.might-help > summary::-webkit-details-marker { display: none; }
+.mh-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+.mh-lbl { font-size: 12px; color: var(--ink-soft); flex: 0 0 78px; }
+.seg.sm button { padding: 6px 8px; font-size: 12px; }
 .ref-sec { border: 1px solid var(--border); border-radius: 10px; margin: 8px 0; padding: 2px 12px; background: var(--bg-deep); }
 .ref-sec > h3 { cursor: pointer; user-select: none; margin: 10px 0; }
 .ref-sec > h3::before { content: "▾ "; color: var(--teal); font-size: 12px; }
@@ -423,6 +429,12 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="addbtn" onclick="addStatus()">＋ Add status</button>
   </div>
   <div class="card">
+    <h2>🎯 Progress &amp; Limits</h2>
+    <p class="hint">Track a multi-step goal toward a <b>Limit</b> — a project's <i>making-progress</i>, a chase's <i>catch/outrun</i>, unlocking a door, a breakthrough. Tap a box to set progress; fill to the Limit to complete it. The roller's <b>Advance</b> effect fills these.</p>
+    <div id="progressList"></div>
+    <button class="addbtn" onclick="addProgress()">＋ Add progress track</button>
+  </div>
+  <div class="card">
     <h2>🟡 Scene Story Tags</h2>
     <p class="hint">Temporary tags in the scene/environment (vantage point, heavy rain, makeshift spear). Toggle helpful/hindering; scratch to remove.</p>
     <div class="taglist" id="sceneList"></div>
@@ -449,6 +461,14 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
       <button data-m="3">Favored +3</button>
       <button data-m="6">Extr. Favored +6</button>
     </div>
+    <details class="might-help"><summary>⚖️ Might helper — set it for me</summary>
+      <p class="hint" style="margin:6px 0">Pick the <b>Might the task demands</b> and the <b>Might you bring</b> (your relevant theme); the app sets the modifier above.</p>
+      <div class="mh-row"><span class="mh-lbl">Task needs</span><div class="seg sm" id="mhTask">
+        <button data-t="1">Origin</button><button data-t="2">Adventure</button><button data-t="3">Greatness</button></div></div>
+      <div class="mh-row"><span class="mh-lbl">You bring</span><div class="seg sm" id="mhYou">
+        <button data-t="1">Origin</button><button data-t="2">Adventure</button><button data-t="3">Greatness</button></div></div>
+      <p class="hint" id="mhOut" style="margin:6px 0 0">Pick both to compute.</p>
+    </details>
     <h3>Situational (other tags / environment)</h3>
     <div class="stepper"><button onclick="adjSit(-1)">−</button><b id="sitVal" style="font-size:20px;min-width:40px;text-align:center">0</b><button onclick="adjSit(1)">+</button></div>
   </div>
@@ -706,6 +726,7 @@ function blankHero() {
       weak:[{id:uid(),text:''}], quest:'', improve:0, abandon:0, milestone:0, special:'', specials:[] },
     relationships: [],
     statuses: [],
+    progress: [],
     scene: [],
     sceneBoard: { step: -1, stakes: '', threats: '' }
   };
@@ -930,6 +951,7 @@ function useAGAction(entry){
     help: (((entry.power||{}).positive)||[]).map(t=>({text:t, on:false})),
     hind: (((entry.power||{}).negative)||[]).map(t=>({text:t, on:false})),
     success: entry.success||'',
+    might: entry.might||'',
     extraFeats: (entry.extraFeats||[]).slice(),
     consequences: (entry.consequences||[]).slice()
   };
@@ -947,6 +969,7 @@ function renderAgRoll(){
     +'<p class="hint" style="margin:4px 0 6px">From the Action Grimoire — tick the suggestions that apply; each adds to your Power alongside your tags.</p>';
   if(agAction.help.length){ h+='<h4 style="margin:6px 0 3px">Could help (+1 each)</h4><div>'+agAction.help.map((x,i)=>chip(x,'help',i)).join('')+'</div>'; }
   if(agAction.hind.length){ h+='<h4 style="margin:8px 0 3px">Could hinder (−1 each)</h4><div>'+agAction.hind.map((x,i)=>chip(x,'hind',i)).join('')+'</div>'; }
+  if(agAction.might) h+='<p class="hint" style="margin:8px 0 0">⚖️ <b>Might:</b> '+esc(agAction.might)+' <i>(use the Might helper below).</i></p>';
   h+='</div>';
   w.innerHTML=h;
   $('agClear').onclick=clearAGAction;
@@ -1011,6 +1034,7 @@ function renderAll(){
   renderFellowship();
   renderRel();
   renderStatuses();
+  renderProgress();
   renderScene();
   renderSceneBoard();
   renderRollHist();
@@ -1242,6 +1266,34 @@ function toggleStatusBox(st,t){
   else { st.boxes[t-1]=true; }
 }
 function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false],limit:5}); renderStatuses(); save(); }
+
+// ----- Progress / Limit tracks (gap #4) -----
+function renderProgress(){
+  const w=$('progressList'); if(!w) return; w.innerHTML='';
+  if(!S.progress) S.progress=[];
+  if(!S.progress.length){ w.innerHTML='<p class="muted">No progress tracks yet.</p>'; }
+  S.progress.forEach((pr,i)=>{
+    const max=Math.min(10,Math.max(2,pr.max||4)); const cur=Math.min(max,Math.max(0,pr.cur||0));
+    const card=document.createElement('div'); card.className='status-card';
+    const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='goal (e.g. making-progress, catch)'; nm.value=pr.name||''; nm.oninput=()=>{ pr.name=nm.value; save(); };
+    const boxes=document.createElement('div'); boxes.className='boxes';
+    for(let t=1;t<=max;t++){ const b=document.createElement('button'); b.className='sbox'+(t<=cur?' on':'')+(t===max?' lim':'');
+      b.textContent=t; b.title=(t===max?'Limit — fills the goal':''); b.onclick=()=>{ pr.cur=(cur===t? t-1 : t); renderProgress(); save(); }; boxes.appendChild(b); }
+    const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none'; del.onclick=()=>{ S.progress.splice(i,1); renderProgress(); save(); };
+    card.appendChild(nm); card.appendChild(boxes); card.appendChild(del); w.appendChild(card);
+    const meta=document.createElement('div'); meta.className='status-meta';
+    const lbl=document.createElement('span'); lbl.textContent='Limit'; const sel=document.createElement('select');
+    for(let L=2;L<=10;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===max) o.selected=true; sel.appendChild(o); }
+    sel.onchange=()=>{ pr.max=+sel.value; if((pr.cur||0)>pr.max) pr.cur=pr.max; renderProgress(); save(); };
+    meta.appendChild(lbl); meta.appendChild(sel);
+    if(cur>=max){ const done=document.createElement('span'); done.className='lim-warn'; done.style.color='var(--teal)'; done.textContent='✓ reached its Limit'+(pr.goal?' — '+pr.goal:''); meta.appendChild(done); }
+    w.appendChild(meta);
+    const g=document.createElement('input'); g.type='text'; g.className='nm'; g.placeholder='what happens when filled (optional)'; g.value=pr.goal||''; g.style.cssText='margin:0 0 10px;background:var(--bg-deep)'; g.oninput=()=>{ pr.goal=g.value; save(); };
+    w.appendChild(g);
+  });
+}
+function addProgress(){ if(!S.progress) S.progress=[]; S.progress.push({id:uid(),name:'',goal:'',cur:0,max:4}); renderProgress(); save(); }
+function advanceProgress(idx,amt){ const pr=S.progress[idx]; if(!pr) return; const max=Math.min(10,Math.max(2,pr.max||4)); pr.cur=Math.min(max,Math.max(0,(pr.cur||0)+amt)); renderProgress(); save(); }
 
 function renderScene(){
   const w=$('sceneList'); w.innerHTML='';
@@ -1544,6 +1596,9 @@ function availableTags(){
 
 function renderRoller(){
   renderAgRoll();
+  // sync might segment + sit (always, even with no tags)
+  document.querySelectorAll('#mightSeg button').forEach(b=>b.classList.toggle('on', +b.dataset.m===might));
+  if($('sitVal')) $('sitVal').textContent=(sit>0?'+':'')+sit;
   const w=$('rollTags'); w.innerHTML='';
   const tags=availableTags();
   if(!tags.length){ w.innerHTML='<p class="muted">Add tags on the Hero tab and they\'ll appear here.</p>'; computePower(); return; }
@@ -1567,9 +1622,6 @@ function renderRoller(){
     tagDiv.appendChild(chip);
   });
   w.appendChild(tagDiv);
-  // sync might segment + sit
-  document.querySelectorAll('#mightSeg button').forEach(b=>b.classList.toggle('on', +b.dataset.m===might));
-  $('sitVal').textContent=(sit>0?'+':'')+sit;
   computePower();
 }
 
@@ -1606,9 +1658,28 @@ function computePower(){
 }
 
 document.querySelectorAll('#mightSeg button').forEach(b=>{
-  b.onclick=()=>{ might=+b.dataset.m; renderRoller(); };
+  b.onclick=()=>{ might=+b.dataset.m; mightCmp={task:null,you:null}; computeMightCmp(); renderRoller(); };   // manual pick clears the helper
 });
 function adjSit(d){ sit=Math.max(-20,Math.min(20,sit+d)); renderRoller(); }
+
+// ----- Might helper (gap #2): compare task Might vs the Might you bring → set the dial -----
+let mightCmp={task:null, you:null};
+const MIGHT_NAMES={1:'Origin',2:'Adventure',3:'Greatness'};
+function computeMightCmp(){
+  const t=mightCmp.task, y=mightCmp.you;
+  document.querySelectorAll('#mhTask button').forEach(b=>b.classList.toggle('on',+b.dataset.t===t));
+  document.querySelectorAll('#mhYou button').forEach(b=>b.classList.toggle('on',+b.dataset.t===y));
+  const out=$('mhOut'); if(!out) return;
+  if(!t||!y){ out.textContent='Pick both to compute.'; return; }
+  const m=Math.max(-6,Math.min(6,(y-t)*3));
+  might=m;
+  const word = m>0?(m===6?'Extremely Favored':'Favored') : m<0?(m===-6?'Extremely Imperiled':'Imperiled') : 'Matched';
+  out.innerHTML='→ <b>'+word+' '+(m>0?'+':'')+m+'</b> · acting '+(m>0?'below':m<0?'above':'at')+' your Might. (Set above.)';
+  document.querySelectorAll('#mightSeg button').forEach(b=>b.classList.toggle('on',+b.dataset.m===might));
+  computePower();
+}
+document.querySelectorAll('#mhTask button').forEach(b=>{ b.onclick=()=>{ mightCmp.task=+b.dataset.t; computeMightCmp(); }; });
+document.querySelectorAll('#mhYou button').forEach(b=>{ b.onclick=()=>{ mightCmp.you=+b.dataset.t; computeMightCmp(); }; });
 
 function rollDice(){
   const power=computePower();
@@ -1709,7 +1780,7 @@ function reduceStatusByAmt(st,amt){
 // ----- Parse a Grimoire action's Success text into one-tap spend effects (gap #3) -----
 const AG_FX={
   CREATE:{type:'bag', label:'＋ Create tag'}, BESTOW:{type:'bag', label:'＋ Give tag'},
-  ENHANCE:{type:'status', label:'▲ Enhance (status)'}, ADVANCE:{type:'status', label:'▲ Advance (status)'},
+  ENHANCE:{type:'status', label:'▲ Enhance (status)'}, ADVANCE:{type:'progress', label:'▲ Advance (progress)'},
   RESTORE:{type:'reduce', label:'▼ Restore (reduce status)'},
   DISRUPT:{type:'other', label:'◆ Disrupt (target status)'}, INFLUENCE:{type:'other', label:'◆ Influence (target status)'},
   ATTACK:{type:'other', label:'◆ Attack (target status)'}, WEAKEN:{type:'other', label:'◆ Weaken (target)'},
@@ -1738,6 +1809,7 @@ function seedEffect(e){
   if(e.type==='bag') spend._form={type:'bag', text:s};
   else if(e.type==='status') spend._form={type:'status', tier:1, name:s};
   else if(e.type==='reduce') spend._form={type:'reduce', amt:1};
+  else if(e.type==='progress') spend._form={type:'progress', sel:(S.progress&&S.progress.length?0:'new'), amt:1, name:s};
   else spend._form={type:'other', amt:1, text:e.effect+(s?': '+s:'')};
   spend._form._sugg=e.sugg||[];
   renderSpend();
@@ -1762,7 +1834,7 @@ function renderSpend(){
   h+='<div class="powerbig" style="padding:0"><div class="n" style="font-size:30px">'+r+'</div><div class="l">Power left</div></div>';
   h+='<div class="muted" style="flex:1">'+(spend.reaction?'Spend to lessen the blow':'Spend on Effects')+'</div>';
   h+='<button class="btn ghost sm" onclick="closeSpend()">Done</button></div>';
-  const E=[['status','＋ Status'],['reduce','− Status'],['bag','＋ Backpack'],['recover','Recover'],['detail','Detail · 1'],['feat','Feat · 1'],['other','Other…']];
+  const E=[['status','＋ Status'],['reduce','− Status'],['bag','＋ Backpack'],['recover','Recover'],['progress','▲ Progress'],['detail','Detail · 1'],['feat','Feat · 1'],['other','Other…']];
   h+='<div class="seg">'+E.map(e=>'<button onclick="spForm(\''+e[0]+'\')"'+(spend._form&&spend._form.type===e[0]?' class="on"':'')+'>'+e[1]+'</button>').join('')+'</div>';
   h+='<div id="spForm"></div>';
   let fx=[];
@@ -1809,6 +1881,24 @@ function drawSpForm(){
     $('sp_am').onclick=()=>{ f.amt=Math.max(1,f.amt-1); drawSpForm(); };
     $('sp_ap').onclick=()=>{ f.amt=Math.min(r,f.amt+1); drawSpForm(); };
     $('sp_apply').onclick=()=>{ const st=S.statuses[f.sel||0]; if(st&&doSpend(f.amt,'reduced '+(st.name||'status')+' by '+f.amt,()=>reduceStatusByAmt(st,f.amt))){ spend._form=null; renderSpend(); } };
+  } else if(f.type==='progress'){
+    const list=S.progress||[];
+    if(f.sel===undefined) f.sel = list.length ? 0 : 'new';
+    const isNew = (f.sel==='new' || !list.length);
+    const opts=list.map((pr,i)=>'<option value="'+i+'"'+(f.sel===i?' selected':'')+'>'+esc(pr.name||'(unnamed)')+' '+(pr.cur||0)+'/'+Math.min(10,Math.max(2,pr.max||4))+'</option>').join('')+'<option value="new"'+(f.sel==='new'?' selected':'')+'>＋ new track…</option>';
+    w.innerHTML='<div class="row" style="margin-top:10px;align-items:flex-end"><label class="fld" style="flex:2;margin:0"><span>Advance a progress track</span><select id="sp_pg">'+opts+'</select></label>'
+      +'<div><span style="font-size:11px;color:var(--ink-soft)">By</span><div class="stepper"><button id="sp_am">−</button><b style="min-width:22px;text-align:center">'+f.amt+'</b><button id="sp_ap">+</button></div></div></div>'
+      +(isNew?'<label class="fld" style="margin-top:8px"><span>New track name</span><input id="sp_pgn" placeholder="e.g. making-progress" value="'+esc(f.name||'')+'"></label>':'')
+      +'<button class="btn sm" id="sp_apply" style="margin-top:8px">Apply · −'+f.amt+' Power</button>';
+    $('sp_pg').onchange=e=>{ f.sel = e.target.value==='new' ? 'new' : +e.target.value; drawSpForm(); };
+    if($('sp_pgn')) $('sp_pgn').oninput=e=>f.name=e.target.value;
+    $('sp_am').onclick=()=>{ f.amt=Math.max(1,f.amt-1); drawSpForm(); };
+    $('sp_ap').onclick=()=>{ f.amt=Math.min(Math.max(1,r),f.amt+1); drawSpForm(); };
+    $('sp_apply').onclick=()=>{ const amt=f.amt; let idx;
+      if(f.sel==='new' || !list.length){ const nm=(f.name||'').trim()||'making-progress'; S.progress=S.progress||[]; S.progress.push({id:uid(),name:nm,goal:'',cur:0,max:4}); idx=S.progress.length-1; }
+      else idx=(typeof f.sel==='number'?f.sel:0);
+      const pr=S.progress[idx];
+      if(doSpend(amt,'advanced '+((pr&&pr.name)||'progress')+' +'+amt,()=>advanceProgress(idx,amt))){ spend._form=null; renderSpend(); } };
   } else if(f.type==='bag'){
     const cost=r===1?1:2;
     w.innerHTML='<label class="fld" style="margin-top:10px"><span>Add a tag to your backpack'+(cost===1?' (single-use)':'')+'</span><input id="sp_bt" placeholder="e.g. rope and hook" value="'+esc(f.text||'')+'"></label>'
