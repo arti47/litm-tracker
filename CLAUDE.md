@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,337 lines / ~474 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,387 lines / ~477 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v29` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v30` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -337,6 +337,13 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
   - **Recover** — un-scratch one of your scratched tags. Cost 2.
   - **Detail · 1**, **Feat · 1**, **Other…** (give a foe a status, etc. — logged, deducts a
     chosen cost). A running "Spent:" log is shown; "Done" closes the panel.
+  - **Grimoire-seeded suggestions (gap #3):** when an action is loaded (Phase B), the panel
+    parses the action's **Success** text into one-tap effect buttons (`parseSuccessEffects`/
+    `AG_FX`/`seedEffect`): each effect keyword maps to the right spend form pre-filled with a
+    suggested tag/status name (CREATE/BESTOW→Backpack, ENHANCE/ADVANCE→Status, RESTORE→Reduce,
+    DISRUPT/INFLUENCE/ATTACK/WEAKEN/SET BACK→Other/target, DISCOVER→instant −1). The form shows
+    the remaining suggestions as quick-pick chips (`spSuggChips`). The full Success text stays
+    available under a "Full Success text" sub-accordion. Extra Feats remain one-tap −1 buttons.
   - Helpers: `giveStatusTier`, `reduceStatusByAmt`, `scratchTagById`/`recoverTagById`/
     `scratchedTags`, `openSpend`/`doSpend`/`renderSpend`/`drawSpForm`. Form inputs persist
     across stepper re-renders (values stored on the form-state object).
