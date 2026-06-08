@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,550 lines / ~492 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,605 lines / ~497 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v33` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v34` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -426,6 +426,14 @@ Phase B — the action→roll bridge.)*
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
 - **Export / import** a hero as JSON.
+- **Share / sync a Fellowship** — ☰ menu **Share Fellowship** writes a `{_litm:'fellowship',
+  fellowship, relationships}` JSON file; **Import / sync Fellowship** reads one and (after a
+  confirm) replaces this hero's Fellowship card + relationship table with the shared copy.
+  `exportFellowship`/`importFellowship`, `#fellowFile`.
+- **Undo / redo + autosave indicator** — ↶ / ↷ header buttons. `save()` snapshots `{roster,
+  activeId}` (coalescing bursts within 1200 ms; stack capped at 40) into `_undo`; `undo`/`redo`
+  swap snapshots via `_restore` (writes localStorage directly + `renderAll`). Hero-switch resets
+  the baseline so navigation isn't an undo step. A header **save-dot** flashes "Saving…" → "✓ Saved".
 - **Light/dark** theme (manual + auto), iOS safe-area aware, installable PWA, fully offline.
 - **PWA update banner** — when the service worker installs a newer version, a bottom banner
   ("New version ready — tap to update") appears. **Update** posts `SKIP_WAITING` to the waiting
@@ -570,13 +578,16 @@ app rather than bloating this one (cf. the TOR2E Loremaster companion).*
       Crossroads* (multiple evolving **Fronts**) campaign trackers.
 
 ### Cross-cutting / tech debt
-- [ ] **Share / sync a Fellowship** — the Fellowship theme + relationship tags are shared
-      across players; today each hero stores its own copy. Add export/merge of a Fellowship.
+- [x] **Share / sync a Fellowship** (2026-06-08) — ☰ **Share Fellowship** exports a
+      `{_litm:'fellowship', fellowship, relationships}` JSON file; **Import / sync Fellowship**
+      replaces this hero's Fellowship card + relationship table with it (`exportFellowship`/
+      `importFellowship`).
 - [x] PWA **update banner** ("New version ready — tap to update") posting `SKIP_WAITING` —
       done (2026-06-06). Reloads once on `controllerchange`; first install stays silent.
 - [x] Per-status **custom Limit** (Challenges can have Limits 1–6; Heroes are always 5) —
       done (2026-06-06). `limit` field + selector; `statusLimit()` defaults legacy/unset to 5.
-- [ ] Undo/redo; autosave indicator.
+- [x] **Undo/redo + autosave indicator** (2026-06-08) — ↶/↷ header buttons over `{roster,activeId}`
+      snapshots (coalesced, cap 40); a header save-dot flashes "Saving…" → "✓ Saved".
 
 ---
 

@@ -90,6 +90,10 @@ header {
 .hdr-btn { background: rgba(255,255,255,0.16); border: none; color: #f3f7f2;
   width: 38px; height: 38px; border-radius: 9px; font-size: 18px; flex: none; }
 .hdr-btn:active { background: rgba(255,255,255,0.3); }
+.hdr-btn:disabled { opacity: .35; }
+.save-dot { font-size: 11px; color: #f3f7f2; opacity: 0; transition: opacity .2s; white-space: nowrap; margin-right: 2px; }
+.save-dot.show { opacity: .85; }
+.save-dot.saving { opacity: .6; }
 nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
 nav::-webkit-scrollbar { display: none; }
 .tab { background: transparent; border: none; color: #cfe1db; padding: 9px 13px;
@@ -349,6 +353,9 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 <header>
   <div class="hdr-top">
     <div class="hdr-title" id="hdrTitle">Legend in the Mist</div>
+    <span class="save-dot" id="saveDot"></span>
+    <button class="hdr-btn" id="undoBtn" onclick="undo()" title="Undo" disabled>↶</button>
+    <button class="hdr-btn" id="redoBtn" onclick="redo()" title="Redo" disabled>↷</button>
     <button class="hdr-btn" onclick="openRoster()" title="Heroes">👥</button>
     <button class="hdr-btn" onclick="openMenu()" title="Menu">☰</button>
   </div>
@@ -619,9 +626,12 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="menu-item" onclick="openAG()"><span class="em">📜</span> Action Grimoire</button>
     <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
+    <button class="menu-item" onclick="exportFellowship()"><span class="em">🤝</span> Share Fellowship (JSON file)</button>
+    <button class="menu-item" onclick="document.getElementById('fellowFile').click()"><span class="em">🔗</span> Import / sync Fellowship</button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
     <button class="menu-item danger-text" onclick="deleteHero()"><span class="em">🗑️</span> Delete this hero</button>
     <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
+    <input type="file" id="fellowFile" accept="application/json,.json" style="display:none" onchange="importFellowship(event)">
     <p class="hint" style="text-align:center;margin-top:10px">Legend in the Mist — Hero Tracker · offline PWA<br>Rules © Son of Oak Game Studio. This is an unofficial fan tool.</p>
   </div>
 </div>
@@ -779,11 +789,33 @@ function loadAll() {
   try { rolls = JSON.parse(localStorage.getItem(LS_ROLLS)) || []; } catch(e){ rolls = []; }
 }
 let saveTimer = null;
+// ----- Undo/redo + autosave indicator -----
+let _undo=[], _redo=[], _lastSnap=null, _lastUndoT=0;
+function _snap(){ return JSON.stringify({r:roster, a:activeId}); }
+function _pushUndoFromSave(){
+  const cur=_snap();
+  if(_lastSnap===null){ _lastSnap=cur; return; }
+  if(cur===_lastSnap) return;
+  const now=Date.now();
+  if(!(now-_lastUndoT<1200 && _undo.length)){ _undo.push(_lastSnap); if(_undo.length>40) _undo.shift(); _redo=[]; }
+  _lastUndoT=now; _lastSnap=cur; updateUndoUI();
+}
+function updateUndoUI(){ const u=$('undoBtn'), r=$('redoBtn'); if(u) u.disabled=!_undo.length; if(r) r.disabled=!_redo.length; }
+function _restore(json){ const o=JSON.parse(json); roster=o.r; activeId=o.a; S=roster.find(h=>h.id===activeId)||roster[0]; activeId=S.id;
+  localStorage.setItem(LS_ROSTER, JSON.stringify(roster)); localStorage.setItem(LS_ACTIVE, activeId); _lastSnap=_snap(); renderAll(); updateUndoUI(); }
+function undo(){ if(!_undo.length) return; _redo.push(_snap()); _restore(_undo.pop()); toast('Undid'); }
+function redo(){ if(!_redo.length) return; _undo.push(_snap()); _restore(_redo.pop()); toast('Redid'); }
+let _savedT=null;
+function flashSaved(){ const d=$('saveDot'); if(!d) return; d.textContent='✓ Saved'; d.classList.add('show'); clearTimeout(_savedT); _savedT=setTimeout(()=>d.classList.remove('show'),1100); }
 function save() {
+  const d=$('saveDot'); if(d){ d.textContent='Saving…'; d.classList.add('show','saving'); }
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
+    _pushUndoFromSave();
     localStorage.setItem(LS_ROSTER, JSON.stringify(roster));
     localStorage.setItem(LS_ACTIVE, activeId);
+    if(d) d.classList.remove('saving');
+    flashSaved();
   }, 250);
 }
 function saveRolls(){ localStorage.setItem(LS_ROLLS, JSON.stringify(rolls.slice(0,40))); }
@@ -2046,7 +2078,7 @@ function renderRoster(){
     w.appendChild(row);
   });
 }
-function switchHero(id){ activeId=id; S=roster.find(h=>h.id===id); helpTags=[]; agAction=null; save(); renderAll(); closeOverlays(); showTab('hero'); toast('Switched to '+(S.heroName||'hero')); }
+function switchHero(id){ activeId=id; S=roster.find(h=>h.id===id); helpTags=[]; agAction=null; _lastSnap=_snap(); save(); renderAll(); closeOverlays(); showTab('hero'); toast('Switched to '+(S.heroName||'hero')); }
 function newHero(){ const h=blankHero(); roster.push(h); switchHero(h.id); toast('New hero created'); }
 function delHeroById(id){
   roster=roster.filter(h=>h.id!==id);
@@ -2069,6 +2101,28 @@ function importJSON(ev){
   fr.onload=()=>{ try{
     const h=JSON.parse(fr.result); const b=blankHero(); for(const k in b) if(h[k]===undefined) h[k]=b[k];
     h.id=uid(); roster.push(h); switchHero(h.id); toast('Hero imported');
+  }catch(e){ alert('Could not read that file.'); } };
+  fr.readAsText(file); ev.target.value='';
+}
+// ----- Share / sync a Fellowship (the shared theme + relationship table) -----
+function exportFellowship(){
+  const data=JSON.stringify({_litm:'fellowship', fellowship:S.fellowship, relationships:S.relationships}, null, 2);
+  const blob=new Blob([data],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='fellowship-'+((S.fellowship&&S.fellowship.title)||'shared').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.json';
+  a.click(); URL.revokeObjectURL(a.href); closeOverlays();
+}
+function importFellowship(ev){
+  const file=ev.target.files[0]; if(!file) return;
+  const fr=new FileReader();
+  fr.onload=()=>{ try{
+    const o=JSON.parse(fr.result);
+    const fel=o.fellowship||(o._litm===undefined&&o.title!==undefined?o:null);
+    if(!fel){ alert('That doesn\'t look like a Fellowship file.'); return; }
+    if(!confirm('Sync this hero\'s Fellowship to the shared one? Replaces the Fellowship card'+(Array.isArray(o.relationships)?' and relationship table':'')+'.')) { ev.target.value=''; return; }
+    S.fellowship=fel; if(!Array.isArray(S.fellowship.specials)) S.fellowship.specials=[];
+    if(Array.isArray(o.relationships)) S.relationships=o.relationships;
+    save(); renderAll(); closeOverlays(); toast('Fellowship synced');
   }catch(e){ alert('Could not read that file.'); } };
   fr.readAsText(file); ev.target.value='';
 }
@@ -2096,6 +2150,7 @@ function toggleTheme(){
 applyTheme();
 loadAll();
 renderAll();
+_lastSnap=_snap(); updateUndoUI();
 
 
 
