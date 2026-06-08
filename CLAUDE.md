@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,223 lines / ~291 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,223 lines / ~318 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v20` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v21` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -377,9 +377,9 @@ browser also hosts the Core-Book's **worked examples** (`LITM_DATA.grimoire` via
 `grimoireExamplesHTML`, grouped by scenario) as a pinned "Core Rulebook — Worked Examples" block.
 Prose/reference sections (e.g. **Common Consequences**) carry an `intro` + grouped
 `lists` (heading + items) instead of action entries, rendered as bulleted lists. **Partial
-dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks** (11 entries) +
-**Common Consequences** (prose); filled in section by section (see Roadmap Phase 7). No new
-localStorage key.
+dataset** — currently **Crafting**, **Direct Attacks**, **Tactical Attacks** (20 entries) +
+**Common Consequences** and **General Considerations** (prose); filled in section by section (see
+Roadmap Phase 7). No new localStorage key.
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
@@ -501,11 +501,14 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
 - [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
       *(Blocked: needs the notebook's crossover source.)*
 - [ ] 🚧 **Action Grimoire supplement** browser (`#agOverlay`/`renderAG`) — the standalone book's
-      full action catalog, searchable. Infrastructure + **Crafting** + **Direct Attacks** +
-      **Tactical Attacks** shipped (2026-06-06); remaining ~16 leaf sections (Support/Movement/Defense,
-      Information Gathering, Thievery, Survival, Navigating Danger, Recovery & Healing, the Magic
-      sections, Commerce, Community, Influence & Intrigue, Fellowship) + the prose sections are
-      being extracted section-by-section from NotebookLM and appended to `_build/action-grimoire.json`.
+      full action catalog, searchable. Infrastructure + **Crafting**, **Direct Attacks**,
+      **Tactical Attacks** (20 entries) + the **Common Consequences** & **General Considerations**
+      prose sections shipped (2026-06-06, full PDF extraction via Gemini); remaining ~16 leaf
+      sections (Support/Movement/Defense, Information Gathering, Thievery, Survival, Navigating
+      Danger, Recovery & Healing, the Magic sections, Commerce, Community, Influence & Intrigue,
+      Fellowship) are being extracted and appended to `_build/action-grimoire.json`. **Phase B**
+      (action→roll bridge: tap-checklist suggestions, seeded spend, consequences) is queued for
+      once the catalog is more complete.
 
 ### Phase 8 — Narrator-adjacent (optional / separate companion)
 *Out of scope for a pure player app, but defined in the rules — consider a sibling Narrator

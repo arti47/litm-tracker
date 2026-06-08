@@ -4,39 +4,39 @@
     {
       "section": "Crafting",
       "page": 9,
-      "intro": null,
+      "intro": "Nearly everyone in a medieval fantasy setting\nhas handicraft skills and access to simple\ntools. Many Heroes enter the story as an\napprentice artisan of a particular craft, and\nnearly all carry implements, weapons, or armor that\nmust be maintained to function properly and that could\nbe improved by a master artisan.\n\nCommon Crafting\nTags & Statuses\n\nBREAKING EQUIPMENT\nTransports such as carts and boats and complex\nmachines, such as siege weapons and the mechanism\nof a windmill have a destroy Limit, on which they\ntake statuses representing structural damage (such as\ndamaged) that prevents them from being operated as\nintended. Maxing out this Limit means the object has\nbeen damaged beyond the point of operation.\nSimilarly, obstructions such as locked doors or\nbarricades have destroy Limits that must be maxed\nbefore they can be easily bypassed (unless you\nmanage to pick the lock, see Burglary on page 38).\n\nDISREPAIR\nRepeated use, travel, and deliberate sabotage can all\naffect gear such as weapons and armor, leaving them\nwith a loud squeaking, loose hilt, or leaning slightly\nto the left. If damage to a piece of gear prevents the\nuse of it altogether, such as a broken bow string or a\nsword without a handle, scratch its tag instead, and\nre-create it once the gear is fixed. See Maintaining\nand Repairing Equipment (page 13).\n\nSUPPLY ISSUES\nThe fuel, food, or ammunition supply of a Hero,\nthe Fellowship, a campsite or shelter, a community,\npack animal, transport, machine, or weapon is\nusually handled narratively. The Narrator can make\nThreats of supply running low (\"You've burned\nhalf your wood by now\") and use Consequences to\nannounce supplies have run out, which prohibits\nany further actions using that item (\"You're out of\narrows.\", Blocked). You can take action or spend\nPower on an extra feat in a related action (such as\nwhile foraging in the forest) to regain supply and\nremove the narrative restriction. You can also prevent\na supply Consequence for an action by using an extra\nfeat, representing using supply economically.\nSupply issues can also be tracked in a Detailed way,\nwith a status. This is recommended for traveling\ngroups as a whole. For example, the Fellowship\nmight have food and munitions issues and be\nrunning short-on-supplies, affecting their camp\nactions. Removing this status requires resupplying,\nsee Making a Purchase (page 72) and Living off\nthe Land (page 44).\nTags representing supplies can:\n• Inspire the Narrator to use supply-related Threats\n& Consequences more or less often\n• Affect resupply actions\nAffect actions that require ample supply to\nperform. For example, extra coal can help when\ncontinuously loading a blacksmith's furnace,\nand a feed bag with a hole could negatively affect\nprolonged ride.",
       "entries": [
         {
           "name": "Crafting and Tinkering",
           "actionExamples": [
             "Build from scratch",
-            "Cobble something together",
+            "Cobble something together.",
             "Concoct alchemical recipe",
             "Tinker with a mechanism",
-            "Artisan handiwork",
+            "Artisan handiwork.",
             "Tailor a garment",
             "Reforge from old materials",
-            "Hone to a razor’s edge",
+            "Hone to a razor's edge",
             "Make from whole cloth",
             "Construct from masterplans",
             "Artfully embellish",
             "Modify in the laboratory",
-            "Heat up the forge",
+            "Heat up the forge.",
             "Build a home",
             "Finely engrave",
-            "Tan a hide",
+            "Tan a hide.",
             "Sharpen a weapon"
           ],
-          "explanation": "You use your trained crafting abilities to create a useful piece of equipment: a weapon, a relic, a potion, a transport, etc. Alternatively, you work on an existing piece of gear to make it perform better than before. The action could reflect a quick, tinkered assembly while at camp using materials and tools at hand or a days-long project at your workshop. For complex or time-consuming projects, the Narrator can decide to set a complete Limit. When maxed out, you gain a story tag or a theme, as decided by the Narrator. Consider Might when working on an item that would be larger than a person or affect more than one person, or on a magical artifact, or to craft or improve many items. This action is often taken while camping or sojourning. See also the Crafting Journey, Corebook Vol. II, page 194. See also Crafting Magical Items (page 65). To sell your crafted items for coin, see Selling Goods (page 74).",
+          "explanation": "You use your trained crafting abilities to create a useful piece of equipment: a weapon, a relic, a potion, a transport, etc. Alternatively, you work on an existing piece of gear to make it perform better than before. The action could reflect a quick, tinkered assembly while at camp using materials and tools at hand or a days-long project at your workshop.\nFor complex or time-consuming projects, the Narrator can decide to set a complete Limit. When maxed out, you gain a story tag or a theme, as decided by the Narrator.\nConsider Might when working on an item that would be larger than a person or affect more than one person, or on a magical artifact, or to craft or improve many items.\nThis action is often taken while camping or sojourning. See also the Crafting Journey, Corebook Vol. II, page 194.\nSee also Crafting Magical Items (page 65). Tο sell your crafted items for coin, see Selling Goods (page 74).",
           "power": {
             "positive": [
               "appropriate crafting skills (e.g., weapon smithing, whittling, golem building)",
               "quality tools",
-              "workshop",
+              "workshop.",
               "special ingredients",
-              "quality materials and resources",
+              "quality materials and resources.",
               "innovative thinking",
-              "recipes, manuals, diagrams, and schematics",
+              "recipes, manuals, diagrams, and schematics.",
               "mentorship or direction from a master of the craft",
               "an apprentice or other assistant",
               "inspiration"
@@ -44,15 +44,15 @@
             "negative": [
               "distractions and stress",
               "scarcity or insufficient materials",
-              "damage to the improved item",
+              "damage to the improved item.",
               "poor quality tools",
               "inadequate workspace",
               "complexity of the recipe, floorplan, or diagram"
             ]
           },
-          "success": "CREATE a story tag for the item, or a theme representing the item and its abilities, such as engraved elm bow, makeshift lockpicks, hidden compartment, or bronze cuirass. If you create a theme, the Narrator can add a negative story tag. BESTOW existing equipment with tags representing new features, like adding honed edge or intimidating runes to your family sword, or wax sealing your boots to make them waterproof. If this creates a theme, the Narrator can add a negative story tag. ADVANCE an ongoing project with making-progress.",
+          "success": "CREATE a story tag for the item, or a theme representing the item and its abilities, such as engraved elm bow, makeshift lockpicks, hidden compartment, or bronze cuirass. If you create a theme, the Narrator can add a negative story tag.\nBESTOW existing equipment with tags representing new features, like adding honed edge or intimidating runes to your family sword, or wax sealing your boots to make them waterproof. If this creates a theme, the Narrator can add a negative story tag.\nADVANCE an ongoing project with making-progress.",
           "extraFeats": [
-            "Adjust the item’s size or shape.",
+            "Adjust the item's size or shape.",
             "Do it quickly or in secret.",
             "Conceal your alterations (the item does not appear to be changed).",
             "Use fewer materials.",
@@ -60,34 +60,88 @@
             "Make it in the style of a particular crafting guild or culture, or add your signature."
           ],
           "consequences": [
-            "» You waste time, break tools, or expend resources (scratch tags or short-on-coin).",
-            "» The item is faulty or flawed (add negative story tag).",
-            "» You have a work accident (scorched, wounded, bruised, cramps, painful hand, etc.).",
-            "» Your work attracts unwanted attention (Exposure).",
-            "» You activate a dangerous functionality in the artifact (Ill Tidings).",
-            "» You overwork yourself or your apprentices (exhausted, resentful, or scratch a tag)."
+            ">> You waste time, break tools, or expend resources (scratch tags or short-on-coin).",
+            ">> The item is faulty or flawed (add negative story tag).",
+            ">> You have a work accident (scorched, wounded, bruised, cramps, painful hand, etc.).",
+            ">>> Your work attracts unwanted attention (Exposure).",
+            ">>> You activate a dangerous functionality in the artifact (Ill Tidings).",
+            ">> You overwork yourself or your apprentices (exhausted, resentful, or scratch a tag)."
           ],
           "might": "Consider Might when working on an item that would be larger than a person or affect more than one person, or on a magical artifact, or to craft or improve many items."
         },
         {
+          "name": "Farming and Mining",
+          "actionExamples": [
+            "Grow a vegetable garden",
+            "Raise livestock.",
+            "Harvest an orchard",
+            "Build a pen",
+            "Milk the cows",
+            "Grow a shallow-water barnacle farm",
+            "Sow and reap.",
+            "Dig a mine",
+            "Prospect a river rich in ore",
+            "Excavate precious fossils"
+          ],
+          "explanation": "You build or operate an endeavor with the intention to harvest some commodity such as cotton, silver, or produce. This could be a specific day-to-day action, one of many needed for the upkeep of the operation, or an entire season of production captured in a single roll, especially if you are sojourning.\nTo process your bounty into useful items, see Crafting and Tinkering (page 11). To trade it for coin, see Selling Goods (page 74). For cooking hearty meals with your bounty, see Invigoration (page 51). If your farm involves livestock, see also Animal Kinship and Handling (page 43).\nConsider Might if you are farming or mining on a large scale or in extreme conditions.",
+          "power": {
+            "positive": [
+              "appropriate farming or mining skills",
+              "good tools",
+              "favorable location, soil, and weather",
+              "guidance from a manual or a mentor",
+              "additional laborers.",
+              "knowledge of the land",
+              "farmer's almanac"
+            ],
+            "negative": [
+              "scarcity of needed resources such as water and nutrients",
+              "inclement weather conditions.",
+              "infertile land",
+              "local trouble (e.g. wild animals)",
+              "poor tools.",
+              "insufficient or troublesome laborers"
+            ]
+          },
+          "success": "QUICK You've completed the task at hand so production can continue.\nCREATE a story tag for the produce or commodity you have generated such as a pail of milk, gold ore, or bushel of silk bulbs.",
+          "extraFeats": [
+            "Finish the work with some time to spare (keep the spotlight).",
+            "Avoid exhausting yourself or your laborers.",
+            "Avoid breaking tools or wasting supplies.",
+            "Complete your work in peace, without anyone bothering you.",
+            "Produce something neat as a by-product.",
+            "Gain the appreciation of your community or neighbors."
+          ],
+          "consequences": [
+            ">> You waste time, break tools, or expend resources (scratch tags or short-on-coin).",
+            ">> The commodity is of poor quality or less than expected (add negative story tag).",
+            ">>> You have a work accident (wounded, bruised, cramps, painful hand, etc.).",
+            ">>> Someone covets your farm or mine (Exposure).",
+            ">>> A new problem crops up and threatens your work (Complication).",
+            ">>> Your farm or mine create problems for nearby dwellers (New Challenge).",
+            ">>> You overwork yourself or your laborers (exhausted, resentful, or scratch a tag)."
+          ],
+          "might": "Consider Might if you are farming or mining on a large scale or in extreme conditions."
+        },
+        {
           "name": "Harvesting Ingredients",
           "actionExamples": [
-            "Find a specific herb, mushroom, moss, etc.",
+            "Find a specific herb, mushroom, moss, etc..",
             "Dissect a monster to obtain a specific organ, gland, or humor",
             "Collect a specimen",
-            "Gather faerie dust on Midsummer’s Eve",
+            "Gather faerie dust on Midsummer's Eve",
             "Milk a Strix",
             "Pick a mind for a specific memory",
             "Extract a soul",
             "Loot a boobytrapped chest, or body"
           ],
-          "explanation": "You obtain a rare ingredient or component through a skillful process of location, identification, and collection. Consider Might if the process requires extraordinary knowledge or ability.",
+          "explanation": "You obtain a rare ingredient or component through a skillful process of location, identification, and collection.\nConsider Might if the process requires extraordinary knowledge or ability.",
           "power": {
             "positive": [
               "appropriate skill such as foraging, chirurgy, or animal husbandry",
               "appropriate lore such as botany or monster lore",
               "steady hand",
-              "keen senses",
+              "keen senses.",
               "specialized tools",
               "suitable workspace",
               "the target of harvesting (glade, carcass, etc.)",
@@ -95,47 +149,58 @@
             ],
             "negative": [
               "insufficient time or room",
-              "distractions and nervousness",
-              "incomplete training or knowledge",
+              "distractions and nervousness.",
+              "incomplete training or knowledge.",
               "poor tools or workspace",
               "poor condition of the target",
               "obstructed senses",
               "natural or unnatural defenses of the target"
             ]
           },
-          "success": "QUICK You successfully obtain the ingredient. CREATE a story tag for the ingredient you collected such as a Rime Thistle extract, cockatrice venom, or a beating heart.",
+          "success": "QUICK You successfully obtain the ingredient.\nCREATE a story tag for the ingredient you collected such as a Rime Thistle extract, cockatrice venom, or a beating heart.",
           "extraFeats": [
             "Leave the target undisturbed and without a trace.",
             "Harvest discreetly (no one knows you harvested).",
             "Extract an ingredient of very fine quality.",
             "Avoid harm to yourself or your tools while harvesting.",
-            "If possible, allow further harvesting from the same"
+            "If possible, allow further harvesting from the same source."
           ],
-          "consequences": [],
+          "consequences": [
+            ">> You waste time or break tools (time-passes or scratch tags).",
+            ">>> You despoil or lose the source of the ingredient (Blocked and scratch tags).",
+            ">> The ingredient is of poor quality or little quantity (add negative story tag).",
+            ">> You have a work accident (wounded, bruised, cramps, painful hand, etc.).",
+            ">>> Someone covets your ingredient or its source (Exposure).",
+            ">> You disturb a local in the process of extraction (New Challenge)."
+          ],
           "might": "Consider Might if the process requires extraordinary knowledge or ability."
         },
         {
           "name": "Maintaining and Repairing Equipment",
           "actionExamples": [
+            "Patch holes.",
+            "Strip and clean.",
+            "Grease the wheels",
+            "Sharpen and remove rust",
             "Reinforce seams",
-            "Lovingly polish",
+            "Lovingly polish.",
             "Straighten a bend",
-            "Organize and count",
+            "Organize and count.",
             "Oil armor",
             "Hammer out dents",
             "Replace buckles",
             "Resole boots",
             "Restring a bow"
           ],
-          "explanation": "You use your crafting skills to keep your equipment functioning by repairing, upkeeping, or replacing broken parts. This action covers serious repairs, of the sort that demand taking special care, and therefore a roll. This action is often taken while camping or sojourning.",
+          "explanation": "You use your crafting skills to keep your equipment functioning by repairing, upkeeping, or replacing broken parts.\nThis action covers serious repairs, of the sort that demand taking special care, and therefore a roll. This action is often taken while camping or sojourning.",
           "power": {
             "positive": [
               "crafting skills",
-              "repair and maintenance tools",
+              "repair and maintenance tools.",
               "extra supplies",
               "workshop",
               "having a relationship with the item",
-              "shops with the necessary parts",
+              "shops with the necessary parts.",
               "calm atmosphere"
             ],
             "negative": [
@@ -143,7 +208,7 @@
               "defect that is subtle or complex",
               "unfamiliar equipment",
               "poor tools or workspace",
-              "heavy damage or wear and tear",
+              "heavy damage or wear and tear.",
               "dirt, muck, or sand in the parts",
               "The removed status or tag does not count as a negative for this action, unless it is especially egregious."
             ]
@@ -152,32 +217,67 @@
           "extraFeats": [
             "Do it quietly.",
             "The repaired damage leaves no mark or trace.",
-            "Keep the spotlight to take immediate action with"
+            "Keep the spotlight to take immediate action with the repaired item."
           ],
-          "consequences": [],
+          "consequences": [
+            ">>> You make things worse (inflict a different status or tag, or scratch a tag).",
+            ">>> Your tools break or you use up all your extra parts (short-on-supplies or scratch a tag).",
+            ">>> You misplace the item in question (Complication).",
+            ">>> You become too engrossed in the work (distracted)."
+          ],
           "might": null
         },
         {
           "name": "Sabotaging",
-          "actionExamples": [],
-          "explanation": null,
+          "actionExamples": [
+            "Loosen rivets",
+            "Pull out parts",
+            "Dull blades",
+            "Disassemble trap",
+            "Clog gears.",
+            "Damage wheels",
+            "Cut ropes",
+            "Deshoe horse",
+            "Despoil water source",
+            "Stop a machine's operation.",
+            "Break out of entanglement"
+          ],
+          "explanation": "You disrupt the operation of a machine, trap, transport, or riding animal using your crafting skills, careful method, or brute strength. You might be trying to stop a specific function, or just get the thing to stop working.\nConsider Might if the device is bigger than a person, if it relies on magic or design you do not understand, or if you're targeting a specific part in it.\nIf you're trying to get through a door or other passage, see also Burglary (page 38).",
           "power": {
             "positive": [
+              "crafting or sabotage skills",
+              "careful examination.",
+              "brute strength",
+              "proper tools",
+              "destructive concoctions",
               "destructive mindset",
               "heavy implements",
               "weak spots"
             ],
             "negative": [
-              "item is fortified against tampering",
+              "item is fortified against tampering.",
               "item is of high quality craftsmanship",
               "wards or other magical protections",
               "guards watching the item"
             ]
           },
-          "success": "QUICK The item ceases to operate, or malfunctions in the way you intended. DISRUPT by giving negative statuses such as damaged or stuttering. If the item is big, the Narrator might decide to give it a destroy Limit. WEAKEN by removing tags from the item representing its functions, or protective statuses such as fortified. RESTORE by removing devices that afflict you such as restrained, or restricted magic.",
-          "extraFeats": [],
-          "consequences": [],
-          "might": null
+          "success": "QUICK The item ceases to operate, or malfunctions in the way you intended.\nDISRUPT by giving negative statuses such as damaged or stuttering. If the item is big, the Narrator might decide to give it a destroy Limit.\nWEAKEN by removing tags from the item representing its functions, or protective statuses such as fortified.\nRESTORE by removing devices that afflict you such as restrained, or restricted magic.",
+          "extraFeats": [
+            "Do it quietly.",
+            "Remove any traces of tampering.",
+            "Delay the effect so that it is triggered later.",
+            "Keep the spotlight for a follow-up action with the item.",
+            "The damage lasts longer or is hard to repair."
+          ],
+          "consequences": [
+            ">>> Your tools break (scratch a tag).",
+            ">> You have a work accident (scorched, wounded, bruised, cramps, painful hand, etc.).",
+            ">>> There are unintended victims (Ill Tidings).",
+            ">>> You are discovered, or your activity is noticed (suspicious, alarm, or Exposure).",
+            ">> You damage a related or nearby functionality you did not intend to (Complication).",
+            ">> You become too engrossed in the work (distracted)."
+          ],
+          "might": "Consider Might if the device is bigger than a person, if it relies on magic or design you do not understand, or if you're targeting a specific part in it."
         }
       ]
     },
@@ -191,12 +291,267 @@
           "actionExamples": [
             "Cast an explosive spell",
             "Bombard with siege weapon",
-            "Shower with a hail of arrows",
+            "Shower with a hail of arrows.",
             "Cleave with a mighty weapon",
             "Infuse an area with evil spirits",
             "Blanket area with magical hoar frost"
           ],
-          "explanation": "You deliver an attack to an entire area. Targets in the area are hit selectively or indiscriminately, depending on the nature of your attack. If there are defensive tags shared by most of the targets, they apply to this roll; otherwise, targets defend from this attack individually (Area Effect Actions, Corebook Vol. I, page 178).",
+          "explanation": "You deliver an attack to an entire area. Targets in the area are hit selectively or indiscriminately, depending on the nature of your attack. If there are defensive tags shared by most of the targets, they apply to this roll; otherwise, targets defend from this attack individually (Area Effect Actions, Corebook Vol. I, page 178).\nThis action often requires some Might to perform, depending on the area covered or number of targets; see Hand-to-Hand Attacks and Ranged Attacks for attacking single targets.",
+          "power": {
+            "positive": [
+              "attack rate or speed",
+              "large melee weapon.",
+              "explosive arrows",
+              "command of terrain",
+              "brute force",
+              "destructive attitude",
+              "chaotic or dangerous magics.",
+              "targets in a choke point"
+            ],
+            "negative": [
+              "targets are spread out",
+              "cover or hiding spots.",
+              "slow-firing weapon or slow projectile",
+              "detrimental weather conditions"
+            ]
+          },
+          "success": "ATTACK to inflict a harmful status such as wounded, bleeding, burned, electrocuted, or corrupted, usually applied to the Limit harm or destroy.",
+          "extraFeats": [
+            "Prevent a counterattack.",
+            "Create a mess or cause chaos.",
+            "Disperse the targets around.",
+            "Remove obstacles or hiding places.",
+            "Block the opponents from reaching a destination.",
+            "Cause the target(s) to retreat in a certain direction."
+          ],
+          "consequences": [
+            ">>> You are caught in the area of effect and take the same status.",
+            ">> The targets counterattack (wounded).",
+            ">> You expose your position (Exposure).",
+            ">> You harm allies, innocents, or something valuable to you (Ill Tidings).",
+            ">>> You overexert your resources (scratch a tag).",
+            ">>> Your attack obscures the area (e.g. smoke cloud) or creates an unintended hazard (e.g. dark magic residue)."
+          ],
+          "might": "This action often requires some Might to perform, depending on the area covered or number of targets; see Hand-to-Hand Attacks and Ranged Attacks for attacking single targets."
+        },
+        {
+          "name": "Multiple Attacks",
+          "actionExamples": [],
+          "explanation": "Your ability to attack multiple times in quick succession should be represented by a tag such as double strike or many-armed.\nIf you attack in a fashion that utilizes your quick rate of attack, add these tags to the Power of Hand-to-Hand Attacks (page 18) or Ranged Attacks (page 18). If you're attacking multiple opponents, tags for multiple attacks can help to offset the Power loss from Might. You may also be able to use multiple attack tags to unleash Area Attacks (page 17).\nYou can also use an extra feat to keep the spotlight for another action after your attack, but typically the Narrator will allow only one such \"follow-up\" attack.",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Precision Attacks",
+          "actionExamples": [
+            "Called shot",
+            "Accurate slice",
+            "Aim for a weak point.",
+            "Stunt shot"
+          ],
+          "explanation": "If you want to make an attack more precise to maximize damage, see Preparing an Attack (page 27) before making an Hand-to-Hand Attack (page 18) or Ranged Attack (page 18).\nIf you make a precise attack to impair a target's specific ability or their equipment, see Impairing Attacks (page 23) or Disarming and Sundering Gear (page 20).\nIf you make a precise attack to perform a stunt, see Trick Shots (page 24).",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Hand-to-Hand Attacks",
+          "actionExamples": [
+            "Sword strike",
+            "Mace swing",
+            "Punch",
+            "Kick.",
+            "Bash",
+            "Stab",
+            "Slash",
+            "Thrust",
+            "Bite",
+            "Impale",
+            "Brush with poison",
+            "Touch with magical effect",
+            "Splash with alchemical substance"
+          ],
+          "explanation": "You strike at close range in order to harm.",
+          "power": {
+            "positive": [
+              "the weapon",
+              "weapon skills.",
+              "weapon enhancements",
+              "touch-based abilities",
+              "specific maneuvers",
+              "strength or speed",
+              "empowered or excessive energy",
+              "superior position",
+              "target's weak spots or vulnerabilities",
+              "target's inferior position"
+            ],
+            "negative": [
+              "wounds or pain",
+              "physical restriction",
+              "unstable ground",
+              "faulty or poor weapon",
+              "target's armor, shielding, or dexterity",
+              "target's natural or magical resistances"
+            ]
+          },
+          "success": "ATTACK to inflict a harmful status such as wounded, slashed, impaled, bleeding, burned, electrocuted, poisoned, or corrupted, usually applied to the Limit harm or destroy.",
+          "extraFeats": [
+            "Keep the spotlight to make a quick second attack.",
+            "Prevent counterattack.",
+            "Push them back.",
+            "Block their path.",
+            "Keep them focused on you.",
+            "Draw someone else's attention.",
+            "Draw an item out of a pouch.",
+            "Maneuver around or away from them.",
+            "Keep your touch unnoticed."
+          ],
+          "consequences": [
+            ">> The target counterattacks (wounded).",
+            ">>> You get off-balanced or expose yourself.",
+            ">> You are forced into an inferior-position or become blindsided.",
+            ">> You exert yourself (winded).",
+            ">>> You lose hold of your weapon (scratch a tag).",
+            ">> Your weapon gets a dull blade, your shield is worn-down, or your armor gains broken straps."
+          ],
+          "might": null
+        },
+        {
+          "name": "Ranged Attacks",
+          "actionExamples": [
+            "Shoot with bow or crossbow",
+            "Blast with a magical bolt",
+            "Throw a rock",
+            "Hurl an apple"
+          ],
+          "explanation": "You shoot, throw, launch, or otherwise propel a harmful projectile, object, energy, or substance at range.\nTo attack an area, see Area Attacks (page 17).",
+          "power": {
+            "positive": [
+              "the weapon",
+              "weapon skills",
+              "weapon enhancements",
+              "custom arrows",
+              "aiming or great accuracy",
+              "manual dexterity",
+              "ideal conditions for a clear shot",
+              "empowered or excessive magical energy",
+              "superior position",
+              "target's weak spots or vulnerabilities",
+              "target's inferior position"
+            ],
+            "negative": [
+              "wounds or pain",
+              "physical restriction",
+              "unstable ground",
+              "faulty or poor weapon",
+              "extreme range.",
+              "poor vision or visibility",
+              "target's armor, cover, shielding, or dexterity",
+              "target's natural or magical resistances"
+            ]
+          },
+          "success": "ATTACK to inflict a harmful status such as wounded, slashed, impaled, bleeding, burned, electrocuted, poisoned, or corrupted, usually applied to the Limit harm or destroy.",
+          "extraFeats": [
+            "Keep the spotlight to shoot again.",
+            "Prevent counterattack.",
+            "Keep them pinned down.",
+            "Keep them focused on you.",
+            "Create a distraction.",
+            "Stay hidden.",
+            "Misdirect the source of the attack.",
+            "Move into position for the next shot.",
+            "Slide down a hillside while firing."
+          ],
+          "consequences": [
+            ">>> You lose sight of your target (Complication).",
+            ">> The target closes in, to within melee range (Complication).",
+            ">>> The target fires arrows or spells back at you (wounded).",
+            ">> You expose your position (Exposure).",
+            ">>> You are forced into an inferior-position or become blindsided.",
+            ">> You hit an unintended target (Ill Tidings).",
+            ">>>> You lose your aim.",
+            ">>> Your bow string breaks, you run out of arrows, or your magical power is exhausted (scratch a tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Restraining an Opponent",
+          "actionExamples": [
+            "Chokehold",
+            "Pin down",
+            "Throw down.",
+            "Tackle",
+            "Body slam",
+            "Leg sweep",
+            "Control someone's body",
+            "Grapple",
+            "Wrestle"
+          ],
+          "explanation": "You use your body or weapons to limit your target's movement in close quarters. See also Hand-to-Hand Attacks (page 18).",
+          "power": {
+            "positive": [
+              "physical strength",
+              "large size.",
+              "martial arts training",
+              "tool or weapon such as a garrote, net, or whip",
+              "target's physical restraints.",
+              "extra limbs"
+            ],
+            "negative": [
+              "small size",
+              "target is nimble or slippery",
+              "target's strength.",
+              "target is electrically charged, cold to the touch, or covered in spikes",
+              "target strength",
+              "target has many limbs, long neck, or other advantageous body shape"
+            ]
+          },
+          "success": "ATTACK with subdued, restrained, or pinned to max out your target's subdue Limit.\nDISRUPT your target with a hindering status such as prone, concussed, pained.",
+          "extraFeats": [
+            "Move them around.",
+            "Avoid their counterattack.",
+            "Position them in between you and a threat.",
+            "Cause them to drop something.",
+            "Take something off of their person."
+          ],
+          "consequences": [
+            ">> The target attacks back (wounded or restrained).",
+            ">> You are thrown off-balanced or prone.",
+            ">>> You become exposed.",
+            ">>> You are forced back into an inferior-position or become blindsided.",
+            ">> You exert yourself (winded).",
+            ">> They take something from you (scratch a tag)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Surprise Attacks",
+          "actionExamples": [],
+          "explanation": "A combatant that is taken by surprise may receive the status surprised, whether through a player action, as a Consequence, or by the Narrator simply translating the narrative into game Effects.\nWhen a Hero is surprised, the status negatively affects their reactions to what surprised them. A Hero may avoid or lessen being surprised with a reaction using tags of vigilance or advance warning.\nWhen a Hero surprises their foes, and especially against alert opponents, the Narrator might require a player to first take an action to gain the element of surprise (give surprised). See Sneaking and Hiding (page 40).\nThe Narrator may also rule that certain defensive tags are inapplicable when a combatant is surprised, such as agile, a tower shield, and even certain forms of armor that an unseen attacker can easily circumvent.\nTo keep an attack undetected to parties other than the target, use an extra feat.",
+          "power": {
+            "positive": [],
+            "negative": []
+          },
+          "success": null,
+          "extraFeats": [],
+          "consequences": [],
+          "might": null
+        },
+        {
+          "name": "Two-Weapon Fighting",
+          "actionExamples": [],
+          "explanation": "Two-weapon fighting is represented either by having two separate weapon tags, by having a tag that outlines your skill with two-weapon fighting, or both. You can perform any battle action using these tags.",
           "power": {
             "positive": [],
             "negative": []
@@ -209,10 +564,10 @@
         {
           "name": "Combo Attacks",
           "actionExamples": [
-            "You can shoot your great bow at a chandelier above a target so it’ll fall on them as an Attack to wound them, while also Creating a flaming chandelier story tag blocking the entrance.",
+            "You can shoot your great bow at a chandelier above a target so it'll fall on them as an Attack to wound them, while also Creating a flaming chandelier story tag blocking the entrance.",
             "You can use your vampiric magic tag suck life force to Attack and give the enemy drained-life, Weaken their energized status, and Recover to heal your own wounded status.",
-            "Your vial of acid could Weaken an enemy’s heavy armor and Attack to give them acid-burns.",
-            "You can pounce from the darkness and stab a monster’s limb with a silver dagger to Disrupt them with a weak limb and Influence them to be frightened!"
+            "Your vial of acid could Weaken an enemy's heavy armor and Attack to give them acid-burns.",
+            "You can pounce from the darkness and stab a monster's limb with a silver dagger to Disrupt them with a weak limb and Influence them to be frightened!"
           ],
           "explanation": "The actions in this section describe distinct battle actions, but every offensive action can potentially combine multiple Effects, depending on the tags used and the amount of Power at your disposal.",
           "power": {
@@ -232,46 +587,68 @@
       "intro": null,
       "entries": [
         {
-          "name": "disarming and Sundering Gear",
+          "name": "Disarming and Sundering Gear",
           "actionExamples": [
             "Sunder a weapon",
-            "Swat weapon away",
+            "Swat weapon away.",
             "Break shield",
             "Bust armor",
-            "Disenchant weapon’s magic",
+            "Disenchant weapon's magic",
             "Destroy wand",
             "Break claws",
             "Snatch out of their hands"
           ],
-          "explanation": "You attack a piece of equipment on somebody’s person, either held, stowed away, or attached to their body, with the goal of making it unusable or unavailable to them.\nRetrieving their gear might be as easy for your target as reaching over to pick a pitchfork up from the ground, or as complicated as spending weeks in a sanctum of sorcery to repair their broken magical talisman. If it is possible within the scope of a scene, the Narrator can use Consequences later in the scene to determine that the target retrieved their gear.",
+          "explanation": "You attack a piece of equipment on somebody's person, either held, stowed away, or attached to their body, with the goal of making it unusable or unavailable to them. Retrieving their gear might be as easy for your target as reaching over to pick a pitchfork up from the ground, or as complicated as spending weeks in a sanctum of sorcery to repair their broken magical talisman. If it is possible within the scope of a scene, the Narrator can use Consequences later in the scene to determine that the target retrieved their gear.",
           "power": {
             "positive": [
               "physical strength",
               "precision",
               "appropriate weapon skills and maneuvers",
-              "long reach",
-              "opponent’s recklessness",
+              "long reach.",
+              "opponent's recklessness",
               "entangling equipment or weapons such as chains, whips, or flails",
-              "opponent’s fragile gear"
+              "opponent's fragile gear"
             ],
             "negative": [
-              "opponent’s strong grip or extra arms",
+              "opponent's strong grip or extra arms",
               "gear belts, fastenings, chains, and such",
               "gear that is small, hard to reach, or well protected",
-              "limited space",
+              "limited space.",
               "robust or magically-shielded equipment",
               "weapons or armor hidden under cloak"
             ]
           },
-          "success": "QUICK  Remove an item not represented by a tag. Consequences and activities involving the item are not available until it is retrieved. WEAKEN  to remove an existing tag representing gear. If you succeed, you could then Create for yourself the same tag, meaning you managed to grab hold of it and can now use it yourself (see Improvising Weapons, page 26).",
-          "extraFeats": [],
-          "consequences": [],
+          "success": "QUICK Remove an item not represented by a tag. Consequences and activities involving the item are not available until it is retrieved. WEAKEN to remove an existing tag representing gear. If you succeed, you could then Create for yourself the same tag, meaning you managed to grab hold of it and can now use it yourself (see Improvising Weapons, page 26).",
+          "extraFeats": [
+            "Kick the disarmed item away or otherwise prevent it from being easily retrieved.",
+            "Keep the spotlight to immediately attack.",
+            "Prevent counterattack.",
+            "Maneuver around your opponent.",
+            "Place or plant something on your opponent."
+          ],
+          "consequences": [
+            ">>> The target attacks you (wounded).",
+            ">>> You yourself are disarmed (scratch a tag) or your grip is loosened (unbalanced).",
+            ">>> The target grapples you (pinned).",
+            ">> The target secures their equipment (strong-grip; only if there was no Success)."
+          ],
           "might": null
         },
         {
           "name": "Feinting and Distracting Attacks",
-          "actionExamples": [],
-          "explanation": null,
+          "actionExamples": [
+            "Feigned strike",
+            "Misdirect.",
+            "Battlefield manipulation",
+            "Shock",
+            "Disrupt minds",
+            "Throw smoke powder bomb.",
+            "Feign weakness",
+            "Dazzle with fire",
+            "Create a diversion",
+            "Fake retreat"
+          ],
+          "explanation": "You use clever tactics or manipulation such as faking an attack, enacting a false retreat, pretending to let your guard down, or creating an illusion or a loud noise in order to impair your target's judgment or cognitive capacity, forcing them to make poor choices or exposing them to a follow-up attack.",
           "power": {
             "positive": [
               "nimbleness",
@@ -281,71 +658,239 @@
               "booming voice",
               "illusions",
               "knowledge of the battlefield",
-              "battlefield tactics",
-              "target’s fear or gullibility",
+              "battlefield tactics.",
+              "target's fear or gullibility",
               "fake emotions"
             ],
             "negative": [
-              "target’s alertness, resolve, training, sharp senses, or leadership",
-              "enemy reconnaissance efforts",
+              "target's alertness, resolve, training, sharp senses, or leadership",
+              "enemy reconnaissance efforts.",
               "impaired communication, when leading a group"
             ]
           },
-          "success": "QUICK  The target takes the desired action. INFLUENCE  to dictate the target’s next actions by giving them a compelling status such as hostile to their own allies, focused on something else, docile, or overconfident. DISRUPT  to inflict a hindering status such as vulnerable, overextended, guard-down, or unaware, surprised, dazed, or distracted. WEAKEN  to reduce a positive tag on the target that represents preparation or commitment such as high-morale, energized, or drilled maneuver.",
-          "extraFeats": [],
-          "consequences": [],
+          "success": "QUICK The target takes the desired action. INFLUENCE to dictate the target's next actions by giving them a compelling status such as hostile to their own allies, focused on something else, docile, or overconfident. DISRUPT to inflict a hindering status such as vulnerable, overextended, guard-down, or unaware, surprised, dazed, or distracted. WEAKEN to reduce a positive tag on the target that represents preparation or commitment such as high-morale, energized, or drilled maneuver.",
+          "extraFeats": [
+            "Keep the spotlight to immediately attack.",
+            "Prevent counterattack.",
+            "Draw attention away from your allies.",
+            "Move the target around the battlefield.",
+            "Split up the target group."
+          ],
+          "consequences": [
+            ">>> The target attacks you while you are feinting (wounded).",
+            ">>> You get off-balanced or expose yourself.",
+            ">>> An ally gets confused as well.",
+            ">> The target sees through your misdirection and it backfires (exposed; only if there was no Success).",
+            ">>> The target wises up and makes you embarrassed or taunted (only if there was no Success).",
+            ">>> The target becomes resistant to future misdirection (alert or Blocked)."
+          ],
           "might": null
         },
         {
           "name": "Holding Off or Spurring Opponents",
-          "actionExamples": [],
-          "explanation": null,
+          "actionExamples": [
+            "Fire covering arrow fire",
+            "Repel with sword or spear maneuvers",
+            "Hold at swordpoint",
+            "Smoke the enemy out",
+            "Maneuver your troops to surround.",
+            "Maneuver armies against each other"
+          ],
+          "explanation": "You use force or the threat of force to limit a target's tactical options, forcing them to reconsider, give up, or take certain actions, such as stepping into a specific area, revealing themselves, staying put, attacking, drawing their weapon, or activating a magical artifact. If the target does not conform to your threat, the Narrator should grant you the spotlight to Attack.",
           "power": {
-            "positive": [],
-            "negative": []
+            "positive": [
+              "long reach",
+              "martial arts skills.",
+              "tactical skills.",
+              "intimidating demeanor",
+              "target's fear",
+              "target's inferior position",
+              "siege weapon, arrows, or spells",
+              "positive ally troop morale",
+              "negative enemy troop morale"
+            ],
+            "negative": [
+              "target's training",
+              "target's resolve",
+              "target's home advantage",
+              "inconvenient angle of attack",
+              "negative ally troop morale",
+              "positive enemy troop morale"
+            ]
           },
-          "success": null,
-          "extraFeats": [],
-          "consequences": [],
+          "success": "QUICK The opponent's behavior is affected as planned. DISRUPT or INFLUENCE to give the target suppressed, cornered, threatened, demoralized, harried, or harassed.",
+          "extraFeats": [
+            "Keep the spotlight to immediately attack.",
+            "Prevent counterattack.",
+            "Push them back.",
+            "Block their path.",
+            "Keep them focused on you.",
+            "Improve your position.",
+            "Force a retreat."
+          ],
+          "consequences": [
+            ">>> You harm allies, innocents, or something valuable to you (Ill Tidings).",
+            ">>> You run out of ammo or magical power (scratch a tag).",
+            ">>> You get off-balanced or expose yourself.",
+            ">> You focus too much on the action (distracted).",
+            ">>> The target manages to partially circumvent your attack (e.g., only one person escapes).",
+            ">> They come to understand your tactics and avoid them (Blocked)."
+          ],
           "might": null
         },
         {
           "name": "Impairing Attacks",
-          "actionExamples": [],
-          "explanation": null,
+          "actionExamples": [
+            "Hamstring.",
+            "Disable a limb",
+            "Break cover.",
+            "Cause pain",
+            "Impair senses",
+            "Throw sand in their eyes.",
+            "Lay a wicked curse"
+          ],
+          "explanation": "You shoot or strike your target with the intention to impair a specific ability. See also Feinting and Distracting Attacks (page 21).",
           "power": {
-            "positive": [],
-            "negative": []
+            "positive": [
+              "learned maneuvers",
+              "weapon skills.",
+              "precise weapons",
+              "curse spells",
+              "agility and maneuverability",
+              "quick reflexes",
+              "knowledge of physiology or target's makeup"
+            ],
+            "negative": [
+              "disadvantageous positioning.",
+              "target's quick reflexes",
+              "target's armor, shielding, or dexterity"
+            ]
           },
-          "success": null,
-          "extraFeats": [],
-          "consequences": [],
+          "success": "DISRUPT by hitting a specific limb or organ, such as with a crippling shot (hobbling), kick to the head (dazed), or a strike to the ears (deafened or off-balanced). WEAKEN to remove specific ability or advantage tags, such as by shooting off a lucky hat, punching a proboscis to impair acute smell, or throwing a knife to slow down a fast runner.",
+          "extraFeats": [
+            "Keep the spotlight to immediately attack.",
+            "Prevent counterattack.",
+            "Make the impairment go unnoticed.",
+            "Cause your target to flinch or be distracted."
+          ],
+          "consequences": [
+            ">> The target attacks (wounded).",
+            ">>> The target is impaired, but in a different way than expected.",
+            ">>> You hit someone or something you did not intend to harm (Ill Tidings).",
+            ">>> The blow leaves your weapon with a loose hilt.",
+            ">> You run out of arrows (Blocked or scratch a tag).",
+            ">> You expose yourself to attacks (exposed)."
+          ],
+          "might": null
+        },
+        {
+          "name": "Provoking",
+          "actionExamples": [
+            "Taunt and tease",
+            "Challenge to single combat",
+            "Insult opponent's ancestry.",
+            "Aggravate",
+            "Throw down your gauntlet.",
+            "Egg them to attack you (or someone else).",
+            "Question their honor or courage"
+          ],
+          "explanation": "You manipulate your opponent into attacking you (or someone else, although that is much harder to achieve). Consider Might if your opponent is unlikely to give you any attention or if you clearly outmatch them. To disrupt an opponent's focus, see Feinting and Distracting Attacks (page 21).",
+          "power": {
+            "positive": [
+              "cunning",
+              "biting remarks",
+              "history with this opponent",
+              "opponent's fragile emotional state or propensity for rage",
+              "supporting audience"
+            ],
+            "negative": [
+              "opponent's discipline",
+              "opponent's cowardice or smarts",
+              "reputation as a trickster",
+              "lack of cunning or smarts",
+              "opponent's wounds or wounded allies"
+            ]
+          },
+          "success": "QUICK The opponent will attack only you (until circumstance or Consequences change this). INFLUENCE your opponent by making them provoked or taunted, a compelling status directing them to attack you. It does not improve their attacks. DISRUPT your opponent by making them distracted, seeing-red, humiliated, etc.",
+          "extraFeats": [
+            "Keep the spotlight to immediately attack, move, or parry.",
+            "Prevent or block their counterattack.",
+            "Make your provocation underhanded, unseen by anyone else.",
+            "Elegantly provoke them without sparking fury (prevent enraged)."
+          ],
+          "consequences": [
+            ">>> The target attacks (wounded).",
+            ">>> The target becomes enraged, which makes it harder to lessen their attacks.",
+            ">> You provoke someone or something you did not intend to (New Challenge or enraged).",
+            ">> Your motivation is plain to see (Exposure)."
+          ],
           "might": null
         },
         {
           "name": "Trick Shots",
-          "actionExamples": [],
-          "explanation": null,
+          "actionExamples": [
+            "Ricochet an arrow",
+            "Disable a trap from afar",
+            "Shoot an apple off someone's head.",
+            "Show off your weapon skills"
+          ],
+          "explanation": "You skillfully perform an impressive, accurate, or complicated stunt with your weapon. For example, trying to shoot and split an arrow you've already stuck into a bullseye, throwing a handaxe to cut a rope across the room, or slicing an apple in half with a sword and having each half ricochet off a different opponent's face. To harm multiple targets with a trick shot, see Ranged Attacks (page 18). To impair a target's specific ability or disarm them, use Impairing Attacks (page 23), Feinting and Distracting Attacks (page 21), or Disarming and Sundering Gear (page 20). To perform a trick shot to create a new hazard, see also Creating and Removing Hazards and Obstacles (page 48).",
           "power": {
-            "positive": [],
+            "positive": [
+              "weapon skills",
+              "precise weapons",
+              "arrows or bolts suited for the task",
+              "agility and maneuverability.",
+              "quick reflexes",
+              "mischievousness",
+              "useful objects in the vicinity such as mirrors, hornet's nest, or weak hinges"
+            ],
             "negative": [
               "heavy or bulky weapons",
               "poor vision or visibility",
-              "target’s size",
+              "target's size",
               "heavy, armored, or durable objects"
             ]
           },
-          "success": "QUICK You successfully pull off your stunt. CREATE  tags that represent new elements in the environment produced by your trick shot, such as a fallen tree, sudden flood, or flurry of falling leaves. INFLUENCE  onlookers with a status such as impressed, amused, or threatened.",
+          "success": "QUICK You successfully pull off your stunt. CREATE tags that represent new elements in the environment produced by your trick shot, such as a fallen tree, sudden flood, or flurry of falling leaves. INFLUENCE onlookers with a status such as impressed, amused, or threatened.",
           "extraFeats": [
             "Destroy an object or remove it from the scene.",
             "Cause others to flinch or be distracted.",
             "Create a breach or opening.",
-            "Have the item arrive in someone’s hands."
+            "Have the item arrive in someone's hands."
           ],
-          "consequences": [],
+          "consequences": [
+            ">>> You hit, but cause a reversed or undesired outcome (only if there was no Success).",
+            ">> You're embarrassed (only if there was no Success).",
+            ">> You harm someone or something you did not intend to harm (Ill Tidings).",
+            ">>> Your weapon loses its edge or aim (dull blade)."
+          ],
           "might": null
         }
       ]
+    },
+    {
+      "section": "General Considerations",
+      "page": 8,
+      "intro": "Always-Relevant Tags and Statuses\nAlmost every action requires you to pay attention to what you're doing and be able to perceive your surroundings. For this reason, tags and statuses like darkness, heavy fog, loud crowd, distracted, pained, etc. can negatively affect most actions. Likewise, stamina statuses like tired, winded, or exhausted or mental statuses like light-headed or distressed can affect any action that requires effort or focus.\n\nCamp & Sojourn Actions\nThe following repeats the list of suggested camp actions (Camping & Sojourns, Corebook Vol. I, page 179), referring to their Action Grimoire counterparts.\n\nTime Matters\nDifferent actions take different amounts of time to perform: a swordstroke is quick, while climbing a hill can take minutes if not hours.\nAs the Heroes take actions in a scene, time marches ever forward, and its passing can trigger events in the Heroes' lives. For example, searching the site of an old temple could take a good while, and as the Heroes are searching, the devils from the basements below may notice their presence, or the rogue sorcerer who searches the same ruin for an ancient relic could get closer to completing their nefarious goal.\nWhen Establishing or re-Establishing a scene, the Narrator can always make Threats related to the passage of time, such as, \"You've spent a lot of time climbing the side of the mountain; the sun is going down ominously.\" Later, they can deliver Consequences such as time-passes on a progress Limit (Corebook Vol. I, page 169) such as coming-storm, enchantment-fading, or speak-now-or-forever-hold-your-peace.\nThe Narrator can also explain the introduction of a Complication as arising due to an action taking longer than intended. For example, a Hero who is conducting a forbidden ritual at a graveyard could find themselves blackmailed by a stray vagabond who's noticed their unusual project and wants something in return for their silence.\nAn action's manner of performance can also affect its timing: an exceptionally well-performed negotiation could be completed quicker than usual, while a botched negotiation could burn precious daylight, often for naught. The Narrator can allow the use of an extra feat to guarantee a speedy execution.",
+      "lists": [
+        {
+          "heading": null,
+          "items": [
+            "Bandage or heal: Mental and Physical Resilience and Recovery (page 52), Treating Injuries and Other Conditions (page 53)",
+            "Converse: Helping and Supporting (page 86), Fellowship Preparations (page 87)",
+            "Cook: Invigoration (page 51)",
+            "Craft & repair: Crafting and Tinkering (page 11), Maintaining and Repairing Equipment (page 13)",
+            "Entertain: Social Gatherings (page 79)",
+            "Hunt & forage: Harvesting Ingredients (page 12), Living off the Land (page 44)",
+            "Prepare: Fellowship Preparations (page 87), Preparing an Approach (page 85), Withstanding and Preparing for Environmental Conditions (page 50)",
+            "Read and research: Researching a Topic (page 36)",
+            "Scout ahead or practice divination: Scouting and Guarding (page 49)",
+            "Stand watch: Scouting and Guarding (page 49)"
+          ]
+        }
+      ],
+      "entries": []
     },
     {
       "section": "Common Consequences",
