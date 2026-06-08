@@ -94,7 +94,8 @@ three sources in `_build/` and injected:
   from the Core Rulebook): sections of action entries, each with action examples, explanation,
   Power helps/hinders, Success effects, Extra Feats, Consequences, Might. Merged into
   `LITM_DATA.actionGrimoire`; shown in the searchable Action-Grimoire browser
-  (`openAG`/`renderAG`, `#agOverlay`). **Partial** — being filled in section by section.
+  (`openAG`/`renderAG`, `#agOverlay`) and loadable into the roller (Phase B, `useAGAction`).
+  **Complete** — 19 leaf action sections (101 entries) + 2 prose sections.
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
