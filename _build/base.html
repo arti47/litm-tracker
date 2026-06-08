@@ -470,7 +470,12 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
       <p class="hint" id="mhOut" style="margin:6px 0 0">Pick both to compute.</p>
     </details>
     <h3>Situational (other tags / environment)</h3>
+    <p class="hint" style="margin:-2px 0 6px">Any other ± the Narrator invokes — a foe's tag, a group/Challenge's Might acting against you, etc.</p>
     <div class="stepper"><button onclick="adjSit(-1)">−</button><b id="sitVal" style="font-size:20px;min-width:40px;text-align:center">0</b><button onclick="adjSit(1)">+</button></div>
+    <h3>🤝 Help from other Heroes</h3>
+    <p class="hint" style="margin:-2px 0 6px">A tag another Hero invokes to help (or hinder) your action. Tap the value to cycle <b>+1 → 🔥+3 → −1 → off</b>.</p>
+    <div id="helpTags"></div>
+    <button class="addbtn" onclick="addHelp()">＋ add help</button>
   </div>
 
   <div class="card">
@@ -744,6 +749,7 @@ let rollMods = {};       // tagId -> 'help'|'hind' (transient selection for the 
 let rollMode = 'action'; // 'action' | 'reaction'
 let spend = null;        // active Power-spend budget after a successful roll
 let agAction = null;     // Action Grimoire action loaded into the roller (Phase B; transient)
+let helpTags = [];       // ally help/hinder contributions for the current roll (transient)
 
 function loadAll() {
   try { roster = JSON.parse(localStorage.getItem(LS_ROSTER)) || []; } catch(e){ roster = []; }
@@ -1594,8 +1600,26 @@ function availableTags(){
   return out;
 }
 
+// ----- Help from other Heroes (group/help actions, Phase 5) -----
+function renderHelp(){
+  const w=$('helpTags'); if(!w) return; w.innerHTML='';
+  helpTags.forEach((h,i)=>{
+    const row=document.createElement('div'); row.className='tagrow';
+    const inp=document.createElement('input'); inp.type='text'; inp.placeholder='Ally — tag (e.g. Aldric — covering fire)'; inp.value=h.name||'';
+    inp.oninput=()=>{ h.name=inp.value; };
+    const val=document.createElement('button'); val.className='modchip'+(h.val>0?' help':h.val<0?' hind':'')+(h.val===3?' burning':'');
+    val.style.cursor='pointer'; val.textContent = h.val===3?'🔥 +3' : h.val>0?'+1' : h.val<0?'−1' : 'off';
+    val.onclick=()=>{ h.val = h.val===1?3 : h.val===3?-1 : h.val===-1?0 : 1; renderRoller(); };
+    const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none';
+    del.onclick=()=>{ helpTags.splice(i,1); renderRoller(); };
+    row.appendChild(inp); row.appendChild(val); row.appendChild(del); w.appendChild(row);
+  });
+}
+function addHelp(){ helpTags.push({id:uid(),name:'',val:1}); renderRoller(); }
+
 function renderRoller(){
   renderAgRoll();
+  renderHelp();
   // sync might segment + sit (always, even with no tags)
   document.querySelectorAll('#mightSeg button').forEach(b=>b.classList.toggle('on', +b.dataset.m===might));
   if($('sitVal')) $('sitVal').textContent=(sit>0?'+':'')+sit;
@@ -1650,6 +1674,7 @@ function computePower(){
     }
   });
   if(agAction){ agAction.help.forEach(x=>{ if(x.on) p+=1; }); agAction.hind.forEach(x=>{ if(x.on) p-=1; }); }
+  helpTags.forEach(h=>{ p += (h.val||0); });   // ally help/hinder contributions
   p += hiHelp - hiHind + might + sit;
   $('powerNum').textContent=p;
   $('powerNum')._val=p;
@@ -1973,7 +1998,7 @@ function renderRoster(){
     w.appendChild(row);
   });
 }
-function switchHero(id){ activeId=id; S=roster.find(h=>h.id===id); save(); renderAll(); closeOverlays(); showTab('hero'); toast('Switched to '+(S.heroName||'hero')); }
+function switchHero(id){ activeId=id; S=roster.find(h=>h.id===id); helpTags=[]; agAction=null; save(); renderAll(); closeOverlays(); showTab('hero'); toast('Switched to '+(S.heroName||'hero')); }
 function newHero(){ const h=blankHero(); roster.push(h); switchHero(h.id); toast('New hero created'); }
 function delHeroById(id){
   roster=roster.filter(h=>h.id!==id);

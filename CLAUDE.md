@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,477 lines / ~485 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,502 lines / ~487 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v31` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v32` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -320,7 +320,11 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
   (Origin/Adventure/Greatness) and the **Might you bring**, and the app computes the modifier
   (`(you−task)×3`, clamped ±6) and sets the dial. A manually-tapped Might clears the helper.
   When a Grimoire action with a Might note is loaded, the note is surfaced in the 🎬 panel.
-- **Situational** ± stepper for any other foe/environment tags the Narrator invokes.
+- **Situational** ± stepper for any other foe/environment tags the Narrator invokes (incl. a
+  group/Challenge's Might acting against you).
+- **🤝 Help from other Heroes (Phase 5 — group/help)** — add ally-invoked tags that help or
+  hinder your action; each row's value cycles **+1 → 🔥+3 → −1 → off** and feeds `computePower`
+  (`helpTags` transient array, `renderHelp`/`addHelp`; cleared on hero switch).
 - Live **Power** readout; animated dice; outcome banner:
   - **10+** Success (no Consequences) · **7–9** Success & Consequences · **6−** Consequences
   - Double 6 = guaranteed Success; double 1 = guaranteed Consequences (regardless of Power) —
@@ -484,7 +488,7 @@ picker** (Phase 3 ✅).
 - [x] *Follow-up done (2026-06-06):* the free-text Quintessence capture at a Moment of
       Fulfillment is now the guided **Quintessence picker** (Phase 3).
 
-### Phase 5 — Play-loop helpers (player-facing) ✅ MOSTLY DONE (2026-06-05)
+### Phase 5 — Play-loop helpers (player-facing) ✅ DONE (2026-06-08)
 Shipped as the **Action/Reaction toggle + burn-scratch + interactive Effect-spender** (see
 Implemented Features → "Play loop").
 - [x] **Reaction roller** — mode toggle; 10+ Power+1, 7–9 lessen only, 6− take as-is.
@@ -493,8 +497,10 @@ Implemented Features → "Play loop").
 - [x] **Status apply/stack/reduce engine** wired to spending Power (`giveStatusTier` spills to
       the next free box; `reduceStatusByAmt` shifts marks left).
 - [x] **Burn-on-roll** scratches the burned tag on roll confirm (`scratchTagById`).
-- [ ] **Group / help actions** — combine multiple players' contributed tags; add a Challenge's
-      group Might as ± Power. *(Still open — the only Phase-5 item left.)*
+- [x] **Group / help actions** (2026-06-08) — the **🤝 Help from other Heroes** section on the
+      Roll tab lets the acting player add ally-invoked tags (each cycles +1 / 🔥+3 / −1 / off),
+      combined into Power (`helpTags`/`renderHelp`). A foe **group/Challenge's Might** is entered
+      via the Situational ± stepper (hint updated). Player-side; transient, cleared on hero switch.
 
 ### Phase 6 — Scene & session context (still player-side) ✅ MOSTLY DONE (2026-06-06)
 Scene board + Camping/Sojourn shipped; only the Journey montage remains.
