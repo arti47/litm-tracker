@@ -33,6 +33,11 @@ if os.path.exists(tpath):
 agpath=os.path.join(B,'action-grimoire.json')
 if os.path.exists(agpath):
     data['actionGrimoire']=json.load(open(agpath,encoding='utf-8'))['sections']
+# The Oracle (solo/co-op play tables) — separate supplement.
+orpath=os.path.join(B,'oracle.json')
+if os.path.exists(orpath):
+    odata=json.load(open(orpath,encoding='utf-8')); odata.pop('_source',None)
+    data['oracle']=odata
 wiz=open(os.path.join(B,'wizard.js'),encoding='utf-8').read()
 datajs='const LITM_DATA = '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n'
 block='\n/* ===== Phase 2: creation data + wizard ===== */\n'+datajs+wiz+'\n'

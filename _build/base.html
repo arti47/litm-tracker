@@ -235,6 +235,16 @@ details.ag-sec[open] > summary::before { content: "▾ "; }
 .mh-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
 .mh-lbl { font-size: 12px; color: var(--ink-soft); flex: 0 0 78px; }
 .seg.sm button { padding: 6px 8px; font-size: 12px; }
+.or-result .sub { margin-top: 4px; line-height: 1.45; }
+.orc-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.orc-l { flex: 0 0 120px; font-size: 11px; color: var(--ink-soft); font-weight: 700; text-transform: uppercase; letter-spacing: .3px; }
+.orc-v { flex: 1; font-size: 13px; line-height: 1.4; }
+.pb-step { border-top: 1px solid var(--border); padding-top: 6px; margin-top: 8px; }
+.pb-step .sub { line-height: 1.5; margin: 2px 0 6px; }
+.orl { border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; margin-bottom: 8px; background: var(--bg-deep); }
+.orl-h { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--teal); font-weight: 700; }
+.orl-r { font-size: 13px; line-height: 1.45; margin: 4px 0; }
+.orl-note { width: 100%; min-height: 32px; font-size: 13px; resize: vertical; }
 .ref-sec { border: 1px solid var(--border); border-radius: 10px; margin: 8px 0; padding: 2px 12px; background: var(--bg-deep); }
 .ref-sec > h3 { cursor: pointer; user-select: none; margin: 10px 0; }
 .ref-sec > h3::before { content: "▾ "; color: var(--teal); font-size: 12px; }
@@ -365,6 +375,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="tab" data-tab="track" onclick="showTab('track')">Tracking</button>
     <button class="tab" data-tab="roll" onclick="showTab('roll')">Roll</button>
     <button class="tab" data-tab="ref" onclick="showTab('ref')">Rules</button>
+    <button class="tab" data-tab="oracle" id="oracleTab" onclick="showTab('oracle')" style="display:none">🔮 Oracle</button>
   </nav>
 </header>
 
@@ -614,6 +625,19 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 </section>
 
+<!-- ORACLE (solo / co-op play) -->
+<section class="panel" id="panel-oracle">
+  <div class="card">
+    <h2>🔮 The Oracle</h2>
+    <p class="hint" style="margin:-2px 0 8px">Solo &amp; co-op tools — roll for answers, scenes, challenges, and consequences, then interpret them in your story. Results log below.</p>
+    <div id="oracleBody"></div>
+  </div>
+  <div class="card">
+    <h2>📓 Oracle log &amp; journal</h2>
+    <div id="oracleLog"></div>
+  </div>
+</section>
+
 <!-- MENU OVERLAY -->
 <div class="overlay" id="menuOverlay" onclick="if(event.target===this)closeOverlays()">
   <div class="sheet">
@@ -628,6 +652,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="exportFellowship()"><span class="em">🤝</span> Share Fellowship (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('fellowFile').click()"><span class="em">🔗</span> Import / sync Fellowship</button>
+    <button class="menu-item" onclick="toggleSolo()"><span class="em">🔮</span> <span id="soloLbl">Enable Solo Play Mode</span></button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
     <button class="menu-item danger-text" onclick="deleteHero()"><span class="em">🗑️</span> Delete this hero</button>
     <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
@@ -755,7 +780,8 @@ function blankHero() {
     progress: [],
     scene: [],
     sceneBoard: { step: -1, stakes: '', threats: '' },
-    journey: { dest: '', max: 3, cur: 0, time: 0, vignettes: [] }
+    journey: { dest: '', max: 3, cur: 0, time: 0, vignettes: [] },
+    oracleLog: []
   };
 }
 
@@ -877,6 +903,7 @@ function showTab(name){
   window.scrollTo(0,0);
   if (name==='roll') renderRoller();
   if (name==='ref') renderRefData();
+  if (name==='oracle') renderOracle();
 }
 
 // ---------- Rules tab: collapsible sections + search ----------
@@ -1413,6 +1440,101 @@ function renderJourney(){
   });
   $('jr_addv').onclick=()=>{ (j.vignettes=j.vignettes||[]).push({id:uid(),text:'',done:false}); save(); renderJourney(); };
   $('jr_reset').onclick=()=>{ if(confirm('Reset this journey? Clears progress, clock, and vignettes.')){ S.journey={dest:'',max:3,cur:0,time:0,vignettes:[]}; save(); renderJourney(); } };
+}
+
+// ============================================================
+//  THE ORACLE (solo / co-op play)
+// ============================================================
+const LS_SOLO='litm-solo';
+function litmOracle(){ try{ if(typeof LITM_DATA!=='undefined' && LITM_DATA.oracle) return LITM_DATA.oracle; }catch(e){} return null; }
+function soloOn(){ return localStorage.getItem(LS_SOLO)==='1'; }
+function applySolo(){ const on=soloOn(); const t=$('oracleTab'); if(t) t.style.display=on?'':'none'; const l=$('soloLbl'); if(l) l.textContent=on?'Disable Solo Play Mode':'Enable Solo Play Mode'; }
+function toggleSolo(){ const on=!soloOn(); localStorage.setItem(LS_SOLO,on?'1':'0'); applySolo(); closeOverlays(); if(on){ showTab('oracle'); toast('Solo Play Mode on'); } else { if($('panel-oracle').classList.contains('active')) showTab('hero'); toast('Solo Play Mode off'); } }
+const d6=()=>1+Math.floor(Math.random()*6);
+const d66=()=>''+d6()+d6();
+const d66idx=s=>(+s[0]-1)*6+(+s[1]-1);            // 0..35
+const d66g12=s=>Math.floor(d66idx(s)/3);          // 0..11 (12 groups of 3)
+const d66g9=s=>Math.floor(d66idx(s)/4);           // 0..8  (9 groups of 4)
+function inR(rng,n){ const p=String(rng).split('-'); return n>=+p[0] && n<=+(p[1]||p[0]); }
+let oracleSel='question';
+let _or={ pow:0, role:'Aggressor', act:1, area:null, conflict:{} };
+function setRes(html){ const r=$('orResult'); if(r) r.innerHTML='<div class="outcome win" style="margin-top:10px">'+html+'</div>'; }
+const ORACLES=[['question','Question'],['conflict','Conflict / Scene'],['premade','Premade Profile'],['builder','Profile Builder'],['action','Challenge Action'],['conseq','Consequences'],['revel','Revelations']];
+function renderOracle(){
+  const O=litmOracle(); const w=$('oracleBody'); if(!w) return;
+  if(!O){ w.innerHTML='<p class="hint">Oracle data not loaded.</p>'; return; }
+  w.innerHTML='<div class="ag-fx" style="margin-bottom:10px">'+ORACLES.map(o=>'<button class="modchip'+(oracleSel===o[0]?' help':'')+'" data-or="'+o[0]+'">'+esc(o[1])+'</button>').join('')+'</div><div id="orBody"></div>';
+  w.querySelectorAll('[data-or]').forEach(b=>b.onclick=()=>{ oracleSel=b.dataset.or; renderOracle(); });
+  drawOracle(O);
+  renderOracleLog();
+}
+function drawOracle(O){
+  const b=$('orBody'); if(!b) return; const res='<div id="orResult" class="or-result"></div>'; let h='';
+  if(oracleSel==='question'){
+    h='<h3>Interpretive answer</h3><button class="btn sm" id="or_interp">🎲 Roll a symbol (d66)</button>'
+      +'<h3 style="margin-top:14px">Yes / No</h3><label class="fld"><span>Question (optional)</span><input id="or_q" placeholder="e.g. Are there bandits in these woods?"></label>'
+      +'<div class="row" style="align-items:center;gap:10px"><span class="hint" style="margin:0;flex:1">Power — tags swaying <b>Yes</b> +, <b>No</b> −</span><div class="stepper"><button id="or_pm">−</button><b id="or_pv" style="min-width:28px;text-align:center">'+(_or.pow>0?'+':'')+_or.pow+'</b><button id="or_pp">+</button></div></div>'
+      +'<button class="btn sm" id="or_yn" style="margin-top:8px">🎲 Ask (2d6 + Power)</button>'+res;
+    b.innerHTML=h;
+    $('or_interp').onclick=()=>{ const r=d66(), i=d66idx(r), s=O.interpretive[i], c=O.interpretiveCols[i];
+      setRes('<b>d66 '+r+' — '+esc(s.symbol)+'</b><div class="sub">'+esc(s.text)+'</div><div class="sub" style="opacity:.85">Attitude: '+esc(c.attitude)+' · Magical being: '+esc(c.being)+' · Terrain: '+esc(c.terrain)+' · Item: '+esc(c.item)+'</div>');
+      oracleAdd('Question · Interpretive','d66 '+r+' — '+s.symbol+': '+s.text); };
+    $('or_pm').onclick=()=>{ _or.pow--; $('or_pv').textContent=(_or.pow>0?'+':'')+_or.pow; };
+    $('or_pp').onclick=()=>{ _or.pow++; $('or_pv').textContent=(_or.pow>0?'+':'')+_or.pow; };
+    $('or_yn').onclick=()=>{ const a=d6(),c2=d6(),tot=a+c2+_or.pow,d1=a===1&&c2===1,d6b=a===6&&c2===6;
+      const band=d1?O.yesno[0]:d6b?O.yesno[4]:tot<=6?O.yesno[1]:tot<=9?O.yesno[2]:O.yesno[3];
+      const q=($('or_q').value||'').trim();
+      setRes('<b>'+a+' + '+c2+(_or.pow?(_or.pow>0?' + '+_or.pow:' − '+Math.abs(_or.pow)):'')+' = '+tot+'</b><div class="sub"><b>'+esc(band.label)+'</b> — '+esc(band.answer)+'</div>');
+      oracleAdd('Question · Yes/No',(q?q+' → ':'')+band.label+': '+band.answer); };
+  } else if(oracleSel==='conflict'){
+    b.innerHTML='<button class="btn sm" id="or_call">🎲 Roll a whole scene</button><p class="hint" style="margin:8px 0 2px">Each column, tap 🎲 to (re)roll just that one:</p><div id="or_cols"></div>';
+    const rollCol=key=>{ let r,g,n=0; do{ r=d66(); g=d66g12(r); }while(g===11 && ++n<24); if(g===11) g=10; return {r,text:O.conflict[key][g]}; };
+    const draw=()=>{ $('or_cols').innerHTML=O.conflictCols.map(([key,label])=>{ const cur=_or.conflict[key];
+      return '<div class="orc-row"><div class="orc-l">'+esc(label)+'</div><div class="orc-v">'+(cur?'<b>'+cur.r+'</b> '+esc(cur.text):'<span class="muted">—</span>')+'</div><button class="ic" data-rc="'+key+'" style="flex:none">🎲</button></div>'; }).join('');
+      $('or_cols').querySelectorAll('[data-rc]').forEach(btn=>btn.onclick=()=>{ _or.conflict[btn.dataset.rc]=rollCol(btn.dataset.rc); draw(); }); };
+    draw();
+    $('or_call').onclick=()=>{ O.conflictCols.forEach(([key])=>_or.conflict[key]=rollCol(key)); draw();
+      oracleAdd('Conflict · Scene', O.conflictCols.map(([key,label])=>label+': '+_or.conflict[key].text).join(' | ')); };
+  } else if(oracleSel==='premade'){
+    h='<button class="btn sm" id="or_area">🎲 Random area</button> <span id="or_areaName" class="hint"></span>'
+      +'<div class="ag-fx" style="margin:10px 0"><button class="btn sm" id="or_cre">Creatures</button><button class="btn sm" id="or_per">People</button><button class="btn sm" id="or_pla">Places &amp; Events</button></div>'
+      +'<button class="btn sm ghost" id="or_vig">🎲 Vignette</button>'+res; b.innerHTML=h;
+    if(_or.area==null) _or.area=0;
+    $('or_areaName').textContent='— '+O.premadeAreas[_or.area];
+    $('or_area').onclick=()=>{ let r,g,n=0; do{ r=d66(); g=d66g12(r); }while(g>=11 && ++n<24); if(g>=11) g=10; _or.area=g; $('or_areaName').textContent='— '+O.premadeAreas[g]; };
+    const pick=(k,label)=>{ const list=O.premade[_or.area][k], roll=d6(), e=list.find(x=>inR(x.r,roll))||list[0];
+      setRes('<b>'+esc(O.premadeAreas[_or.area])+'</b><div class="sub">'+label+' (d6 '+roll+'): '+esc(e.name)+'</div>'); oracleAdd('Premade · '+label, O.premadeAreas[_or.area]+' — '+e.name); };
+    $('or_cre').onclick=()=>pick('creatures','Creature'); $('or_per').onclick=()=>pick('persons','Person'); $('or_pla').onclick=()=>pick('places','Place/Event');
+    $('or_vig').onclick=()=>{ const cat=O.vignettes[d6()-1], it=cat.items[Math.min(cat.items.length-1,d6()-1)]; setRes('<b>Vignette — '+esc(cat.cat)+'</b><div class="sub">'+esc(it)+'</div>'); oracleAdd('Vignette', cat.cat+': '+it); };
+  } else if(oracleSel==='builder'){
+    const pb=O.profileBuilder; h='<p class="hint">'+esc(pb.intro)+'</p>';
+    pb.steps.forEach((s,i)=>{ h+='<div class="pb-step"><div class="fmt-h">'+esc(s.h)+'</div><p class="sub">'+esc(s.t)+'</p>'+(i===1?'<button class="btn sm" id="or_cr">🎲 Roll CR</button> <span id="or_crv" class="hint"></span>':'')+'</div>'; });
+    b.innerHTML=h;
+    $('or_cr').onclick=()=>{ let might=0,cr=0; for(let k=0;k<12;k++){ const r=d6(); if(r===6) might++; else { cr=r; break; } } if(!cr) cr=5;
+      $('or_crv').textContent='→ CR '+cr+(might?(' · +'+might+' Might'):''); oracleAdd('Profile Builder · CR','CR '+cr+(might?(' (+'+might+' Might)'):'')); };
+  } else if(oracleSel==='action'){
+    const roles=Object.keys(O.challengeAction);
+    h='<label class="fld"><span>Challenge Role</span><select id="or_role">'+roles.map(r=>'<option'+(_or.role===r?' selected':'')+'>'+r+'</option>').join('')+'</select></label><button class="btn sm" id="or_ca">🎲 Roll an action (d6)</button>'+res; b.innerHTML=h;
+    $('or_role').onchange=e=>_or.role=e.target.value;
+    $('or_ca').onclick=()=>{ const list=O.challengeAction[_or.role]; let r=d6(); if(r>list.length) r=1+Math.floor(Math.random()*list.length); const line=list[r-1];
+      setRes('<b>'+esc(_or.role)+' (d6 '+r+')</b><div class="sub">'+esc(line)+'</div>'); oracleAdd('Challenge Action · '+_or.role, line); };
+  } else if(oracleSel==='conseq'){
+    b.innerHTML='<button class="btn sm" id="or_cq">🎲 Roll a Consequence (d66 + d6)</button>'+res;
+    $('or_cq').onclick=()=>{ const r=d66(), row=O.consequences[d66g9(r)], sp=row.specific[d6()-1]||row.specific[0];
+      setRes('<b>d66 '+r+' — '+esc(row.title)+'</b><div class="sub">'+esc(row.desc)+'</div><div class="sub" style="opacity:.85">Specific (d6): '+esc(sp)+'</div>'); oracleAdd('Consequence', row.title+' — '+sp); };
+  } else if(oracleSel==='revel'){
+    b.innerHTML='<div class="seg sm" id="or_act"><button data-a="1"'+(_or.act===1?' class="on"':'')+'>Act I</button><button data-a="2"'+(_or.act===2?' class="on"':'')+'>Act II</button><button data-a="3"'+(_or.act===3?' class="on"':'')+'>Act III</button></div><button class="btn sm" id="or_rev" style="margin-top:8px">🎲 Reveal (d66)</button>'+res;
+    b.querySelectorAll('#or_act button').forEach(btn=>btn.onclick=()=>{ _or.act=+btn.dataset.a; drawOracle(O); });
+    $('or_rev').onclick=()=>{ const r=d66(), row=O.revelations[d66g9(r)], txt=row['act'+_or.act];
+      setRes('<b>Act '+['','I','II','III'][_or.act]+' · d66 '+r+'</b><div class="sub">'+esc(txt)+'</div>'); oracleAdd('Revelation · Act '+_or.act, txt); };
+  }
+}
+function oracleAdd(kind, result){ if(!S.oracleLog) S.oracleLog=[]; S.oracleLog.unshift({id:uid(), t:Date.now(), kind, result, note:''}); S.oracleLog=S.oracleLog.slice(0,80); save(); renderOracleLog(); }
+function renderOracleLog(){ const w=$('oracleLog'); if(!w) return; const log=S.oracleLog||[];
+  if(!log.length){ w.innerHTML='<p class="muted">No rolls yet — roll an oracle above and it\'s recorded here. Add a journal note to any entry.</p>'; return; }
+  w.innerHTML=log.map(e=>'<div class="orl"><div class="orl-h"><b>'+esc(e.kind)+'</b><button class="ic" data-del="'+e.id+'" style="flex:none">✕</button></div><div class="orl-r">'+esc(e.result)+'</div><textarea class="orl-note" data-note="'+e.id+'" placeholder="journal note…">'+esc(e.note||'')+'</textarea></div>').join('');
+  w.querySelectorAll('[data-del]').forEach(btn=>btn.onclick=()=>{ S.oracleLog=S.oracleLog.filter(x=>x.id!==btn.dataset.del); save(); renderOracleLog(); });
+  w.querySelectorAll('[data-note]').forEach(t=>t.oninput=()=>{ const e=S.oracleLog.find(x=>x.id===t.dataset.note); if(e){ e.note=t.value; save(); } });
 }
 function campRest(){
   let n=0, red=0;
@@ -2150,6 +2272,7 @@ function toggleTheme(){
 applyTheme();
 loadAll();
 renderAll();
+applySolo();
 _lastSnap=_snap(); updateUndoUI();
 
 

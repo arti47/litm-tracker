@@ -48,17 +48,18 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,605 lines / ~497 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,728 lines / ~542 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
-  the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v34` (bump on every deploy)
+  the Action Grimoire supplement catalog + the Oracle tables, ~230 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v35` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
-- **localStorage keys (4)**:
+- **localStorage keys (5)**:
   - `litm-roster-v1` — array of all heroes (each hero is the full state object)
   - `litm-active-v1` — id of the currently open hero
   - `litm-rolls-v1` — last 40 dice rolls
   - `litm-theme` — `'light'` / `'dark'` / unset = auto (`prefers-color-scheme`)
+  - `litm-solo` — `'1'` when Solo Play Mode is on (reveals the 🔮 Oracle tab); app-level, not per-hero
   - (`litm-hero` appears only as the default export filename stem, not a storage key)
 
 ### Stack
@@ -96,13 +97,18 @@ three sources in `_build/` and injected:
   `LITM_DATA.actionGrimoire`; shown in the searchable Action-Grimoire browser
   (`openAG`/`renderAG`, `#agOverlay`) and loadable into the roller (Phase B, `useAGAction`).
   **Complete** — 19 leaf action sections (101 entries) + 2 prose sections.
+- `_build/oracle.json` — **The Oracle** (solo/co-op play) supplement: the Question (interpretive
+  d66 + d66 sub-columns + yes/no bands), Conflict (7 columns), Premade Profile (areas +
+  creatures/persons/places + vignettes), Profile Builder steps, Challenge Action (11 Roles),
+  Consequences (d66), and Revelations (d66 × 3 acts) tables. Merged into `LITM_DATA.oracle`;
+  rendered on the 🔮 Oracle tab (`renderOracle`/`drawOracle`).
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
   NotebookLM `source_get_content` dump of *Legend In The Mist - Core Book.pdf*).
 - `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
   `specials-override.json` + `might-table.json` + `grimoire.json` + `tutorial.json` +
-  `action-grimoire.json` + `wizard.js` → `character-tracker.html` **and** `index.html`
+  `action-grimoire.json` + `oracle.json` + `wizard.js` → `character-tracker.html` **and** `index.html`
   (mirrors automatically).
 
 ```bash
@@ -149,7 +155,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
   `litm-data.json`, `quintessences.json`, `specials-override.json`, `might-table.json`,
-  `grimoire.json`, `tutorial.json`, `action-grimoire.json`, `parse_litm.py`, `inject.py`.
+  `grimoire.json`, `tutorial.json`, `action-grimoire.json`, `oracle.json`, `parse_litm.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -173,6 +179,10 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
     mechanical}. Consumed by the Moment-of-Fulfillment picker (`litmQuintessences()`) and the
     searchable Reference tab; `hasQuintessence(name)` substring-matches the hero's free-text
     Quintessences field to drive roller encodings (currently **Beyond Luck**).
+  - `oracle` (merged from `_build/oracle.json`) — **The Oracle** solo/co-op play tables (Question
+    yes/no + interpretive d66, Conflict, Premade Profile, Profile Builder, Challenge Action,
+    Consequences, Revelations). Consumed by the 🔮 Oracle tab (`litmOracle()`), rendered by
+    `renderOracle`/`drawOracle`; the tab is gated by **Solo Play Mode** (`litm-solo`).
 
 ### State model (one hero)
 ```
@@ -186,7 +196,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
   progress:[{name,goal,cur,max}],   // progress/Limit tracks (gap #4); max 2–10, complete at cur≥max
   scene:[{text,type,scratched}],
   sceneBoard:{step:-1|0|1|2, stakes, threats},
-  journey:{dest, max(2–10), cur, time, vignettes:[{text,done}]} }   // Journey montage (Phase 6)
+  journey:{dest, max(2–10), cur, time, vignettes:[{text,done}]},   // Journey montage (Phase 6)
+  oracleLog:[{id,t,kind,result,note}] }   // Oracle results + journal notes (solo/co-op), cap 80
 ```
 
 ---
@@ -318,6 +329,26 @@ clock), and a list of **Vignette Challenges** — each row has a **🎲** (close
 to the Roll tab for a Quick action) and a **✓** that clears the vignette and advances one leg
 (strikes it through). Reaching the leg Limit shows **✓ Arrived at <dest>**. Persisted per hero in
 `journey`; a **Reset journey** button clears it.
+
+### The Oracle — solo & co-op play (supplement) ✅
+A **🔮 Oracle tab** (`#panel-oracle`, `renderOracle`/`drawOracle`), gated behind a **Solo Play
+Mode** ☰ menu toggle (`toggleSolo`, `litm-solo` localStorage key) — the tab is hidden in normal
+play and revealed when solo mode is on. All seven oracles are interactive (the app rolls the
+dice and shows the matching line, with a re-roll), driven by `LITM_DATA.oracle`:
+- **Question** — Interpretive (roll d66 → symbol + meaning, plus the same roll's Attitude/Magical
+  being/Terrain/Item sub-columns) and **Yes/No** (2d6 + a **± Power stepper** for tags swaying
+  the answer; double-1/double-6 = Extreme No/Yes).
+- **Conflict / Scene** — roll all 7 columns (Central Challenge, Role, Target, Location, Unfolding,
+  Secondary, Story Tags) or re-roll any one; "Roll again" rows auto-reroll (loop-capped).
+- **Premade Profile** — roll an area (d66) then a Creature/Person/Place (d6 → name + book page),
+  plus a **Vignette** roller.
+- **Profile Builder** — the 5-step guide with a **Roll CR** button (d6; a 6 adds Might and rerolls).
+- **Challenge Action** — pick a Role (11) → roll d6 for its Threat/Consequence.
+- **Consequences** — roll d66 → category + a d6 specific consequence.
+- **Revelations** — pick Act I/II/III → roll d66 for the matching revelation.
+Every roll is appended to a per-hero **Oracle log & journal** (`oracleLog`, `renderOracleLog`,
+cap 80) with a free-text note box per entry; entries are deletable. Dice helpers `d6`/`d66` +
+`d66idx`/`d66g12`/`d66g9` map rolls to the table groups.
 
 ### Roll (the headline feature) — rule-correct **2d6 + Power**
 - Auto-collects every eligible tag from the sheet (theme titles, power tags, weakness tags,

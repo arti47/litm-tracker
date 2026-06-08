@@ -1,0 +1,1453 @@
+{
+  "_source": "Legend in the Mist — The Oracle (solo & co-op play). Verbatim tables from the supplement.",
+  "interpretive": [
+    {
+      "roll": "11",
+      "symbol": "The Peasant",
+      "text": "Hard work. Yearning for more. Cycles and repetition. An innocent bystander."
+    },
+    {
+      "roll": "12",
+      "symbol": "The Merchant",
+      "text": "Polite conflict. Bargains. Contracts and promises. A worldly person."
+    },
+    {
+      "roll": "13",
+      "symbol": "The Elder",
+      "text": "Contentment. Wisdom of age. Introspection. Someone wise with experience."
+    },
+    {
+      "roll": "14",
+      "symbol": "The Marshal",
+      "text": "Pride. Skill at arms. Organized and orderly. A soldier or law enforcer."
+    },
+    {
+      "roll": "15",
+      "symbol": "The Witch",
+      "text": "Ugliness. Intuition. Vengeance. An outcast."
+    },
+    {
+      "roll": "16",
+      "symbol": "The Thaumaturge",
+      "text": "Preparation. Studied knowledge. Tradition. A magic user."
+    },
+    {
+      "roll": "21",
+      "symbol": "The Lost Sheep",
+      "text": "Getting lost. Wandering. Seeking a direction. Someone in distress."
+    },
+    {
+      "roll": "22",
+      "symbol": "The Foolish Goose",
+      "text": "Uncertainty. Wasting time. Blissful ignorance. A fool or drunkard."
+    },
+    {
+      "roll": "23",
+      "symbol": "The Black Hound",
+      "text": "Ill portents. Bad luck. Untrustworthy people. A rogue, thief, or brigand."
+    },
+    {
+      "roll": "24",
+      "symbol": "The Spying Falcon",
+      "text": "Seeking information. Going beyond limits. Flying. A hunter."
+    },
+    {
+      "roll": "25",
+      "symbol": "The Powerful Steed",
+      "text": "Journeying fast. Reliability and moderation. Overcoming hardship. A mount or transport."
+    },
+    {
+      "roll": "26",
+      "symbol": "The Hungry Wolf",
+      "text": "Seeking opportunity. Desperation. Hunger. A lone monster or beast."
+    },
+    {
+      "roll": "31",
+      "symbol": "The Hammer & Chisel",
+      "text": "Making a mark. Boldness. Duality and dilemmas. A set of useful tools."
+    },
+    {
+      "roll": "32",
+      "symbol": "The Scythe",
+      "text": "Reaping what you have sown. Sudden death or loss. Harvest season. A dangerous situation."
+    },
+    {
+      "roll": "33",
+      "symbol": "The Pitchfork",
+      "text": "Taking up arms. Threats and fears. Physical strength. Someone threatening."
+    },
+    {
+      "roll": "34",
+      "symbol": "The Lantern",
+      "text": "Hope. Learning. Being seen or discovered. A source of knowledge."
+    },
+    {
+      "roll": "35",
+      "symbol": "The Loom",
+      "text": "Weaving together. Combining forces. Complex interplay. Two threats combined against you."
+    },
+    {
+      "roll": "36",
+      "symbol": "The Forge",
+      "text": "Making something new. Breaking down the old. Skill at a craft. A workshop or place of business."
+    },
+    {
+      "roll": "41",
+      "symbol": "The Shrine",
+      "text": "Ceremony. Mourning. Beauty. A priest or shaman."
+    },
+    {
+      "roll": "42",
+      "symbol": "The Crossroads",
+      "text": "Choices. Offers of help. Changes in life. A chance meeting."
+    },
+    {
+      "roll": "43",
+      "symbol": "The Village Fair",
+      "text": "Harmony. Diversions and entertainment. Optimism. An ally or old friend."
+    },
+    {
+      "roll": "44",
+      "symbol": "The Well",
+      "text": "Temptation. Taint or despoilment. Dangerous locations. A mysterious stranger."
+    },
+    {
+      "roll": "45",
+      "symbol": "The Winding River",
+      "text": "Complications. Witnessing beauty and splendor. A set or fated path. An unavoidable journey."
+    },
+    {
+      "roll": "46",
+      "symbol": "The Mountain",
+      "text": "Increasing difficulty. Lofty goals or ideals. Treacherous landscape. An obstacle."
+    },
+    {
+      "roll": "51",
+      "symbol": "The Great Spider",
+      "text": "Detailed plans. Webs of power. The center of something sprawling. A trap."
+    },
+    {
+      "roll": "52",
+      "symbol": "The Faerie Prince",
+      "text": "Petty tyrants. Alluring people. Silly or decadent games. A noble."
+    },
+    {
+      "roll": "53",
+      "symbol": "The Dead Knight",
+      "text": "Returning. Old promises or oaths. Undying love. A ghost of the past."
+    },
+    {
+      "roll": "54",
+      "symbol": "The Sorceress",
+      "text": "Power for its own sake. Great feats. Loss of control. Someone power hungry."
+    },
+    {
+      "roll": "55",
+      "symbol": "The Kraken",
+      "text": "Profound, unseen, or spiritual forces. Surprise. Mystery. An ambush."
+    },
+    {
+      "roll": "56",
+      "symbol": "The Dragon",
+      "text": "Greed. Luck. Regal bearing. Someone wealthy."
+    },
+    {
+      "roll": "61",
+      "symbol": "The Herald",
+      "text": "Social engagements. Formality. Oracular portents. A new person."
+    },
+    {
+      "roll": "62",
+      "symbol": "The Tyrant's Road",
+      "text": "Many guards or soldiers. Destruction. The offers of power. A dangerous path."
+    },
+    {
+      "roll": "63",
+      "symbol": "The Drawbridge",
+      "text": "Putting up defenses. Withdrawing. Hiding. Something blocking your path."
+    },
+    {
+      "roll": "64",
+      "symbol": "The High Lord",
+      "text": "Judgement. Hard choices. Authority. A leader or ruler."
+    },
+    {
+      "roll": "65",
+      "symbol": "The Bloody Crown",
+      "text": "Violence. War. Politics. Two forces clash with each other."
+    },
+    {
+      "roll": "66",
+      "symbol": "The Empty Throne",
+      "text": "Abdication of duties. Failure of leadership. Crisis. An opportunity."
+    }
+  ],
+  "interpretiveCols": [
+    {
+      "roll": "11",
+      "attitude": "Joyful",
+      "being": "Shapeshifting trickster",
+      "terrain": "Ridgeline",
+      "item": "Comb or hairpin"
+    },
+    {
+      "roll": "12",
+      "attitude": "Content",
+      "being": "Malicious or helpful household spirit",
+      "terrain": "Valley",
+      "item": "Locket"
+    },
+    {
+      "roll": "13",
+      "attitude": "Affectionate",
+      "being": "Birds with strange agendas",
+      "terrain": "Plateau",
+      "item": "Signet ring"
+    },
+    {
+      "roll": "14",
+      "attitude": "Curious",
+      "being": "Sneaky underground faerie",
+      "terrain": "Cliff",
+      "item": "Belt or buckle"
+    },
+    {
+      "roll": "15",
+      "attitude": "Smug",
+      "being": "Lake or river spirit",
+      "terrain": "Slope or hill",
+      "item": "Gloves or scarf"
+    },
+    {
+      "roll": "16",
+      "attitude": "Proud",
+      "being": "Sapient goat or sheep",
+      "terrain": "Sinkhole",
+      "item": "Hat"
+    },
+    {
+      "roll": "21",
+      "attitude": "Playful",
+      "being": "Guardian of a bridge or door",
+      "terrain": "Mountain pass",
+      "item": "Boots"
+    },
+    {
+      "roll": "22",
+      "attitude": "Compassionate",
+      "being": "Waterfall serpent",
+      "terrain": "River or brook",
+      "item": "Coin pouch"
+    },
+    {
+      "roll": "23",
+      "attitude": "Determined",
+      "being": "Gaggle of pixies",
+      "terrain": "Waterfall",
+      "item": "Socks"
+    },
+    {
+      "roll": "24",
+      "attitude": "Patient",
+      "being": "Fae duelist",
+      "terrain": "Pond or lake",
+      "item": "Waterskin"
+    },
+    {
+      "roll": "25",
+      "attitude": "Appreciative",
+      "being": "Tree spirit or talking tree",
+      "terrain": "Spring or geyser",
+      "item": "Tinderbox"
+    },
+    {
+      "roll": "26",
+      "attitude": "Angry",
+      "being": "Protective hearth spirit",
+      "terrain": "Marsh or flooded area",
+      "item": "Toothpick"
+    },
+    {
+      "roll": "31",
+      "attitude": "Jealous",
+      "being": "Drunken wine guardian",
+      "terrain": "Cove and/or sea cave",
+      "item": "Sewing needle and thread"
+    },
+    {
+      "roll": "32",
+      "attitude": "Afraid",
+      "being": "Food-stealing magic cat",
+      "terrain": "Dunes or beach",
+      "item": "Wooden bowl"
+    },
+    {
+      "roll": "33",
+      "attitude": "Despairing",
+      "being": "Snake-bodied wise sage",
+      "terrain": "Ruins",
+      "item": "Clay mug"
+    },
+    {
+      "roll": "34",
+      "attitude": "Distrustful",
+      "being": "Wandering golem",
+      "terrain": "Tree stumps",
+      "item": "Pot or kettle"
+    },
+    {
+      "roll": "35",
+      "attitude": "Insecure",
+      "being": "Dream-invading sprite",
+      "terrain": "Forest or grove",
+      "item": "Oil flask"
+    },
+    {
+      "roll": "36",
+      "attitude": "Irritable",
+      "being": "Horse-headed forest spirit",
+      "terrain": "Thicket",
+      "item": "Rolling pin"
+    },
+    {
+      "roll": "41",
+      "attitude": "Lonely",
+      "being": "Cursed angler",
+      "terrain": "Clearing",
+      "item": "Eating knife"
+    },
+    {
+      "roll": "42",
+      "attitude": "Overwhelmed",
+      "being": "Light-haunting ghost",
+      "terrain": "Cave or tunnel",
+      "item": "Cup and saucer"
+    },
+    {
+      "roll": "43",
+      "attitude": "Vindictive",
+      "being": "Human-faced talking worm",
+      "terrain": "Prairie",
+      "item": "Hammer"
+    },
+    {
+      "roll": "44",
+      "attitude": "Weary",
+      "being": "Intelligent wildfire",
+      "terrain": "Boulder field",
+      "item": "Shovel"
+    },
+    {
+      "roll": "45",
+      "attitude": "Conflicted",
+      "being": "Mud that remembers",
+      "terrain": "Desert or oasis",
+      "item": "Tongs"
+    },
+    {
+      "roll": "46",
+      "attitude": "Wistful",
+      "being": "Someone trapped in a mirror",
+      "terrain": "Dry riverbed",
+      "item": "Rope"
+    },
+    {
+      "roll": "51",
+      "attitude": "Apathetic",
+      "being": "Favor-trading imp",
+      "terrain": "Snowfield",
+      "item": "Barrel"
+    },
+    {
+      "roll": "52",
+      "attitude": "Skeptical",
+      "being": "Doppelganger",
+      "terrain": "Keep, watchtower, or castle",
+      "item": "Anvil"
+    },
+    {
+      "roll": "53",
+      "attitude": "Restless",
+      "being": "Screaming cave",
+      "terrain": "Henge or cairn",
+      "item": "Map or scroll"
+    },
+    {
+      "roll": "54",
+      "attitude": "Mocking",
+      "being": "Talkative giant insect",
+      "terrain": "Quarry",
+      "item": "Candlestick"
+    },
+    {
+      "roll": "55",
+      "attitude": "Cooperative",
+      "being": "Blue-skinned storyteller",
+      "terrain": "Mine",
+      "item": "Bedroll"
+    },
+    {
+      "roll": "56",
+      "attitude": "Defensive",
+      "being": "Animated skeleton",
+      "terrain": "Crossroads",
+      "item": "Compass"
+    },
+    {
+      "roll": "61",
+      "attitude": "Manipulative",
+      "being": "Singing gust of wind",
+      "terrain": "Village",
+      "item": "Chest"
+    },
+    {
+      "roll": "62",
+      "attitude": "Rebellious",
+      "being": "Face in a wall or tree",
+      "terrain": "Bridge",
+      "item": "Dice or playing cards"
+    },
+    {
+      "roll": "63",
+      "attitude": "Obedient",
+      "being": "Ghost of a child",
+      "terrain": "Farm, farmhouse, or barn",
+      "item": "Musical instrument"
+    },
+    {
+      "roll": "64",
+      "attitude": "Stern",
+      "being": "Floating book",
+      "terrain": "Inn or tavern",
+      "item": "Puzzle box"
+    },
+    {
+      "roll": "65",
+      "attitude": "Judgemental",
+      "being": "Demon bound into a gemstone",
+      "terrain": "Trench or canal",
+      "item": "Child's toy"
+    },
+    {
+      "roll": "66",
+      "attitude": "Bored",
+      "being": "Pair of glowing eyes in the darkness",
+      "terrain": "Temple or burial grounds",
+      "item": "Prayer beads"
+    }
+  ],
+  "yesno": [
+    {
+      "band": "dbl1",
+      "label": "⚀⚀ Double ones",
+      "answer": "Extreme No — not at all (regardless of Power)."
+    },
+    {
+      "band": "low",
+      "label": "6 or less",
+      "answer": "No."
+    },
+    {
+      "band": "mid",
+      "label": "7–9",
+      "answer": "It's complicated — a Yes with a caveat, or a No with an exception."
+    },
+    {
+      "band": "high",
+      "label": "10+",
+      "answer": "Yes."
+    },
+    {
+      "band": "dbl6",
+      "label": "⚅⚅ Double sixes",
+      "answer": "Extreme Yes — yes, and more so! (regardless of Power)."
+    }
+  ],
+  "conflict": {
+    "central": [
+      "A monster…",
+      "A natural disaster or hazard…",
+      "An animal or beast…",
+      "A person…",
+      "The terrain… (use a Landscape Journey, location Challenge, or Vignette)",
+      "A natural condition… (disease, hunger, weather)",
+      "An event, occurrence, or coincidence… (use an Occasion Journey, event Challenge, or Vignette)",
+      "A community or organization…",
+      "An unseen force… (enchantment, curse, spirit)",
+      "An underling of the main villain or major vexation…",
+      "The main villain or major vexation…",
+      "Roll again twice"
+    ],
+    "role": [
+      "…physically endangers… (Aggressor or Pursuer cause bodily harm or death — Ill Tidings, or negative physical statuses)",
+      "…socially or emotionally endangers… (Aggressor or Influence ruin reputation or harm psyche — negative social or emotional statuses)",
+      "…presents a dilemma… (Influence threatens two things, only one can be prevented; roll twice on Target)",
+      "…drains, despoils, or corrupts… (Sapper deplete resources or tags; despoiled, corrupted)",
+      "…stands as a major obstacle for… (Obstacle or Mystery; Blocked)",
+      "…disrupts the peace or stability of… (Influence or Sapper; Complication or mental/emotional statuses)",
+      "…is manipulating or influencing… (Influence; swayed)",
+      "…is spying on, searching for, inquiring, or researching… (Watcher; Exposure, alert, gains tags)",
+      "…is tricking, fooling, infiltrating, or entrancing… (Influence or Sapper; loss of a resource, beguiled)",
+      "…is progressing towards a crescendo to… (Countdown; use a progress Limit; roll again for its endgame, treating it as especially dangerous)",
+      "…is hunting down / has stolen… (Pursuer or Quarry; seeks to capture/imprison/possess — or — escape)",
+      "Roll again twice"
+    ],
+    "target": [
+      "…one or all of the Heroes.",
+      "…a Quest-related person or group.",
+      "…a Quest-related object or magic.",
+      "…a Quest-related ideal or goal.",
+      "…a Quest-related location or region.",
+      "…an ally or innocent bystander.",
+      "…a community or organization.",
+      "…an important resource.",
+      "…a nearby location or your camp.",
+      "…the Hero's current goal.",
+      "…something taken for granted, or the status quo.",
+      "Roll again twice"
+    ],
+    "location": [
+      "At home, in a village, or a small building (Homestead & Village)",
+      "A liminal or bucolic area, beyond the towns (Outskirts & Fields)",
+      "On the roadway, highway, or major trails (On the Trail)",
+      "Off the beaten path or somewhere truly wild (In the Wilds)",
+      "At a port, out at sea, or along a river (Open Water)",
+      "Somewhere forgotten, dark, or dismal (Forsaken Places)",
+      "In a bustling area, with many people (Town & City)",
+      "In a castle, court, or other place of political power (The Castle)",
+      "Near a violent conflict (On the Battlefield)",
+      "Out in the wastelands, desert, or another desolate area (Blighted Badlands)",
+      "Down in ruins, a dungeon, or a magical laboratory (Vaults of Darkness)",
+      "Roll again twice"
+    ],
+    "unfolding": [
+      "Overt action or aggression",
+      "Pleas or cries for help",
+      "Mysterious, requires investigation",
+      "An offer, contract, inquiry, or temptation",
+      "A Hero is affected first",
+      "An ambush or surprise",
+      "Slowly and gradually",
+      "One Hero learns of it while alone or isolated",
+      "Sudden reveal upon entering or arriving",
+      "Only revealed near the end",
+      "Hidden or removed, requires finding",
+      "Roll again twice"
+    ],
+    "secondary": [
+      "A bystander, or a group of them (Charge)",
+      "The Heroes' vulnerable allies (Charge)",
+      "An unrelated monster (Aggressor)",
+      "An unrelated animal or beast (Aggressor, Charge, Quarry)",
+      "Terrain (location Challenge or Landscape Journey)",
+      "An event taking place (Occasion Journey)",
+      "The weather, a hazard, or a trap (in a Journey, use a Vignette)",
+      "The Heroes are separated or isolated (Complication, Blocked, or an Obstacle Challenge)",
+      "A pervasive negative emotion — jealousy, anger, hopelessness (Sapper)",
+      "A group of the Central Challenge (Increase Might)",
+      "Allies, minions, or offspring of the Central Challenge (same role, or Support)",
+      "Roll again twice"
+    ],
+    "storyTags": [
+      "No tag-worthy features",
+      "Notable landscape features (sharp rocks, dense woods, spooky marshes, tall barley stalks)",
+      "Dangerous or useful objects (roaring bonfire, alchemy supplies, stashed weapons, crates)",
+      "People (town elder, gathering crowd, children at play)",
+      "Condition (cold winds, bright sunlight, obscuring fog, eldritch glow)",
+      "Mood (partying, somber mourning, eerie silence, desperate struggle)",
+      "Enchantments (warded-against-magic, wall of flames, supernatural gloom)",
+      "Notable structural features (battlements, rickety bridge, balcony, window)",
+      "Animal or beast (bleating calf, climbing goat, barking dog)",
+      "Something out of place (ancient statue, foreign flora, oddly-colored tile)",
+      "Sensory effects (loud noise, creepy vibes, putrid smell, blinding sunlight)",
+      "Roll again twice"
+    ]
+  },
+  "conflictCols": [
+    [
+      "central",
+      "Central Challenge"
+    ],
+    [
+      "role",
+      "Role · Threats & Consequences"
+    ],
+    [
+      "target",
+      "Target of the Challenge"
+    ],
+    [
+      "location",
+      "Location"
+    ],
+    [
+      "unfolding",
+      "Unfolding"
+    ],
+    [
+      "secondary",
+      "Secondary Challenge"
+    ],
+    [
+      "storyTags",
+      "Story Tags"
+    ]
+  ],
+  "challengeAction": {
+    "Aggressor": [
+      "ATTACK — Strike defensively (give a weak harmful status, and gain parry-1 or guarded-1)",
+      "ATTACK — Strike with force (give a harmful status such as wounded)",
+      "ATTACK — Lash out with a violent strike (give a strong harmful status, but gain exposed-1)",
+      "MANEUVER — Put in a compromised position (a positional status such as prone) or block movement (Blocked)"
+    ],
+    "Charge": [
+      "FOLLOW — Make too much noise or distract (Exposure, remove hidden, or distracted)",
+      "FOLLOW — Suddenly be gone, separated from the Hero or wandered off (Complication)",
+      "BLUNDER — Move right into the path of danger (Complication, or gain exposed or panicked)",
+      "BLUNDER — Scream for help (Exposure, New Challenge, or give compelled-to-help)",
+      "BLUNDER — Become captured, trapped, or entangled (gain restrained)",
+      "BE HURT — Suffer harm or injury, possibly fatal (gain a harmful status, or Ill Tidings)"
+    ],
+    "Countdown": [
+      "GET WORSE — Advance (gain progress-1)",
+      "GET WORSE — Disarm/lower defenses (scratch a tag or reduce a positive status) or strike with fear (intimidated or confused)",
+      "GET WORSE — Advance aggressively, harming opposition (gain progress-1 and give a harmful status)",
+      "GET WORSE — Worsen in an obvious, terrifying way (gain progress-1 and give worried or scared)",
+      "RALLY — Reinforcements arrive (New Challenge or increase Might)",
+      "BREAK OUT — Shatter through a hindrance (scratch tags or remove hindering statuses)",
+      "DEFEND — Summon a new defender (New Challenge or increase Might of defenders)",
+      "DEFEND — A defender of the process attacks (roll on Aggressor or Influence)"
+    ],
+    "Influence": [
+      "ENTICE — Make an impression (gain friendly or give curious)",
+      "ENTICE — Discern or reveal a secret/weakness (Exposure and gain a tag for it)",
+      "ENTICE — Attract, offering something desired (give interested or beguiled, or gain a desirable tag)",
+      "CONVINCE — Disarm resistance or sow self-doubt (scratch a tag or reduce a positive status)",
+      "CONVINCE — Strongly influence (give a compelling status such as convinced or tempted)",
+      "CONVINCE — Make a deal or press to choose (give indebted and a desired tag, or Force the Hero to Choose)"
+    ],
+    "Obstacle": [
+      "A possible way through is sealed, blocked, or ruined (Blocked)",
+      "Become (or be revealed) more difficult to pass (gain a status/tag like steep incline, covered in brambles, flaming-3)",
+      "Harm someone interacting with it or attempting to pass (give a harmful status)",
+      "Break a tool, exhaust a resource, or make a useful skill irrelevant (reduce a resource status or scratch a tag)",
+      "Entangle, web, paralyze, or otherwise restrain passers-through (give restrained)",
+      "Summon or spawn guardians (New Challenge, with the Aggressor or Watcher role)"
+    ],
+    "Mystery": [
+      "Conditions worsen, making the truth harder to reveal (gain an obscuring status/tag like foggy-2 or disturbed evidence)",
+      "A useful source of information runs dry or is exhausted (scratch a tag)",
+      "Clues are inconclusive or only part-true (Yes, But…)",
+      "The truth is slipping away (gain confounding, or give a witness tight-lipped or bewitched)",
+      "The investigators pay a price: frustrated by lack of progress, shocked by what they find, etc.",
+      "A vital clue/witness escapes (New Challenge — Quarry role) or someone repels the investigators (New Challenge — Aggressor role)"
+    ],
+    "Pursuer": [
+      "GIVE CHASE — Draw closer and closer (add a status on the catch or track Limit)",
+      "GIVE CHASE — Gain momentum (gain speeding-1, and add a status on the catch or track Limit)",
+      "GIVE CHASE — Overcome an obstacle (scratch an obstacle tag and add a status on the catch or track Limit)",
+      "HINDER — Force the quarry to slow or reveal itself (give hobbled/slow, or scratch a movement/mount/transport tag)",
+      "HINDER — Create an obstacle ahead or steer the chase into one (create an obstacle tag)",
+      "HINDER — Maneuver to block escape on a specific path (Blocked)"
+    ],
+    "Quarry": [
+      "FLEE — Move further away (add a status on the outrun or escape Limit)",
+      "FLEE — Gain momentum or mask tracks (gain speeding-1 or hidden-1, and add a status on the outrun or escape Limit)",
+      "FLEE — Clear an obstacle (scratch an obstacle tag and add a status on the outrun or escape Limit)",
+      "HINDER — Slow or confuse the pursuer (give a hindering status or scratch a tag)",
+      "HINDER — Put an obstacle in the pursuer's path (create an obstacle tag)",
+      "HINDER — Draw another party into the chase (New Challenge)"
+    ],
+    "Support": [
+      "AID — Empower their allies (give inspired/confident/energized, or increase their Might)",
+      "AID — Protect allies, block an attack, or create cover (give guarded/warded, cover tags like barricade, or Blocked)",
+      "AID — Heal allies or restore their strength (reduce a hindering or harmful status)",
+      "AID — Recover allies' abilities (restore a Challenge's original tags)",
+      "AID — Grant allies a new asset or ability (create a tag)",
+      "AID — Restore or replace a fallen ally (New Challenge: bring a defeated Challenge back)"
+    ],
+    "Sapper": [
+      "MEASURE — Identify a Hero's weakness (Exposure or give a negative tag) or break their defenses (scratch a tag)",
+      "MEASURE — Find an advantageous position or hide on the fringes (gain hidden)",
+      "WEAKEN — Harry the Hero or sap their strength (give drained/despaired/hobbled/weakened/exposed, etc.)",
+      "WEAKEN — Deplete an important resource (reduce a resource status, or give a scarcity status like low-on-arrows)",
+      "WEAKEN — Sabotage a useful ability/item/position/process (scratch a tag, reduce a positive status, or set back a progress status)",
+      "WEAKEN — Put an obstacle in a Hero's path (create an obstacle tag)"
+    ],
+    "Watcher": [
+      "PATROL — Notice something that makes them agitated or vigilant (gain alert or suspicious)",
+      "PATROL — Spot its quarry, or find evidence of activity (Exposure)",
+      "CLOSE IN — Remove obstacles in their path to the truth (remove a concealing tag/status like disguise, hidden, mysterious)",
+      "CLOSE IN — Close down a path of escape or evasion (Blocked)",
+      "STUDY — Reveal vital information about their quarry/plans (Exposure, and remove preparedness statuses or tags)",
+      "STUDY — Figure out their quarry's next move (Exposure and gain prepared)"
+    ]
+  },
+  "consequences": [
+    {
+      "range": "11-14",
+      "title": "A NEW DANGER",
+      "desc": "The Hero ran into a new Challenge or a new Threat from an existing Challenge. (New Challenge, Complication, optionally give the Hero surprised)",
+      "specific": [
+        "Hero is surprised or unprepared",
+        "Hero is startled or scared",
+        "Hero is exposed or distracted",
+        "Scratch ally tag(s)",
+        "Scratch Hero tool or weapon",
+        "Scratch Hero ability"
+      ]
+    },
+    {
+      "range": "15-22",
+      "title": "COLLATERAL DAMAGE",
+      "desc": "The action unintentionally affects something or someone the Hero didn't want to affect. (Give an ally a negative status or scratch their tags, Ill Tidings)",
+      "specific": [
+        "Ally is wounded",
+        "Ally suffers Effects of the action",
+        "Scratch ally tool or weapon",
+        "Scratch useful scene tag",
+        "Create obstacle or hazard",
+        "An innocent is hurt (Ill Tidings)"
+      ]
+    },
+    {
+      "range": "23-26",
+      "title": "EXPOSURE",
+      "desc": "The Hero betrays vital information to their adversaries — location, identity, intentions, or plan. (Exposure, give the Challenge an advantageous tag/status)",
+      "specific": [
+        "Hero's location",
+        "Hero's abilities",
+        "Hero's intentions",
+        "Hero's weaknesses",
+        "Hero's identity",
+        "Reroll and apply to an ally"
+      ]
+    },
+    {
+      "range": "31-34",
+      "title": "EXPENDITURE",
+      "desc": "The Hero expends resources (stamina, arrows, ingredients, mana, etc.). (Scratch a tag, give exhausted, or reduce a resource status)",
+      "specific": [
+        "Hero is tired",
+        "Scratch Hero tool or weapon",
+        "Hero is low-on-[resource]",
+        "Hero is disheartened",
+        "Reduce a Hero positive status",
+        "Roll again twice"
+      ]
+    },
+    {
+      "range": "35-42",
+      "title": "HARM",
+      "desc": "The Hero was harmed during the action. (Give a negative status such as bleeding, burned, upset)",
+      "specific": [
+        "Hero is wounded or bleeding",
+        "Hero is humiliated or embarrassed",
+        "Hero is burned or poisoned",
+        "Hero becomes sick",
+        "Hero is knocked-back or prone",
+        "Hero must pay (short-on-coin)"
+      ]
+    },
+    {
+      "range": "43-46",
+      "title": "IMPERFECT EXECUTION",
+      "desc": "The Hero didn't get everything they wanted. (Yes, but…, add a negative story tag or status)",
+      "specific": [
+        "Shoddy (add a negative tag)",
+        "Incomplete or spotty",
+        "Unreliable or chancy",
+        "Expires sooner than expected",
+        "Vague, indefinite, or indecisive",
+        "Roll again and also seems-fine"
+      ]
+    },
+    {
+      "range": "51-54",
+      "title": "LOSS OF ADVANTAGE",
+      "desc": "The Hero lost an advantage they had or worked for. (Remove/reduce a beneficial status or scratch beneficial tags)",
+      "specific": [
+        "Reduce a Hero positive status",
+        "Lose favorable position",
+        "Block best path to goal (Blocked)",
+        "Reduce an opponent's negative status",
+        "Scratch a positive scene tag",
+        "Roll again twice"
+      ]
+    },
+    {
+      "range": "55-62",
+      "title": "SIDE EFFECTS",
+      "desc": "The Hero's action had unexpected or unwanted results. (Create a negative scene tag, or give the Hero a negative status/tag)",
+      "specific": [
+        "Hero is distracted",
+        "Hero is restrained",
+        "Hero is humiliated",
+        "Hero is wanted or marked",
+        "Create obstacle or hazard",
+        "Scratch Hero ability"
+      ]
+    },
+    {
+      "range": "63-66",
+      "title": "WASTED TIME",
+      "desc": "The Hero spent too long, letting other complications unfold. (Advance a progress status, Block a missed course, worsen conditions)",
+      "specific": [
+        "It's too late to… (Blocked)",
+        "Hero and allies are tired",
+        "A New Danger (see above)",
+        "Create a negative conditions tag",
+        "An opponent advances (Complication)",
+        "time-passes-1 (at tier 4, roll again — much worse)"
+      ]
+    }
+  ],
+  "revelations": [
+    {
+      "range": "11-14",
+      "act1": "The Heroes' home is facing a never-before-seen danger.",
+      "act2": "The greater world is dangerous.",
+      "act3": "The Great Danger has the power to reach its end goal and is making final preparations."
+    },
+    {
+      "range": "15-22",
+      "act1": "The dangers are caused by a common source.",
+      "act2": "Some of the greater world's dangers can also become allies, tools, lore, etc.",
+      "act3": "The Great Danger has attributes that make it invincible or unstoppable."
+    },
+    {
+      "range": "23-26",
+      "act1": "The source of the danger is nearby.",
+      "act2": "The Heroes must grow in order to face the world's mighty dangers.",
+      "act3": "The Great Danger has a vulnerability or weakness."
+    },
+    {
+      "range": "31-34",
+      "act1": "The Heroes are unequipped to deal with this danger.",
+      "act2": "All dangers faced so far have an immensely powerful common source — the Great Danger.",
+      "act3": "Overcoming a specific Agent will weaken or expose the Great Danger in a specific way."
+    },
+    {
+      "range": "35-42",
+      "act1": "Someone nearby has the greater knowledge needed to face the danger.",
+      "act2": "Many places are threatened by the Great Danger, like the Heroes' home.",
+      "act3": "A unique place, item, ability, or ally can exploit the Great Danger's weaknesses."
+    },
+    {
+      "range": "43-46",
+      "act1": "A hidden strength or resource can help the Heroes overcome the danger.",
+      "act2": "The Great Danger has noticed the Heroes and seeks to stop them.",
+      "act3": "The path to overcoming the Great Danger demands an equally great price or sacrifice."
+    },
+    {
+      "range": "51-54",
+      "act1": "A dangerous undertaking is needed to find a way to overcome the danger.",
+      "act2": "The Great Danger has a specific end goal toward which it strives.",
+      "act3": "A price the Hero is unwilling to pay may be traded for another, but arranging this is extremely difficult."
+    },
+    {
+      "range": "55-62",
+      "act1": "This danger originates from a bigger threat to the Heroes' way of life.",
+      "act2": "Some of the Great Danger's power is carried by powerful places, creatures, or beings — the Agents.",
+      "act3": "The Great Danger will launch its final stroke imminently."
+    },
+    {
+      "range": "63-66",
+      "act1": "A greater threat will produce more dangers if the Heroes don't rise to meet it.",
+      "act2": "There is a way to overcome or circumvent one of the Great Danger's chief Agents.",
+      "act3": "The Heroes are now able to approach the Great Danger and make their attempt to stop it."
+    }
+  ],
+  "premadeAreas": [
+    "Homestead & Village (p112)",
+    "Outskirts & Fields (p122)",
+    "On the Trail (p130)",
+    "In the Wilds (p136)",
+    "Open Water (p152)",
+    "Forsaken Places (p156)",
+    "Town & City (p162)",
+    "The Castle (p168)",
+    "On the Battlefield (p176)",
+    "Blighted Badlands (p182)",
+    "Vaults of Darkness (p188)",
+    "Roll again twice"
+  ],
+  "premade": [
+    {
+      "creatures": [
+        {
+          "r": "1-3",
+          "name": "House Hob (p115)"
+        },
+        {
+          "r": "4-6",
+          "name": "Imposing Pet (p115)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1",
+          "name": "Avoided Acquaintance (p112)"
+        },
+        {
+          "r": "2",
+          "name": "Commoner (p113)"
+        },
+        {
+          "r": "3",
+          "name": "Crafty Rumormonger (p114)"
+        },
+        {
+          "r": "4",
+          "name": "Grumpy Keeper (p114)"
+        },
+        {
+          "r": "5",
+          "name": "Pastoral Priest/Priestess (p116)"
+        },
+        {
+          "r": "6",
+          "name": "Respected Elder (p117) or Stern Magistrate (p117)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-3",
+          "name": "Harvest Festival — Journey (p118)"
+        },
+        {
+          "r": "4-6",
+          "name": "Insular Hamlet — Journey (p120)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-2",
+          "name": "Boggart (p124)"
+        },
+        {
+          "r": "3-4",
+          "name": "Moldering Jack (p126)"
+        },
+        {
+          "r": "5",
+          "name": "Ominous Raven (p127)"
+        },
+        {
+          "r": "6",
+          "name": "Runaway Farm Animal (p127)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1-3",
+          "name": "Hedge Witch (p125)"
+        },
+        {
+          "r": "4-6",
+          "name": "Lone Tracker (p126)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1",
+          "name": "Abandoned Well (p122)"
+        },
+        {
+          "r": "2-3",
+          "name": "An Honest Day's Work (p123)"
+        },
+        {
+          "r": "4",
+          "name": "Backwoods Haunting (p123)"
+        },
+        {
+          "r": "5-6",
+          "name": "Windswept Farmlands — Journey (p128)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-3",
+          "name": "Dog Boys (p132)"
+        },
+        {
+          "r": "4-6",
+          "name": "Grabbing Gnome (p133)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1-2",
+          "name": "Ambitious Conjurer (p130)"
+        },
+        {
+          "r": "3-4",
+          "name": "Brutal Outlaw (p131)"
+        },
+        {
+          "r": "5-6",
+          "name": "Shrewd Merchant (p133)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-2",
+          "name": "Dismal Ferry Ride (p131)"
+        },
+        {
+          "r": "3-4",
+          "name": "Insular Hamlet — Journey (p120)"
+        },
+        {
+          "r": "5-6",
+          "name": "Lawless Roadway — Journey (p134)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1",
+          "name": "Antlered Forest Spirit (p136)"
+        },
+        {
+          "r": "2",
+          "name": "Big Cat (p138) or Protective Bear (p142)"
+        },
+        {
+          "r": "3",
+          "name": "Fabled Bird of Prey (p139)"
+        },
+        {
+          "r": "4",
+          "name": "Local Godling (p140)"
+        },
+        {
+          "r": "5",
+          "name": "Monstrous Spider and Web (p141)"
+        },
+        {
+          "r": "6",
+          "name": "Will-O'-the-Wisp (p143)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1-3",
+          "name": "Bloodthirsty Reaver (p139)"
+        },
+        {
+          "r": "4-5",
+          "name": "Maddened Woodcutter (p140)"
+        },
+        {
+          "r": "6",
+          "name": "Rampaging Giant (p142)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1",
+          "name": "Bewitching Glade (p138)"
+        },
+        {
+          "r": "2",
+          "name": "Dark Forest — Journey (p144)"
+        },
+        {
+          "r": "3",
+          "name": "Echoing Cavern — Journey (p146)"
+        },
+        {
+          "r": "4",
+          "name": "Mountain Pass — Journey (p148)"
+        },
+        {
+          "r": "5",
+          "name": "Megalith (p141)"
+        },
+        {
+          "r": "6",
+          "name": "Wrathwood Tree (p143)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-3",
+          "name": "Drowning Beauty (p152)"
+        },
+        {
+          "r": "4-6",
+          "name": "Kraken (p153)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1-3",
+          "name": "Raiding Longboat (p153)"
+        },
+        {
+          "r": "4-6",
+          "name": "Brutal Outlaw (p131)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-2",
+          "name": "Echoing Cavern — Journey (p146)"
+        },
+        {
+          "r": "3-6",
+          "name": "Treacherous Waters — Journey (p154)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1",
+          "name": "Bargaining Devil (p156)"
+        },
+        {
+          "r": "2-3",
+          "name": "Changeling (p157)"
+        },
+        {
+          "r": "4",
+          "name": "Otherworldly Assailant (p159)"
+        },
+        {
+          "r": "5-6",
+          "name": "Unshriven Revenant (p159)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1-3",
+          "name": "Keeper of Thresholds (p158)"
+        },
+        {
+          "r": "4-6",
+          "name": "Ragged Jester (p158)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-4",
+          "name": "Forlorn Ruins — Journey (p160)"
+        },
+        {
+          "r": "5-6",
+          "name": "Morose Mire — Journey (p150)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-3",
+          "name": "Plague Rats (p162)"
+        },
+        {
+          "r": "4-6",
+          "name": "Stained Saint (p192)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1-2",
+          "name": "Nimble Pickpocket (p162)"
+        },
+        {
+          "r": "3",
+          "name": "Obsessive Cultist (p163)"
+        },
+        {
+          "r": "4",
+          "name": "Outlaw Overlord (p164)"
+        },
+        {
+          "r": "5",
+          "name": "Rival Bard (p165)"
+        },
+        {
+          "r": "6",
+          "name": "Tavern Lark (p165)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-3",
+          "name": "Bewildering City — Journey (p166)"
+        },
+        {
+          "r": "4",
+          "name": "Crafting (p194)"
+        },
+        {
+          "r": "5-6",
+          "name": "Provisioning (p196)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-3",
+          "name": "Imposing Pet (p115)"
+        },
+        {
+          "r": "4-6",
+          "name": "Plague Rats (p162)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1",
+          "name": "Ardent Knight (p168)"
+        },
+        {
+          "r": "2",
+          "name": "Distrustful Ruler (p169)"
+        },
+        {
+          "r": "3-4",
+          "name": "Plotting Courtier (p170)"
+        },
+        {
+          "r": "5",
+          "name": "Sadistic Gaoler (p171)"
+        },
+        {
+          "r": "6",
+          "name": "Shadowy Catspaw (p169)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-3",
+          "name": "Battle at the Gates — Journey (p172)"
+        },
+        {
+          "r": "4-6",
+          "name": "Noble Banquet — Journey (p174)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-3",
+          "name": "Fabled Bird of Prey (p139)"
+        },
+        {
+          "r": "4-6",
+          "name": "Swarm of Insects (p183)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1",
+          "name": "Battlefield Leader (p176)"
+        },
+        {
+          "r": "2",
+          "name": "Bombardier (p177)"
+        },
+        {
+          "r": "3",
+          "name": "Frontier Healer (p178)"
+        },
+        {
+          "r": "4-6",
+          "name": "Soldier (p179)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-2",
+          "name": "Battle at the Gates — Journey (p172)"
+        },
+        {
+          "r": "3-6",
+          "name": "Ongoing Battle — Journey (p180)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-2",
+          "name": "Corrupted Vermin (p182)"
+        },
+        {
+          "r": "3-4",
+          "name": "Greedy Dragon (p184)"
+        },
+        {
+          "r": "5-6",
+          "name": "Swarm of Insects (p183)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1-3",
+          "name": "Bloodthirsty Reaver (p139)"
+        },
+        {
+          "r": "4-6",
+          "name": "Lone Tracker (p126)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-2",
+          "name": "Morose Mire — Journey (p150)"
+        },
+        {
+          "r": "3-4",
+          "name": "Desolate Wasteland — Journey (p186)"
+        },
+        {
+          "r": "5-6",
+          "name": "Stagnant Thoughts (p183)"
+        }
+      ]
+    },
+    {
+      "creatures": [
+        {
+          "r": "1-2",
+          "name": "Immortal Vampire (p190)"
+        },
+        {
+          "r": "3-4",
+          "name": "Stained Saint (p192)"
+        },
+        {
+          "r": "5-6",
+          "name": "Twisted Creation (p193)"
+        }
+      ],
+      "persons": [
+        {
+          "r": "1",
+          "name": "Dark Tyrant (p188)"
+        },
+        {
+          "r": "2-3",
+          "name": "Heartless Warlock (p189)"
+        },
+        {
+          "r": "4-6",
+          "name": "Swarming Minions (p191)"
+        }
+      ],
+      "places": [
+        {
+          "r": "1-3",
+          "name": "Compactor Trap (p191)"
+        },
+        {
+          "r": "4-6",
+          "name": "Roll in Locks & Traps Vignettes (p203)"
+        }
+      ]
+    }
+  ],
+  "vignettes": [
+    {
+      "cat": "Chance Encounters",
+      "items": [
+        "Angry Locals",
+        "Cartographer",
+        "Enchanter's Demesne",
+        "Plea for Assistance",
+        "Stampede",
+        "Vindictive Challenger"
+      ]
+    },
+    {
+      "cat": "Environmental Conditions",
+      "items": [
+        "Blizzard",
+        "Heatwave",
+        "Heavy Rain",
+        "Obscuring Fog",
+        "Thunderous Storm",
+        "Wildfire"
+      ]
+    },
+    {
+      "cat": "Mishaps",
+      "items": [
+        "Dwindling Supplies",
+        "Exhaustion",
+        "Injury",
+        "Lost Companion",
+        "Sickness",
+        "Worn-Down Transportation"
+      ]
+    },
+    {
+      "cat": "Locks & Traps",
+      "items": [
+        "Boobytrapped Chest or Cursed Item",
+        "Hidden Pit",
+        "Puzzle/Riddle Door or Warded Passageway",
+        "Snare or Bear Trap",
+        "Tripwire or Pressure Plate",
+        "Grease Patch"
+      ]
+    },
+    {
+      "cat": "Poignant Moments",
+      "items": [
+        "Cautionary Tale",
+        "Deep Conversation",
+        "Down at the Pub",
+        "Inspiring Vista",
+        "Marching Song",
+        "Overgrown Shrine"
+      ]
+    },
+    {
+      "cat": "(Journey)",
+      "items": [
+        "Pick from a randomly selected Journey"
+      ]
+    }
+  ],
+  "profileBuilder": {
+    "intro": "Quickly build a Challenge Profile for something you've described in the scene.",
+    "steps": [
+      {
+        "h": "1 · Mighty Aspects",
+        "t": "Count your Hero's Adventure + Greatness themes (average for a group). Reduce the Adventure count by one, OR move 1 from Greatness to Adventure. That's how many Mighty aspects the Challenge has. Decide what they are: size, numbers, skill, magic, influence, cunning, riches, etc."
+      },
+      {
+        "h": "2 · Challenge Rating (CR)",
+        "t": "Roll a d6 (at the start of an adventure roll two and take the lower; near the end take the higher). 1–5 = your CR. On a 6, increase Might (add an Adventure aspect or change an Adventure aspect to Greatness) and roll again. (Tap Roll CR below.)"
+      },
+      {
+        "h": "3 · Limits",
+        "t": "Choose a hard / medium / easy way to overcome it — each becomes a Limit (harm, convince, trick, threaten, destroy, subdue, dispel, banish, catch, escape…). Max: hard = CR+1, medium = CR, easy = CR−1 (remove if 0). A crescendo/transformation gets a progress Limit of 4."
+      },
+      {
+        "h": "4 · Tags & Statuses",
+        "t": "Top defenses & offensive edge (these weaken Hero actions; they aren't the Challenge's active abilities). Tags: as many as its CR. Statuses: as many tiers as its CR."
+      },
+      {
+        "h": "5 · Threats & Consequences",
+        "t": "Pick the Challenge's Role and use the Challenge Action Oracle for its Threats & Consequences. Main Consequence: a status of tier = CR (or half-CR in tags, rounded up). Others: tier = half-CR rounded up (or one tag for CR 1–4, two for CR 5)."
+      }
+    ]
+  }
+}
