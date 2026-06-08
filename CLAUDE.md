@@ -51,7 +51,7 @@ As of last verification:
 - **`character-tracker.html`**: ~2,279 lines / ~471 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v27` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v28` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -369,8 +369,9 @@ Tutorial** ☰ menu item. Reopening always resets to step 1 (no new localStorage
 ### Action Grimoire browser (supplement) ✅ COMPLETE
 A searchable **browser overlay** (`#agOverlay`, `openAG`/`renderAG`/`closeAG`, `litmActionGrimoire()`)
 for the standalone **Action Grimoire** supplement (a *separate book* from the Core Rulebook). Data
-in `LITM_DATA.actionGrimoire` (from `_build/action-grimoire.json`): sections of action entries, each
-rendered as a collapsible `<details>` card. Opening an entry shows its **explanation** + the
+in `LITM_DATA.actionGrimoire` (from `_build/action-grimoire.json`): **each section is a collapsible
+`<details>` accordion** (collapsed by default — the browser opens to a tidy list of section names),
+and inside, **each action entry is its own collapsible card**. Opening an entry shows its **explanation** + the
 **🎲 Use in a roll** button; everything else (action examples, Power **helps**/**hinders**, **Success**
 effects, **Extra Feats**, **Consequences**, **Might**) is tucked behind a nested **More details**
 sub-accordion (`.ag-more`, collapsed by default; auto-opened when a search matches inside it). A search
