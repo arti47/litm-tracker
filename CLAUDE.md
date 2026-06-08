@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,816 lines / ~655 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,011 lines / ~669 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v36` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v37` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -446,13 +446,27 @@ builds the data-driven sections (`renderQuintRef` + `renderMightRef`) at runtime
 grouped by scenario via `grimoireExamplesHTML`) now render **inside the Action Grimoire browser**.
 *(The 5E crossover is deferred — it needs a source not reachable here; see Roadmap Phase 7.)*
 
-### Tutorial — the Gerrin walkthrough (Phase 7) ✅
-A paginated **tutorial overlay** (`#tutorialOverlay`, `openTutorial`/`renderTutorial`/
-`closeTutorial`) presenting the Core Book's 11-step Gerrin deer-stalker introduction (data in
-`LITM_DATA.tutorial`). Back / Next / Finish navigation with a "Step N of 11" counter; each
-step's text is split into paragraphs and HTML-escaped. Opened from the **▶ Play the
-interactive tutorial** button in the Reference tab's Getting-started section and the **📖
-Tutorial** ☰ menu item. Reopening always resets to step 1 (no new localStorage key).
+### Tutorial — interactive guided tour + Gerrin walkthrough (Phase 7, reworked 2026-06-08) ✅
+Opening the tutorial (**📖 Tutorial** ☰ menu item / the Getting-started button) now shows an
+**intro** (`openTutorial`→`renderTutorialIntro`) with two choices:
+- **▶ Play the guided tour (hands-on)** — the headline. A **coach-mark tour over the live app**
+  (`#tourLayer` = a dim backdrop with a spotlight `#tourHole` + a `#tourCard` callout;
+  `startTour`/`tourShow`/`tourPlace`/`tourReposition`/`finishTour`, steps in `TOUR_STEPS`). It
+  **spins up the Gerrin ready-made Hero** (`heroFromPremade` off `LITM_DATA.premades`, flagged
+  `_tour`), switches to him, and walks **15 steps** through a real action loop, switching tabs and
+  driving the actual UI: meet his themes/tags → backpack → establish a **scene tag** → invoke
+  Gerrin's *Stealthy step* + *Keen senses* on the Roll tab (Power = 2) → **"Your turn — roll!"**
+  (the one gated moment; `tourOnRoll`, hooked at the end of `rollDice`, auto-advances after the
+  dice settle) → read the outcome tiers → the **Spend panel** → statuses (gives `hidden-2`) →
+  stacking & Limits → a **Progress** track → weakness/Improve & reactions → Milestones & Promise →
+  wrap-up. Each step's `setup` is **idempotent** (guarded adds) so Back/Next is safe. The model is
+  **mostly auto-driven** (the tour performs the taps/adds and explains) with the **roll** handed to
+  the player. On **Finish/Quit** it restores the Hero you had open and offers **Keep Gerrin** /
+  discard (`finishTour(keep)`); the spotlight passes clicks through (`pointer-events:none`) so the
+  real buttons stay tappable. **No new localStorage key.**
+- **📖 Read the Core Book walkthrough** — the original paginated reader (`renderTutorial`, data in
+  `LITM_DATA.tutorial`): the 11-step Gerrin intro, Back/Next/Finish, "Step N of 11"; Back on step 1
+  returns to the intro.
 
 ### Action Grimoire browser (supplement) ✅ COMPLETE
 A searchable **browser overlay** (`#agOverlay`, `openAG`/`renderAG`/`closeAG`, `litmActionGrimoire()`)
@@ -606,11 +620,13 @@ remaining items need Core-Book/notebook source text not reachable in this enviro
       **plus the rulebook's per-Might example-action table** (Climb/Archery/Performance/Sneak/
       Craft/Heal at Origin/Adventure/Greatness), sourced via NotebookLM into
       `_build/might-table.json` and rendered by `renderMightRef`. ✅ (2026-06-06)
-- [x] Built-in **tutorial** (the Gerrin deer-stalker walkthrough) — a paginated 11-step
-      overlay (`openTutorial`, `#tutorialOverlay`) opened from the Getting-started Reference
-      section or ☰ menu; data in `_build/tutorial.json` → `LITM_DATA.tutorial`. ✅ (2026-06-06)
-      *(Follow-up: optional auto-open on first run; the source dump interleaves narrative and
-      rules call-outs, so the text reads as the rulebook pages do.)*
+- [x] Built-in **tutorial** ✅ (2026-06-06) — the Gerrin walkthrough; **reworked into a hands-on
+      interactive guided tour** (2026-06-08). `openTutorial` now offers an intro with the **▶ guided
+      tour** (a 15-step coach-mark tour over the live app that loads the Gerrin ready-made Hero and
+      drives a real action loop — invoke tags, roll, spend Power, statuses, progress, development —
+      then restores your Hero; `#tourLayer`/`TOUR_STEPS`/`startTour`/`finishTour`) and the original
+      **📖 paginated reader** (`renderTutorial`, `LITM_DATA.tutorial`). *(Follow-up: optional
+      auto-open on first run.)*
 - [ ] **5E D&D crossover** quick-reference (class/race → theme-kit hints).
       *(Blocked: needs the notebook's crossover source.)*
 - [x] ✅ **Action Grimoire supplement** browser (`#agOverlay`/`renderAG`) — the standalone book's

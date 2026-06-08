@@ -356,6 +356,22 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   font-weight: 700; cursor: pointer; white-space: nowrap; }
 .update-banner .upd-go { background: #fff; color: var(--teal-dark); }
 .update-banner .upd-x { background: transparent; color: #fff; opacity: .8; padding: 8px 6px; }
+
+/* ----- Interactive guided tour (Gerrin) ----- */
+#tourLayer { position: fixed; inset: 0; z-index: 300; display: none; pointer-events: none; }
+#tourLayer.show { display: block; }
+#tourHole { position: absolute; pointer-events: none; border-radius: 12px; border: 2px solid var(--teal);
+  box-shadow: 0 0 0 9999px rgba(8,16,14,.66); transition: left .25s, top .25s, width .25s, height .25s; }
+#tourCard { position: absolute; pointer-events: auto; box-sizing: border-box; max-width: 340px;
+  background: var(--card-bg); color: var(--ink); border: 1px solid var(--border); border-radius: 14px;
+  padding: 13px 14px; box-shadow: 0 12px 36px rgba(0,0,0,.5); font-size: 14px; }
+#tourCard .tour-step { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--ink-soft); font-weight: 700; margin-bottom: 3px; }
+#tourCard .tour-title { font-family: Georgia, serif; font-weight: 700; font-size: 16px; color: var(--teal); margin-bottom: 5px; }
+#tourCard .tour-body { line-height: 1.5; }
+#tourCard .tour-body i { color: var(--ink-soft); }
+#tourCard .tour-cue { margin-top: 9px; background: var(--power); color: var(--power-ink); border-radius: 9px; padding: 7px 10px; font-weight: 700; font-size: 13px; }
+#tourCard .tour-foot { display: flex; align-items: center; gap: 8px; margin-top: 13px; }
+#tourCard .tour-foot button { padding: 8px 13px; font-size: 13px; border-radius: 10px; flex: 0 0 auto; }
 </style>
 </head>
 <body>
@@ -714,6 +730,9 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 </div>
 
+<!-- GUIDED TOUR coach-mark layer (Phase 7 rework) -->
+<div id="tourLayer"><div id="tourHole"></div><div id="tourCard"></div></div>
+
 <!-- ACTION GRIMOIRE BROWSER (supplement) -->
 <div class="overlay" id="agOverlay" onclick="if(event.target===this)closeAG()">
   <div class="sheet">
@@ -937,11 +956,23 @@ function renderRefData(){ renderQuintRef(); renderMightRef(); attachRefAccordion
 // ----- Tutorial overlay (Phase 7 — the Core Book's Gerrin walkthrough) -----
 let tutStep=0;
 function litmTutorial(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.tutorial)) return LITM_DATA.tutorial; }catch(e){} return []; }
-function openTutorial(){ if(typeof closeOverlays==='function') closeOverlays(); tutStep=0; renderTutorial(); $('tutorialOverlay').classList.add('show'); }
+function openTutorial(){ if(typeof closeOverlays==='function') closeOverlays(); renderTutorialIntro(); $('tutorialOverlay').classList.add('show'); }
 function closeTutorial(){ $('tutorialOverlay').classList.remove('show'); }
+function renderTutorialIntro(){
+  $('tutTitle').textContent='📖 Tutorial';
+  $('tutBody').innerHTML=
+    '<p class="hint" style="margin:-6px 0 10px">Learn the game by <b>doing</b> it — or just read the rulebook walkthrough.</p>'
+    +'<button class="btn wide" id="tut_tour">▶ Play the guided tour (hands-on)</button>'
+    +'<p class="hint" style="margin:8px 0 14px">Loads <b>Gerrin</b> the deer-stalker onto a sheet and walks you through a real action — tapping tags, rolling <b>2d6 + Power</b>, and spending Power on Effects. Your own Hero is set aside and comes back at the end.</p>'
+    +'<button class="btn wide ghost" id="tut_read">📖 Read the Core Book walkthrough</button>'
+    +'<button class="btn ghost wide" id="tut_close2" style="margin-top:10px">Close</button>';
+  $('tut_tour').onclick=()=>startTour();
+  $('tut_read').onclick=()=>{ tutStep=0; renderTutorial(); };
+  $('tut_close2').onclick=()=>closeTutorial();
+}
 function renderTutorial(){
   const t=litmTutorial();
-  if(!t.length){ $('tutBody').innerHTML='<p class="hint">Tutorial unavailable.</p>'; return; }
+  if(!t.length){ $('tutBody').innerHTML='<p class="hint">Walkthrough unavailable.</p>'; return; }
   tutStep=Math.max(0,Math.min(t.length-1,tutStep));
   const s=t[tutStep];
   $('tutTitle').textContent='📖 '+s.title;
@@ -949,18 +980,181 @@ function renderTutorial(){
     '<p class="hint" style="margin:-8px 0 8px">Step '+(tutStep+1)+' of '+t.length+' · the Core Book’s Gerrin walkthrough</p>'
     +'<div class="tut-text">'+fmtText(s.text)+'</div>'
     +'<div class="tut-nav">'
-    +'<button class="btn ghost" id="tut_prev"'+(tutStep===0?' disabled':'')+'>‹ Back</button>'
+    +'<button class="btn ghost" id="tut_prev">‹ Back</button>'
     +'<span class="tut-spacer"></span>'
     +(tutStep<t.length-1?'<button class="btn" id="tut_next">Next ›</button>':'<button class="btn" id="tut_done">Finish</button>')
     +'</div>'
     +'<button class="btn ghost wide" id="tut_close" style="margin-top:8px">Close</button>';
   const sheet=document.querySelector('#tutorialOverlay .sheet');
   const scroll=()=>{ const tx=document.querySelector('#tutorialOverlay .tut-text'); if(tx) tx.scrollTop=0; if(sheet) sheet.scrollTop=0; };
-  const p=$('tut_prev'); if(p) p.onclick=()=>{ tutStep--; renderTutorial(); scroll(); };
+  const p=$('tut_prev'); if(p) p.onclick=()=>{ if(tutStep===0){ renderTutorialIntro(); } else { tutStep--; renderTutorial(); scroll(); } };
   const n=$('tut_next'); if(n) n.onclick=()=>{ tutStep++; renderTutorial(); scroll(); };
   const d=$('tut_done'); if(d) d.onclick=()=>closeTutorial();
   $('tut_close').onclick=()=>closeTutorial();
 }
+
+/* ===== Interactive guided tour (Gerrin) — coach-marks over the live app ===== */
+let _tour={on:false,i:0,prevId:null,gerrinId:null,await:null,curEl:null,lastTier:null};
+
+function tourFindGerrin(){
+  try{ return (LITM_DATA.premades||[]).find(c=>/gerrin/i.test(c.name))||null; }catch(e){ return null; }
+}
+function heroFromPremade(c){
+  const h=blankHero();
+  h.heroName=c.name; h.playerName=(S&&S.playerName)||'';
+  h.themes=c.themes.map(t=>({
+    id:uid(), type:t.type, title:t.title,
+    power:(t.power||[]).map(p=>({id:uid(),text:p,scratched:false})),
+    weak:[{id:uid(),text:t.weak||''}],
+    quest:t.quest||'', improve:0, abandon:0, milestone:0,
+    special:'Background: '+(t.desc||''),
+    specials:t.special?[{name:t.special.name,desc:t.special.desc}]:[]
+  }));
+  while(h.themes.length<4) h.themes.push(blankTheme());
+  h.backpack=(c.backpack||[]).map(x=>({id:uid(),text:x,type:'story',scratched:false}));
+  if(!h.backpack.length) h.backpack=[{id:uid(),text:'',type:'story',scratched:false}];
+  return h;
+}
+function tourSelectTag(label){
+  const t=availableTags().find(x=>(x.label||'').toLowerCase().includes(label.toLowerCase()));
+  if(t) rollMods[t.id]='help';
+}
+function startTour(){
+  const c=tourFindGerrin();
+  if(!c){ toast('Tutorial hero unavailable'); return; }
+  closeTutorial();
+  _tour.prevId=activeId;
+  const g=heroFromPremade(c); g._tour=true;
+  roster.push(g); _tour.gerrinId=g.id;
+  activeId=g.id; S=g; rollMods={}; burnId=null; helpTags=[]; agAction=null; might=0; sit=0; rollMode='action';
+  save(); renderAll();
+  _tour.on=true; _tour.i=0; _tour.await=null; _tour.lastTier=null;
+  $('tourLayer').classList.add('show');
+  tourShow();
+}
+function endTourLayer(){ _tour.on=false; _tour.await=null; _tour.curEl=null; $('tourLayer').classList.remove('show'); }
+function finishTour(keep){
+  endTourLayer();
+  if(!keep && _tour.gerrinId){ const i=roster.findIndex(h=>h.id===_tour.gerrinId); if(i>=0) roster.splice(i,1); }
+  let pid=_tour.prevId;
+  if(!roster.find(h=>h.id===pid)) pid=(roster[0]||{}).id;
+  activeId=pid; S=roster.find(h=>h.id===pid)||roster[0]||null;
+  rollMods={}; burnId=null; helpTags=[]; might=0; sit=0;
+  save(); renderAll(); showTab('hero');
+  toast(keep?'Gerrin saved to your roster':'Tour finished — your Hero is back');
+  _tour.gerrinId=null; _tour.prevId=null;
+}
+function tourQuit(){ if(confirm('End the tutorial? Gerrin will be discarded.')) finishTour(false); }
+function tourShow(){
+  const s=TOUR_STEPS[_tour.i]; if(!s){ _tour.i=TOUR_STEPS.length-1; return; }
+  _tour.await=null;
+  if(s.tab) showTab(s.tab);
+  if(s.setup){ try{ s.setup(); }catch(e){} }
+  setTimeout(()=>tourPlace(s), 70);
+}
+function tourPlace(s){
+  if(!_tour.on) return;
+  const card=$('tourCard'), hole=$('tourHole');
+  let el=null; if(s.target){ try{ el=s.target(); }catch(e){} }
+  _tour.curEl=el||null;
+  const n=TOUR_STEPS.length, last=_tour.i===n-1;
+  const body=(typeof s.html==='function')?s.html():s.html;
+  let foot='';
+  foot += (_tour.i>0)?'<button class="btn ghost" id="tourBack">‹ Back</button>':'<button class="btn ghost" id="tourQuit">Quit</button>';
+  foot += '<span style="flex:1"></span>';
+  if(last){ foot+='<button class="btn ghost" id="tourDiscard">Finish</button><button class="btn" id="tourKeep">Keep Gerrin</button>'; }
+  else if(s.mode!=='roll'){ foot+='<button class="btn" id="tourNext">Next ›</button>'; }
+  card.innerHTML='<div class="tour-step">Step '+(_tour.i+1)+' of '+n+'</div>'
+    +'<div class="tour-title">'+s.title+'</div>'
+    +'<div class="tour-body">'+body+'</div>'
+    +(s.mode==='roll'?'<div class="tour-cue">👆 Your turn — do it below and I’ll continue automatically.</div>':'')
+    +'<div class="tour-foot">'+foot+'</div>';
+  if(el){ try{ el.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} hole.style.display='block'; setTimeout(()=>tourReposition(),320); }
+  else { hole.style.display='none'; card.style.maxWidth='340px'; card.style.left='50%'; card.style.top='50%'; card.style.transform='translate(-50%,-50%)'; }
+  const bk=$('tourBack'); if(bk) bk.onclick=()=>{ _tour.i--; tourShow(); };
+  const q=$('tourQuit'); if(q) q.onclick=tourQuit;
+  const nx=$('tourNext'); if(nx) nx.onclick=()=>{ _tour.i++; tourShow(); };
+  const kp=$('tourKeep'); if(kp) kp.onclick=()=>finishTour(true);
+  const dc=$('tourDiscard'); if(dc) dc.onclick=()=>finishTour(false);
+  if(s.mode==='roll') _tour.await='roll';
+}
+function tourReposition(){
+  if(!_tour.on) return;
+  const el=_tour.curEl; const hole=$('tourHole'), card=$('tourCard');
+  if(!el){ return; }
+  const r=el.getBoundingClientRect(), pad=8;
+  hole.style.left=(r.left-pad)+'px'; hole.style.top=(r.top-pad)+'px';
+  hole.style.width=(r.width+pad*2)+'px'; hole.style.height=(r.height+pad*2)+'px';
+  card.style.transform='none';
+  const cw=Math.min(340, window.innerWidth-24); card.style.maxWidth=cw+'px';
+  let left=Math.min(Math.max(12, r.left), window.innerWidth-cw-12); card.style.left=left+'px';
+  const ch=card.offsetHeight||200, gap=12;
+  if(r.bottom+gap+ch < window.innerHeight-8){ card.style.top=(r.bottom+gap)+'px'; }
+  else if(r.top-gap-ch > 8){ card.style.top=(r.top-gap-ch)+'px'; }
+  else { card.style.top=Math.max(8, (window.innerHeight-ch)/2)+'px'; }
+}
+function tourOnRoll(tier){
+  _tour.lastTier=tier;
+  if(_tour.on && _tour.await==='roll'){ _tour.await=null; setTimeout(()=>{ if(_tour.on){ _tour.i++; tourShow(); } }, 850); }
+}
+window.addEventListener('resize',()=>{ if(_tour.on) tourReposition(); });
+window.addEventListener('scroll',()=>{ if(_tour.on) tourReposition(); }, true);
+
+const TOUR_STEPS=[
+  { title:'Welcome — let’s actually play',
+    html:'Meet <b>Gerrin</b>, a deer-stalker I’ve loaded onto a sheet just for this tour. We’ll play a real action together — invoke tags, roll the dice, spend Power.<br><br>Your own Hero is safely set aside and returns at the end.' },
+  { tab:'hero', target:()=>document.querySelector('#themesWrap .card.theme'),
+    title:'Your Hero is made of tags',
+    html:'Gerrin has <b>four themes</b>. Each has <span style="background:var(--power);color:var(--power-ink);padding:0 4px;border-radius:4px">power tags</span> you invoke for Power and <span style="background:var(--weak);color:var(--weak-ink);padding:0 4px;border-radius:4px">weakness tags</span>. His <b>Deer Stalker</b> theme gives <i>Stealthy step</i> and <i>Keen senses</i>.' },
+  { tab:'hero', target:()=>$('backpackList').closest('.card'),
+    title:'The Backpack',
+    html:'Story tags — packed items and prepared tricks, mostly <b>single-use</b>. Tap 🟡/🟠 to flip helpful/hindering, ✓ to scratch one once it’s spent.' },
+  { tab:'track', setup:()=>{ if(!S.scene.some(t=>/dense forest/i.test(t.text))) S.scene.push({id:uid(),text:'Dense forest canopy',type:'story',scratched:false}); S.sceneBoard.step=1; renderScene(); renderSceneBoard&&renderSceneBoard(); },
+    target:()=>$('sceneList').closest('.card'),
+    title:'The Narrator sets the scene',
+    html:'Every scene has its own tags and threats. I’ve added a scene tag — <b>Dense forest canopy</b>. Scene tags help (or hinder) rolls just like your own. A wary deer steps into the clearing ahead…' },
+  { tab:'roll', setup:()=>{ rollMods={}; burnId=null; tourSelectTag('Stealthy step'); tourSelectTag('Keen senses'); renderRoller(); },
+    target:()=>$('rollTags'),
+    title:'Take an action: stalk the deer',
+    html:'To act you <b>invoke tags</b> and roll <b>2d6 + Power</b>. I’ve tapped Gerrin’s <i>Stealthy step</i> and <i>Keen senses</i> — each helpful tag is <b>+1 Power</b>. Tap any tag to toggle it yourself.' },
+  { tab:'roll', target:()=>($('powerNum').closest('.powerbig')||$('powerNum')),
+    title:'Counting Power',
+    html:'Two helpful tags → <b>Power 2</b>. Statuses, your <b>Might</b>, and the Narrator’s situational tweaks adjust it too. More Power means a better roll.' },
+  { tab:'roll', mode:'roll', target:()=>$('rollBtn'),
+    title:'Your turn — roll!',
+    html:'Tap <b>🎲 Roll 2d6 + Power</b> below. I’ll read the result with you.' },
+  { tab:'roll', target:()=>$('outcomeBox'),
+    title:'Read the outcome',
+    html:()=>{ const base='<b>10+</b> clean Success · <b>7–9</b> Success <i>and</i> Consequences · <b>6 or less</b> Consequences only.<br><br>';
+      const t=_tour.lastTier;
+      return base + (t==='win'?'You succeeded cleanly — now you have <b>Power to spend</b> on Effects.'
+        : t==='mixed'?'You succeeded but took Consequences — you still get <b>Power to spend</b>.'
+        : t==='lose'?'The dice were unkind — no Power this time. On a Success, a <b>Spend panel</b> opens right here.'
+        : 'On a Success you gain <b>Power to spend</b> on Effects.'); } },
+  { tab:'roll', target:()=>{ const sb=$('spendBox'); return (sb && sb.innerHTML.trim())? sb : $('outcomeBox'); },
+    title:'Spend your Power on Effects',
+    html:'On a Success a <b>Spend panel</b> appears here. Spend Power to <b>give or raise a status</b> (1 per tier), <b>add or recover a tag</b> (2), <b>discover</b> a detail (1), or perform a <b>feat</b> (1). Each button deducts its cost — try one.' },
+  { tab:'track', setup:()=>{ let st=S.statuses.find(s=>/^hidden$/i.test((s.name||'').trim())); if(!st){ giveStatusTier('hidden',2); } renderStatuses(); },
+    target:()=>$('statusList').closest('.card'),
+    title:'Statuses — tiered conditions',
+    html:'A status is a tag with a <b>tier 1–6</b>. I gave Gerrin <b>hidden-2</b> as he slips into cover. Tap a box to set the tier. Positive statuses (hidden, inspired) help you; negative ones (wounded, scared) hinder.' },
+  { tab:'track', setup:()=>{ let st=S.statuses.find(s=>/^hidden$/i.test((s.name||'').trim())); if(!st){ giveStatusTier('hidden',2); st=S.statuses.find(s=>/^hidden$/i.test((s.name||'').trim())); } if(st && st.boxes.filter(Boolean).length<2){ giveStatusTier('hidden',2); } renderStatuses(); },
+    target:()=>$('statusList').closest('.card'),
+    title:'Statuses stack — and Limits',
+    html:'Apply the same status again and it fills the <b>next</b> box — it stacks. A Hero’s <b>Limit is 5</b>: reach it and you’re taken out (overcome, or killed/transformed at 6). Lower a foe’s Limit to take them out sooner.' },
+  { tab:'track', setup:()=>{ if(!S.progress.some(p=>/stalk the deer/i.test(p.name||''))) S.progress.push({name:'Stalk the deer',goal:'close the distance for a clean shot',cur:1,max:4}); renderProgress(); },
+    target:()=>$('progressList').closest('.card'),
+    title:'Progress & Limits — bigger goals',
+    html:'Some goals take several successes — a chase, a craft, picking a lock. Track them toward a <b>Limit</b>. The roller’s <b>Advance</b> effect fills these; <b>Discover</b> reveals new details to act on.' },
+  { tab:'hero', target:()=>document.querySelector('#themesWrap .card.theme'),
+    title:'Weakness, growth & reactions',
+    html:'Invoking an <b>orange weakness tag</b> (Gerrin’s <i>Loner</i>) adds no Power — but <b>marks Improve</b>: your Hero grows through hardship. When trouble hits you, you can also <b>React</b> (the toggle atop the Roll tab) to lessen the blow.' },
+  { tab:'hero', target:()=>document.querySelector('#themesWrap .card.theme'),
+    title:'Milestones, evolving & Promise',
+    html:'Each theme has <b>Improve / Abandon / Milestone</b> tracks. Filling <b>Milestone</b> evolves the theme and marks <b>Promise</b>; filling <b>Abandon</b> replaces it. Reach <b>5 Promise</b> for a <b>Moment of Fulfillment</b> — a fresh start and a permanent <b>Quintessence</b>.' },
+  { title:'That’s the loop!',
+    html:'Invoke tags → roll <b>2d6 + Power</b> → spend Power on Effects → grow your Hero. Every rule lives in the <b>📖 Rules</b> tab and the <b>📜 Action Grimoire</b>.<br><br><b>Keep Gerrin</b> to keep practising, or <b>Finish</b> to return to your own Hero.' }
+];
 
 // ----- Action Grimoire browser (supplement catalog) -----
 function litmActionGrimoire(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.actionGrimoire)) return LITM_DATA.actionGrimoire; }catch(e){} return []; }
@@ -1964,6 +2158,7 @@ function rollDice(){
     rolls=rolls.slice(0,40); saveRolls(); renderRollHist();
     if(burnNote){ save(); renderThemes(); renderFellowship(); renderBackpack(); renderScene(); renderRoller(); }
     if(navigator.vibrate) navigator.vibrate(tier!=='lose'?20:[10,40,10]);
+    if(typeof tourOnRoll==='function') tourOnRoll(tier);
   }, 480);
 }
 
