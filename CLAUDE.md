@@ -48,10 +48,10 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~2,279 lines / ~471 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~2,337 lines / ~474 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog, ~190 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v28` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v29` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (4)**:
@@ -371,7 +371,11 @@ A searchable **browser overlay** (`#agOverlay`, `openAG`/`renderAG`/`closeAG`, `
 for the standalone **Action Grimoire** supplement (a *separate book* from the Core Rulebook). Data
 in `LITM_DATA.actionGrimoire` (from `_build/action-grimoire.json`): **each section is a collapsible
 `<details>` accordion** (collapsed by default — the browser opens to a tidy list of section names),
-and inside, **each action entry is its own collapsible card**. Opening an entry shows its **explanation** + the
+and inside, **each action entry is its own collapsible card**. All prose (section intros, entry **explanations**, **Success** text, and the tutorial) is run
+through a shared **`fmtText`** formatter — reflows the PDF's hard-wrapped lines into 1–2-sentence
+paragraphs, promotes embedded sub-headings (ALL-CAPS / Title-Case) to styled `.fmt-h` headers,
+bolds `Label:` prefixes and the rules keywords (CREATE/ENHANCE/DISRUPT/…), and turns `•` lines
+into bullet lists. Opening an entry shows its **explanation** + the
 **🎲 Use in a roll** button; everything else (action examples, Power **helps**/**hinders**, **Success**
 effects, **Extra Feats**, **Consequences**, **Might**) is tucked behind a nested **More details**
 sub-accordion (`.ag-more`, collapsed by default; auto-opened when a search matches inside it). A search

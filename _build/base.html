@@ -194,7 +194,11 @@ details.ag-sec > summary::before { content: "▸ "; }
 details.ag-sec[open] > summary::before { content: "▾ "; }
 .ag-secbody { padding: 0 12px 10px; }
 .ag-pg { font-weight: 400; color: var(--ink-soft); font-size: 12px; }
-.ag-intro { font-size: 13px; color: var(--ink-soft); line-height: 1.5; white-space: pre-wrap; margin: 0 0 8px; }
+.ag-intro { margin: 0 0 8px; }
+.ag-intro p, .ag-succ p { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0 8px; }
+.fmt-h { font-size: 12px; text-transform: uppercase; letter-spacing: .3px; color: var(--teal); font-weight: 700; margin: 9px 0 2px; }
+.fmt-ul { margin: 4px 0 8px; padding-left: 18px; }
+.fmt-ul li { font-size: 13px; line-height: 1.45; margin: 2px 0; }
 .ag-entry { border: 1px solid var(--border); border-radius: 10px; margin: 6px 0; background: var(--bg-deep); }
 .ag-entry summary { padding: 9px 11px; font-weight: 700; cursor: pointer; list-style: none; }
 .ag-entry summary::-webkit-details-marker { display: none; }
@@ -748,6 +752,50 @@ const $ = id => document.getElementById(id);
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1600); }
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+// ---------- Prose formatter: paragraphs + sub-headings + bullets + effect-keyword bolding ----------
+function fmtEffectBold(s){ return s.replace(/\b(SET BACK|CREATE|ENHANCE|DISRUPT|RESTORE|WEAKEN|BESTOW|ADVANCE|LESSEN|DISCOVER|INFLUENCE|ATTACK|VARIES|QUICK|SIMPLE|DETAILED)\b/g,'<b>$1</b>'); }
+function splitSentences(t){
+  // protect abbreviation periods with a private-use char so they never trigger a sentence split
+  let s=t.replace(/\b(Vol|Vols|Corebook|Mr|Mrs|Ms|Dr|St|No|pg|vs|cf|e\.g|i\.e|etc)\.(\s)/g,(m,a,sp)=>a+''+sp);
+  return s.split(/(?<=[.!?])\s+(?=[A-Z“"'(])/)
+          .map(x=>x.replace(//g,'.').replace(/\s+/g,' ').trim())
+          .filter(Boolean);
+}
+function fmtParas(text){            // one block of prose → 1–2-sentence paragraphs; bold labels + effect keywords
+  const t=(text||'').trim(); if(!t) return '';
+  const mk=(chunk)=>{ const lm=chunk.match(/^([A-Z][A-Za-z'&/ ]{1,28}?):\s+(.+)$/);
+    return '<p>'+(lm?'<b>'+esc(lm[1])+':</b> '+fmtEffectBold(esc(lm[2])):fmtEffectBold(esc(chunk)))+'</p>'; };
+  const sents=splitSentences(t);
+  if(sents.length<=2) return mk(t);
+  let out=''; for(let i=0;i<sents.length;i+=2){ out+=mk(sents.slice(i,i+2).join(' ')); }
+  return out;
+}
+function isHeadingLine(line){
+  if(!line || line.length>60 || /[.!?,;]$/.test(line)) return false;
+  const letters=line.replace(/[^A-Za-z]/g,'');
+  if(letters.length>=2 && letters===letters.toUpperCase()) return true;                          // ALL-CAPS heading
+  if(line.split(/\s+/).length<=9 && /^[A-Z][\w'&/-]*(\s+([A-Z][\w'&/-]*|&|of|the|a|an|and|or|to|in|for|with|on|at|by))*:?$/.test(line)) return true; // Title-Case heading
+  return false;
+}
+function fmtText(text){
+  if(!text) return '';
+  let html='';
+  String(text).split(/\n[ \t]*\n+/).forEach(block=>{          // blank-line separated blocks
+    const lines=block.split(/\n/).map(l=>l.trim()).filter(Boolean);
+    let buf=[], bul=[], head=[];
+    const flushBuf=()=>{ if(buf.length){ html+=fmtParas(buf.join(' ')); buf=[]; } };
+    const flushBul=()=>{ if(bul.length){ html+='<ul class="fmt-ul">'+bul.map(b=>'<li>'+fmtEffectBold(esc(b))+'</li>').join('')+'</ul>'; bul=[]; } };
+    const flushHead=()=>{ if(head.length){ html+='<div class="fmt-h">'+esc(head.join(' '))+'</div>'; head=[]; } };
+    lines.forEach(line=>{
+      if(/^[•▪]/.test(line)){ flushHead(); flushBuf(); bul.push(line.replace(/^[•▪]\s*/,'')); }
+      else if(isHeadingLine(line)){ flushBul(); flushBuf(); head.push(line.replace(/:$/,'')); }   // heading anywhere in the block
+      else { flushBul(); flushHead(); buf.push(line); }
+    });
+    flushHead(); flushBuf(); flushBul();
+  });
+  return html;
+}
+
 // ---------- Tabs ----------
 function showTab(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -797,10 +845,9 @@ function renderTutorial(){
   tutStep=Math.max(0,Math.min(t.length-1,tutStep));
   const s=t[tutStep];
   $('tutTitle').textContent='📖 '+s.title;
-  const paras=(s.text||'').split(/\n+/).map(p=>p.trim()).filter(Boolean).map(p=>'<p>'+esc(p)+'</p>').join('');
   $('tutBody').innerHTML=
     '<p class="hint" style="margin:-8px 0 8px">Step '+(tutStep+1)+' of '+t.length+' · the Core Book’s Gerrin walkthrough</p>'
-    +'<div class="tut-text">'+paras+'</div>'
+    +'<div class="tut-text">'+fmtText(s.text)+'</div>'
     +'<div class="tut-nav">'
     +'<button class="btn ghost" id="tut_prev"'+(tutStep===0?' disabled':'')+'>‹ Back</button>'
     +'<span class="tut-spacer"></span>'
@@ -847,7 +894,7 @@ function renderAG(){
     }).filter(Boolean);
     if(!entries.length && !lists.length && !showIntro) return;
     html+='<details class="ag-sec"'+(q?' open':'')+'><summary>'+esc(sec.section||'')+(sec.page?' <span class="ag-pg">p.'+sec.page+'</span>':'')+'</summary><div class="ag-secbody">';
-    if(showIntro) html+='<p class="ag-intro">'+esc(sec.intro)+'</p>';
+    if(showIntro) html+='<div class="ag-intro">'+fmtText(sec.intro)+'</div>';
     lists.forEach(l=>{
       html+='<div class="ag-list">'+(l.heading?'<h4>'+esc(l.heading)+'</h4>':'')
         +'<ul>'+(l.items||[]).map(it=>'<li>'+esc(it)+'</li>').join('')+'</ul></div>';
@@ -855,13 +902,13 @@ function renderAG(){
     entries.forEach(e=>{
       const idx=flat.push(e)-1;
       html+='<details class="ag-entry"'+(q?' open':'')+'><summary>'+esc(e.name)+'</summary><div class="ag-edetail">';
-      if(e.explanation) html+='<p>'+esc(e.explanation)+'</p>';
+      if(e.explanation) html+='<div class="ag-expl">'+fmtText(e.explanation)+'</div>';
       html+='<button class="btn sm ag-use" data-agi="'+idx+'" style="margin:2px 0 0">🎲 Use in a roll</button>';
       let more='';
       more+=agList('e.g.',e.actionExamples,'ag-ex');
       more+=agList('✓ helps',(e.power||{}).positive,'ag-help');
       more+=agList('✕ hinders',(e.power||{}).negative,'ag-hind');
-      if(e.success) more+='<div class="ag-row"><span class="ag-lbl">Success</span>'+esc(e.success)+'</div>';
+      if(e.success) more+='<div class="ag-lbl" style="margin-top:6px">Success</div><div class="ag-succ">'+fmtText(e.success)+'</div>';
       more+=agList('Extra feats',e.extraFeats);
       more+=agList('Consequences',e.consequences);
       if(e.might) more+='<div class="ag-row"><span class="ag-lbl">Might</span>'+esc(e.might)+'</div>';
