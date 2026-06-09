@@ -2890,6 +2890,23 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
     html+=mightWarn(th.type);
     if(tb.concept) html+=`<p class="wz-sub" style="margin:8px 0 0"><b>${esc(th.type)}:</b> ${esc(tb.concept)}</p>`;
     html+=`</div>`;
+    // theme kits for this type — ready-made tags (optional)
+    const kits=(D.themekits||{})[th.type]||[];
+    if(kits.length){
+      const kit=kits.find(k=>k.name===th._kit);
+      html+=`<div class="wz-card"><div class="wz-fld" style="margin-bottom:2px"><span>Theme kit — ready-made tags (${kits.length} for ${esc(th.type)})</span></div>`;
+      html+=`<p class="wz-note" style="margin:0 0 6px">Optional: pick a kit to drop in ready-made tags, then tweak using the questions below — or skip and write your own.</p>`;
+      html+=`<select id="wz_dkit"><option value="">— choose a kit —</option>`+
+        kits.map(k=>`<option value="${esc(k.name)}" ${th._kit===k.name?'selected':''}>${esc(k.name)}</option>`).join('')+`</select>`;
+      if(kit){
+        html+=`<div class="wz-fld" style="margin-top:8px"><span>Power tags · tap to add/remove</span><div class="chips">`+
+          kit.power.map(p=>`<button class="chip pw ${th.power.some(x=>(x.text||'').trim().toLowerCase()===p.toLowerCase())?'sel':''}" data-kp="${esc(p)}">${esc(p)}</button>`).join('')+`</div></div>`;
+        html+=`<div class="wz-fld"><span>Weakness tags · tap to add/remove</span><div class="chips">`+
+          kit.weak.map(p=>`<button class="chip wk ${th.weak.some(x=>(x.text||'').trim().toLowerCase()===p.toLowerCase())?'sel':''}" data-kw="${esc(p)}">${esc(p)}</button>`).join('')+`</div></div>`;
+        if(kit.quest) html+=`<p class="wz-note" style="margin:2px 0 0">Suggested Quest: “${esc(kit.quest)}” — fills the Quest box below if it's empty.</p>`;
+      }
+      html+=`</div>`;
+    }
     // power tag questions
     if(tb.powerQ&&tb.powerQ.length){
       html+=`<div class="wz-card"><div class="wz-fld"><span>Power tag questions — answer to make tags</span><ul class="qlist">`+
@@ -2910,7 +2927,11 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
     }
     html+=`<label class="wz-fld"><span>Quest</span><input id="wz_quest" placeholder="A goal, belief, or journey…"></label></div>`;
     $b().innerHTML=html;
-    $b().querySelectorAll('[data-tb]').forEach(b=>b.onclick=()=>{ if(th.type===b.dataset.tb) return; th.type=b.dataset.tb; renderDetail(idx); });
+    $b().querySelectorAll('[data-tb]').forEach(b=>b.onclick=()=>{ if(th.type===b.dataset.tb) return; th.type=b.dataset.tb; th._kit=null; renderDetail(idx); });
+    const dk=document.getElementById('wz_dkit');
+    if(dk) dk.onchange=()=>{ th._kit=dk.value||null; const k=kits.find(x=>x.name===th._kit); if(k && !(th.quest||'').trim()) th.quest=k.quest||''; renderDetail(idx); };
+    $b().querySelectorAll('[data-kp]').forEach(b=>b.onclick=()=>{ toggleDetailTag(th,'power',b.dataset.kp); renderDetail(idx); });
+    $b().querySelectorAll('[data-kw]').forEach(b=>b.onclick=()=>{ toggleDetailTag(th,'weak',b.dataset.kw); renderDetail(idx); });
     const ttl=document.getElementById('wz_title'); if(ttl){ ttl.value=th.title||''; ttl.oninput=()=>th.title=ttl.value; }
     const q=document.getElementById('wz_quest'); if(q){ q.value=th.quest||''; q.oninput=()=>th.quest=q.value; }
     $b().querySelectorAll('.wz_pw').forEach(inp=>{ inp.value=th.power[+inp.dataset.i].text||''; inp.oninput=()=>th.power[+inp.dataset.i].text=inp.value; });
@@ -2993,6 +3014,19 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
     let h='';
     for(const grp in TYPE_ORDER){ h+=`<optgroup label="${grp}">`+TYPE_ORDER[grp].map(t=>`<option ${t===sel?'selected':''}>${t}</option>`).join('')+`</optgroup>`; }
     return h;
+  }
+  // Detailed path: toggle a kit tag into a theme's power/weak list (fills an empty input first).
+  function toggleDetailTag(th, field, text){
+    const arr=th[field], key=text.trim().toLowerCase();
+    const i=arr.findIndex(x=>(x.text||'').trim().toLowerCase()===key);
+    if(i>=0){ arr.splice(i,1); }
+    else {
+      const empty=arr.find(x=>!(x.text||'').trim());
+      if(empty){ empty.text=text; }
+      else arr.push(field==='power'?{id:uid(),text:text,scratched:false}:{id:uid(),text:text});
+    }
+    if(field==='power' && !arr.length) arr.push({id:uid(),text:'',scratched:false});
+    if(field==='weak'  && !arr.length) arr.push({id:uid(),text:''});
   }
   // Visible, tappable themebook picker (all 20 types grouped by Might) — used by the Detailed path.
   function themebookChipsHTML(sel){
