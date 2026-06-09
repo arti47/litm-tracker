@@ -2929,7 +2929,11 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
     $b().innerHTML=html;
     $b().querySelectorAll('[data-tb]').forEach(b=>b.onclick=()=>{ if(th.type===b.dataset.tb) return; th.type=b.dataset.tb; th._kit=null; renderDetail(idx); });
     const dk=document.getElementById('wz_dkit');
-    if(dk) dk.onchange=()=>{ th._kit=dk.value||null; const k=kits.find(x=>x.name===th._kit); if(k && !(th.quest||'').trim()) th.quest=k.quest||''; renderDetail(idx); };
+    if(dk) dk.onchange=()=>{ const prevKit=th._kit; th._kit=dk.value||null; const k=kits.find(x=>x.name===th._kit);
+      if(k){ // set the title to the kit name if empty, or if it still holds the previous kit's name (auto-set, not user-typed)
+        if(!(th.title||'').trim() || (prevKit && th.title===prevKit)) th.title=k.name;
+        if(!(th.quest||'').trim()) th.quest=k.quest||''; }
+      renderDetail(idx); };
     $b().querySelectorAll('[data-kp]').forEach(b=>b.onclick=()=>{ toggleDetailTag(th,'power',b.dataset.kp); renderDetail(idx); });
     $b().querySelectorAll('[data-kw]').forEach(b=>b.onclick=()=>{ toggleDetailTag(th,'weak',b.dataset.kw); renderDetail(idx); });
     const ttl=document.getElementById('wz_title'); if(ttl){ ttl.value=th.title||''; ttl.oninput=()=>th.title=ttl.value; }
