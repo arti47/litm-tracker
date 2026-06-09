@@ -17,6 +17,11 @@ spath=os.path.join(B,'specials-override.json')
 if os.path.exists(spath):
     for k,v in json.load(open(spath,encoding='utf-8'))['specials'].items():
         data.setdefault('specials',{})[k]=v
+# General Store — expanded curated backpack suggestions (a suggestions aid, not a rules table);
+# kept in its own file so parse_litm.py's smaller hardcoded list can't clobber it.
+gspath=os.path.join(B,'general-store.json')
+if os.path.exists(gspath):
+    data['generalStore']=json.load(open(gspath,encoding='utf-8'))['generalStore']
 # Per-Might example-action table (Reference tab) — Core Book via NotebookLM.
 mpath=os.path.join(B,'might-table.json')
 if os.path.exists(mpath):

@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,135 lines / ~679 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,159 lines / ~684 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v41` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v42` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -80,6 +80,10 @@ three sources in `_build/` and injected:
 - `_build/quintessences.json` — the **Quintessence** list (name + verbatim effect + a one-line
   `mechanical` note), sourced from the Core Book via NotebookLM (not the PDF parser).
   `inject.py` merges it into `LITM_DATA.quintessences`, so `parse_litm.py` can't clobber it.
+- `_build/general-store.json` — the **General Store** backpack suggestions (17 categories, ~217
+  items): an *expanded curated suggestions aid* (not a verbatim rules table — players can type
+  their own). `inject.py` merges it into `LITM_DATA.generalStore`, replacing `parse_litm.py`'s
+  smaller hardcoded list.
 - `_build/specials-override.json` — authoritative **Special Improvements** for the five theme
   types whose 5th entry the parser drops (Personality, Influence, Destiny, Companion,
   Possessions). `inject.py` merges these over `LITM_DATA.specials`, so all 20 types have 5.
@@ -116,9 +120,9 @@ three sources in `_build/` and injected:
 - `_build/parse_premades.py` — regenerates `premades.json` from the Character Pack markdown
   (`python3 _build/parse_premades.py <character_pack.md> _build/premades.json`).
 - `_build/inject.py` — **idempotent**: `base.html` + `litm-data.json` + `quintessences.json` +
-  `specials-override.json` + `might-table.json` + `grimoire.json` + `tutorial.json` +
-  `action-grimoire.json` + `oracle.json` + `premades.json` + `wizard.js` → `character-tracker.html`
-  **and** `index.html` (mirrors automatically).
+  `specials-override.json` + `general-store.json` + `might-table.json` + `grimoire.json` +
+  `tutorial.json` + `action-grimoire.json` + `oracle.json` + `premades.json` + `wizard.js` →
+  `character-tracker.html` **and** `index.html` (mirrors automatically).
 
 ```bash
 python3 _build/inject.py     # rebuild character-tracker.html + index.html from sources
@@ -163,9 +167,9 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `icon.svg` + `icon-192.png` + `icon-512.png` — app icon (misty stag antlers + "LITM").
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
-  `litm-data.json`, `quintessences.json`, `specials-override.json`, `might-table.json`,
-  `grimoire.json`, `tutorial.json`, `action-grimoire.json`, `oracle.json`, `premades.json`,
-  `parse_litm.py`, `parse_premades.py`, `inject.py`.
+  `litm-data.json`, `quintessences.json`, `specials-override.json`, `general-store.json`,
+  `might-table.json`, `grimoire.json`, `tutorial.json`, `action-grimoire.json`, `oracle.json`,
+  `premades.json`, `parse_litm.py`, `parse_premades.py`, `inject.py`.
 
 ### Data constants in `<script>`
 - `THEME_TYPES` — all **20 theme types** grouped by Might:
@@ -184,7 +188,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
   - `tropes` — 28 × {name, themes[3], fourth[3], backpack[]}
   - `fellowshipKits` — 6 × {name, power[], weak[], quest}
   - `relationship` — relationship-tag examples grouped in 4 categories
-  - `generalStore` — backpack item suggestions grouped in 6 categories
+  - `generalStore` (merged from `_build/general-store.json`) — backpack item suggestions grouped
+    in **17 categories** (~217 items); an expanded curated aid (players can type their own)
   - `quintessences` (merged from `_build/quintessences.json`) — **18** × {name, effect,
     mechanical}. Consumed by the Moment-of-Fulfillment picker (`litmQuintessences()`) and the
     searchable Reference tab; `hasQuintessence(name)` substring-matches the hero's free-text
@@ -257,9 +262,14 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
     Added no new localStorage key. (`renderPremade`/`commitPremade`/`mightLabel` in `wizard.js`.)
 - **General Store** step — pick one starting **backpack** story tag from trope suggestions +
   6 curated categories (armor/weapons/shields/gear/valuables), or type your own.
-- **Fellowship** step — choose one of **6 Fellowship kits** (or skip) and build a
-  **per-fellow relationship table** (a row per fellow Hero: name + tag; suggestion chips
-  from the rulebook's 4 categories fill the last row).
+- **Fellowship** step — choose one of **6 Fellowship kits** (or skip). Picking a kit opens a
+  **builder**: the kit's ~9 power tags and 4 weakness tags as **tap-chips** (choose which you
+  want — power toggles, weakness single-select), plus an editable **title** (defaults to the kit
+  name) and **Quest** (defaults to the kit's). `commit` uses the chosen tags (falling back to the
+  kit's first 3 power + first weakness only if none were picked) — *(previously it auto-took
+  `power.slice(0,3)`/`weak[0]` with no way to choose)*. Also build a **per-fellow relationship
+  table** (a row per fellow Hero: name + tag; suggestion chips from the rulebook's 4 categories
+  fill the last row).
 - **Origin-only nudge** — warns when a chosen theme type is Adventure/Greatness Might, since a
   typical rustic-fantasy start is mostly Origin.
 - On finish, builds a full hero (normalising kit strings → sheet tag objects), adds it to the

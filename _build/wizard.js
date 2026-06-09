@@ -423,6 +423,21 @@
     fk.forEach((k,i)=>{
       html+=`<button class="wz-pick ${draft._fellowKit===i?'sel':''}" data-k="${i}"><div class="nm">${esc(k.name)}</div><div class="meta">${esc(k.power.slice(0,3).join(' · '))}…</div><div class="fl">${esc(k.quest||'')}</div></button>`;
     });
+    // chosen-kit builder — pick which power/weakness tags you want
+    if(draft._fellowKit!=null && fk[draft._fellowKit]){
+      const k=fk[draft._fellowKit];
+      if(!draft._fellowPower) draft._fellowPower=[];
+      if(!draft._fellowWeak) draft._fellowWeak=[];
+      html+=`<div class="wz-card"><div class="wz-fld" style="margin-bottom:2px"><span>Build the ${esc(k.name)} Fellowship</span></div>`;
+      html+=`<p class="wz-note" style="margin:0 0 6px">Choose which tags you want — tap to add/remove. (Pick ~2–3 power and 1 weakness; edit later on the Fellowship tab.)</p>`;
+      html+=`<label class="wz-fld"><span>Title</span><input id="wz_ftitle" placeholder="${esc(k.name)}"></label>`;
+      html+=`<div class="wz-fld"><span>Power tags · tap to choose</span><div class="chips">`+
+        k.power.map(p=>`<button class="chip pw ${draft._fellowPower.includes(p)?'sel':''}" data-fp="${esc(p)}">${esc(p)}</button>`).join('')+`</div></div>`;
+      html+=`<div class="wz-fld"><span>Weakness tag · tap to choose</span><div class="chips">`+
+        k.weak.map(p=>`<button class="chip wk ${draft._fellowWeak.includes(p)?'sel':''}" data-fw="${esc(p)}">${esc(p)}</button>`).join('')+`</div></div>`;
+      html+=`<label class="wz-fld"><span>Quest</span><input id="wz_fquest" placeholder="${esc(k.quest||'')}"></label>`;
+      html+=`</div>`;
+    }
     // per-fellow relationship table
     if(!draft._rels) draft._rels=[];
     const rel=D.relationship||{};
@@ -438,8 +453,15 @@
     html+=`</div></div>`;
     $b().innerHTML=html;
     $b().querySelectorAll('[data-k]').forEach(btn=>btn.onclick=()=>{
-      draft._fellowKit = btn.dataset.k==='none'?null:+btn.dataset.k; renderFellowship();
+      if(btn.dataset.k==='none'){ draft._fellowKit=null; }
+      else { const i=+btn.dataset.k; if(draft._fellowKit!==i){ draft._fellowKit=i; const k=fk[i];
+        draft._fellowTitle=k.name; draft._fellowQuest=k.quest||''; draft._fellowPower=[]; draft._fellowWeak=[]; } }
+      renderFellowship();
     });
+    const ft=document.getElementById('wz_ftitle'); if(ft){ ft.value=draft._fellowTitle||''; ft.oninput=()=>draft._fellowTitle=ft.value; }
+    const fq=document.getElementById('wz_fquest'); if(fq){ fq.value=draft._fellowQuest||''; fq.oninput=()=>draft._fellowQuest=fq.value; }
+    $b().querySelectorAll('[data-fp]').forEach(b=>b.onclick=()=>{ const a=draft._fellowPower, v=b.dataset.fp, i=a.indexOf(v); if(i>=0)a.splice(i,1); else a.push(v); renderFellowship(); });
+    $b().querySelectorAll('[data-fw]').forEach(b=>b.onclick=()=>{ draft._fellowWeak = draft._fellowWeak.includes(b.dataset.fw)?[]:[b.dataset.fw]; renderFellowship(); });
     drawRelRows();
     document.getElementById('wz_addrel').onclick=()=>{ draft._rels.push({name:'',tag:''}); drawRelRows(); };
     $b().querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{
@@ -509,12 +531,14 @@
     while(hero.themes.length<4) hero.themes.push(emptyTheme());
     // backpack
     hero.backpack=[{id:uid(),text:draft._backpack||'',type:'story',scratched:false}];
-    // fellowship
+    // fellowship — use the player's chosen tags (fall back to the kit's first few if none picked)
     if(draft._fellowKit!=null && (D.fellowshipKits||[])[draft._fellowKit]){
       const k=D.fellowshipKits[draft._fellowKit];
-      hero.fellowship={ type:'Companion', title:k.name,
-        power:k.power.slice(0,3).map(t=>({id:uid(),text:t,scratched:false})),
-        weak:[{id:uid(),text:k.weak[0]||''}], quest:k.quest||'',
+      const pw=(draft._fellowPower&&draft._fellowPower.length)?draft._fellowPower:k.power.slice(0,3);
+      const wk=(draft._fellowWeak&&draft._fellowWeak.length)?draft._fellowWeak:[k.weak[0]||''];
+      hero.fellowship={ type:'Companion', title:(draft._fellowTitle||k.name),
+        power:pw.map(t=>({id:uid(),text:t,scratched:false})),
+        weak:wk.map(t=>({id:uid(),text:t})), quest:(draft._fellowQuest||k.quest||''),
         improve:0,abandon:0,milestone:0,special:'',specials:[] };
     }
     const rels=(draft._rels||[]).filter(r=>(r.name||'').trim()||(r.tag||'').trim());
