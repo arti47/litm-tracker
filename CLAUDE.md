@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,131 lines / ~679 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,135 lines / ~679 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v40` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v41` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -237,9 +237,11 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
     the default Skill-or-Trade themebook existed.)* The themebook also surfaces its **Theme kits**
     (the ~6 kits for that type from `LITM_DATA.themekits`): a **kit selector** whose chosen kit
     shows its power/weakness tags as **tap-chips** that drop straight into your power/weakness
-    inputs (`toggleDetailTag` fills an empty input first, else appends; re-tapping removes), and
-    prefills the Quest if empty — so you get ready-made tags *and* the themebook prompts together.
-    (Switching the themebook type clears the selected kit.)
+    inputs (`toggleDetailTag` fills an empty input first, else appends; re-tapping removes),
+    **sets the theme title to the kit name** (when empty, or when it still holds the previous
+    kit's name — a title you typed yourself is preserved), and prefills the Quest if empty — so
+    you get ready-made tags *and* the themebook prompts together. (Switching the themebook type
+    clears the selected kit; this mirrors the Quickest path, where the kit name is the title.)
   - **✍️ Simplest** — name + blank sheet (the original v1 behavior).
   - **📦 Ready-made** — pick one of **20 pre-built Heroes** from the **Character Pack** supplement
     (`LITM_DATA.premades`). The picker is **grouped by tier** — *Dalesfolk Heroes* (14 ordinary
