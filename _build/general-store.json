@@ -1,0 +1,22 @@
+{
+  "_source": "Curated General Store suggestions for the wizard's backpack step — expanded, genre-appropriate (rustic dark-fantasy / the Dales). A suggestions aid, not a verbatim rules table; players can always type their own. Merged over LITM_DATA.generalStore by inject.py.",
+  "generalStore": {
+    "Light armor": ["buff coat", "gambeson", "padded jerkin", "arming doublet", "leather armor", "boiled leather armor", "studded leather", "hide armor", "fur-lined coat", "jack of plates", "ring mail", "brigandine"],
+    "Heavy armor": ["cuirass", "breastplate", "chainmail", "scale armor", "lamellar armor", "splint mail", "plate armor", "full harness", "helm", "coif", "greaves", "vambraces", "pauldrons", "gauntlets"],
+    "Shields": ["buckler", "targe", "round shield", "heater shield", "kite shield", "wicker shield", "tower shield", "spiked roundshield"],
+    "Melee weapons": ["knife", "dagger", "arming sword", "longsword", "greatsword", "falchion", "rapier", "hatchet", "war axe", "mace", "morningstar", "flail", "warhammer", "maul", "club", "cudgel", "quarterstaff", "spear", "pike", "halberd", "glaive", "billhook", "pitchfork", "war scythe"],
+    "Ranged weapons": ["sling", "shortbow", "hunting bow", "longbow", "crossbow", "heavy crossbow", "throwing knives", "javelins", "blowpipe"],
+    "Ammunition": ["quiver of arrows", "crossbow bolts", "sling stones", "broadhead arrows", "blunted arrows", "fire arrows", "whistling signal arrow"],
+    "Tools": ["rope and hook", "grappling hook", "climbing gear", "crowbar", "hammer and nails", "handsaw", "hand drill", "chisel", "shovel", "pickaxe", "sickle", "whetstone", "fishing tackle", "net", "snare", "steel trap", "lockpicks", "sewing kit", "carpenter's tools", "mason's tools", "smith's tongs"],
+    "Camp & survival": ["bedroll", "tent", "wool blanket", "cookware", "mess kit", "tinderbox", "flint and steel", "waterskin", "traveler's rations", "hardtack", "dried meat", "trail mix", "oilskin cloak", "snowshoes", "walking staff", "map case", "compass"],
+    "Light & fire": ["torch", "lantern", "hooded lantern", "bullseye lantern", "oil flask", "tallow candle", "wax candle", "everlasting glowing fungus"],
+    "Containers": ["backpack", "satchel", "saddlebags", "sack", "belt pouch", "herb pouch", "wineskin", "small barrel", "wooden crate", "lockbox", "scroll case", "false-bottom case"],
+    "Clothing": ["traveler's cloak", "hooded cowl", "wool tunic", "fur cloak", "rain cloak", "sturdy boots", "leather gloves", "wide-brimmed hat", "warm scarf", "leather belt"],
+    "Medicine & remedies": ["healer's kit", "bandages", "soothing salve", "poultice", "herbal remedy", "willowbark", "antitoxin", "splint", "restorative tonic", "stitching needle", "smelling salts"],
+    "Provisions": ["sack of grain", "loaf of bread", "wheel of cheese", "smoked fish", "salted pork", "honey", "salt and spices", "cooking oil", "tea leaves", "skin of ale", "bottle of wine", "dried fruit"],
+    "Animals & transport": ["riding horse", "draft horse", "pony", "mule", "donkey", "ox and cart", "wagon", "handcart", "sled", "rowboat", "saddle and tack", "war dog", "hunting hound", "trained hawk", "carrier pigeon", "pack goat"],
+    "Roguery & sundries": ["caltrops", "smoke pellet", "disguise kit", "marked cards", "loaded dice", "signal whistle", "spyglass", "magnifying lens", "ink and quill", "sealing wax", "abacus", "scale and weights", "thieves' chalk"],
+    "Valuables & documents": ["bag of coins", "precious gem", "silver locket", "signet ring", "fine cloak", "artisanal necklace", "map of the realm", "letter of introduction", "deed or writ", "merchant's ledger", "family heirloom", "trade tokens"],
+    "Oldways charms": ["rowan charm", "iron nail", "blessed water", "bundle of sage", "pouch of warding salt", "protective talisman", "prayer beads", "bone fetish", "candle of vigil", "lucky horseshoe", "rune-carved stone"]
+  }
+}
