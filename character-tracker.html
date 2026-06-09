@@ -2884,8 +2884,11 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
     setFoot(true,true);
     const tb=(D.themebooks||{})[th.type]||{};
     let html=`<h2 class="wz-h">Theme ${idx+1}: ${esc(th.type)} Themebook</h2>`;
-    html+=`<div class="wz-card"><label class="wz-fld"><span>Theme type</span><select id="wz_type">${typeOptions(th.type)}</select></label>${mightWarn(th.type)}`;
-    if(tb.concept) html+=`<p class="wz-sub" style="margin:6px 0 0">${esc(tb.concept)}</p>`;
+    html+=`<div class="wz-card"><div class="wz-fld" style="margin-bottom:2px"><span>Choose this theme's themebook — ${allTypes().length} to pick from</span></div>`;
+    html+=`<p class="wz-note" style="margin:0 0 6px">Tap a type to load its themebook. Each is a different set of questions; the highlighted one is selected.</p>`;
+    html+=themebookChipsHTML(th.type);
+    html+=mightWarn(th.type);
+    if(tb.concept) html+=`<p class="wz-sub" style="margin:8px 0 0"><b>${esc(th.type)}:</b> ${esc(tb.concept)}</p>`;
     html+=`</div>`;
     // power tag questions
     if(tb.powerQ&&tb.powerQ.length){
@@ -2907,7 +2910,7 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
     }
     html+=`<label class="wz-fld"><span>Quest</span><input id="wz_quest" placeholder="A goal, belief, or journey…"></label></div>`;
     $b().innerHTML=html;
-    document.getElementById('wz_type').onchange=e=>{ th.type=e.target.value; renderDetail(idx); };
+    $b().querySelectorAll('[data-tb]').forEach(b=>b.onclick=()=>{ if(th.type===b.dataset.tb) return; th.type=b.dataset.tb; renderDetail(idx); });
     const ttl=document.getElementById('wz_title'); if(ttl){ ttl.value=th.title||''; ttl.oninput=()=>th.title=ttl.value; }
     const q=document.getElementById('wz_quest'); if(q){ q.value=th.quest||''; q.oninput=()=>th.quest=q.value; }
     $b().querySelectorAll('.wz_pw').forEach(inp=>{ inp.value=th.power[+inp.dataset.i].text||''; inp.oninput=()=>th.power[+inp.dataset.i].text=inp.value; });
@@ -2989,6 +2992,15 @@ const LITM_DATA = {"themebooks":{"Circumstance":{"powerQ":["What Circumstance do
   function typeOptions(sel){
     let h='';
     for(const grp in TYPE_ORDER){ h+=`<optgroup label="${grp}">`+TYPE_ORDER[grp].map(t=>`<option ${t===sel?'selected':''}>${t}</option>`).join('')+`</optgroup>`; }
+    return h;
+  }
+  // Visible, tappable themebook picker (all 20 types grouped by Might) — used by the Detailed path.
+  function themebookChipsHTML(sel){
+    let h='';
+    for(const grp in TYPE_ORDER){
+      h+=`<div class="wz-note" style="margin:8px 0 3px;font-weight:700">${esc(grp)}</div><div class="chips">`+
+        TYPE_ORDER[grp].map(t=>`<button class="chip ${t===sel?'sel':''}" data-tb="${esc(t)}">${esc(t)}</button>`).join('')+`</div>`;
+    }
     return h;
   }
   function mightWarn(type){

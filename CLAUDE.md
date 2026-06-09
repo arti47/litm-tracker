@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,085 lines / ~675 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,097 lines / ~676 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v38` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v39` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -230,7 +230,11 @@ data in `LITM_DATA`. Full-screen stepper with progress bar, Back/Next, light/dar
     editable title and Quest (kit default). Trope's backpack suggestions feed the store step.
   - **📖 Detailed** — per theme, pick a type and answer its **Themebook**: the concept blurb,
     the lettered **Power Tag Questions** and **Weakness Tag Questions**, and **Quest Ideas**,
-    with inputs to turn answers into the title/power/weakness tags + Quest.
+    with inputs to turn answers into the title/power/weakness tags + Quest. The type is chosen
+    via a **visible themebook picker** — all **20** types shown as tap-chips grouped by Might
+    (Origin/Adventure/Greatness/Any), the selected one highlighted (`themebookChipsHTML` in
+    `wizard.js`). *(Replaced the easy-to-miss "Theme type" dropdown, which made it look like only
+    the default Skill-or-Trade themebook existed.)*
   - **✍️ Simplest** — name + blank sheet (the original v1 behavior).
   - **📦 Ready-made** — pick one of **20 pre-built Heroes** from the **Character Pack** supplement
     (`LITM_DATA.premades`). The picker is **grouped by tier** — *Dalesfolk Heroes* (14 ordinary
