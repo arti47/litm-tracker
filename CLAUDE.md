@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,011 lines / ~669 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,085 lines / ~675 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v37` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v38` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -206,7 +206,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
            special(free-text notes),specials:[{name,desc}]}] ×4 (variable),
   fellowship:{…same shape as a theme…},
   relationships:[{name,tag,scratched}],
-  statuses:[{name,boxes:[6×bool],limit:1–6}],   // limit defaults to 5 (Hero); legacy/unset → 5
+  statuses:[{name,boxes:[6×bool],limit:1–6,owner:'me'|'foe',target}],   // limit defaults 5 (Hero)/4 (foe); legacy/unset → 5; owner defaults 'me'
   progress:[{name,goal,cur,max}],   // progress/Limit tracks (gap #4); max 2–10, complete at cur≥max
   scene:[{text,type,scratched}],
   sceneBoard:{step:-1|0|1|2, stakes, threats},
@@ -324,6 +324,21 @@ theme fills a track, and resets the track on completion:
   killed/transformed at 6); lower it for a Challenge/foe. The Limit box is dash-outlined; the
   warning fires at `tier ≥ limit` ("taken out", or "overcome"/"killed or transformed" at the
   Hero defaults). `statusLimit(st)` falls back to 5 for legacy/unset/out-of-range values.
+- **Status owner — 🧍 Me vs 👹 Foe** (2026-06-09) — each status carries an **owner** (`'me'`/`'foe'`)
+  and an optional **target**. A per-card **Me/Foe segmented toggle** flips ownership (switching to
+  Foe defaults the Limit to **4** and reveals a **target** field). `renderStatuses` renders your
+  statuses under a *🧍 Your statuses* header, then **foe statuses grouped by target** (a *👹 Bandits*
+  header, a *👹 Wolf* header, …; `statusCard` builds each, target uses `oninput`-update +
+  `onchange`-regroup to keep focus while typing). Two add buttons: **＋ Add status** (me, `addStatus`)
+  and **👹 Add foe status** (`addFoeStatus`). `giveStatusTier(name,tier,owner,target)` matches on
+  name **+ owner + (foe) target**, so your `wounded`, a foe's `wounded`, and two different foes'
+  `wounded` stay distinct and stack independently. On the **Roll tab**, foe statuses appear marked
+  **👹 name (target)** with a dashed chip (`.modchip.foe`) and a tooltip — like all statuses they
+  **only count when tapped** (nothing auto-adds), pooling into the single highest helpful/highest
+  hindering per the rules (a *hobbled* foe taps in as +tier to your attack). The **Spend panel**
+  gains a **👹 Foe status** effect (name + tier + which-foe) that creates/stacks a tracked foe
+  status via `giveStatusTier(...,'foe',target)`; Grimoire ATTACK/WEAKEN/DISRUPT/INFLUENCE/SET BACK
+  keywords now seed this foe form (`AG_FX`→`type:'foe'`). No new localStorage key.
 - **Progress & Limits (gap #4)** — a 🎯 card of named **progress tracks** toward a **Limit**
   (a project's *making-progress*, a chase's *catch/outrun*, *unlock*, *breakthrough*). Each has
   a box track (Limit 2–10 via selector), tap-to-set current, an optional "when filled" goal
@@ -382,6 +397,8 @@ cap 80) with a free-text note box per entry; entries are deletable. Dice helpers
 - Tap a tag to count it: helpful (+1) → hindering (−1) → off. Weakness tags toggle as a −1.
 - **Burn a tag** 🔥 — one helpful tag gives **+3** instead of +1 (and is flagged to scratch).
 - **Status math** — only the single highest helpful and single highest hindering status count.
+  **Foe statuses** (owner `'foe'`) show marked **👹** and count the same way *only when tapped*
+  (helpful when a foe's condition works for your action, hindering when it's against you).
 - **Might** segmented control: Extr. Imperiled −6 / Imperiled −3 / Matched / Favored +3 / Extr. Favored +6.
 - **⚖️ Might helper (gap #2)** — a collapsible under the Might control: pick the **task's Might**
   (Origin/Adventure/Greatness) and the **Might you bring**, and the app computes the modifier
@@ -661,6 +678,10 @@ app rather than bloating this one (cf. the TOR2E Loremaster companion).*
       done (2026-06-06). `limit` field + selector; `statusLimit()` defaults legacy/unset to 5.
 - [x] **Undo/redo + autosave indicator** (2026-06-08) — ↶/↷ header buttons over `{roster,activeId}`
       snapshots (coalesced, cap 40); a header save-dot flashes "Saving…" → "✓ Saved".
+- [x] **Status owner — 🧍 Me vs 👹 Foe** (2026-06-09) — per-status owner + optional target; the
+      Tracking list groups foe statuses by target; foe statuses show marked 👹 on the Roll tab and
+      only count when tapped; the Spend panel can inflict a tracked foe status. A small step toward
+      the Phase-8 Narrator/adversary side, kept player-side. (See Tracking → "Status owner".)
 
 ---
 
