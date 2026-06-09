@@ -177,9 +177,20 @@ body.dark .m-origin { background: rgba(95,163,146,.25); color: var(--teal-dark);
 .sbox.tier { box-shadow: 0 0 0 2px var(--teal); }
 .sbox.lim { border-style: dashed; border-color: var(--bad); }
 .status-meta { display: flex; align-items: center; gap: 6px; margin: -2px 0 10px;
-  font-size: 11px; color: var(--ink-soft); }
+  font-size: 11px; color: var(--ink-soft); flex-wrap: wrap; }
 .status-meta select { padding: 2px 6px; font-size: 12px; border-radius: 6px; }
-.status-meta .lim-warn { flex: 1; color: var(--bad); font-weight: 600; }
+.status-meta .lim-warn { flex: 1 1 100%; color: var(--bad); font-weight: 600; }
+/* status owner (Me vs Foe) */
+.status-grouphd { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
+  color: var(--ink-soft); margin: 12px 0 5px; }
+.status-grouphd.foe { color: var(--weak-ink); }
+.status-wrap.foe { border-left: 3px solid var(--weak); padding-left: 9px; border-radius: 6px; margin-bottom: 4px; }
+.owner-seg { flex: 0 0 auto; }
+.owner-seg button { padding: 4px 8px; font-size: 11px; min-width: 0; }
+.foe-target { flex: 1 1 90px; min-width: 80px; padding: 4px 8px; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--card-bg); color: var(--ink); font-size: 13px; }
+.modchip.foe { border-style: dashed; }
+.modchip .foe-tgt { opacity: .7; font-size: 11px; font-weight: 400; }
 .q-list { display: flex; flex-direction: column; gap: 6px; max-height: 46vh; overflow: auto; margin-bottom: 4px; }
 .q-pick { text-align: left; padding: 9px 11px; border-radius: 10px; border: 1.5px solid var(--border);
   background: var(--card-bg); color: var(--ink); display: flex; flex-direction: column; gap: 3px; cursor: pointer; }
@@ -459,9 +470,12 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
   <div class="card">
     <h2>🟢 Statuses</h2>
-    <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. A Hero's <b>Limit is 5</b> (overcome at 5, killed/transformed at 6); lower the per-status <b>Limit</b> when tracking a Challenge or foe that's taken out sooner.</p>
+    <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. Each status is on <b>🧍 you</b> or <b>👹 a foe</b> — toggle per status. A Hero's <b>Limit is 5</b> (overcome at 5, killed/transformed at 6); a foe's is lower. Foe statuses show on the Roll tab marked 👹 — tap one to count it only when it actually helps or hinders your action.</p>
     <div id="statusList"></div>
-    <button class="addbtn" onclick="addStatus()">＋ Add status</button>
+    <div class="row" style="gap:8px">
+      <button class="addbtn" style="flex:1;margin:0" onclick="addStatus()">＋ Add status</button>
+      <button class="addbtn" style="flex:1;margin:0" onclick="addFoeStatus()">👹 Add foe status</button>
+    </div>
   </div>
   <div class="card">
     <h2>🎯 Progress &amp; Limits</h2>
@@ -619,6 +633,8 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
         <tr class="ref-row"><td>Stack</td><td>mark the incoming tier's box; if taken, spill to the next free box right. Current tier = highest marked box.</td></tr>
         <tr class="ref-row"><td>Reduce</td><td>move all marks left by the tiers reduced; marks below 1 are removed.</td></tr>
         <tr class="ref-row"><td>Limit</td><td>a Hero's Limit is 5 (overcome at 5, killed/transformed at 6). A Challenge or foe can have a Limit of 1–6 — set it per status; reaching it takes the target out.</td></tr>
+        <tr class="ref-row"><td>Whose?</td><td>each status is on <b>🧍 you</b> or <b>👹 a foe</b> (toggle per status; foe statuses can be grouped by target). A status lives on whoever it's applied to — there's no shared pool.</td></tr>
+        <tr class="ref-row"><td>In a roll</td><td>add your single <b>highest helpful</b> status and subtract your single <b>highest hindering</b> — judged per action. A <b>foe's</b> status can help you (a <i>hobbled</i> foe is easier to hit) or hinder you; tap it 👹 on the Roll tab only when it applies.</td></tr>
       </tbody></table>
     </div>
 
@@ -827,6 +843,8 @@ function loadAll() {
   roster.forEach(h => {
     (h.themes||[]).forEach(t => { if(!Array.isArray(t.specials)) t.specials = []; });
     if (h.fellowship && !Array.isArray(h.fellowship.specials)) h.fellowship.specials = [];
+    // status owner/target (Me vs Foe) — older statuses are all the Hero's
+    (h.statuses||[]).forEach(st => { if(st.owner!=='foe') st.owner='me'; if(typeof st.target!=='string') st.target=''; });
   });
   activeId = localStorage.getItem(LS_ACTIVE);
   S = roster.find(h => h.id === activeId) || roster[0];
@@ -1494,40 +1512,76 @@ function addRel(){ S.relationships.push({id:uid(),name:'',tag:'',scratched:false
 
 function renderStatuses(){
   const w=$('statusList'); w.innerHTML='';
-  if(!S.statuses.length){ w.innerHTML='<p class="muted">No active statuses.</p>'; }
-  S.statuses.forEach((st,i)=>{
-    const lim = statusLimit(st);
-    const card=document.createElement('div'); card.className='status-card';
-    const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='status name'; nm.value=st.name;
-    nm.oninput=()=>{ st.name=nm.value; save(); };
-    const boxes=document.createElement('div'); boxes.className='boxes';
-    const tier = st.boxes.lastIndexOf(true)+1; // highest marked
-    for(let t=1;t<=6;t++){
-      const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'')+(t===lim?' lim':'');
-      b.textContent=t;
-      if(t===lim) b.title='Limit '+lim+' — reaching this tier takes the target out';
-      b.onclick=()=>{ toggleStatusBox(st,t); renderStatuses(); save(); };
-      boxes.appendChild(b);
-    }
-    const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none';
-    del.onclick=()=>{ S.statuses.splice(i,1); renderStatuses(); save(); };
-    card.appendChild(nm); card.appendChild(boxes); card.appendChild(del);
-    w.appendChild(card);
+  const mine=S.statuses.filter(st=>(st.owner||'me')!=='foe');
+  const foes=S.statuses.filter(st=>(st.owner||'me')==='foe');
+  if(!S.statuses.length){ w.innerHTML='<p class="muted">No active statuses.</p>'; return; }
+  // ----- your statuses -----
+  if(mine.length){
+    const h=document.createElement('div'); h.className='status-grouphd'; h.innerHTML='🧍 Your statuses'; w.appendChild(h);
+    mine.forEach(st=> w.appendChild(statusCard(st)));
+  }
+  // ----- foe statuses, grouped by target -----
+  if(foes.length){
+    foes.sort((a,b)=>(a.target||'').toLowerCase().localeCompare((b.target||'').toLowerCase()));
+    let lastT=null;
+    foes.forEach(st=>{
+      const tg=(st.target||'').trim();
+      if(lastT===null || tg.toLowerCase()!==lastT){
+        const h=document.createElement('div'); h.className='status-grouphd foe';
+        h.innerHTML='👹 '+(tg?esc(tg):'Unnamed foe'); w.appendChild(h); lastT=tg.toLowerCase();
+      }
+      w.appendChild(statusCard(st));
+    });
+  }
+}
+function statusCard(st){
+  const wrap=document.createElement('div'); wrap.className='status-wrap'+((st.owner||'me')==='foe'?' foe':'');
+  const lim=statusLimit(st);
+  const card=document.createElement('div'); card.className='status-card';
+  const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='status name'; nm.value=st.name;
+  nm.oninput=()=>{ st.name=nm.value; save(); };
+  const boxes=document.createElement('div'); boxes.className='boxes';
+  const tier=st.boxes.lastIndexOf(true)+1;
+  for(let t=1;t<=6;t++){
+    const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'')+(t===lim?' lim':'');
+    b.textContent=t;
+    if(t===lim) b.title='Limit '+lim+' — reaching this tier takes the target out';
+    b.onclick=()=>{ toggleStatusBox(st,t); renderStatuses(); save(); };
+    boxes.appendChild(b);
+  }
+  const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none';
+  del.onclick=()=>{ const i=S.statuses.indexOf(st); if(i>=0) S.statuses.splice(i,1); renderStatuses(); save(); };
+  card.appendChild(nm); card.appendChild(boxes); card.appendChild(del);
+  wrap.appendChild(card);
 
-    // Per-status Limit selector (Heroes are always 5; a Challenge/foe may be 1–6).
-    const meta=document.createElement('div'); meta.className='status-meta';
-    const limLbl=document.createElement('span'); limLbl.textContent='Limit';
-    const sel=document.createElement('select');
-    for(let L=1;L<=6;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===lim) o.selected=true; sel.appendChild(o); }
-    sel.onchange=()=>{ st.limit=+sel.value; renderStatuses(); save(); };
-    meta.appendChild(limLbl); meta.appendChild(sel);
-    if(tier>=lim){ const warn=document.createElement('span'); warn.className='lim-warn';
-      warn.textContent = (lim>=6 || tier>=6) ? '⚠ Tier '+tier+' — killed or transformed.'
-        : lim===5 ? '⚠ Tier 5 — Limit reached: overcome by this status.'
-        : '⚠ Tier '+tier+' ≥ Limit '+lim+' — taken out.';
-      meta.appendChild(warn); }
-    w.appendChild(meta);
+  const meta=document.createElement('div'); meta.className='status-meta';
+  // owner toggle (🧍 Me / 👹 Foe)
+  const own=document.createElement('div'); own.className='seg sm owner-seg';
+  [['me','🧍 Me'],['foe','👹 Foe']].forEach(([v,lbl])=>{
+    const b=document.createElement('button'); b.textContent=lbl; if((st.owner||'me')===v) b.className='on';
+    b.onclick=()=>{ if((st.owner||'me')===v) return; st.owner=v; if(v==='foe'){ if(statusLimit(st)===5) st.limit=4; } else { st.target=''; } renderStatuses(); save(); };
+    own.appendChild(b);
   });
+  meta.appendChild(own);
+  // foe target field
+  if((st.owner||'me')==='foe'){
+    const tin=document.createElement('input'); tin.type='text'; tin.className='foe-target'; tin.placeholder='foe / target'; tin.value=st.target||'';
+    tin.oninput=()=>{ st.target=tin.value; save(); };          // live update, no re-render (keep focus)
+    tin.onchange=()=>{ renderStatuses(); };                     // regroup on blur
+    meta.appendChild(tin);
+  }
+  const limLbl=document.createElement('span'); limLbl.textContent='Limit'; meta.appendChild(limLbl);
+  const sel=document.createElement('select');
+  for(let L=1;L<=6;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===lim) o.selected=true; sel.appendChild(o); }
+  sel.onchange=()=>{ st.limit=+sel.value; renderStatuses(); save(); };
+  meta.appendChild(sel);
+  if(tier>=lim){ const warn=document.createElement('span'); warn.className='lim-warn';
+    warn.textContent = (lim>=6 || tier>=6) ? '⚠ Tier '+tier+' — killed or transformed.'
+      : lim===5 ? '⚠ Tier 5 — Limit reached: overcome by this status.'
+      : '⚠ Tier '+tier+' ≥ Limit '+lim+' — taken out.';
+    meta.appendChild(warn); }
+  wrap.appendChild(meta);
+  return wrap;
 }
 function statusLimit(st){ const L=+(st&&st.limit); return (L>=1 && L<=6) ? L : 5; }
 function toggleStatusBox(st,t){
@@ -1536,7 +1590,8 @@ function toggleStatusBox(st,t){
   if(st.boxes[t-1]){ for(let k=t-1;k<6;k++) st.boxes[k]=false; }
   else { st.boxes[t-1]=true; }
 }
-function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false],limit:5}); renderStatuses(); save(); }
+function addStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false],limit:5,owner:'me',target:''}); renderStatuses(); save(); }
+function addFoeStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,false,false,false,false],limit:4,owner:'foe',target:''}); renderStatuses(); save(); }
 
 // ----- Progress / Limit tracks (gap #4) -----
 function renderProgress(){
@@ -1991,8 +2046,8 @@ function availableTags(){
   // backpack + scene story tags
   S.backpack.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1}); });
   S.scene.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1}); });
-  // statuses
-  S.statuses.forEach(st=>{ const tier=st.boxes.lastIndexOf(true)+1; if(st.name.trim() && tier>0) out.push({id:st.id,label:st.name,kind:'status',tier}); });
+  // statuses (your own + foes'; foe ones are marked and only count when tapped)
+  S.statuses.forEach(st=>{ const tier=st.boxes.lastIndexOf(true)+1; if(st.name.trim() && tier>0) out.push({id:st.id,label:st.name,kind:'status',tier,foe:(st.owner||'me')==='foe',target:(st.target||'').trim()}); });
   return out;
 }
 
@@ -2026,11 +2081,13 @@ function renderRoller(){
   tags.forEach(t=>{
     const sel=rollMods[t.id];
     const chip=document.createElement('span');
-    chip.className='modchip'+(sel==='help'?' help':'')+(sel==='hind'?' hind':'')+(t.kind==='status'?' stat':'')+(burnId===t.id?' burning':'');
+    chip.className='modchip'+(sel==='help'?' help':'')+(sel==='hind'?' hind':'')+(t.kind==='status'?' stat':'')+(t.foe?' foe':'')+(burnId===t.id?' burning':'');
     let val='';
     if(t.kind==='status'){ val = sel==='help'?'+'+t.tier : sel==='hind'?'−'+t.tier : '±'+t.tier; }
     else { val = sel==='help'?(burnId===t.id?'+3':'+1') : sel==='hind'?'−1':(t.base>0?'+1':'−1'); }
-    chip.innerHTML = '<span>'+esc(t.label)+'</span> <span class="v">'+val+'</span>';
+    const lbl = t.foe ? ('👹 '+esc(t.label)+(t.target?' <span class="foe-tgt">('+esc(t.target)+')</span>':'')) : esc(t.label);
+    chip.innerHTML = '<span>'+lbl+'</span> <span class="v">'+val+'</span>';
+    if(t.foe) chip.title='Foe status — counts only if you tap it (helpful when it works for your action, hindering when against you).';
     chip.onclick=()=>{ cycleMod(t); };
     // burn flame for helpful non-status tags
     if(t.kind!=='status' && sel==='help'){
@@ -2187,9 +2244,13 @@ function recoverTagById(id){
   const b=S.backpack.find(x=>x.id===id); if(b)b.scratched=false;
 }
 // ----- Status apply/reduce (rules-correct stacking) -----
-function giveStatusTier(name,tier){
-  let st=S.statuses.find(s=>s.name.trim().toLowerCase()===name.trim().toLowerCase());
-  if(!st){ st={id:uid(),name:name,boxes:[false,false,false,false,false,false],limit:5}; S.statuses.push(st); }
+function giveStatusTier(name,tier,owner,target){
+  owner=(owner==='foe')?'foe':'me'; target=(target||'').trim();
+  // match an existing status with the same name AND owner AND (for foes) target, so your 'wounded'
+  // and a foe's 'wounded' — and two different foes' — stay distinct.
+  let st=S.statuses.find(s=>s.name.trim().toLowerCase()===name.trim().toLowerCase()
+    && (s.owner||'me')===owner && (owner!=='foe' || (s.target||'').trim().toLowerCase()===target.toLowerCase()));
+  if(!st){ st={id:uid(),name:name,boxes:[false,false,false,false,false,false],limit:owner==='foe'?4:5,owner:owner,target:target}; S.statuses.push(st); }
   let b=tier-1; while(b<6 && st.boxes[b]) b++;   // spill right if the box is taken
   if(b<6) st.boxes[b]=true;
   renderStatuses(); save();
@@ -2204,9 +2265,9 @@ const AG_FX={
   CREATE:{type:'bag', label:'＋ Create tag'}, BESTOW:{type:'bag', label:'＋ Give tag'},
   ENHANCE:{type:'status', label:'▲ Enhance (status)'}, ADVANCE:{type:'progress', label:'▲ Advance (progress)'},
   RESTORE:{type:'reduce', label:'▼ Restore (reduce status)'},
-  DISRUPT:{type:'other', label:'◆ Disrupt (target status)'}, INFLUENCE:{type:'other', label:'◆ Influence (target status)'},
-  ATTACK:{type:'other', label:'◆ Attack (target status)'}, WEAKEN:{type:'other', label:'◆ Weaken (target)'},
-  'SET BACK':{type:'other', label:'▼ Set back (target)'}, DISCOVER:{type:'detail', label:'🔍 Discover · 1'}
+  DISRUPT:{type:'foe', label:'👹 Disrupt (foe status)'}, INFLUENCE:{type:'foe', label:'👹 Influence (foe status)'},
+  ATTACK:{type:'foe', label:'👹 Attack (foe status)'}, WEAKEN:{type:'foe', label:'👹 Weaken (foe status)'},
+  'SET BACK':{type:'foe', label:'👹 Set back (foe status)'}, DISCOVER:{type:'detail', label:'🔍 Discover · 1'}
 };
 function agSugg(seg){
   const pats=[/such as ([^.]+)/i, /give (?:your ally|yourself|them|the target|your target|your opponent|your allies|the beast|the bandits)\s+([a-z][^.]+)/i,
@@ -2230,6 +2291,7 @@ function seedEffect(e){
   if(e.type==='detail'){ doSpend(1,'discovered'+(s?' — '+s:' a detail')); spend._form=null; renderSpend(); return; }
   if(e.type==='bag') spend._form={type:'bag', text:s};
   else if(e.type==='status') spend._form={type:'status', tier:1, name:s};
+  else if(e.type==='foe') spend._form={type:'foe', tier:1, name:s, target:''};
   else if(e.type==='reduce') spend._form={type:'reduce', amt:1};
   else if(e.type==='progress') spend._form={type:'progress', sel:(S.progress&&S.progress.length?0:'new'), amt:1, name:s};
   else spend._form={type:'other', amt:1, text:e.effect+(s?': '+s:'')};
@@ -2256,7 +2318,7 @@ function renderSpend(){
   h+='<div class="powerbig" style="padding:0"><div class="n" style="font-size:30px">'+r+'</div><div class="l">Power left</div></div>';
   h+='<div class="muted" style="flex:1">'+(spend.reaction?'Spend to lessen the blow':'Spend on Effects')+'</div>';
   h+='<button class="btn ghost sm" onclick="closeSpend()">Done</button></div>';
-  const E=[['status','＋ Status'],['reduce','− Status'],['bag','＋ Backpack'],['recover','Recover'],['progress','▲ Progress'],['detail','Detail · 1'],['feat','Feat · 1'],['other','Other…']];
+  const E=[['status','＋ Status'],['foe','👹 Foe status'],['reduce','− Status'],['bag','＋ Backpack'],['recover','Recover'],['progress','▲ Progress'],['detail','Detail · 1'],['feat','Feat · 1'],['other','Other…']];
   h+='<div class="seg">'+E.map(e=>'<button onclick="spForm(\''+e[0]+'\')"'+(spend._form&&spend._form.type===e[0]?' class="on"':'')+'>'+e[1]+'</button>').join('')+'</div>';
   h+='<div id="spForm"></div>';
   let fx=[];
@@ -2293,9 +2355,21 @@ function drawSpForm(){
     $('sp_tp').onclick=()=>{ f.tier=Math.min(6,f.tier+1); drawSpForm(); };
     $('sp_apply').onclick=()=>{ const nm=(f.name||'').trim(); if(!nm){toast('Name the status');return;} if(doSpend(f.tier,'gave '+nm+'-'+f.tier,()=>giveStatusTier(nm,f.tier))){ spend._form=null; renderSpend(); } };
     spSuggChips(w,f,'name');
+  } else if(f.type==='foe'){
+    w.innerHTML='<div class="row" style="margin-top:10px;align-items:flex-end"><label class="fld" style="flex:2;margin:0"><span>Inflict a status on a foe</span><input id="sp_nm" placeholder="e.g. wounded" value="'+esc(f.name||'')+'"></label>'
+      +'<div style="flex:0 0 auto"><span style="font-size:11px;color:var(--ink-soft)">Tier</span><div class="stepper"><button id="sp_tm">−</button><b style="min-width:22px;text-align:center">'+f.tier+'</b><button id="sp_tp">+</button></div></div></div>'
+      +'<label class="fld" style="margin-top:8px"><span>Which foe (optional — groups it on the Tracking tab)</span><input id="sp_tg" placeholder="e.g. Bandits" value="'+esc(f.target||'')+'"></label>'
+      +'<button class="btn sm" id="sp_apply" style="margin-top:8px">Apply · −'+f.tier+' Power</button>';
+    $('sp_nm').oninput=e=>f.name=e.target.value;
+    $('sp_tg').oninput=e=>f.target=e.target.value;
+    $('sp_tm').onclick=()=>{ f.tier=Math.max(1,f.tier-1); drawSpForm(); };
+    $('sp_tp').onclick=()=>{ f.tier=Math.min(6,f.tier+1); drawSpForm(); };
+    $('sp_apply').onclick=()=>{ const nm=(f.name||'').trim(); if(!nm){toast('Name the status');return;} const tg=(f.target||'').trim();
+      if(doSpend(f.tier,'gave foe'+(tg?' ('+tg+')':'')+' '+nm+'-'+f.tier,()=>giveStatusTier(nm,f.tier,'foe',tg))){ spend._form=null; renderSpend(); } };
+    spSuggChips(w,f,'name');
   } else if(f.type==='reduce'){
     if(!S.statuses.length){ w.innerHTML='<p class="hint" style="margin-top:8px">No statuses to reduce.</p>'; return; }
-    const opts=S.statuses.map((s,i)=>{ const ti=s.boxes.lastIndexOf(true)+1; return '<option value="'+i+'"'+(f.sel===i?' selected':'')+'>'+esc(s.name||'(unnamed)')+'-'+ti+'</option>'; }).join('');
+    const opts=S.statuses.map((s,i)=>{ const ti=s.boxes.lastIndexOf(true)+1; const fo=(s.owner||'me')==='foe'?('👹'+((s.target||'').trim()?' '+(s.target||'').trim()+':':'')+' '):''; return '<option value="'+i+'"'+(f.sel===i?' selected':'')+'>'+fo+esc(s.name||'(unnamed)')+'-'+ti+'</option>'; }).join('');
     w.innerHTML='<div class="row" style="margin-top:10px;align-items:flex-end"><label class="fld" style="flex:2;margin:0"><span>Reduce a status</span><select id="sp_sel">'+opts+'</select></label>'
       +'<div><span style="font-size:11px;color:var(--ink-soft)">By</span><div class="stepper"><button id="sp_am">−</button><b style="min-width:22px;text-align:center">'+f.amt+'</b><button id="sp_ap">+</button></div></div></div>'
       +'<button class="btn sm" id="sp_apply" style="margin-top:8px">Apply · −'+f.amt+' Power</button>';
