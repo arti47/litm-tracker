@@ -37,9 +37,9 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 
 ### Current state (verify before quoting — figures drift)
 
-Last verified: **2026-06-08** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
+Last verified: **2026-07-13** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
 Improvements + Phase 4 development automation + Phase 6 scene board & camp/sojourn + Phase 7
-searchable reference + the Oracle + the Character-Pack ready-made Heroes). Re-run to refresh:
+searchable reference + the Oracle + the Character-Pack ready-made Heroes + Solo Play in-app guide). Re-run to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,159 lines / ~684 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,187 lines / ~689 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v42` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v43` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -478,7 +478,9 @@ Sections: **Getting started** (onboarding + tutorial button), **Counting Power**
 Favored & Imperiled** (mechanic + the per-Might example table from `LITM_DATA.mightTable` via
 `renderMightRef`), **Roll 2d6 + Power**, **Spending Power on Effects** (the Effect costs the
 spender enforces — worked examples moved to the Grimoire), **Reactions**, **Statuses**, **Hero
-Development**, **Quintessences** (all 18, via `renderQuintRef`), **Camping**. `renderRefData`
+Development**, **Quintessences** (all 18, via `renderQuintRef`), **Camping**, **🔮 Solo Play —
+how to use the Oracle** (step-by-step loop: frame scene → ask Oracle → roll → spend Power →
+Oracle for consequence → log it → camp; all seven Oracle tools described; journaling guide). `renderRefData`
 builds the data-driven sections (`renderQuintRef` + `renderMightRef`) at runtime, then
 `attachRefAccordion` + `filterRef`. The Core-Book's verbatim **worked examples** (`LITM_DATA.grimoire`,
 grouped by scenario via `grimoireExamplesHTML`) now render **inside the Action Grimoire browser**.
