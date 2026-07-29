@@ -262,6 +262,21 @@ details.ag-sec[open] > summary::before { content: "▾ "; }
 .ref-sec.collapsed > h3::before { content: "▸ "; }
 .ref-sec.collapsed > *:not(h3) { display: none !important; }
 
+/* ---------- Inline "how to use" help (native details) ---------- */
+.howto { border: 1px solid var(--border); border-radius: 10px; margin: 0 0 12px; background: var(--bg-deep); overflow: hidden; }
+.howto > summary { cursor: pointer; user-select: none; list-style: none; padding: 10px 12px; font-weight: 700; font-size: 14px; color: var(--teal); display: flex; align-items: center; gap: 7px; }
+.howto > summary::-webkit-details-marker { display: none; }
+.howto > summary::before { content: "▸"; font-size: 12px; transition: transform .15s; }
+.howto[open] > summary::before { transform: rotate(90deg); }
+.howto[open] > summary { border-bottom: 1px solid var(--border); }
+.howto .howto-body { padding: 4px 14px 12px; }
+.howto .howto-body h4 { margin: 12px 0 4px; font-size: 13px; color: var(--teal-light); }
+.howto .howto-body h4:first-child { margin-top: 6px; }
+.howto .howto-body ul { margin: 4px 0; padding-left: 20px; }
+.howto .howto-body ol { margin: 4px 0; padding-left: 22px; }
+.howto .howto-body li { font-size: 13px; line-height: 1.5; margin: 3px 0; }
+.howto .howto-body p.howto-note { font-size: 12px; color: var(--ink-soft); line-height: 1.45; margin: 6px 0 0; }
+
 /* ---------- Roller ---------- */
 .modchip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 20px;
   border: 1.5px solid var(--border); background: var(--card-bg); font-size: 13px; font-weight: 600;
@@ -408,6 +423,54 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 
 <!-- HERO -->
 <section class="panel active" id="panel-hero">
+  <details class="howto">
+    <summary>🎲 How to play</summary>
+    <div class="howto-body">
+      <h4>The game in one line</h4>
+      <ul>
+        <li>Describe what your Hero does → if it's risky, <b>roll 2d6 + Power</b> → read the outcome → <b>spend Power</b> on Effects → take any Consequences → repeat.</li>
+      </ul>
+      <h4>Building Power (before you roll)</h4>
+      <ul>
+        <li><b>Tags</b> — tap each tag that helps (+1) or hinders (−1): your theme power tags, backpack, scene tags, the Fellowship.</li>
+        <li><b>Burn</b> a tag 🔥 for +3 instead of +1 (it gets scratched).</li>
+        <li><b>Status</b> — your single highest helpful and single highest hindering status count.</li>
+        <li><b>Might</b> — set Favored (+3/+6) or Imperiled (−3/−6) when the task is below/above your theme's Might.</li>
+      </ul>
+      <h4>Reading the dice</h4>
+      <ul>
+        <li><b>10+</b> — success, no consequences.</li>
+        <li><b>7–9</b> — success, but with a consequence/cost.</li>
+        <li><b>6 or less</b> — it goes wrong; take the consequences.</li>
+      </ul>
+      <h4>Growing your Hero</h4>
+      <ul>
+        <li>Invoke a <b>weakness</b> → mark <b>Improve</b>. Achieve a Quest → <b>Milestone</b>. Betray one → <b>Abandon</b>. Fill a track (3) to develop the theme.</li>
+        <li>Evolving/replacing a theme marks <b>Promise</b>; fill 5 Promise → a <b>Moment of Fulfillment</b> (gain a Quintessence).</li>
+        <li><b>Camp</b> (☰ menu) between scenes to recover scratched tags and reduce statuses.</li>
+      </ul>
+      <p class="howto-note">Playing without a Narrator? Turn on ☰ → Solo Play Mode for the 🔮 Oracle, then see the Oracle tab's help.</p>
+    </div>
+  </details>
+  <details class="howto">
+    <summary>❓ How to use this tab</summary>
+    <div class="howto-body">
+      <h4>Hero Card</h4>
+      <ul>
+        <li>Set your <b>Player</b> and <b>Hero</b> name (Hero name shows in the header).</li>
+        <li><b>Promise</b> (5 circles) tracks advancement; the <b>Fulfillments</b> counter and <b>Quintessences</b> record rule-breaking rewards.</li>
+        <li><b>Backpack</b> — tap a tag to flip helpful 🟡 / hindering 🟠; ✓ scratches (single-use); use ＋ to add.</li>
+      </ul>
+      <h4>Theme Cards (×4)</h4>
+      <ul>
+        <li>Pick the <b>type</b> (Might badge updates); set the <b>title</b> (main power tag).</li>
+        <li>Add <b>power tags</b> 🟡 and <b>weakness tags</b> 🟠; ✓ scratches/recovers a power tag.</li>
+        <li>Write the <b>Quest</b>; mark <b>Improve / Milestone / Abandon</b> pips as they trigger in play (filling one at 3 opens the development flow).</li>
+        <li><b>🔖 Special Improvements</b> — tap to pick from your type's list (one gained when Improve fills).</li>
+      </ul>
+      <p class="howto-note">Add or remove themes with the buttons at the bottom — themes evolve and get replaced over a campaign.</p>
+    </div>
+  </details>
   <div class="card">
     <h2>🪶 Hero Card</h2>
     <div class="row">
@@ -440,6 +503,24 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 
 <!-- FELLOWSHIP -->
 <section class="panel" id="panel-fellowship">
+  <details class="howto">
+    <summary>❓ How to use this tab</summary>
+    <div class="howto-body">
+      <h4>Fellowship theme (shared 5th theme)</h4>
+      <ul>
+        <li>Fill it like a theme card: <b>type</b>, <b>title</b>, power tags, weakness, Quest, tracks, Special Improvements.</li>
+        <li>Its power tags are <b>single-use</b> — tap to invoke on the Roll tab (scratched), recover one while <b>camping</b>.</li>
+      </ul>
+      <h4>Relationships</h4>
+      <ul>
+        <li>Add one <b>relationship tag</b> per fellow Hero (name + tag); tap ✓ to scratch after invoking, renew in camp.</li>
+      </ul>
+      <h4>Share / sync</h4>
+      <ul>
+        <li>☰ menu → <b>Share Fellowship</b> exports it; <b>Import / sync Fellowship</b> pulls a shared copy onto this Hero.</li>
+      </ul>
+    </div>
+  </details>
   <div class="card">
     <h2>🤝 Fellowship Theme</h2>
     <p class="hint">A shared fifth theme any Hero can invoke. Power tags are <b>single-use</b> — scratched when invoked, recovered while camping.</p>
@@ -455,6 +536,30 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 
 <!-- TRACKING -->
 <section class="panel" id="panel-track">
+  <details class="howto">
+    <summary>❓ How to use this tab</summary>
+    <div class="howto-body">
+      <h4>🎬 Scene board</h4>
+      <ul>
+        <li>Tap the loop beat you're in: <b>Establish → Action → Consequences</b>; jot the <b>stakes</b> and looming <b>threats</b>.</li>
+        <li>Launch <b>Camp / Sojourn…</b> and <b>Journey montage…</b> from here.</li>
+      </ul>
+      <h4>Statuses</h4>
+      <ul>
+        <li>＋ <b>Add status</b> (yours) or 👹 <b>Add foe status</b>; tap the 6-box track to set the <b>tier</b>.</li>
+        <li>Set the <b>Limit</b> (1–6) — the tier that takes the target out (Hero = 5).</li>
+        <li>Foe statuses show 👹 and group by <b>target</b>; on the Roll tab they only count when tapped.</li>
+      </ul>
+      <h4>🎯 Progress &amp; Limits</h4>
+      <ul>
+        <li>Add a named track toward a <b>Limit</b> (2–10) for projects, chases, unlocks; the roller's <b>▲ Advance</b> fills it.</li>
+      </ul>
+      <h4>Scene story tags</h4>
+      <ul>
+        <li>Add environment tags; flip helpful/hindering; they're tappable on the Roll tab and expire at camp.</li>
+      </ul>
+    </div>
+  </details>
   <div class="card">
     <h2>🎬 Scene</h2>
     <p class="hint">The game loop. Tap the beat you're in; jot the stakes and what's looming.</p>
@@ -493,6 +598,33 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 
 <!-- ROLL -->
 <section class="panel" id="panel-roll">
+  <details class="howto">
+    <summary>❓ How to use this tab</summary>
+    <div class="howto-body">
+      <h4>1 · Pick the mode</h4>
+      <ul>
+        <li><b>⚔️ Action</b> — you're doing something. <b>🛡️ Reaction</b> — you're defending (spend rules differ).</li>
+      </ul>
+      <h4>2 · Build your Power</h4>
+      <ul>
+        <li>Tap tags to count them: helpful (+1) → hindering (−1) → off. Weakness tags toggle −1.</li>
+        <li><b>🔥 Burn</b> one helpful tag for +3 (scratched on roll).</li>
+        <li>Tap a <b>status</b> to apply it (highest helpful + highest hindering only). 👹 foe statuses count only when tapped.</li>
+        <li>Set <b>Might</b> (or use the ⚖️ helper: task Might vs your Might).</li>
+        <li><b>🤝 Help from other Heroes</b> and the <b>Situational ±</b> stepper add ally/Narrator modifiers.</li>
+      </ul>
+      <h4>3 · Roll &amp; read</h4>
+      <ul>
+        <li>Roll 2d6 + Power → <b>10+</b> clean success · <b>7–9</b> success + consequence · <b>6−</b> consequence.</li>
+      </ul>
+      <h4>4 · Spend your Power</h4>
+      <ul>
+        <li>After a success the <b>Effects panel</b> opens with a budget: give/reduce a status, add a backpack tag, recover a tag, ▲ advance a track, discover a detail, extra feat.</li>
+        <li>Rule of Minimum One: a success always spends at least 1 Power.</li>
+      </ul>
+      <p class="howto-note">Loaded a Grimoire action (📜 → 🎲 Use in a roll)? Its help/hinder suggestions and Success effects seed this tab.</p>
+    </div>
+  </details>
   <div class="card">
     <h2 id="rollHead">🎲 Roll an Action</h2>
     <div class="seg" id="modeSeg" style="margin-bottom:10px">
@@ -687,6 +819,32 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 
 <!-- ORACLE (solo / co-op play) -->
 <section class="panel" id="panel-oracle">
+  <details class="howto">
+    <summary>❓ How to use this tab</summary>
+    <div class="howto-body">
+      <h4>The Oracle replaces the Narrator</h4>
+      <ul>
+        <li>Whenever you'd ask a Narrator "what happens / is it true?", ask the Oracle, then interpret the roll into fiction.</li>
+      </ul>
+      <h4>The solo loop</h4>
+      <ol>
+        <li><b>Frame</b> the scene (Tracking → 🎬 Scene, or roll <b>Conflict / Scene</b>).</li>
+        <li><b>Ask</b> a <b>Question — Yes/No</b> (± Power for tags swaying it) or <b>Interpretive</b> (d66 symbol).</li>
+        <li><b>Act</b> on the Roll tab as normal.</li>
+        <li>On 7–9 / 6−, roll <b>Consequences</b> or a <b>Challenge Action</b> for what the world does back.</li>
+        <li><b>Log</b> it below and add a note; <b>Camp</b> between scenes.</li>
+      </ol>
+      <h4>The seven tools</h4>
+      <ul>
+        <li><b>Question</b> (Yes/No + Interpretive), <b>Conflict/Scene</b>, <b>Premade Profile</b>, <b>Profile Builder</b>, <b>Challenge Action</b>, <b>Consequences</b>, <b>Revelations</b> (Act I/II/III).</li>
+      </ul>
+      <h4>Journal</h4>
+      <ul>
+        <li>Every roll auto-logs below. Per note, write: <b>(1)</b> question/action, <b>(2)</b> result, <b>(3)</b> the fiction, <b>(4)</b> a loose end for next time.</li>
+      </ul>
+      <p class="howto-note">Full step-by-step also lives in 📖 Rules → "🔮 Solo Play — how to use the Oracle".</p>
+    </div>
+  </details>
   <div class="card">
     <h2>🔮 The Oracle</h2>
     <p class="hint" style="margin:-2px 0 8px">Solo &amp; co-op tools — roll for answers, scenes, challenges, and consequences, then interpret them in your story. Results log below.</p>

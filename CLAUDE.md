@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,187 lines / ~689 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,345 lines / ~698 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
-  Heroes, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v43` (bump on every deploy)
+  Heroes + the inline per-tab How-to-use help, ~458 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v44` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -533,6 +533,14 @@ Direct/Tactical Attacks → Support/Movement/Defense → Information Gathering �
 → Navigating Danger → Recovery & Healing → the four Magic sections → Commerce → Community →
 Influence & Intrigue → Fellowship) + the 2 prose sections. No new localStorage key. *(Next:
 Phase B — the action→roll bridge.)*
+
+### Inline "How to use" help (per-tab) ✅
+Each play tab carries a collapsible **native `<details class="howto">`** help block at the top of
+the panel (zero JS, no new localStorage key, collapsed by default): **Hero** (two — a **🎲 How to
+play** game-loop overview + a **❓ How to use this tab**), **Fellowship**, **Tracking**, **Roll**,
+and **Oracle**. Each lists step-by-step bullets grouped under `.howto-body h4` sub-headings. Styling
+in the `.howto` CSS block (near `.ref-sec`); markup hand-written in `_build/base.html`. The 📖 Rules
+tab keeps the deep reference (searchable accordions); these are the quick per-screen primers.
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
