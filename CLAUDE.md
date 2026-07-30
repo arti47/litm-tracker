@@ -48,11 +48,11 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,345 lines / ~698 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,376 lines / ~701 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
-  Heroes + the inline per-tab How-to-use help, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v44` (bump on every deploy)
+  Heroes + the inline per-tab How-to-use help + the solo play-loop bridges, ~458 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v45` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -391,6 +391,22 @@ clock), and a list of **Vignette Challenges** — each row has a **🎲** (close
 to the Roll tab for a Quick action) and a **✓** that clears the vignette and advances one leg
 (strikes it through). Reaching the leg Limit shows **✓ Arrived at <dest>**. Persisted per hero in
 `journey`; a **Reset journey** button clears it.
+
+### Solo play-loop bridges (seamless flow) ✅
+Cross-screen handoffs that close the solo loop without manual tab-hopping (all gated behind
+**Solo Play Mode** where noted; no new state fields):
+- **Roll → Consequence** — on a solo **7–9 / 6−** (action mode) the roll outcome shows a
+  **🔮 Roll a Consequence** button that jumps to the Oracle's Consequences tool and pre-rolls
+  (`oracleJump('conseq','or_cq')`).
+- **Roll → journal** — the outcome shows **📓 Log to journal** (solo) that appends the dice
+  result to the Oracle log (`logRollToJournal` → `oracleAdd`; `_lastRoll` holds the summary).
+- **Oracle → Act** — the **Question** and **Conflict / Scene** tools carry an **⚔️ Act — go to
+  Roll** button (`#or_toroll` → `showTab('roll')`).
+- **Consequence → sheet** — the **Consequences** and **Challenge Action** results carry a
+  **＋ Add as scene tag** button that pushes the specific line as a hindering scene story tag
+  (`oracleApplyScene`, `_orLastApply`).
+- **Scene board deep-links** — in solo, tapping **② Action** jumps to the Roll tab and
+  **③ Consequences** jumps to the Oracle (the `#loopSeg` handler; passive/marker-only in normal play).
 
 ### The Oracle — solo & co-op play (supplement) ✅
 A **🔮 Oracle tab** (`#panel-oracle`, `renderOracle`/`drawOracle`), gated behind a **Solo Play

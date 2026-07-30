@@ -1831,7 +1831,8 @@ function renderSceneBoard(){
 }
 document.querySelectorAll('#loopSeg button').forEach(b=>{
   b.onclick=()=>{ if(!S.sceneBoard) S.sceneBoard={step:-1,stakes:'',threats:''};
-    const s=+b.dataset.step; S.sceneBoard.step=(S.sceneBoard.step===s? -1 : s); renderSceneBoard(); save(); };
+    const s=+b.dataset.step; const sel=(S.sceneBoard.step===s? -1 : s); S.sceneBoard.step=sel; renderSceneBoard(); save();
+    if(sel!==-1 && soloOn()){ if(sel===1) showTab('roll'); else if(sel===2){ oracleSel='conseq'; showTab('oracle'); } } };  // solo deep-link: Action→Roll, Consequences→Oracle
 });
 $('sb_stakes').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.stakes=e.target.value; save(); };
 $('sb_threats').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.threats=e.target.value; save(); };
@@ -1909,8 +1910,10 @@ function drawOracle(O){
     h='<h3>Interpretive answer</h3><button class="btn sm" id="or_interp">🎲 Roll a symbol (d66)</button>'
       +'<h3 style="margin-top:14px">Yes / No</h3><label class="fld"><span>Question (optional)</span><input id="or_q" placeholder="e.g. Are there bandits in these woods?"></label>'
       +'<div class="row" style="align-items:center;gap:10px"><span class="hint" style="margin:0;flex:1">Power — tags swaying <b>Yes</b> +, <b>No</b> −</span><div class="stepper"><button id="or_pm">−</button><b id="or_pv" style="min-width:28px;text-align:center">'+(_or.pow>0?'+':'')+_or.pow+'</b><button id="or_pp">+</button></div></div>'
-      +'<button class="btn sm" id="or_yn" style="margin-top:8px">🎲 Ask (2d6 + Power)</button>'+res;
+      +'<button class="btn sm" id="or_yn" style="margin-top:8px">🎲 Ask (2d6 + Power)</button>'
+      +'<button class="btn sm ghost" id="or_toroll" style="margin-top:8px">⚔️ Act — go to Roll</button>'+res;
     b.innerHTML=h;
+    $('or_toroll').onclick=()=>showTab('roll');
     $('or_interp').onclick=()=>{ const r=d66(), i=d66idx(r), s=O.interpretive[i], c=O.interpretiveCols[i];
       setRes('<b>d66 '+r+' — '+esc(s.symbol)+'</b><div class="sub">'+esc(s.text)+'</div><div class="sub" style="opacity:.85">Attitude: '+esc(c.attitude)+' · Magical being: '+esc(c.being)+' · Terrain: '+esc(c.terrain)+' · Item: '+esc(c.item)+'</div>');
       oracleAdd('Question · Interpretive','d66 '+r+' — '+s.symbol+': '+s.text); };
@@ -1922,7 +1925,8 @@ function drawOracle(O){
       setRes('<b>'+a+' + '+c2+(_or.pow?(_or.pow>0?' + '+_or.pow:' − '+Math.abs(_or.pow)):'')+' = '+tot+'</b><div class="sub"><b>'+esc(band.label)+'</b> — '+esc(band.answer)+'</div>');
       oracleAdd('Question · Yes/No',(q?q+' → ':'')+band.label+': '+band.answer); };
   } else if(oracleSel==='conflict'){
-    b.innerHTML='<button class="btn sm" id="or_call">🎲 Roll a whole scene</button><p class="hint" style="margin:8px 0 2px">Each column, tap 🎲 to (re)roll just that one:</p><div id="or_cols"></div>';
+    b.innerHTML='<button class="btn sm" id="or_call">🎲 Roll a whole scene</button><p class="hint" style="margin:8px 0 2px">Each column, tap 🎲 to (re)roll just that one:</p><div id="or_cols"></div><button class="btn sm ghost" id="or_toroll" style="margin-top:10px">⚔️ Act — go to Roll</button>';
+    $('or_toroll').onclick=()=>showTab('roll');
     const rollCol=key=>{ let r,g,n=0; do{ r=d66(); g=d66g12(r); }while(g===11 && ++n<24); if(g===11) g=10; return {r,text:O.conflict[key][g]}; };
     const draw=()=>{ $('or_cols').innerHTML=O.conflictCols.map(([key,label])=>{ const cur=_or.conflict[key];
       return '<div class="orc-row"><div class="orc-l">'+esc(label)+'</div><div class="orc-v">'+(cur?'<b>'+cur.r+'</b> '+esc(cur.text):'<span class="muted">—</span>')+'</div><button class="ic" data-rc="'+key+'" style="flex:none">🎲</button></div>'; }).join('');
@@ -1951,12 +1955,12 @@ function drawOracle(O){
     const roles=Object.keys(O.challengeAction);
     h='<label class="fld"><span>Challenge Role</span><select id="or_role">'+roles.map(r=>'<option'+(_or.role===r?' selected':'')+'>'+r+'</option>').join('')+'</select></label><button class="btn sm" id="or_ca">🎲 Roll an action (d6)</button>'+res; b.innerHTML=h;
     $('or_role').onchange=e=>_or.role=e.target.value;
-    $('or_ca').onclick=()=>{ const list=O.challengeAction[_or.role]; let r=d6(); if(r>list.length) r=1+Math.floor(Math.random()*list.length); const line=list[r-1];
-      setRes('<b>'+esc(_or.role)+' (d6 '+r+')</b><div class="sub">'+esc(line)+'</div>'); oracleAdd('Challenge Action · '+_or.role, line); };
+    $('or_ca').onclick=()=>{ const list=O.challengeAction[_or.role]; let r=d6(); if(r>list.length) r=1+Math.floor(Math.random()*list.length); const line=list[r-1]; _orLastApply=line;
+      setRes('<b>'+esc(_or.role)+' (d6 '+r+')</b><div class="sub">'+esc(line)+'</div><button class="btn sm ghost" style="margin-top:8px" onclick="oracleApplyScene(_orLastApply)">＋ Add as scene tag</button>'); oracleAdd('Challenge Action · '+_or.role, line); };
   } else if(oracleSel==='conseq'){
     b.innerHTML='<button class="btn sm" id="or_cq">🎲 Roll a Consequence (d66 + d6)</button>'+res;
-    $('or_cq').onclick=()=>{ const r=d66(), row=O.consequences[d66g9(r)], sp=row.specific[d6()-1]||row.specific[0];
-      setRes('<b>d66 '+r+' — '+esc(row.title)+'</b><div class="sub">'+esc(row.desc)+'</div><div class="sub" style="opacity:.85">Specific (d6): '+esc(sp)+'</div>'); oracleAdd('Consequence', row.title+' — '+sp); };
+    $('or_cq').onclick=()=>{ const r=d66(), row=O.consequences[d66g9(r)], sp=row.specific[d6()-1]||row.specific[0]; _orLastApply=sp;
+      setRes('<b>d66 '+r+' — '+esc(row.title)+'</b><div class="sub">'+esc(row.desc)+'</div><div class="sub" style="opacity:.85">Specific (d6): '+esc(sp)+'</div><button class="btn sm ghost" style="margin-top:8px" onclick="oracleApplyScene(_orLastApply)">＋ Add as scene tag</button>'); oracleAdd('Consequence', row.title+' — '+sp); };
   } else if(oracleSel==='revel'){
     b.innerHTML='<div class="seg sm" id="or_act"><button data-a="1"'+(_or.act===1?' class="on"':'')+'>Act I</button><button data-a="2"'+(_or.act===2?' class="on"':'')+'>Act II</button><button data-a="3"'+(_or.act===3?' class="on"':'')+'>Act III</button></div><button class="btn sm" id="or_rev" style="margin-top:8px">🎲 Reveal (d66)</button>'+res;
     b.querySelectorAll('#or_act button').forEach(btn=>btn.onclick=()=>{ _or.act=+btn.dataset.a; drawOracle(O); });
@@ -1965,6 +1969,25 @@ function drawOracle(O){
   }
 }
 function oracleAdd(kind, result){ if(!S.oracleLog) S.oracleLog=[]; S.oracleLog.unshift({id:uid(), t:Date.now(), kind, result, note:''}); S.oracleLog=S.oracleLog.slice(0,80); save(); renderOracleLog(); }
+// ----- Play-loop bridges (seamless flow) -----
+let _orLastApply='';                         // last Oracle "specific" text, for one-tap apply-to-scene
+let _lastRoll=null;                          // last dice roll summary, for one-tap journal logging
+function logRollToJournal(){                  // gap #3: log a dice roll into the Oracle journal
+  if(!_lastRoll) return;
+  oracleAdd(rollMode==='reaction'?'Reaction roll':'Action roll',
+    _lastRoll.big+' — rolled '+_lastRoll.r1+'+'+_lastRoll.r2+(_lastRoll.power>=0?'+':'−')+Math.abs(_lastRoll.power)+' = '+_lastRoll.total);
+  toast('Logged to journal');
+}
+function oracleJump(sel, clickId){           // switch to a given Oracle tool (and optionally fire its roll)
+  oracleSel=sel; showTab('oracle');          // showTab('oracle') re-renders the tab
+  if(clickId){ const el=$(clickId); if(el) el.click(); }
+}
+function oracleApplyScene(text){             // gap #5: add a rolled Consequence as a hindering scene tag
+  text=(text||'').trim(); if(!text) return;
+  S.scene.push({id:uid(),text:text,type:'hindering',scratched:false}); save();
+  if(typeof renderScene==='function') renderScene();
+  toast('Added to scene tags');
+}
 function renderOracleLog(){ const w=$('oracleLog'); if(!w) return; const log=S.oracleLog||[];
   if(!log.length){ w.innerHTML='<p class="muted">No rolls yet — roll an oracle above and it\'s recorded here. Add a journal note to any entry.</p>'; return; }
   w.innerHTML=log.map(e=>'<div class="orl"><div class="orl-h"><b>'+esc(e.kind)+'</b><button class="ic" data-del="'+e.id+'" style="flex:none">✕</button></div><div class="orl-r">'+esc(e.result)+'</div><textarea class="orl-note" data-note="'+e.id+'" placeholder="journal note…">'+esc(e.note||'')+'</textarea></div>').join('');
@@ -2394,9 +2417,17 @@ function rollDice(){
       agNote='<div class="sub" style="opacity:.9;margin-top:6px"><b>Likely Consequences — '+esc(agAction.name)+':</b>'
         +'<ul style="margin:4px 0 0;padding-left:18px">'+agAction.consequences.map(c=>'<li>'+esc(String(c).replace(/^[»>\s]+/,''))+'</li>').join('')+'</ul></div>';
     }
+    // seamless-flow bridges (solo): roll a Consequence on a miss/mixed; log this roll to the journal
+    _lastRoll={ r1, r2, power, total, big:(reaction?'🛡 ':'')+big };
+    let bridge='';
+    if(soloOn()){
+      bridge='<div class="row" style="gap:8px;margin-top:8px">';
+      if(!reaction && tier!=='win') bridge+='<button class="btn sm" onclick="oracleJump(\'conseq\',\'or_cq\')">🔮 Roll a Consequence</button>';
+      bridge+='<button class="btn sm ghost" onclick="logRollToJournal()">📓 Log to journal</button></div>';
+    }
     $('outcomeBox').innerHTML = '<div class="outcome '+cls+'"><div class="big">'+big+'</div>'
       + '<div class="sub">Rolled '+r1+' + '+r2+' '+(power>=0?'+ ':'− ')+Math.abs(power)+' Power = <b>'+total+'</b></div>'
-      + '<div class="sub">'+sub+'</div>'+detail+weakNote+blNote+agNote+burnNote+'</div>';
+      + '<div class="sub">'+sub+'</div>'+detail+weakNote+blNote+agNote+burnNote+bridge+'</div>';
     rolls.unshift({t:Date.now(), r1, r2, power, total, big:(reaction?'🛡 ':'')+big, hero:S.heroName||'Hero'});
     rolls=rolls.slice(0,40); saveRolls(); renderRollHist();
     if(burnNote){ save(); renderThemes(); renderFellowship(); renderBackpack(); renderScene(); renderRoller(); }
