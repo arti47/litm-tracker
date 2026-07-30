@@ -48,11 +48,12 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,376 lines / ~701 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,455 lines / ~708 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
-  Heroes + the inline per-tab How-to-use help + the solo play-loop bridges, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v45` (bump on every deploy)
+  Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
+  Profile Builder, ~458 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v46` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (5)**:
@@ -420,7 +421,15 @@ dice and shows the matching line, with a re-roll), driven by `LITM_DATA.oracle`:
   Secondary, Story Tags) or re-roll any one; "Roll again" rows auto-reroll (loop-capped).
 - **Premade Profile** — roll an area (d66) then a Creature/Person/Place (d6 → name + book page),
   plus a **Vignette** roller.
-- **Profile Builder** — the 5-step guide with a **Roll CR** button (d6; a 6 adds Might and rerolls).
+- **Profile Builder** — an **interactive worksheet** (`renderPB`/`pbAct`/`pbSummary`, transient
+  `_or.pb`): Adventure/Greatness theme **steppers** → auto-computed Mighty-aspect count; **aspect
+  tap-chips**; a start/middle/end **phase toggle** + **Roll CR** (d6; start=2-take-lower,
+  end=2-take-higher, a 6 adds Might and rerolls); CR then auto-computes the **Limit caps**
+  (hard CR+1 / medium CR / easy CR−1, each a type dropdown), **tags & status tiers** (= CR), and
+  **Consequence tiers** (main = CR, lesser = ⌈CR/2⌉). A **Role** picker + **🎲 Roll a Threat**
+  jump to the Challenge Action oracle. A live **📋 Profile** summary with **📓 Log to journal** and
+  **👹 Add as foe status**. Each step's verbatim rules text is tucked into a collapsible **ℹ️ How
+  this works** (`.pb-help`) so it's no longer a wall of text.
 - **Challenge Action** — pick a Role (11) → roll d6 for its Threat/Consequence.
 - **Consequences** — roll d66 → category + a d6 specific consequence.
 - **Revelations** — pick Act I/II/III → roll d66 for the matching revelation.
