@@ -252,6 +252,18 @@ details.ag-sec[open] > summary::before { content: "▾ "; }
 .orc-v { flex: 1; font-size: 13px; line-height: 1.4; }
 .pb-step { border-top: 1px solid var(--border); padding-top: 6px; margin-top: 8px; }
 .pb-step .sub { line-height: 1.5; margin: 2px 0 6px; }
+/* Interactive Profile Builder worksheet */
+.pb-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin: 8px 0; background: var(--bg); }
+.pb-card .fmt-h { color: var(--teal); font-weight: 700; margin-bottom: 4px; }
+.pb-ln { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0; }
+.pb-ln > span { font-size: 13px; }
+.pb-ln select { flex: none; max-width: 55%; }
+.pb-ln .stepper b { min-width: 22px; text-align: center; display: inline-block; }
+.pb-out { margin: 8px 0 2px; font-size: 14px; }
+.pb-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pb-help { margin-top: 8px; }
+.pb-help > summary { padding: 6px 10px; font-size: 12px; }
+.pb-help .howto-body { padding: 2px 12px 8px; }
 .orl { border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; margin-bottom: 8px; background: var(--bg-deep); }
 .orl-h { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--teal); font-weight: 700; }
 .orl-r { font-size: 13px; line-height: 1.45; margin: 4px 0; }
@@ -1893,7 +1905,8 @@ const d66g12=s=>Math.floor(d66idx(s)/3);          // 0..11 (12 groups of 3)
 const d66g9=s=>Math.floor(d66idx(s)/4);           // 0..8  (9 groups of 4)
 function inR(rng,n){ const p=String(rng).split('-'); return n>=+p[0] && n<=+(p[1]||p[0]); }
 let oracleSel='question';
-let _or={ pow:0, role:'Aggressor', act:1, area:null, conflict:{} };
+let _or={ pow:0, role:'Aggressor', act:1, area:null, conflict:{},
+  pb:{ adv:1, great:0, aspects:[], phase:'mid', cr:0, might:0, limits:{hard:'',med:'',easy:''}, role:'Aggressor' } };
 function setRes(html){ const r=$('orResult'); if(r) r.innerHTML='<div class="outcome win" style="margin-top:10px">'+html+'</div>'; }
 const ORACLES=[['question','Question'],['conflict','Conflict / Scene'],['premade','Premade Profile'],['builder','Profile Builder'],['action','Challenge Action'],['conseq','Consequences'],['revel','Revelations']];
 function renderOracle(){
@@ -1946,11 +1959,7 @@ function drawOracle(O){
     $('or_cre').onclick=()=>pick('creatures','Creature'); $('or_per').onclick=()=>pick('persons','Person'); $('or_pla').onclick=()=>pick('places','Place/Event');
     $('or_vig').onclick=()=>{ const cat=O.vignettes[d6()-1], it=cat.items[Math.min(cat.items.length-1,d6()-1)]; setRes('<b>Vignette — '+esc(cat.cat)+'</b><div class="sub">'+esc(it)+'</div>'); oracleAdd('Vignette', cat.cat+': '+it); };
   } else if(oracleSel==='builder'){
-    const pb=O.profileBuilder; h='<p class="hint">'+esc(pb.intro)+'</p>';
-    pb.steps.forEach((s,i)=>{ h+='<div class="pb-step"><div class="fmt-h">'+esc(s.h)+'</div><p class="sub">'+esc(s.t)+'</p>'+(i===1?'<button class="btn sm" id="or_cr">🎲 Roll CR</button> <span id="or_crv" class="hint"></span>':'')+'</div>'; });
-    b.innerHTML=h;
-    $('or_cr').onclick=()=>{ let might=0,cr=0; for(let k=0;k<12;k++){ const r=d6(); if(r===6) might++; else { cr=r; break; } } if(!cr) cr=5;
-      $('or_crv').textContent='→ CR '+cr+(might?(' · +'+might+' Might'):''); oracleAdd('Profile Builder · CR','CR '+cr+(might?(' (+'+might+' Might)'):'')); };
+    renderPB(O); return;
   } else if(oracleSel==='action'){
     const roles=Object.keys(O.challengeAction);
     h='<label class="fld"><span>Challenge Role</span><select id="or_role">'+roles.map(r=>'<option'+(_or.role===r?' selected':'')+'>'+r+'</option>').join('')+'</select></label><button class="btn sm" id="or_ca">🎲 Roll an action (d6)</button>'+res; b.innerHTML=h;
@@ -1967,6 +1976,76 @@ function drawOracle(O){
     $('or_rev').onclick=()=>{ const r=d66(), row=O.revelations[d66g9(r)], txt=row['act'+_or.act];
       setRes('<b>Act '+['','I','II','III'][_or.act]+' · d66 '+r+'</b><div class="sub">'+esc(txt)+'</div>'); oracleAdd('Revelation · Act '+_or.act, txt); };
   }
+}
+// ----- Interactive Challenge Profile Builder (Oracle) -----
+const PB_ASPECTS=['size','numbers','skill','magic','influence','cunning','riches','speed','ferocity','armor'];
+const PB_LIMITS=['harm','convince','trick','threaten','destroy','subdue','dispel','banish','catch','escape'];
+function pbHelp(t){ return '<details class="howto pb-help"><summary>ℹ️ How this works</summary><div class="howto-body"><p class="sub" style="margin:6px 0">'+esc(t)+'</p></div></details>'; }
+function pbSummary(){ const p=_or.pb, mighty=Math.max(0,(p.adv||0)+(p.great||0)-1), cr=p.cr||0;
+  const lims=['hard','med','easy'].map(k=>{ if(!p.limits[k]) return null; const cap={hard:cr+1,med:cr,easy:Math.max(0,cr-1)}[k]; return {hard:'Hard',med:'Medium',easy:'Easy'}[k]+' '+p.limits[k]+' ('+cap+')'; }).filter(Boolean);
+  let s='CR '+(cr||'—')+(p.might?' (+'+p.might+' Might)':'')+'. Mighty aspects ('+mighty+'): '+(p.aspects.join(', ')||'—')+'. ';
+  if(cr) s+='Tags '+cr+', status tiers '+cr+'. ';
+  if(lims.length) s+='Limits: '+lims.join('; ')+'. ';
+  if(cr) s+='Main Consequence tier '+cr+' (lesser '+Math.ceil(cr/2)+'). ';
+  s+='Role: '+(p.role||'—')+'.'; return s;
+}
+function pbAct(cmd,O){ const p=_or.pb;
+  if(cmd==='adv+') p.adv=Math.min(9,(p.adv||0)+1);
+  else if(cmd==='adv-') p.adv=Math.max(0,(p.adv||0)-1);
+  else if(cmd==='great+') p.great=Math.min(9,(p.great||0)+1);
+  else if(cmd==='great-') p.great=Math.max(0,(p.great||0)-1);
+  else if(cmd==='rollcr'){ const r1=()=>1+Math.floor(Math.random()*6);
+      const one=()=> p.phase==='start'?Math.min(r1(),r1()) : p.phase==='end'?Math.max(r1(),r1()) : r1();
+      let might=0,cr=0; for(let k=0;k<12;k++){ const r=one(); if(r===6) might++; else { cr=r; break; } } if(!cr) cr=5;
+      p.cr=cr; p.might=might; oracleAdd('Profile Builder · CR','CR '+cr+(might?(' (+'+might+' Might)'):'')); }
+  else if(cmd==='threat'){ _or.role=p.role; oracleSel='action'; showTab('oracle'); return; }
+  else if(cmd==='log'){ oracleAdd('Challenge Profile', pbSummary()); toast('Profile logged to journal'); return; }
+  else if(cmd==='foe'){ giveStatusTier((p.aspects[0]||'Challenge'), Math.max(1,p.cr||1), 'foe', ''); toast('Foe status added — see Tracking'); return; }
+  renderPB(O);
+}
+function renderPB(O){
+  const b=$('orBody'); if(!b) return; const p=_or.pb, pb=O.profileBuilder;
+  const mighty=Math.max(0,(p.adv||0)+(p.great||0)-1), cr=p.cr||0, caps={hard:cr+1,med:cr,easy:Math.max(0,cr-1)}, roles=Object.keys(O.challengeAction);
+  const step=(p.phase==='start'?'start':p.phase==='end'?'end':'mid');
+  let h='<p class="hint" style="margin:0 0 10px">'+esc(pb.intro)+' Fill each step — the numbers compute for you.</p>';
+  // 1 · Mighty aspects
+  h+='<div class="pb-card"><div class="fmt-h">1 · Mighty aspects</div>'
+    +'<div class="pb-ln"><span>Adventure themes</span><div class="stepper"><button data-pb="adv-">−</button><b>'+(p.adv||0)+'</b><button data-pb="adv+">＋</button></div></div>'
+    +'<div class="pb-ln"><span>Greatness themes</span><div class="stepper"><button data-pb="great-">−</button><b>'+(p.great||0)+'</b><button data-pb="great+">＋</button></div></div>'
+    +'<div class="pb-out">→ <b>'+mighty+'</b> Mighty aspect'+(mighty===1?'':'s')+' <span class="hint">(themes − 1)</span></div>'
+    +'<p class="hint" style="margin:6px 0 4px">What are they? Tap to pick:</p><div class="pb-chips">'+PB_ASPECTS.map(a=>'<button class="modchip'+(p.aspects.includes(a)?' help':'')+'" data-pbasp="'+a+'">'+a+'</button>').join('')+'</div>'
+    +pbHelp(pb.steps[0].t)+'</div>';
+  // 2 · CR
+  h+='<div class="pb-card"><div class="fmt-h">2 · Challenge Rating</div>'
+    +'<div class="seg sm" id="pb_phase"><button data-ph="start"'+(step==='start'?' class="on"':'')+'>Adventure start</button><button data-ph="mid"'+(step==='mid'?' class="on"':'')+'>Middle</button><button data-ph="end"'+(step==='end'?' class="on"':'')+'>Near end</button></div>'
+    +'<button class="btn sm" data-pb="rollcr" style="margin-top:8px">🎲 Roll CR (d6)</button>'
+    +'<div class="pb-out">'+(cr?('CR <b style="font-size:20px">'+cr+'</b>'+(p.might?(' · +'+p.might+' Might'):'')):'<span class="hint">not rolled yet</span>')+'</div>'
+    +pbHelp(pb.steps[1].t)+'</div>';
+  // 3 · Limits
+  h+='<div class="pb-card"><div class="fmt-h">3 · Limits</div>';
+  if(!cr) h+='<p class="hint">Roll CR first.</p>';
+  else ['hard','med','easy'].forEach(k=>{ const cap=caps[k]; if(k==='easy'&&cap<=0) return;
+      h+='<div class="pb-ln"><span>'+{hard:'Hard',med:'Medium',easy:'Easy'}[k]+' — max '+cap+'</span><select data-pblim="'+k+'"><option value="">(pick a way)</option>'+PB_LIMITS.map(t=>'<option'+(p.limits[k]===t?' selected':'')+'>'+t+'</option>').join('')+'</select></div>'; });
+  h+=pbHelp(pb.steps[2].t)+'</div>';
+  // 4 · Tags & statuses
+  h+='<div class="pb-card"><div class="fmt-h">4 · Tags & statuses</div>'
+    +(cr?('<div class="pb-out">Give it <b>'+cr+'</b> tag'+(cr===1?'':'s')+' and <b>'+cr+'</b> status tier'+(cr===1?'':'s')+' (its defenses & edge).</div>'):'<p class="hint">Roll CR first.</p>')
+    +pbHelp(pb.steps[3].t)+'</div>';
+  // 5 · Threats & consequences
+  h+='<div class="pb-card"><div class="fmt-h">5 · Threats & consequences</div>'
+    +'<div class="pb-ln"><span>Role</span><select data-pbrole>'+roles.map(r=>'<option'+(p.role===r?' selected':'')+'>'+r+'</option>').join('')+'</select></div>'
+    +'<button class="btn sm ghost" data-pb="threat" style="margin-top:6px">🎲 Roll a Threat (Challenge Action)</button>'
+    +(cr?('<div class="pb-out">Main Consequence: status tier <b>'+cr+'</b> · lesser: tier <b>'+Math.ceil(cr/2)+'</b>.</div>'):'')
+    +pbHelp(pb.steps[4].t)+'</div>';
+  // Summary
+  h+='<div class="pb-card" style="background:var(--bg-deep)"><div class="fmt-h">📋 Profile</div><div class="sub" id="pb_sum">'+esc(pbSummary())+'</div>'
+    +'<div class="row" style="gap:8px;margin-top:8px"><button class="btn sm" data-pb="log">📓 Log to journal</button><button class="btn sm ghost" data-pb="foe">👹 Add as foe status</button></div></div>';
+  b.innerHTML=h;
+  b.querySelectorAll('[data-pb]').forEach(el=>{ el.onclick=()=>pbAct(el.dataset.pb,O); });
+  b.querySelectorAll('[data-pbasp]').forEach(el=>{ el.onclick=()=>{ const a=el.dataset.pbasp, i=p.aspects.indexOf(a); if(i<0)p.aspects.push(a); else p.aspects.splice(i,1); renderPB(O); }; });
+  b.querySelectorAll('#pb_phase [data-ph]').forEach(el=>{ el.onclick=()=>{ p.phase=el.dataset.ph; renderPB(O); }; });
+  b.querySelectorAll('[data-pblim]').forEach(el=>{ el.onchange=()=>{ p.limits[el.dataset.pblim]=el.value; renderPB(O); }; });
+  const rs=b.querySelector('[data-pbrole]'); if(rs) rs.onchange=()=>{ p.role=rs.value; const sm=$('pb_sum'); if(sm) sm.textContent=pbSummary(); };
 }
 function oracleAdd(kind, result){ if(!S.oracleLog) S.oracleLog=[]; S.oracleLog.unshift({id:uid(), t:Date.now(), kind, result, note:''}); S.oracleLog=S.oracleLog.slice(0,80); save(); renderOracleLog(); }
 // ----- Play-loop bridges (seamless flow) -----
