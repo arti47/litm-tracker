@@ -332,6 +332,18 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 .sheet { background: var(--card-bg); width: 100%; max-width: 480px; border-radius: 18px 18px 0 0;
   padding: 18px 16px calc(var(--safe-bot) + 18px); max-height: 86vh; overflow-y: auto; }
 .sheet h2 { margin: 0 0 14px; color: var(--teal); }
+/* first-run welcome + idiot-proofing */
+.welcome-solo { display: flex; gap: 10px; align-items: flex-start; margin: 12px 0 4px; padding: 11px 12px;
+  border: 1px solid var(--border); border-radius: 11px; background: var(--bg-deep); font-size: 14px; line-height: 1.4; cursor: pointer; }
+.welcome-solo input { margin-top: 3px; width: 18px; height: 18px; flex: none; }
+.welcome-loop { margin-top: 12px; padding: 11px 12px; border-radius: 11px; background: var(--bg-deep);
+  border: 1px dashed var(--border); font-size: 13px; line-height: 1.55; }
+.newbie { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 12px; padding: 10px 12px;
+  border: 1px solid var(--teal); border-radius: 11px; background: var(--bg-deep); font-size: 14px; font-weight: 600; }
+.newbie > span { flex: 1; min-width: 140px; }
+.infodot { border: none; background: transparent; color: var(--teal); font-size: 14px; cursor: pointer;
+  padding: 0 2px; vertical-align: middle; line-height: 1; opacity: .8; }
+.infodot:hover { opacity: 1; }
 .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
   background: var(--bg-deep); border: 1px solid var(--border); border-radius: 11px; padding: 13px 14px;
   font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 9px; }
@@ -435,7 +447,12 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 
 <!-- HERO -->
 <section class="panel active" id="panel-hero">
-  <details class="howto">
+  <div id="newbieBanner" class="newbie" style="display:none">
+    <span>✨ New here? Get playing fast —</span>
+    <button class="btn sm" onclick="if(typeof startTour==='function')startTour();else openTutorial()">▶ Guided tour</button>
+    <button class="btn sm ghost" onclick="newHero()">📦 Ready-made Hero</button>
+  </div>
+  <details class="howto" id="howtoPlay">
     <summary>🎲 How to play</summary>
     <div class="howto-body">
       <h4>The game in one line</h4>
@@ -490,12 +507,12 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
       <label class="fld"><span>Hero Name</span><input type="text" id="f_heroName"></label>
     </div>
     <h3>Promise</h3>
-    <div class="track"><span class="track-lbl">Promise</span><div class="pips" id="promisePips"></div></div>
+    <div class="track"><span class="track-lbl">Promise <button type="button" class="infodot" onclick="explain('promise')" title="What's this?">ⓘ</button></span><div class="pips" id="promisePips"></div></div>
     <p class="hint">Mark Promise when you evolve or replace a theme (and when trading theme parts). Fill all 5 → a <b>Moment of Fulfillment</b>: reset, carry over extra marks, and gain a Quintessence.</p>
     <label class="fld" style="margin-top:10px"><span>Moments of Fulfillment</span>
       <div class="stepper"><button onclick="bump('fulfillments',-1)">−</button><b id="fulfillVal" style="font-size:20px;min-width:24px;text-align:center"></b><button onclick="bump('fulfillments',1)">+</button></div>
     </label>
-    <label class="fld"><span>Quintessences</span><textarea id="f_quintessences" placeholder="Permanent, rule-breaking qualities gained at a Moment of Fulfillment…"></textarea></label>
+    <label class="fld"><span>Quintessences <button type="button" class="infodot" onclick="explain('quintessence')" title="What's this?">ⓘ</button></span><textarea id="f_quintessences" placeholder="Permanent, rule-breaking qualities gained at a Moment of Fulfillment…"></textarea></label>
   </div>
 
   <div class="card">
@@ -534,7 +551,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     </div>
   </details>
   <div class="card">
-    <h2>🤝 Fellowship Theme</h2>
+    <h2>🤝 Fellowship Theme <button type="button" class="infodot" onclick="explain('fellowship')" title="What's this?">ⓘ</button></h2>
     <p class="hint">A shared fifth theme any Hero can invoke. Power tags are <b>single-use</b> — scratched when invoked, recovered while camping.</p>
     <div id="fellowshipWrap"></div>
   </div>
@@ -586,7 +603,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="btn wide ghost" style="margin-top:6px" onclick="openJourney()">🧭 Journey montage…</button>
   </div>
   <div class="card">
-    <h2>🟢 Statuses</h2>
+    <h2>🟢 Statuses <button type="button" class="infodot" onclick="explain('status')" title="What's this?">ⓘ</button></h2>
     <p class="hint">Tier 1 (mild) → 6 (deadly/transformative). Tap a box to set the current tier; stacking pushes to the next free box. Each status is on <b>🧍 you</b> or <b>👹 a foe</b> — toggle per status. A Hero's <b>Limit is 5</b> (overcome at 5, killed/transformed at 6); a foe's is lower. Foe statuses show on the Roll tab marked 👹 — tap one to count it only when it actually helps or hinders your action.</p>
     <div id="statusList"></div>
     <div class="row" style="gap:8px">
@@ -646,7 +663,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <p class="hint" id="rollHint">Tap a tag to count it: once = helpful (+1), twice = hindering (−1), again = off. Tap 🔥 on a helpful tag to <b>burn</b> it (+3 instead of +1, scratches the tag). Statuses: only your single highest helpful and highest hindering count.</p>
     <div id="agRoll"></div>
     <div id="rollTags"></div>
-    <h3>Might</h3>
+    <h3>Might <button type="button" class="infodot" onclick="explain('might')" title="What's this?">ⓘ</button></h3>
     <div class="seg" id="mightSeg">
       <button data-m="-6">Extr. Imperiled −6</button>
       <button data-m="-3">Imperiled −3</button>
@@ -672,7 +689,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   </div>
 
   <div class="card">
-    <div class="powerbig"><div class="n" id="powerNum">0</div><div class="l">Power</div></div>
+    <div class="powerbig"><div class="n" id="powerNum">0</div><div class="l">Power <button type="button" class="infodot" onclick="explain('power')" title="What's this?">ⓘ</button></div></div>
     <div class="dice"><div class="die" id="die1">–</div><div class="die" id="die2">–</div></div>
     <button class="btn wide" id="rollBtn" style="font-size:17px;padding:14px" onclick="rollDice()">🎲 Roll 2d6 + Power</button>
     <div id="outcomeBox"></div>
@@ -888,6 +905,21 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
     <input type="file" id="fellowFile" accept="application/json,.json" style="display:none" onchange="importFellowship(event)">
     <p class="hint" style="text-align:center;margin-top:10px">Legend in the Mist — Hero Tracker · offline PWA<br>Rules © Son of Oak Game Studio. This is an unofficial fan tool.</p>
+  </div>
+</div>
+
+<!-- WELCOME OVERLAY (first run) -->
+<div class="overlay" id="welcomeOverlay">
+  <div class="sheet">
+    <h2>👋 Welcome</h2>
+    <p class="hint" style="margin:-6px 0 12px">This is your <b>Legend in the Mist</b> character sheet and dice roller. It does the maths — you tell the story. New to it? Pick a starting point:</p>
+    <button class="btn wide" onclick="welcomeGo('tour')">▶ Take the guided tour</button>
+    <p class="hint" style="margin:3px 0 10px">A short hands-on walkthrough using a ready-made hero. Best first stop.</p>
+    <button class="btn wide ghost" onclick="welcomeGo('premade')">📦 Start with a ready-made Hero</button>
+    <p class="hint" style="margin:3px 0 10px">Pick a pre-built character and play right away.</p>
+    <button class="btn wide ghost" onclick="welcomeGo('explore')">✍️ I'll explore on my own</button>
+    <label class="welcome-solo"><input type="checkbox" id="wc_solo"> <span><b>I'm playing solo</b> (no GM / game master).<br><span class="hint">Turns on the 🔮 Oracle — it answers your yes/no questions and builds the story, so you can play with no one running the game.</span></span></label>
+    <div class="welcome-loop"><b>How a turn works:</b> set the scene → <i>(solo)</i> ask the Oracle → describe your action → tap the tags that help → <b>Roll</b> → spend your Power → take any Consequences → repeat. Rest at <b>Camp</b>.</div>
   </div>
 </div>
 
@@ -1509,6 +1541,7 @@ function renderMightRef(){
 //  RENDER
 // ============================================================
 function renderAll(){
+  updateNewbieBanner();
   $('hdrTitle').textContent = S.heroName ? S.heroName : 'Legend in the Mist';
   $('f_playerName').value = S.playerName;
   $('f_heroName').value   = S.heroName;
@@ -2834,10 +2867,48 @@ function toggleTheme(){
 // ============================================================
 //  BOOT
 // ============================================================
+// ---------- Idiot-proofing: first-run welcome, beginner banner, jargon hints ----------
+const LS_SEEN='litm-seen';
+const JARGON={
+  power:'Power = the number added to your 2d6 dice roll. Each helpful tag you tap is +1, each hindering one −1.',
+  might:'Might is how the task compares to your hero. Below you = Favored (+3/+6); above you = Imperiled (−3/−6); matched = 0.',
+  promise:'Promise fills as your themes grow. Reach 5 for a Moment of Fulfillment — a permanent reward (a Quintessence).',
+  quintessence:'A Quintessence is a permanent, rule-bending quality your hero earns at a Moment of Fulfillment.',
+  fellowship:'The Fellowship is a shared theme the whole group can draw on, with its own tags and Quest.',
+  status:'A status is a condition (wounded, hidden, afraid…) tracked in tiers 1 (mild) to 6 (severe). Set the Limit to the tier that takes the target out (a hero is 5).',
+  burn:'Burn a helpful tag for +3 instead of +1 — but it gets scratched (used up until you rest).',
+  oracle:'The Oracle answers yes/no questions and generates scenes and consequences when you have no GM.'
+};
+function explain(k){ const t=JARGON[k]; if(t) toast(t); }
+function heroIsUntouched(){ if(!S) return false;
+  if((S.heroName||'').trim()||(S.playerName||'').trim()||(S.quintessences||'').trim()||(S.notes||'').trim()) return false;
+  if((S.themes||[]).some(t=>(t.title||'').trim()||(t.power||[]).some(p=>(p.text||'').trim())||(t.weak||[]).some(w=>(w.text||'').trim())||(t.quest||'').trim())) return false;
+  if((S.backpack||[]).some(b=>(b.text||'').trim())) return false;
+  return true;
+}
+function updateNewbieBanner(){ const el=$('newbieBanner'); if(el) el.style.display=heroIsUntouched()?'':'none'; }
+function maybeWelcome(){
+  if(localStorage.getItem(LS_SEEN)==='1') return;
+  const hp=$('howtoPlay'); if(hp) hp.open=true;              // auto-expand "How to play" once
+  const wc=$('wc_solo'); if(wc) wc.checked=soloOn();
+  $('welcomeOverlay').classList.add('show');
+}
+function welcomeDismiss(){
+  const wc=$('wc_solo'); if(wc && wc.checked && !soloOn()){ localStorage.setItem(LS_SOLO,'1'); applySolo(); }
+  localStorage.setItem(LS_SEEN,'1'); $('welcomeOverlay').classList.remove('show');
+}
+function welcomeGo(what){
+  welcomeDismiss();
+  if(what==='tour'){ if(typeof startTour==='function') startTour(); else if(typeof openTutorial==='function') openTutorial(); }
+  else if(what==='premade'){ if(typeof newHero==='function') newHero(); toast('Tap 📦 Ready-made Hero'); }
+  else { showTab(soloOn()?'oracle':'hero'); }
+}
+
 applyTheme();
 loadAll();
 renderAll();
 applySolo();
+maybeWelcome();
 _lastSnap=_snap(); updateUndoUI();
 
 

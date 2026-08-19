@@ -48,20 +48,21 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,455 lines / ~708 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,526 lines / ~714 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
-  Profile Builder, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v46` (bump on every deploy)
+  Profile Builder + the first-run Welcome onboarding, ~458 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v47` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
-- **localStorage keys (5)**:
+- **localStorage keys (6)**:
   - `litm-roster-v1` — array of all heroes (each hero is the full state object)
   - `litm-active-v1` — id of the currently open hero
   - `litm-rolls-v1` — last 40 dice rolls
   - `litm-theme` — `'light'` / `'dark'` / unset = auto (`prefers-color-scheme`)
   - `litm-solo` — `'1'` when Solo Play Mode is on (reveals the 🔮 Oracle tab); app-level, not per-hero
+  - `litm-seen` — `'1'` once the first-run **Welcome** overlay has been dismissed; app-level, not per-hero
   - (`litm-hero` appears only as the default export filename stem, not a storage key)
 
 ### Stack
@@ -558,6 +559,21 @@ Direct/Tactical Attacks → Support/Movement/Defense → Information Gathering �
 → Navigating Danger → Recovery & Healing → the four Magic sections → Commerce → Community →
 Influence & Intrigue → Fellowship) + the 2 prose sections. No new localStorage key. *(Next:
 Phase B — the action→roll bridge.)*
+
+### First-run onboarding & idiot-proofing (for zero-knowledge newcomers) ✅
+Makes the app usable by someone who has never read the rules or played a solo RPG:
+- **Welcome overlay** (`#welcomeOverlay`, `maybeWelcome`/`welcomeGo`/`welcomeDismiss`) — shown once
+  (gated by `litm-seen`). Three starting points — **▶ Guided tour** (`startTour`), **📦 Ready-made
+  Hero** (`newHero` → wizard), **✍️ Explore myself** — plus a **"I'm playing solo (no GM)"**
+  checkbox that turns on Solo Play (reveals the Oracle) with a plain-language explanation, and a
+  one-paragraph "how a turn works" loop.
+- **Auto-expand "🎲 How to play"** (`#howtoPlay`) on the first visit only (via `maybeWelcome`).
+- **Beginner banner** (`#newbieBanner`, `heroIsUntouched`/`updateNewbieBanner`) — on the Hero tab
+  while the hero is still blank: "New here? ▶ Guided tour · 📦 Ready-made Hero"; auto-hides once any
+  field/tag/name is filled (re-checked every `renderAll`).
+- **Point-of-use ⓘ jargon hints** (`.infodot`, `explain(k)`, `JARGON` dict) on the worst terms —
+  Power, Might, Promise, Quintessences, Statuses, Fellowship — tap to toast a one-line plain
+  explanation. No new per-hero state (`litm-seen` is app-level).
 
 ### Inline "How to use" help (per-tab) ✅
 Each play tab carries a collapsible **native `<details class="howto">`** help block at the top of
