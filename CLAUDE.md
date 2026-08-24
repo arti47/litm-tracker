@@ -765,6 +765,47 @@ python3 -m http.server 4178      # then open http://localhost:4178/index.html
 Or just open `character-tracker.html` directly (`file://`) — it runs without a server; only
 the service worker / install prompt needs http(s).
 
+## Committed specs (`scripts/`) — run `bash scripts/test.sh`
+Two dependency-free Node specs (built-ins only; no npm install) guard against opposite mistakes.
+Both exit non-zero and **name the offenders**, so they work as a pre-commit hook / CI gate.
+They are deterministic — **do not** wrap them in a retry loop.
+
+- **`scripts/coverage.js`** (source document → code) + **`docs/coverage.json`** — checks the app still
+  implements documented rules features. Fails if any `implemented`/`partial`/`unknown` entry's
+  **marker** (a code substring that would vanish if the feature were removed) is missing from
+  `character-tracker.html`, if an entry lacks `source`/`marker`, or if a non-`implemented` entry lacks a
+  `note`. Prints per-status counts. **57 entries** (49 implemented / 3 partial / 4 deliberately-omitted
+  / 1 unknown).
+  - ⚠️ **`docs/coverage.json` is SEEDED from this CLAUDE.md, NOT verified against the Core Rulebook**
+    (the rulebook text isn't in this repo). So `_meta.omissionDetectionActive=false`: a genuine rulebook
+    requirement never written into the docs is *absent from the list and undetected*. This buys
+    **regression** detection (an implemented feature losing its marker) but not **omission** detection.
+    To make omission detection real, obtain the Core Rulebook and add entries section by section
+    (new requirements start `unknown` until their marker is found). This proves a *mapping*, not
+    correctness — a marker can exist while the code holds wrong values.
+  - `partial` entries (each with a note): `quintessence-mechanics` (only Beyond Luck auto-encoded),
+    `creation-theme-kits` (the one *Heirloom Longsword* artifact), `creation-general-store` (curated aid,
+    not the verbatim book table). `deliberately-omitted`: Narrator challenge profiles, Frames of Play,
+    bestiary, 5E crossover (all null-marker, Roadmap Phase 7/8). App-level features (roster, export,
+    undo, PWA, onboarding) are intentionally **not** in coverage — they aren't rulebook requirements.
+- **`scripts/reachability.js`** (code → user) — static analysis of `character-tracker.html` for
+  shipped-but-unreachable surface. Six classes: **1** orphan functions, **2** inert controls (handler →
+  undefined name), **3** broken `$()`/`getElementById` id refs, **4** broken `showTab` targets, **5**
+  missing shipped files (sw precache / manifest icons / `<link>`/`<script src>`), **6** unopenable/
+  unclosable overlays. Currently **all zero**.
+  - **False-positive traps already handled** (don't re-investigate): runtime-assigned ids (`el.id='x'`)
+    and ids emitted inside `innerHTML` template strings are collected into the id universe; concatenated
+    ids (`'x-'+n`) are skipped (literal reads only); method-call tokens (`.click`/`.getElementById`) are
+    in `BUILTINS`; **runtime-created overlays** (the wizard's `wzOverlay`, shown via a local var
+    `ov.classList.add('show')` not a literal id — the "variable-reference not literal" trap) are treated
+    as self-managed when their id is set via `.id='…'`.
+  - **Known gaps** (documented, accepted): a purely-recursive orphan function references itself so it
+    counts >1 and wouldn't be flagged; class 6 proves a programmatic show/hide path exists, not that a
+    *visible* exit control renders (needs DOM). Deliberate exemptions go in the `EXEMPT` object **with a
+    reason**; there are none at present.
+  - **Proven to fail** (Step 3): breaking a marker makes coverage name `[outcome-tiers]` and exit 1;
+    injecting an unreferenced `__ORPHAN_DEMO__` makes reachability name it under class 1 and exit 1.
+
 ## Conventions
 - **Update this `CLAUDE.md` on every change** — features, Roadmap, and "Current state" stats
   must always reflect the live app. A change isn't done until the docs match (see the
