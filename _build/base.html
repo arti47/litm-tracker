@@ -344,6 +344,13 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 .infodot { border: none; background: transparent; color: var(--teal); font-size: 14px; cursor: pointer;
   padding: 0 2px; vertical-align: middle; line-height: 1; opacity: .8; }
 .infodot:hover { opacity: 1; }
+/* Run-a-game guide */
+.guide-phase { margin: 16px 0 6px; padding: 7px 11px; border-radius: 9px; background: var(--teal); color: #fff;
+  font-weight: 700; font-size: 14px; }
+.guide-list { margin: 4px 0 2px; padding-left: 22px; }
+.guide-list li { font-size: 14px; line-height: 1.5; margin: 6px 0; }
+.guide-tip { margin: 10px 0 2px; padding: 10px 12px; border-radius: 10px; background: var(--bg-deep);
+  border: 1px dashed var(--border); font-size: 13px; line-height: 1.55; }
 .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
   background: var(--bg-deep); border: 1px solid var(--border); border-radius: 11px; padding: 13px 14px;
   font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 9px; }
@@ -451,6 +458,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <span>✨ New here? Get playing fast —</span>
     <button class="btn sm" onclick="if(typeof startTour==='function')startTour();else openTutorial()">▶ Guided tour</button>
     <button class="btn sm ghost" onclick="newHero()">📦 Ready-made Hero</button>
+    <button class="btn sm ghost" onclick="openPlayGuide()">🎯 How to play</button>
   </div>
   <details class="howto" id="howtoPlay">
     <summary>🎲 How to play</summary>
@@ -899,6 +907,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="exportFellowship()"><span class="em">🤝</span> Share Fellowship (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('fellowFile').click()"><span class="em">🔗</span> Import / sync Fellowship</button>
+    <button class="menu-item" onclick="openPlayGuide()"><span class="em">🎯</span> How to run a game (Start · Sustain · End)</button>
     <button class="menu-item" onclick="toggleSolo()"><span class="em">🔮</span> <span id="soloLbl">Enable Solo Play Mode</span></button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
     <button class="menu-item danger-text" onclick="deleteHero()"><span class="em">🗑️</span> Delete this hero</button>
@@ -920,6 +929,44 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="btn wide ghost" onclick="welcomeGo('explore')">✍️ I'll explore on my own</button>
     <label class="welcome-solo"><input type="checkbox" id="wc_solo"> <span><b>I'm playing solo</b> (no GM / game master).<br><span class="hint">Turns on the 🔮 Oracle — it answers your yes/no questions and builds the story, so you can play with no one running the game.</span></span></label>
     <div class="welcome-loop"><b>How a turn works:</b> set the scene → <i>(solo)</i> ask the Oracle → describe your action → tap the tags that help → <b>Roll</b> → spend your Power → take any Consequences → repeat. Rest at <b>Camp</b>.</div>
+    <button class="btn wide ghost" style="margin-top:10px" onclick="openPlayGuide()">🎯 How do I actually run a game? (Start · Sustain · End)</button>
+  </div>
+</div>
+
+<!-- PLAY GUIDE OVERLAY -->
+<div class="overlay" id="playGuideOverlay" onclick="if(event.target===this)closePlayGuide()">
+  <div class="sheet">
+    <h2>🎯 How to run a game</h2>
+    <p class="hint" style="margin:-6px 0 12px">The whole arc in one place — from a blank screen to a satisfying ending. Do these in order; you'll be playing within minutes.</p>
+
+    <div class="guide-phase">▶ Starting — your first 10 minutes</div>
+    <ol class="guide-list">
+      <li><b>Get a hero fast.</b> On the Welcome screen tap <b>📦 Ready-made Hero</b> (build your own later). You now have tags and dice.</li>
+      <li><b>Playing alone?</b> Tick <b>"I'm playing solo"</b> (or ☰ → Solo Play). The <b>🔮 Oracle</b> appears — it plays the GM for you.</li>
+      <li><b>Frame one scene.</b> Tracking → <b>🎬 Scene</b>. Write <b>one goal</b> in <i>Stakes</i> (e.g. "find what's killing the sheep") and where you are. That's enough to start.</li>
+      <li><b>(Solo) See what's here.</b> Oracle → <b>Conflict / Scene</b> → roll, and turn the result into a sentence of fiction. Now something is happening.</li>
+    </ol>
+
+    <div class="guide-phase">🔁 Sustaining — one loop, repeated (this <i>is</i> the game)</div>
+    <ol class="guide-list">
+      <li>Say what your hero <b>does</b>.</li>
+      <li>Risky or uncertain? → <b>Roll</b> tab: tap the tags that help, then Roll. <b>10+</b> clean · <b>7–9</b> it works but something bites · <b>6−</b> it goes wrong.</li>
+      <li><b>Spend your Power</b> in the panel that appears — that's how you change the world (give a foe a status, grab a tag, fill a Progress track).</li>
+      <li><b>(Solo)</b> on a 7–9 / 6−, tap <b>🔮 Roll a Consequence</b> to see what bites back, then <b>📓 Log to journal</b>.</li>
+      <li>Ask <b>Oracle → Yes/No</b> whenever you'd ask a GM "is that true?"</li>
+      <li>When the scene's goal is <b>settled</b> (won or lost), start a new scene — new Stakes; use <b>🧭 Journey</b> if you travel.</li>
+      <li><b>Camp</b> between hard scenes to heal and grow.</li>
+    </ol>
+    <div class="guide-tip"><b>The one trick that keeps momentum:</b> end every journal note with a <i>new question</i>. "The beast fled — but whose footprints are those?" That question is your next scene.</div>
+
+    <div class="guide-phase">⏹️ Ending well — three sizes of ending</div>
+    <ul class="guide-list">
+      <li><b>End a scene:</b> when the Stakes are resolved, narrate the result and set the 🎬 loop to <b>③ Consequences</b>. Note what changed, then move on.</li>
+      <li><b>End a session:</b> open <b>🏕️ Camp</b> — expire used-up tags, <b>Rest</b> (recover), <b>Reflect</b> (mark Improve to grow). Then write the <b>loose threads</b> in your journal. That's your save point.</li>
+      <li><b>End a story:</b> each theme carries a <b>Quest</b>. Pursue it → mark <b>Milestone</b>; enough growth fills <b>Promise</b> to 5 → a <b>Moment of Fulfillment</b> (a permanent reward and a natural turning point). A story ends <i>well</i> when the central Quest resolves — fulfilled or abandoned. Narrate a short denouement, mark that last Milestone, and note how the hero changed. Credits roll.</li>
+    </ul>
+
+    <button class="btn wide" style="margin-top:14px" onclick="closePlayGuide()">Got it — let's play ✓</button>
   </div>
 </div>
 
@@ -2903,6 +2950,8 @@ function welcomeGo(what){
   else if(what==='premade'){ if(typeof newHero==='function') newHero(); toast('Tap 📦 Ready-made Hero'); }
   else { showTab(soloOn()?'oracle':'hero'); }
 }
+function openPlayGuide(){ if(typeof closeOverlays==='function') closeOverlays(); $('playGuideOverlay').classList.add('show'); }
+function closePlayGuide(){ $('playGuideOverlay').classList.remove('show'); }
 
 applyTheme();
 loadAll();

@@ -48,12 +48,12 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,526 lines / ~714 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,575 lines / ~718 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
-  Profile Builder + the first-run Welcome onboarding, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v47` (bump on every deploy)
+  Profile Builder + the first-run Welcome onboarding + the Run-a-game guide, ~458 KB of it `LITM_DATA`).
+- **`sw.js` `CACHE_VERSION`**: `litm-v48` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -574,6 +574,13 @@ Makes the app usable by someone who has never read the rules or played a solo RP
 - **Point-of-use ⓘ jargon hints** (`.infodot`, `explain(k)`, `JARGON` dict) on the worst terms —
   Power, Might, Promise, Quintessences, Statuses, Fellowship — tap to toast a one-line plain
   explanation. No new per-hero state (`litm-seen` is app-level).
+- **Run-a-game guide** (`#playGuideOverlay`, `openPlayGuide`/`closePlayGuide`) — a single plain,
+  sequential walkthrough of the whole arc a newcomer was missing: **▶ Starting** (hero → solo →
+  frame a scene → ask the Oracle), **🔁 Sustaining** (the action loop + the "end every journal note
+  with a new question" momentum trick), and **⏹️ Ending well** at three scopes (end a scene / end a
+  session via Camp / end a story via Quest→Milestone→Moment of Fulfillment). Opened from the Welcome
+  overlay, the ☰ menu, and the beginner banner. `.guide-phase`/`.guide-list`/`.guide-tip` CSS; no new
+  state.
 
 ### Inline "How to use" help (per-tab) ✅
 Each play tab carries a collapsible **native `<details class="howto">`** help block at the top of
