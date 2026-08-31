@@ -351,6 +351,21 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 .guide-list li { font-size: 14px; line-height: 1.5; margin: 6px 0; }
 .guide-tip { margin: 10px 0 2px; padding: 10px 12px; border-radius: 10px; background: var(--bg-deep);
   border: 1px dashed var(--border); font-size: 13px; line-height: 1.55; }
+/* "Play with me" coach — a fixed step-by-step director over the live app */
+#coachBar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 120; background: var(--teal); color: #fff;
+  padding: 11px 13px calc(var(--safe-bot, 0px) + 11px); box-shadow: 0 -6px 22px rgba(0,0,0,0.28); display: none; }
+#coachBar.show { display: block; }
+#coachBar .coach-hd { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; opacity: .85; margin-bottom: 4px; }
+#coachBar .coach-say { font-size: 14.5px; line-height: 1.45; margin-bottom: 9px; }
+#coachBar .coach-say b { color: #fff; }
+#coachBar .coach-btns { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+#coachBar button { border: none; border-radius: 9px; padding: 10px 14px; font-weight: 700; font-size: 14px; cursor: pointer; }
+#coachBar .cbtn { background: #fff; color: var(--teal); }
+#coachBar .cbtn.ghost { background: rgba(255,255,255,0.18); color: #fff; }
+#coachBar .cbtn.x { background: transparent; color: #fff; margin-left: auto; opacity: .85; padding: 10px; font-size: 16px; }
+body.coach-active { padding-bottom: 108px; }
+.coach-spot { outline: 3px solid #ffd76a; outline-offset: 3px; border-radius: 12px; animation: coachPulse 1.15s ease-in-out infinite; }
+@keyframes coachPulse { 0%,100% { outline-color: #ffd76a; } 50% { outline-color: rgba(255,215,106,0.3); } }
 .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
   background: var(--bg-deep); border: 1px solid var(--border); border-radius: 11px; padding: 13px 14px;
   font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 9px; }
@@ -456,7 +471,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 <section class="panel active" id="panel-hero">
   <div id="newbieBanner" class="newbie" style="display:none">
     <span>✨ New here? Get playing fast —</span>
-    <button class="btn sm" onclick="if(typeof startTour==='function')startTour();else openTutorial()">▶ Guided tour</button>
+    <button class="btn sm" onclick="startCoach()">▶ Play with me</button>
     <button class="btn sm ghost" onclick="newHero()">📦 Ready-made Hero</button>
     <button class="btn sm ghost" onclick="openPlayGuide()">🎯 How to play</button>
   </div>
@@ -907,6 +922,7 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="exportFellowship()"><span class="em">🤝</span> Share Fellowship (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('fellowFile').click()"><span class="em">🔗</span> Import / sync Fellowship</button>
+    <button class="menu-item" onclick="startCoach()"><span class="em">▶</span> Play with me (guided, step by step)</button>
     <button class="menu-item" onclick="openPlayGuide()"><span class="em">🎯</span> How to run a game (Start · Sustain · End)</button>
     <button class="menu-item" onclick="toggleSolo()"><span class="em">🔮</span> <span id="soloLbl">Enable Solo Play Mode</span></button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
@@ -922,8 +938,8 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
   <div class="sheet">
     <h2>👋 Welcome</h2>
     <p class="hint" style="margin:-6px 0 12px">This is your <b>Legend in the Mist</b> character sheet and dice roller. It does the maths — you tell the story. New to it? Pick a starting point:</p>
-    <button class="btn wide" onclick="welcomeGo('tour')">▶ Take the guided tour</button>
-    <p class="hint" style="margin:3px 0 10px">A short hands-on walkthrough using a ready-made hero. Best first stop.</p>
+    <button class="btn wide" onclick="welcomeGo('coach')">▶ Play with me — I'll guide every step</button>
+    <p class="hint" style="margin:3px 0 10px">No reading. I set up a game and tell you exactly what to tap, turn by turn. Best first stop.</p>
     <button class="btn wide ghost" onclick="welcomeGo('premade')">📦 Start with a ready-made Hero</button>
     <p class="hint" style="margin:3px 0 10px">Pick a pre-built character and play right away.</p>
     <button class="btn wide ghost" onclick="welcomeGo('explore')">✍️ I'll explore on my own</button>
@@ -1037,6 +1053,13 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- "Play with me" coach bar -->
+<div id="coachBar">
+  <div class="coach-hd" id="coachHd">Play with me</div>
+  <div class="coach-say" id="coachSay"></div>
+  <div class="coach-btns" id="coachBtns"></div>
+</div>
 
 <div class="update-banner" id="updateBanner">
   <span class="upd-msg"><b>New version ready</b> — tap to update.</span>
@@ -2592,6 +2615,7 @@ function rollDice(){
     if(burnNote){ save(); renderThemes(); renderFellowship(); renderBackpack(); renderScene(); renderRoller(); }
     if(navigator.vibrate) navigator.vibrate(tier!=='lose'?20:[10,40,10]);
     if(typeof tourOnRoll==='function') tourOnRoll(tier);
+    if(typeof coachOnRoll==='function') coachOnRoll(tier);
   }, 480);
 }
 
@@ -2946,12 +2970,92 @@ function welcomeDismiss(){
 }
 function welcomeGo(what){
   welcomeDismiss();
-  if(what==='tour'){ if(typeof startTour==='function') startTour(); else if(typeof openTutorial==='function') openTutorial(); }
+  if(what==='coach'){ startCoach(); }
+  else if(what==='tour'){ if(typeof startTour==='function') startTour(); else if(typeof openTutorial==='function') openTutorial(); }
   else if(what==='premade'){ if(typeof newHero==='function') newHero(); toast('Tap 📦 Ready-made Hero'); }
   else { showTab(soloOn()?'oracle':'hero'); }
 }
 function openPlayGuide(){ if(typeof closeOverlays==='function') closeOverlays(); $('playGuideOverlay').classList.add('show'); }
 function closePlayGuide(){ $('playGuideOverlay').classList.remove('show'); }
+
+// ================= "Play with me" coach — a step-by-step director over the live app =================
+let _coach = { on:false, i:0, await:null, lastTier:null };
+function coachSpotClear(){ document.querySelectorAll('.coach-spot').forEach(e=>e.classList.remove('coach-spot')); }
+function coachSpot(sel){ coachSpotClear(); if(!sel) return; const el=document.querySelector(sel); if(el){ el.classList.add('coach-spot'); try{ el.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} } }
+function coachSetup(){
+  // Non-destructive: only spin up Gerrin if the current hero is untouched; only frame a scene if empty.
+  try { if(heroIsUntouched()){ const c=tourFindGerrin && tourFindGerrin(); if(c){ const g=heroFromPremade(c); roster.push(g); switchHero(g.id); } } } catch(e){}
+  if(!soloOn()){ localStorage.setItem(LS_SOLO,'1'); applySolo(); }
+  try {
+    if(!S.scene.some(t=>(t.text||'').trim())){
+      S.scene.push({id:uid(), text:'Thornwood at dusk — thick fog', type:'story', scratched:false});
+      S.scene.push({id:uid(), text:'Fresh tracks leaving the path', type:'hindering', scratched:false});
+    }
+    if(!S.sceneBoard) S.sceneBoard={step:-1,stakes:'',threats:''};
+    if(!(S.sceneBoard.stakes||'').trim()){ S.sceneBoard.stakes='Find what is taking the sheep before the new moon'; S.sceneBoard.step=0; }
+    save(); renderAll();
+  } catch(e){}
+}
+function coachAskYesNo(){
+  oracleSel='question'; showTab('oracle');
+  const q=$('or_q'); if(q) q.value='Are the tracks fresh enough to follow?';
+  const b=$('or_yn'); if(b) b.click();
+  setTimeout(coachNext, 700);
+}
+function coachSteps(){
+  const t=_coach.lastTier;
+  const postRoll = t==='win'
+      ? 'You <b>succeeded</b>! ✅ Now <b>spend your Power</b> in the panel that popped up — that\'s how you change the world (give a foe a status, grab a tag). Then tap Next.'
+    : t==='mixed'
+      ? 'Success — <b>with a cost</b>. ⚠️ Spend your Power below, then tap <b>🔮 Roll a Consequence</b> to see what bites back. Then Next.'
+    : t==='lose'
+      ? 'It <b>went wrong</b>. ❌ Tap <b>🔮 Roll a Consequence</b> to find out what happens, then <b>📓 Log to journal</b>. Then Next.'
+      : 'You rolled. Read the coloured result — it tells you what happened. Then tap Next.';
+  return [
+    { hd:'Get ready', say:'👋 I\'ll set up a real game for you and walk you through it — just tap the buttons. Ready?',
+      btns:[{label:'Let\'s play ▸', act:()=>{ coachSetup(); coachNext(); }}] },
+    { hd:'Step 1 — your hero', tab:'hero', say:'Meet <b>Gerrin</b>, a hunter. The yellow words on his cards are <b>tags</b> — things he\'s good at. You tap them to do stuff. Have a quick look, then Next.' },
+    { hd:'Step 2 — your scene', tab:'track', spot:'#loopSeg', say:'Here\'s your <b>scene</b>: dusk in foggy Thornwood, something is killing sheep. Your goal is in <i>Stakes</i>: find its den.' },
+    { hd:'Step 3 — ask the Oracle', tab:'oracle', say:'No GM? <b>Ask the Oracle</b> anything. Let\'s ask: “Are the tracks fresh enough to follow?”',
+      btns:[{label:'🔮 Ask it for me', act:()=>coachAskYesNo()}] },
+    { hd:'Step 4 — take an action', tab:'roll', spot:'#rollTags', awaitRoll:true,
+      say:'Now <b>do something</b>: Gerrin sneaks toward the den. Tap the glowing <b>tags</b> (they help him), then tap the big <b>Roll</b> button.' },
+    { hd:'Step 5 — read it', say:postRoll },
+    { hd:'Step 6 — keep going', say:'🎉 That\'s a whole turn: <b>describe → roll → spend / consequence</b>. Do another, or start wrapping up?',
+      btns:[{label:'🎲 Another turn', act:()=>coachGo(4)}, {label:'Wind down ▸', act:()=>coachNext()}] },
+    { hd:'Ending 1 — end the scene', tab:'track', spot:'#loopSeg', say:'When your goal is settled, the <b>scene ends</b>. Tap <b>③ Consequences</b> and say what changed. Then a new scene begins.' },
+    { hd:'Ending 2 — end the session', say:'Stopping for the day? <b>Camp</b> to heal and grow, then note what\'s unresolved so you can pick up later.',
+      btns:[{label:'🏕️ Open Camp', act:()=>openCamp()}, {label:'Next ▸', act:()=>coachNext()}] },
+    { hd:'Ending 3 — end the story', say:'Your <b>story</b> ends when a theme\'s <b>Quest</b> is done — that fills <b>Promise</b>, and at 5 you get a <b>Moment of Fulfillment</b>: the finale, and a permanent reward.' },
+    { hd:'You\'re playing', say:'🎉 That\'s the entire game! You\'re set up and playing right now — I\'ll step aside. Reopen me anytime from <b>☰ → Play with me</b>.',
+      btns:[{label:'Finish ✓', act:()=>coachEnd()}] }
+  ];
+}
+function coachRender(){
+  const steps=coachSteps(); const s=steps[_coach.i]; if(!s){ coachEnd(); return; }
+  $('coachHd').textContent = s.hd || 'Play with me';
+  $('coachSay').innerHTML = s.say || '';
+  if(s.tab) showTab(s.tab);
+  coachSpot(s.spot);
+  _coach.await = s.awaitRoll ? 'roll' : null;
+  const wrap=$('coachBtns'); wrap.innerHTML='';
+  const mk=(label,cls,fn)=>{ const b=document.createElement('button'); b.className=cls; b.textContent=label; b.onclick=fn; wrap.appendChild(b); };
+  (s.btns||[]).forEach(b=>mk(b.label,'cbtn',b.act));
+  if(!s.btns && !s.awaitRoll && _coach.i>0) mk('Next ▸','cbtn',coachNext);
+  if(s.awaitRoll) mk('Skip ▸','cbtn ghost',()=>{ _coach.await=null; coachNext(); });   // never a dead end
+  if(_coach.i>1 && _coach.i<steps.length-1) mk('◂ Back','cbtn ghost',coachPrev);
+  mk('✕','cbtn x',coachEnd);
+}
+function coachGo(i){ _coach.i=Math.max(0,i); coachRender(); }
+function coachNext(){ coachGo(_coach.i+1); }
+function coachPrev(){ coachGo(Math.max(0,_coach.i-1)); }
+function startCoach(){ if(typeof closeOverlays==='function') closeOverlays(); $('welcomeOverlay').classList.remove('show'); $('playGuideOverlay').classList.remove('show');
+  _coach.on=true; _coach.i=0; _coach.await=null; _coach.lastTier=null;
+  document.body.classList.add('coach-active'); $('coachBar').classList.add('show'); coachRender();
+}
+function coachEnd(){ _coach.on=false; _coach.await=null; coachSpotClear();
+  document.body.classList.remove('coach-active'); $('coachBar').classList.remove('show'); toast('Coach closed — reopen from ☰ → Play with me'); }
+function coachOnRoll(tier){ if(_coach.on && _coach.await==='roll'){ _coach.await=null; _coach.lastTier=tier; coachNext(); } }
 
 applyTheme();
 loadAll();
