@@ -363,9 +363,14 @@ body.dark .outcome.mixed { background: rgba(154,106,16,.22); color: #e7bd66; }
 #coachBar .cbtn { background: #fff; color: var(--teal); }
 #coachBar .cbtn.ghost { background: rgba(255,255,255,0.18); color: #fff; }
 #coachBar .cbtn.x { background: transparent; color: #fff; margin-left: auto; opacity: .85; padding: 10px; font-size: 16px; }
-body.coach-active { padding-bottom: 108px; }
+#coachBar .coach-tip { font-size: 12px; opacity: .85; margin-top: 7px; line-height: 1.4; }
+body.coach-active { padding-bottom: 124px; }
 .coach-spot { outline: 3px solid #ffd76a; outline-offset: 3px; border-radius: 12px; animation: coachPulse 1.15s ease-in-out infinite; }
 @keyframes coachPulse { 0%,100% { outline-color: #ffd76a; } 50% { outline-color: rgba(255,215,106,0.3); } }
+#coachDot { position: fixed; right: 12px; bottom: calc(var(--safe-bot, 0px) + 14px); z-index: 119; display: none;
+  background: var(--teal); color: #fff; border: none; border-radius: 22px; padding: 11px 16px; font-weight: 700;
+  font-size: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.32); cursor: pointer; }
+#coachDot.show { display: block; }
 .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
   background: var(--bg-deep); border: 1px solid var(--border); border-radius: 11px; padding: 13px 14px;
   font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 9px; }
@@ -1054,12 +1059,13 @@ body.coach-active { padding-bottom: 108px; }
 
 <div class="toast" id="toast"></div>
 
-<!-- "Play with me" coach bar -->
+<!-- "Play with me" coach bar + always-there re-summon button -->
 <div id="coachBar">
   <div class="coach-hd" id="coachHd">Play with me</div>
   <div class="coach-say" id="coachSay"></div>
   <div class="coach-btns" id="coachBtns"></div>
 </div>
+<button id="coachDot" onclick="coachResume()">❓ What do I do now?</button>
 
 <div class="update-banner" id="updateBanner">
   <span class="upd-msg"><b>New version ready</b> — tap to update.</span>
@@ -2978,8 +2984,10 @@ function welcomeGo(what){
 function openPlayGuide(){ if(typeof closeOverlays==='function') closeOverlays(); $('playGuideOverlay').classList.add('show'); }
 function closePlayGuide(){ $('playGuideOverlay').classList.remove('show'); }
 
-// ================= "Play with me" coach — a step-by-step director over the live app =================
-let _coach = { on:false, i:0, await:null, lastTier:null };
+// ================= "Play with me" coach — a persistent companion beside your real game =================
+// It never "steps aside": after setup it loops the play cycle forever, always answering "what do I do now?",
+// and leaves a floating re-summon button so you can never get stranded on the sheet.
+let _coach = { on:false, used:false, state:'intro', await:null, lastTier:null };
 function coachSpotClear(){ document.querySelectorAll('.coach-spot').forEach(e=>e.classList.remove('coach-spot')); }
 function coachSpot(sel){ coachSpotClear(); if(!sel) return; const el=document.querySelector(sel); if(el){ el.classList.add('coach-spot'); try{ el.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} } }
 function coachSetup(){
@@ -2988,7 +2996,7 @@ function coachSetup(){
   if(!soloOn()){ localStorage.setItem(LS_SOLO,'1'); applySolo(); }
   try {
     if(!S.scene.some(t=>(t.text||'').trim())){
-      S.scene.push({id:uid(), text:'Thornwood at dusk — thick fog', type:'story', scratched:false});
+      S.scene.push({id:uid(), text:'Thornwood at dusk \u2014 thick fog', type:'story', scratched:false});
       S.scene.push({id:uid(), text:'Fresh tracks leaving the path', type:'hindering', scratched:false});
     }
     if(!S.sceneBoard) S.sceneBoard={step:-1,stakes:'',threats:''};
@@ -2996,66 +3004,71 @@ function coachSetup(){
     save(); renderAll();
   } catch(e){}
 }
-function coachAskYesNo(){
-  oracleSel='question'; showTab('oracle');
-  const q=$('or_q'); if(q) q.value='Are the tracks fresh enough to follow?';
-  const b=$('or_yn'); if(b) b.click();
-  setTimeout(coachNext, 700);
-}
-function coachSteps(){
+function coachStates(){
   const t=_coach.lastTier;
-  const postRoll = t==='win'
-      ? 'You <b>succeeded</b>! ✅ Now <b>spend your Power</b> in the panel that popped up — that\'s how you change the world (give a foe a status, grab a tag). Then tap Next.'
-    : t==='mixed'
-      ? 'Success — <b>with a cost</b>. ⚠️ Spend your Power below, then tap <b>🔮 Roll a Consequence</b> to see what bites back. Then Next.'
-    : t==='lose'
-      ? 'It <b>went wrong</b>. ❌ Tap <b>🔮 Roll a Consequence</b> to find out what happens, then <b>📓 Log to journal</b>. Then Next.'
-      : 'You rolled. Read the coloured result — it tells you what happened. Then tap Next.';
-  return [
-    { hd:'Get ready', say:'👋 I\'ll set up a real game for you and walk you through it — just tap the buttons. Ready?',
-      btns:[{label:'Let\'s play ▸', act:()=>{ coachSetup(); coachNext(); }}] },
-    { hd:'Step 1 — your hero', tab:'hero', say:'Meet <b>Gerrin</b>, a hunter. The yellow words on his cards are <b>tags</b> — things he\'s good at. You tap them to do stuff. Have a quick look, then Next.' },
-    { hd:'Step 2 — your scene', tab:'track', spot:'#loopSeg', say:'Here\'s your <b>scene</b>: dusk in foggy Thornwood, something is killing sheep. Your goal is in <i>Stakes</i>: find its den.' },
-    { hd:'Step 3 — ask the Oracle', tab:'oracle', say:'No GM? <b>Ask the Oracle</b> anything. Let\'s ask: “Are the tracks fresh enough to follow?”',
-      btns:[{label:'🔮 Ask it for me', act:()=>coachAskYesNo()}] },
-    { hd:'Step 4 — take an action', tab:'roll', spot:'#rollTags', awaitRoll:true,
-      say:'Now <b>do something</b>: Gerrin sneaks toward the den. Tap the glowing <b>tags</b> (they help him), then tap the big <b>Roll</b> button.' },
-    { hd:'Step 5 — read it', say:postRoll },
-    { hd:'Step 6 — keep going', say:'🎉 That\'s a whole turn: <b>describe → roll → spend / consequence</b>. Do another, or start wrapping up?',
-      btns:[{label:'🎲 Another turn', act:()=>coachGo(4)}, {label:'Wind down ▸', act:()=>coachNext()}] },
-    { hd:'Ending 1 — end the scene', tab:'track', spot:'#loopSeg', say:'When your goal is settled, the <b>scene ends</b>. Tap <b>③ Consequences</b> and say what changed. Then a new scene begins.' },
-    { hd:'Ending 2 — end the session', say:'Stopping for the day? <b>Camp</b> to heal and grow, then note what\'s unresolved so you can pick up later.',
-      btns:[{label:'🏕️ Open Camp', act:()=>openCamp()}, {label:'Next ▸', act:()=>coachNext()}] },
-    { hd:'Ending 3 — end the story', say:'Your <b>story</b> ends when a theme\'s <b>Quest</b> is done — that fills <b>Promise</b>, and at 5 you get a <b>Moment of Fulfillment</b>: the finale, and a permanent reward.' },
-    { hd:'You\'re playing', say:'🎉 That\'s the entire game! You\'re set up and playing right now — I\'ll step aside. Reopen me anytime from <b>☰ → Play with me</b>.',
-      btns:[{label:'Finish ✓', act:()=>coachEnd()}] }
-  ];
+  const branch = t==='win' ? '\u2705 <b>Success!</b> Spend your Power in the panel that popped up \u2014 that\'s how you make something happen (give a foe a status, grab a tag). Then start your next turn.'
+    : t==='mixed' ? '\u26a0\ufe0f <b>Success \u2014 with a cost.</b> Spend your Power below, then tap <b>\ud83d\udd2e Roll a Consequence</b> to see what bites back. Then next turn.'
+    : t==='lose' ? '\u274c <b>It went wrong.</b> Tap <b>\ud83d\udd2e Roll a Consequence</b> to find out what happens, then <b>\ud83d\udcd3 Log it</b>. Then next turn.'
+    : 'Read the coloured result \u2014 it tells you what happened. Then start your next turn.';
+  return {
+    intro:{ hd:'Get ready', say:'\ud83d\udc4b I\'ll set up a real game and <b>stay with you the whole time</b>, telling you what to tap every turn. Ready?',
+      btns:[{label:'Let\'s play \u25b8', act:()=>{ coachSetup(); coachSet('hero'); }}] },
+    hero:{ hd:'Meet your hero', tab:'hero', say:'This is <b>Gerrin</b>, a hunter. The yellow words on his cards are <b>tags</b> \u2014 things he\'s good at; you tap them to act. Have a peek, then Next.',
+      btns:[{label:'Next \u25b8', act:()=>coachSet('scene')}] },
+    scene:{ hd:'Your scene', tab:'track', spot:'#loopSeg', say:'Your <b>scene</b>: dusk in foggy Thornwood, something is killing sheep. Your goal is in <i>Stakes</i>: find its den. Ready to play a turn.',
+      btns:[{label:'Start playing \u25b8', act:()=>coachSet('hub')}] },
+    hub:{ hd:'Your turn \u2014 what now?', tip:true,
+      say:'Decide (out loud or in your head) <b>what your hero tries to do next</b>. Then pick one:',
+      btns:[
+        {label:'\ud83d\udd2e Ask the Oracle first', cls:'ghost', act:()=>{ oracleSel='question'; showTab('oracle'); coachSet('afterAsk'); }},
+        {label:'\ud83c\udfb2 Take an action', act:()=>coachSet('act')},
+        {label:'Wrap up \u25be', cls:'ghost', act:()=>coachSet('endMenu')}
+      ] },
+    afterAsk:{ hd:'Ask the Oracle', tab:'oracle', say:'Type a yes/no question (there\'s an example filled in) and tap <b>\ud83c\udfb2 Ask</b>. The answer shapes what\'s true. Then take your action.',
+      btns:[{label:'\ud83c\udfb2 Take an action \u25b8', act:()=>coachSet('act')},{label:'\u25c2 Back', cls:'ghost', act:()=>coachSet('hub')}] },
+    act:{ hd:'Take an action', tab:'roll', spot:'#rollTags', awaitRoll:true,
+      say:'Say what your hero does, then <b>tap the glowing tags</b> that help and hit the big <b>Roll</b> button.' },
+    resolve:{ hd:'What happened', say:branch,
+      btns:[{label:'\u25b6 Next turn', act:()=>coachSet('hub')},{label:'Wrap up \u25be', cls:'ghost', act:()=>coachSet('endMenu')}] },
+    endMenu:{ hd:'Wrapping up', say:'How much are you ending?',
+      btns:[{label:'End this scene', act:()=>coachSet('endScene')},{label:'End the session', act:()=>coachSet('endSession')},{label:'End the story', act:()=>coachSet('endStory')},{label:'\u25c2 Keep playing', cls:'ghost', act:()=>coachSet('hub')}] },
+    endScene:{ hd:'End the scene', tab:'track', spot:'#loopSeg', say:'Goal settled? Tap <b>\u2462 Consequences</b> and say what changed \u2014 then a fresh scene begins.',
+      btns:[{label:'\u25b6 Back to play', act:()=>coachSet('hub')}] },
+    endSession:{ hd:'End the session', say:'Stopping for today? <b>Camp</b> to heal and grow, then note the loose threads so you can pick up next time.',
+      btns:[{label:'\ud83c\udfd5\ufe0f Open Camp', act:()=>openCamp()},{label:'\u25b6 Back to play', cls:'ghost', act:()=>coachSet('hub')}] },
+    endStory:{ hd:'End the story', say:'Your <b>story</b> ends when a theme\'s <b>Quest</b> is done \u2014 that fills <b>Promise</b>, and at 5 you get a <b>Moment of Fulfillment</b>: the finale, and a permanent reward.',
+      btns:[{label:'\u25b6 Back to play', act:()=>coachSet('hub')}] }
+  };
 }
-function coachRender(){
-  const steps=coachSteps(); const s=steps[_coach.i]; if(!s){ coachEnd(); return; }
-  $('coachHd').textContent = s.hd || 'Play with me';
-  $('coachSay').innerHTML = s.say || '';
-  if(s.tab) showTab(s.tab);
-  coachSpot(s.spot);
-  _coach.await = s.awaitRoll ? 'roll' : null;
+function coachSet(state){ _coach.state=state; coachRenderState(); }
+function coachRenderState(){
+  const def=coachStates()[_coach.state]; if(!def) return;
+  $('coachHd').textContent=def.hd||'Play with me';
+  $('coachSay').innerHTML=(def.say||'')+(def.tip?'<div class="coach-tip">Momentum trick: after each turn ask \u201cwhat did that change, and what\'s the new danger?\u201d \u2014 that\'s your next turn.</div>':'');
+  if(def.tab) showTab(def.tab);
+  coachSpot(def.spot);
+  _coach.await = def.awaitRoll ? 'roll' : null;
+  if(_coach.state==='afterAsk'){ const q=$('or_q'); if(q && !(q.value||'').trim()) q.value='Are the tracks fresh enough to follow?'; }
   const wrap=$('coachBtns'); wrap.innerHTML='';
-  const mk=(label,cls,fn)=>{ const b=document.createElement('button'); b.className=cls; b.textContent=label; b.onclick=fn; wrap.appendChild(b); };
-  (s.btns||[]).forEach(b=>mk(b.label,'cbtn',b.act));
-  if(!s.btns && !s.awaitRoll && _coach.i>0) mk('Next ▸','cbtn',coachNext);
-  if(s.awaitRoll) mk('Skip ▸','cbtn ghost',()=>{ _coach.await=null; coachNext(); });   // never a dead end
-  if(_coach.i>1 && _coach.i<steps.length-1) mk('◂ Back','cbtn ghost',coachPrev);
-  mk('✕','cbtn x',coachEnd);
+  const mk=(label,cls,fn)=>{ const b=document.createElement('button'); b.className='cbtn'+(cls?(' '+cls):''); b.textContent=label; b.onclick=fn; wrap.appendChild(b); };
+  (def.btns||[]).forEach(b=>mk(b.label,b.cls||'',b.act));
+  if(def.awaitRoll) mk('Skip \u25b8','ghost',()=>{ _coach.await=null; coachSet('resolve'); });   // never a dead end
+  mk('\u2715','x',coachClose);
 }
-function coachGo(i){ _coach.i=Math.max(0,i); coachRender(); }
-function coachNext(){ coachGo(_coach.i+1); }
-function coachPrev(){ coachGo(Math.max(0,_coach.i-1)); }
 function startCoach(){ if(typeof closeOverlays==='function') closeOverlays(); $('welcomeOverlay').classList.remove('show'); $('playGuideOverlay').classList.remove('show');
-  _coach.on=true; _coach.i=0; _coach.await=null; _coach.lastTier=null;
-  document.body.classList.add('coach-active'); $('coachBar').classList.add('show'); coachRender();
+  _coach.on=true; _coach.used=true; _coach.await=null; _coach.lastTier=null;
+  document.body.classList.add('coach-active'); coachHideDot(); $('coachBar').classList.add('show'); coachSet('intro');
 }
-function coachEnd(){ _coach.on=false; _coach.await=null; coachSpotClear();
-  document.body.classList.remove('coach-active'); $('coachBar').classList.remove('show'); toast('Coach closed — reopen from ☰ → Play with me'); }
-function coachOnRoll(tier){ if(_coach.on && _coach.await==='roll'){ _coach.await=null; _coach.lastTier=tier; coachNext(); } }
+function coachClose(){ _coach.on=false; _coach.await=null; coachSpotClear();
+  document.body.classList.remove('coach-active'); $('coachBar').classList.remove('show'); coachShowDot(); }
+function coachResume(){
+  if(!_coach.used){ startCoach(); return; }
+  _coach.on=true; document.body.classList.add('coach-active'); coachHideDot(); $('coachBar').classList.add('show');
+  coachSet((_coach.state==='intro')?'intro':'hub');   // drop straight back into the live loop
+}
+function coachShowDot(){ const d=$('coachDot'); if(d && _coach.used) d.classList.add('show'); }
+function coachHideDot(){ const d=$('coachDot'); if(d) d.classList.remove('show'); }
+function coachOnRoll(tier){ if(_coach.on && _coach.await==='roll'){ _coach.await=null; _coach.lastTier=tier; coachSet('resolve'); } }
 
 applyTheme();
 loadAll();

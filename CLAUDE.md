@@ -48,13 +48,13 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,679 lines / ~726 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~3,692 lines / ~728 KB (includes the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v49` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v50` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -575,17 +575,21 @@ Makes the app usable by someone who has never read the rules or played a solo RP
 - **Point-of-use ⓘ jargon hints** (`.infodot`, `explain(k)`, `JARGON` dict) on the worst terms —
   Power, Might, Promise, Quintessences, Statuses, Fellowship — tap to toast a one-line plain
   explanation. No new per-hero state (`litm-seen` is app-level).
-- **"Play with me" coach** (`#coachBar`, `startCoach`/`coachRender`/`coachNext`/`coachEnd`,
-  `_coach` state) — the answer for "I won't read; just play." A fixed bottom bar that runs a
-  **real, guided session** step by step: on "Let's play" it **sets a game up for you**
-  (`coachSetup` — spins up Gerrin only if the hero is untouched, turns on Solo, frames a starter
-  Thornwood scene; all non-destructive) then coaches one action loop — meet hero → read the scene →
-  **ask the Oracle for you** (`coachAskYesNo`) → **take an action**, gated on your real dice roll
-  (`coachOnRoll`, hooked at the end of `rollDice`) → outcome-aware next step (win/mixed/lose branch)
-  → **another turn** (loops) or **wind down** → the three endings (scene / session-via-Camp /
-  story-via-Quest→MoF). Highlights the control to tap (`.coach-spot`), always offers **Skip**/Back so
-  it's never a dead end, and leaves a **live game in progress** on finish (keeps your hero). Launched
-  from the Welcome overlay's primary button, ☰ menu, and the beginner banner. No new localStorage key.
+- **"Play with me" coach** (`#coachBar` + `#coachDot`, `startCoach`/`coachSet`/`coachRenderState`/
+  `coachStates`/`coachClose`/`coachResume`, `_coach` state machine) — the answer for "I won't read;
+  just play." A fixed bottom bar that is a **persistent companion beside your real game — it never
+  steps aside.** On "Let's play" it **sets a game up for you** (`coachSetup` — spins up Gerrin only if
+  the hero is untouched, turns on Solo, frames a starter Thornwood scene; all non-destructive), walks
+  hero → scene, then drops into a **`hub` state that loops the play cycle forever**: your turn → *Ask
+  the Oracle* or *Take an action* (roll-gated via `coachOnRoll`, hooked at the end of `rollDice`) →
+  **outcome-aware `resolve`** (win/mixed/lose branch tells you the exact next tap) → **▶ Next turn**
+  back to the hub, indefinitely. Endings are an **opt-in `Wrap up` menu** (end scene / session-via-Camp
+  / story-via-Quest→MoF) that always returns to the hub — it does **not** terminate the coaching. Two
+  anti-stranding guarantees: gated steps always offer **Skip**, and closing the bar (✕) leaves a
+  floating **❓ What do I do now?** button (`#coachDot`) that re-opens the coach **straight back into
+  the live loop** (`coachResume` → `hub`, not the intro). Highlights the control to tap (`.coach-spot`).
+  Launched from the Welcome overlay's primary button, ☰ menu, and the beginner banner. No new
+  localStorage key.
 - **Run-a-game guide** (`#playGuideOverlay`, `openPlayGuide`/`closePlayGuide`) — a single plain,
   sequential walkthrough of the whole arc a newcomer was missing: **▶ Starting** (hero → solo →
   frame a scene → ask the Oracle), **🔁 Sustaining** (the action loop + the "end every journal note
