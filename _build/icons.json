@@ -1,0 +1,24 @@
+{
+  "_note": "Emoji -> inline SVG icon map. Lucide icons (ISC, _build/icons/LICENSE-lucide.txt) vendored in _build/icons/; 'orb' and 'antler' are hand-drawn; 'dot-*' are rulebook-colour tag dots. inject.py builds the <symbol> sprite + ICON_MAP from this.",
+  "map": {
+    "🎲": "dices", "👹": "skull", "🔮": "orb", "☰": "menu", "📖": "book-open", "🔥": "flame",
+    "🪵": "flame-kindling", "📜": "scroll-text", "✨": "sparkles", "🎯": "target", "❓": "circle-help",
+    "🎬": "clapperboard", "📦": "package", "📓": "notebook-pen", "🧍": "user", "⚔️": "swords", "⚔": "swords",
+    "🤝": "handshake", "🏕️": "tent", "🏕": "tent", "🧭": "compass", "🛡️": "shield", "🛡": "shield",
+    "⚠️": "triangle-alert", "⚠": "triangle-alert", "👥": "users", "⚖️": "scale", "⚖": "scale",
+    "♻️": "refresh-ccw", "♻": "refresh-ccw", "🔖": "bookmark", "⚅": "dice-6", "⚀": "dice-1",
+    "✍️": "pen-line", "✍": "pen-line", "🪶": "feather", "🎒": "backpack", "💞": "heart-handshake",
+    "⬆️": "arrow-up", "🔗": "link", "🌓": "sun-moon", "🗑️": "trash-2", "🗑": "trash-2", "👋": "hand",
+    "🔁": "repeat", "👆": "pointer", "⚙️": "settings", "⚙": "settings", "ℹ️": "info", "ⓘ": "info",
+    "📋": "clipboard-list", "💤": "moon", "🤔": "message-circle-question", "🌟": "star", "⚑": "flag",
+    "🔍": "search", "⚡": "zap", "🟡": "dot-power", "🟠": "dot-weak", "🟢": "dot-status"
+  },
+  "custom": {
+    "orb": "<circle cx=\"12\" cy=\"10\" r=\"7\"/><path d=\"M8 20h8M8.5 15.5 7 20M15.5 15.5 17 20\"/><path d=\"M9 8.5a3.5 3.5 0 0 1 3-2.5\"/>",
+    "antler": "<path d=\"M12 21v-8\"/><path d=\"M12 15c-2-2-3.2-3.6-3.5-6.5M10 13.5 7 12.8M9 11 6.5 9.6M8.5 8.5 7.6 5\"/><path d=\"M12 15c2-2 3.2-3.6 3.5-6.5M14 13.5l3-.7M15 11l2.5-1.4M15.5 8.5l.9-3.5\"/>",
+    "dot-power": "<circle cx=\"12\" cy=\"12\" r=\"7\" fill=\"var(--power)\" stroke=\"var(--power-ink)\" stroke-width=\"1.5\"/>",
+    "dot-weak": "<circle cx=\"12\" cy=\"12\" r=\"7\" fill=\"var(--weak)\" stroke=\"var(--weak-ink)\" stroke-width=\"1.5\"/>",
+    "dot-status": "<circle cx=\"12\" cy=\"12\" r=\"7\" fill=\"var(--status)\" stroke=\"var(--status-ink)\" stroke-width=\"1.5\"/>"
+  },
+  "extra": ["undo-2", "redo-2", "scroll", "trophy", "map", "x", "check"]
+}

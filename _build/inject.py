@@ -53,6 +53,24 @@ block='\n/* ===== Phase 2: creation data + wizard ===== */\n'+datajs+wiz+'\n'
 marker='// Service worker'
 assert marker in base
 out=base.replace(marker, block+'\n'+marker, 1)
+# ---- UI refresh: embedded display font + inline SVG icon sprite ----
+import base64, re
+fpath=os.path.join(B,'fonts','cinzel-sub.woff2')   # Cinzel (OFL, _build/fonts/OFL-Cinzel.txt), Latin subset, wght 600-700
+if '__CINZEL_WOFF2_B64__' in out:
+    out=out.replace('__CINZEL_WOFF2_B64__', base64.b64encode(open(fpath,'rb').read()).decode())
+icfg=json.load(open(os.path.join(B,'icons.json'),encoding='utf-8'))
+names=sorted(set(icfg['map'].values())|set(icfg['custom'].keys())|set(icfg.get('extra',[])))
+syms=[]
+for n in names:
+    if n in icfg['custom']: inner=icfg['custom'][n]
+    else:
+        svg=open(os.path.join(B,'icons',n+'.svg'),encoding='utf-8').read()
+        inner=re.sub(r'\s+',' ',svg[svg.index('>',svg.index('<svg'))+1:svg.rindex('</svg>')]).strip()
+    syms.append('<symbol id="i-'+n+'" viewBox="0 0 24 24">'+inner+'</symbol>')
+sprite=('<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">'
+        '<!-- Lucide icons (ISC) --><defs>'+''.join(syms)+'</defs></svg>')
+out=out.replace('<!--__ICON_SPRITE__-->', sprite, 1)
+out=out.replace('/*__ICON_MAP__*/', 'const ICON_MAP = '+json.dumps(icfg['map'],ensure_ascii=False)+';', 1)
 open(os.path.join(ROOT,'character-tracker.html'),'w',encoding='utf-8').write(out)
 open(os.path.join(ROOT,'index.html'),'w',encoding='utf-8').write(out)
 print('built character-tracker.html + index.html, bytes:', len(out))

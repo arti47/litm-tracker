@@ -12,7 +12,7 @@
 <title>Legend in the Mist — Hero Tracker</title>
 
 <!-- App icon (inline SVG → data URI, single-file friendly). Misty stag antlers over a forest. -->
-<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20180%20180%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233e7a6b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231c3f38%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22url%28%23b%29%22%2F%3E%3Cg%20stroke%3D%22%23eef3ec%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M90%20120%20V70%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C78%2074%2072%2066%2070%2050%20M78%2078%20L62%2074%20M74%2064%20L60%2058%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C102%2074%20108%2066%20110%2050%20M102%2078%20L118%2074%20M106%2064%20L120%2058%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%2290%22%20y%3D%22150%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23eef3ec%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%222%22%3ELITM%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20180%20180%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233e7a6b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231c3f38%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22url%28%23b%29%22%2F%3E%3Cg%20stroke%3D%22%23eef3ec%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M90%20120%20V70%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C78%2074%2072%2066%2070%2050%20M78%2078%20L62%2074%20M74%2064%20L60%2058%22%2F%3E%3Cpath%20d%3D%22M90%2086%20C102%2074%20108%2066%20110%2050%20M102%2078%20L118%2074%20M106%2064%20L120%2058%22%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%2290%22%20y%3D%22150%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23eef3ec%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%222%22%3ELITM%3C%2Ftext%3E%3C%2Fsvg%3E">
 
 <style>
@@ -449,18 +449,95 @@ body.coach-active { padding-bottom: 124px; }
 #tourCard .tour-cue { margin-top: 9px; background: var(--power); color: var(--power-ink); border-radius: 9px; padding: 7px 10px; font-weight: 700; font-size: 13px; }
 #tourCard .tour-foot { display: flex; align-items: center; gap: 8px; margin-top: 13px; }
 #tourCard .tour-foot button { padding: 8px 13px; font-size: 13px; border-radius: 10px; flex: 0 0 auto; }
+
+/* =====================================================================
+   UI REFRESH — Phase 1: tokens, display font, icons, a11y, tap targets
+   ===================================================================== */
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 600 700; font-display: swap;
+  src: url(data:font/woff2;base64,__CINZEL_WOFF2_B64__) format('woff2'); }
+:root {
+  --font-display: 'Cinzel', Georgia, 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --r-s: 6px; --r-m: 10px; --r-l: 14px; --r-xl: 18px;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --focus: #e0a526;
+  --mixed: #9a6a10; --mixed-bg: #fff5e0;
+  --burn: #e8821e;
+  --spot: #ffd76a;
+  --m-origin-bg: #d9e8e3; --m-origin-ink: #2e5d52;
+  --m-adv-bg: #ecdfbd; --m-adv-ink: #7a5a14;
+  --m-great-bg: #e8d6ec; --m-great-ink: #6a2e7a;
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+body.dark {
+  --focus: #f2c35b;
+  --mixed: #e7bd66; --mixed-bg: rgba(154,106,16,.22);
+  --m-origin-bg: rgba(95,163,146,.25); --m-origin-ink: #8fd0bf;
+  --m-adv-bg: rgba(201,160,70,.22); --m-adv-ink: #e8c77a;
+  --m-great-bg: rgba(170,110,190,.24); --m-great-ink: #d9a8e6;
+}
+html, body { font-family: var(--font-body); }
+h1, h2, h3, .hdr-title, .sheet h2, .tour-title, .special-pick .hd b, .outcome .big, .powerbig .n {
+  font-family: var(--font-display); letter-spacing: .02em; }
+.card > h2 { font-weight: 700; font-size: 18.5px; }
+.card > h3, label.fld > span { font-size: 12.5px; }
+.m-origin { background: var(--m-origin-bg); color: var(--m-origin-ink); }
+.m-adventure { background: var(--m-adv-bg); color: var(--m-adv-ink); }
+.m-greatness { background: var(--m-great-bg); color: var(--m-great-ink); }
+body.dark .m-origin { background: var(--m-origin-bg); color: var(--m-origin-ink); }
+.outcome.mixed { background: var(--mixed-bg); color: var(--mixed); }
+body.dark .outcome.mixed { background: var(--mixed-bg); color: var(--mixed); }
+.modchip.burning { box-shadow: 0 0 0 2px var(--burn); }
+.coach-spot { outline-color: var(--spot); }
+
+/* inline SVG icons (emoji are swapped for these at runtime — see iconize()) */
+.ico { width: 1.15em; height: 1.15em; vertical-align: -0.2em; flex: none; display: inline-block;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ico + .ico-sp { display: none; }
+h2 > .ico:first-child, .menu-item .ico:first-child, summary .ico:first-child { color: var(--teal); }
+.card > h2 > .ico:first-child { width: 1.05em; height: 1.05em; opacity: .9; }
+.hdr-btn .ico { width: 20px; height: 20px; vertical-align: middle; }
+.menu-item .em .ico { width: 22px; height: 22px; }
+.infodot .ico { width: 15px; height: 15px; vertical-align: -2px; }
+#coachBar .ico, .guide-phase .ico, .btn:not(.ghost) .ico { color: inherit; }
+
+/* keyboard focus (touch taps stay clean) */
+:focus { outline: none; }
+:focus-visible { outline: 2.5px solid var(--focus); outline-offset: 2px; border-radius: var(--r-s); }
+input:focus-visible, textarea:focus-visible, select:focus-visible { outline-offset: 0; }
+input[type=text]:focus, textarea:focus, select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(46,93,82,.18); }
+
+/* tap targets ≥44px without changing the visual grid: invisible hit-area halo */
+.pip, .sbox, .tagrow .ic, .special-item .ic, .infodot, .modchip .burn { position: relative; }
+.pip::after, .sbox::after, .tagrow .ic::after, .special-item .ic::after, .infodot::after, .modchip .burn::after {
+  content: ''; position: absolute; inset: -8px; }
+.sbox::after { inset: -6px -2px; }
+.pip { width: 26px; height: 26px; }
+.tagrow .ic { width: 36px; height: 36px; border-radius: var(--r-m); }
+.tagrow input { min-height: 36px; }
+.stepper button, .hdr-btn { min-width: 42px; min-height: 42px; }
+/* legibility floor */
+.mightbadge { font-size: 10.5px; }
+.track-lbl, .orc-l, .status-meta, .ag-lbl { font-size: 11.5px; }
+.hint, .muted { line-height: 1.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
+<!--__ICON_SPRITE__-->
 
 <header>
   <div class="hdr-top">
     <div class="hdr-title" id="hdrTitle">Legend in the Mist</div>
     <span class="save-dot" id="saveDot"></span>
-    <button class="hdr-btn" id="undoBtn" onclick="undo()" title="Undo" disabled>↶</button>
-    <button class="hdr-btn" id="redoBtn" onclick="redo()" title="Redo" disabled>↷</button>
-    <button class="hdr-btn" onclick="openRoster()" title="Heroes">👥</button>
-    <button class="hdr-btn" onclick="openMenu()" title="Menu">☰</button>
+    <button class="hdr-btn" id="undoBtn" onclick="undo()" title="Undo" aria-label="Undo" disabled><svg class="ico"><use href="#i-undo-2"/></svg></button>
+    <button class="hdr-btn" id="redoBtn" onclick="redo()" title="Redo" aria-label="Redo" disabled><svg class="ico"><use href="#i-redo-2"/></svg></button>
+    <button class="hdr-btn" onclick="openRoster()" title="Heroes" aria-label="Heroes">👥</button>
+    <button class="hdr-btn" onclick="openMenu()" title="Menu" aria-label="Menu">☰</button>
   </div>
   <nav id="nav">
     <button class="tab active" data-tab="hero" onclick="showTab('hero')">Hero</button>
@@ -2932,6 +3009,7 @@ function applyTheme(){
   if(t==='dark') document.body.classList.add('dark');
   else if(t==='light') document.body.classList.remove('dark');
   else if(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) document.body.classList.add('dark');
+  const tc=document.querySelector('meta[name=theme-color]'); if(tc) tc.setAttribute('content', document.body.classList.contains('dark')?'#1c3f38':'#2e5d52');
 }
 function toggleTheme(){
   const dark=!document.body.classList.contains('dark');
@@ -3070,11 +3148,52 @@ function coachShowDot(){ const d=$('coachDot'); if(d && _coach.used) d.classList
 function coachHideDot(){ const d=$('coachDot'); if(d) d.classList.remove('show'); }
 function coachOnRoll(tier){ if(_coach.on && _coach.await==='roll'){ _coach.await=null; _coach.lastTier=tier; coachSet('resolve'); } }
 
+// ============================================================
+//  UI REFRESH — emoji → inline SVG icons (consistent cross-platform, ink-line style)
+//  Swaps known emoji in rendered text nodes for <svg><use href="#i-…"></svg> from the
+//  injected sprite. Text content itself is unchanged; form fields/options/titles are skipped.
+// ============================================================
+/*__ICON_MAP__*/
+const ICON_RE = (()=>{ const ks=Object.keys(typeof ICON_MAP!=='undefined'?ICON_MAP:{}).sort((a,b)=>b.length-a.length)
+  .map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')); return ks.length? new RegExp('('+ks.join('|')+')️?','gu') : null; })();
+const ICON_SKIP = { SCRIPT:1, STYLE:1, TEXTAREA:1, OPTION:1, OPTGROUP:1, SELECT:1, INPUT:1, svg:1, title:1 };
+function icoSVG(name){ return '<svg class="ico i-'+name+'" aria-hidden="true"><use href="#i-'+name+'"/></svg>'; }
+function iconizeText(tn){
+  const t=tn.nodeValue; if(!ICON_RE || !t) return; ICON_RE.lastIndex=0; if(!ICON_RE.test(t)) return;
+  const p=tn.parentNode; if(!p || ICON_SKIP[p.nodeName] || (p.closest && p.closest('svg,textarea,select,[data-noicon]'))) return;
+  const frag=document.createDocumentFragment(); let last=0; ICON_RE.lastIndex=0; let m;
+  while((m=ICON_RE.exec(t))){
+    if(m.index>last) frag.appendChild(document.createTextNode(t.slice(last,m.index)));
+    const name=ICON_MAP[m[1]]; const span=document.createElement('span'); span.className='ico-w';
+    span.innerHTML=icoSVG(name); frag.appendChild(span.firstChild);
+    last=m.index+m[0].length;
+  }
+  if(last<t.length) frag.appendChild(document.createTextNode(t.slice(last)));
+  p.replaceChild(frag, tn);
+}
+function iconize(root){
+  if(!ICON_RE || !root) return;
+  if(root.nodeType===3){ iconizeText(root); return; }
+  if(root.nodeType!==1 || ICON_SKIP[root.nodeName]) return;
+  const w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const list=[]; let n;
+  while((n=w.nextNode())) list.push(n);
+  list.forEach(iconizeText);
+}
+function startIconizer(){
+  iconize(document.body);
+  if(!window.MutationObserver) return;
+  new MutationObserver(muts=>{ muts.forEach(m=>{
+    if(m.type==='characterData') iconizeText(m.target);
+    else m.addedNodes.forEach(iconize);
+  }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
+}
+
 applyTheme();
 loadAll();
 renderAll();
 applySolo();
 maybeWelcome();
+startIconizer();
 _lastSnap=_snap(); updateUndoUI();
 
 

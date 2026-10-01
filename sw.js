@@ -5,7 +5,7 @@
 //   • Updates do NOT auto-activate; the page may post SKIP_WAITING when ready.
 // Bump CACHE_VERSION on any deploy so old caches are garbage-collected on activate.
 
-const CACHE_VERSION = 'litm-v50';
+const CACHE_VERSION = 'litm-v51';
 const PRECACHE = [
   './',
   './index.html',
@@ -13,7 +13,10 @@ const PRECACHE = [
   './manifest.json',
   './icon.svg',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './icon-maskable-192.png',
+  './icon-maskable-512.png',
+  './apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {

@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v50` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v51` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -116,6 +116,13 @@ three sources in `_build/` and injected:
   Improvement), a backpack, and example actions. Parsed from the pack markdown by
   `_build/parse_premades.py`. Merged into `LITM_DATA.premades`; consumed by the wizard's
   **📦 Ready-made Hero** path (`renderPremade`/`commitPremade` in `wizard.js`).
+- `_build/fonts/cinzel-sub.woff2` — **Cinzel** display font (OFL, `_build/fonts/OFL-Cinzel.txt`), Latin subset,
+  wght 600–700 (~21 KB). `inject.py` base64-embeds it at the `__CINZEL_WOFF2_B64__` marker in `base.html`'s
+  `@font-face` (headings/titles only; body stays system sans). Offline-safe.
+- `_build/icons.json` + `_build/icons/*.svg` — the **inline SVG icon set** (vendored **Lucide** subset, ISC,
+  `_build/icons/LICENSE-lucide.txt`, plus hand-drawn `orb`/`antler` and rulebook-colour `dot-*`). `icons.json`
+  maps emoji → icon name; `inject.py` builds a `<symbol>` sprite at `<!--__ICON_SPRITE__-->` and emits
+  `const ICON_MAP` at `/*__ICON_MAP__*/`. Add an icon: drop the Lucide SVG in `_build/icons/`, map it in `icons.json`.
 - `_build/wizard.js` — the self-contained creation-wizard module (injects its own CSS/DOM,
   hooks the "New Hero" buttons).
 - `_build/parse_litm.py` — regenerates `litm-data.json` from the Core Book raw text (the
@@ -168,6 +175,8 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `manifest.json` — PWA manifest (`theme_color` `#2e5d52`, icons).
 - `sw.js` — service worker (`CACHE_VERSION`).
 - `icon.svg` + `icon-192.png` + `icon-512.png` — app icon (misty stag antlers + "LITM").
+- `apple-touch-icon.png` (180, full-bleed — iOS ignores SVG touch icons) + `icon-maskable-192/512.png`
+  (art scaled into the 80% safe zone) — referenced by `<link rel=apple-touch-icon>` / `manifest.json`, precached in `sw.js`.
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
   `litm-data.json`, `quintessences.json`, `specials-override.json`, `general-store.json`,
@@ -605,6 +614,19 @@ play** game-loop overview + a **❓ How to use this tab**), **Fellowship**, **Tr
 and **Oracle**. Each lists step-by-step bullets grouped under `.howto-body h4` sub-headings. Styling
 in the `.howto` CSS block (near `.ref-sec`); markup hand-written in `_build/base.html`. The 📖 Rules
 tab keeps the deep reference (searchable accordions); these are the quick per-screen primers.
+
+### UI refresh — rulebook-faithful look (2026-10-01) — *styling only, no content changes*
+Driven by a UX/UI audit; delivered in phases. Direction: **rulebook-faithful** (parchment, card-like themes,
+ink-line icons), auto light/dark.
+- **Phase 1 ✅ — tokens, font, icons, a11y.** Design tokens on `:root` (`--r-*` radius, `--sp-*` spacing,
+  `--font-display`/`--font-body`, `--focus`, `--mixed*`, `--burn`, `--spot`, `--m-*` Might-badge colours with
+  dark variants — replaces hard-coded `#fff5e0`/`#e8821e`/`#ffd76a`). **Cinzel** display font for headings,
+  header title, outcome + Power numerals. **Emoji → SVG icons** at runtime: `iconize`/`iconizeText`/
+  `startIconizer` (TreeWalker + `MutationObserver`) swap any `ICON_MAP` emoji in rendered text for
+  `<svg class="ico"><use href="#i-…">`; inputs/textarea/select/option/`[data-noicon]` are skipped and the
+  underlying text/data is untouched. `:focus-visible` outlines, `prefers-reduced-motion` kill-switch,
+  ≥44px **hit-area halos** (`::after{inset:-8px}`) on pips/status boxes/tag buttons/infodots without
+  changing the visual grid, small-text floor raised. `applyTheme` now also syncs `meta[name=theme-color]`.
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
