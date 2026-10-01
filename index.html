@@ -786,6 +786,81 @@ input:not([type]), input[type=search], input[type=number] { width: 100%; padding
 .addbtn { border-radius: var(--r-m); }
 .panel.active { animation: panelIn .22s ease; }
 @keyframes panelIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* =====================================================================
+   UI REFRESH — Round 1: grouped roll chips, crest, progress bars, tablet grid, night-ink dark
+   ===================================================================== */
+/* roll chips grouped by source; kind tint before selection */
+.rt-grp { margin: 4px 0 10px; padding: 8px 10px 4px; border-radius: var(--r-m); background: var(--bg-deep); border-left: 3px solid var(--mist); }
+.rt-grp.mt-origin { border-left-color: #5f9886; } .rt-grp.mt-adventure { border-left-color: #c39a3e; } .rt-grp.mt-greatness { border-left-color: #9a5fae; }
+.rt-h { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--ink-soft); margin-bottom: 6px; }
+.rt-h .ico { width: 14px; height: 14px; color: var(--teal); }
+.rt-h span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rt-h .rt-n { margin-left: auto; font-size: 10.5px; color: var(--teal); text-transform: none; letter-spacing: 0; white-space: nowrap; }
+.modchip.k-power:not(.help):not(.hind) { border-color: #e2c45c; }
+.modchip.k-weak:not(.help):not(.hind), .modchip.k-storyh:not(.help):not(.hind) { border-color: #e8a160; }
+.modchip.k-story:not(.help):not(.hind) { border-color: #e2c45c; border-style: dotted; }
+.modchip.k-status:not(.help):not(.hind) { border-color: #8cc07f; }
+body.dark .modchip.k-power:not(.help):not(.hind), body.dark .modchip.k-story:not(.help):not(.hind) { border-color: #9c8434; }
+body.dark .modchip.k-weak:not(.help):not(.hind), body.dark .modchip.k-storyh:not(.help):not(.hind) { border-color: #a5683a; }
+body.dark .modchip.k-status:not(.help):not(.hind) { border-color: #4e7a4a; }
+.modchip.help, .modchip.hind { box-shadow: 0 2px 6px -2px var(--shadow); }
+
+/* fellowship card headings match theme cards */
+.theme h3 { margin: 14px 0 6px; font-size: 12.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .5px; }
+
+/* crest */
+.hero-crest { order: 3; margin-left: auto; display: inline-flex; }
+.card > h2::after { order: 2; }
+.crest { flex: none; filter: drop-shadow(0 2px 3px rgba(0,0,0,.18)); }
+.roster-item button.pick { display: flex; align-items: center; gap: 10px; }
+.roster-item .rp-nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* progress tracks: one connected bar with a goal flag */
+.prog-card .boxes { gap: 0; border-radius: 8px; overflow: hidden; border: 1.5px solid var(--mist); }
+.prog-card .sbox { border: 0; border-right: 1px solid var(--border); border-radius: 0; width: 24px; background: var(--card-bg); }
+.prog-card .sbox:last-child { border-right: 0; }
+.prog-card .sbox.on { background: var(--teal-light) !important; color: #fff !important; }
+.prog-card .sbox.lim { border-style: solid; }
+.prog-card .sbox.lim::before { display: none; }
+.prog-card .sbox.lim::after { content: '⚑'; position: static; display: block; font-size: 11px; inset: auto; }
+.prog-card .sbox.lim { font-size: 0; }
+.prog-card { border-left-color: var(--teal-light); }
+.prog-card.done { box-shadow: 0 0 0 2px var(--teal-light); }
+
+/* sheet step headings + chevrons */
+.camp-h { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px; background: var(--bg-deep);
+  border-left: 3px solid var(--teal); }
+.ref-sec > h3::before, details.ag-sec > summary::before, .ag-entry summary::before, .ag-more > summary::before, .howto > summary::before {
+  content: ''; display: inline-block; width: 7px; height: 7px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal);
+  transform: rotate(-45deg); margin: 0 9px 1px 2px; transition: transform .18s var(--ease); vertical-align: middle; font-size: 0; }
+.ref-sec:not(.collapsed) > h3::before, details.ag-sec[open] > summary::before, .ag-entry[open] summary::before, .ag-more[open] > summary::before, .howto[open] > summary::before {
+  transform: rotate(45deg); content: ''; }
+.ref-sec.collapsed > h3::before { content: ''; }
+
+/* night-ink dark: noise + starfield fading down from the top */
+body.dark { background-image: radial-gradient(120% 60% at 50% -10%, var(--tint-top), transparent 70%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .75  0 0 0 0 .85  0 0 0 0 .8  0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(#n)' opacity='.07'/%3E%3C/svg%3E"); }
+body.dark::before { content: ''; position: fixed; left: 0; right: 0; top: 0; height: 45vh; z-index: -1; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260'%3E%3Ccircle cx='165' cy='77' r='1.3' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='37' cy='48' r='1' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='259' cy='109' r='0.6' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='222' cy='214' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='46' cy='217' r='0.6' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='114' cy='31' r='1.3' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='113' cy='23' r='0.8' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='214' cy='73' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='286' cy='92' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='190' cy='49' r='0.6' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='316' cy='105' r='1.3' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='397' cy='160' r='1.3' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='185' cy='153' r='0.8' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='357' cy='124' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='268' cy='253' r='1' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='147' cy='37' r='0.6' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='84' cy='175' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='215' cy='20' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='174' cy='179' r='1.3' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='35' cy='47' r='1' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='356' cy='33' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='331' cy='228' r='1' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='342' cy='177' r='0.6' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='181' cy='86' r='0.6' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='30' cy='111' r='1' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='378' cy='126' r='1.3' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='254' cy='41' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='205' cy='142' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='281' cy='142' r='1.3' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='349' cy='194' r='0.8' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='42' cy='90' r='0.8' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='337' cy='119' r='0.6' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='301' cy='93' r='1' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='2' cy='74' r='1.3' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='312' cy='163' r='0.8' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='233' cy='200' r='1.3' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='201' cy='53' r='1.3' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='31' cy='97' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='225' cy='83' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='307' cy='26' r='0.6' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='290' cy='77' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='314' cy='13' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='314' cy='192' r='0.8' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='177' cy='186' r='1.3' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='59' cy='249' r='1.3' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='247' cy='159' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='52' cy='175' r='1' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='354' cy='82' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='270' cy='185' r='0.8' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='388' cy='152' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='265' cy='187' r='0.8' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='395' cy='114' r='1' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='313' cy='99' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='378' cy='116' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='182' cy='14' r='0.6' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='241' cy='132' r='0.8' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='228' cy='178' r='1' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='112' cy='52' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='100' cy='172' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='319' cy='0' r='1.3' fill='%23dfe9e4' opacity='0.7'/%3E%3Ccircle cx='329' cy='43' r='0.6' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='400' cy='102' r='1.3' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='222' cy='170' r='0.6' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='237' cy='205' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='87' cy='65' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='302' cy='238' r='0.8' fill='%23dfe9e4' opacity='0.9'/%3E%3Ccircle cx='336' cy='179' r='0.8' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='10' cy='7' r='0.6' fill='%23dfe9e4' opacity='0.5'/%3E%3Ccircle cx='222' cy='99' r='0.8' fill='%23dfe9e4' opacity='0.35'/%3E%3Ccircle cx='128' cy='108' r='1' fill='%23dfe9e4' opacity='0.5'/%3E%3C/svg%3E") repeat-x top / 400px 260px;
+  -webkit-mask-image: linear-gradient(#000, transparent); mask-image: linear-gradient(#000, transparent); }
+
+/* tablet / landscape ≥900px: two columns where useful */
+@media (min-width: 900px) {
+  .panel { max-width: 1180px; padding-left: 20px; padding-right: 20px; }
+  #panel-hero.active, #panel-track.active, #panel-fellowship.active { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; align-items: start; }
+  #panel-hero > .newbie, #panel-hero > #themesWrap, #panel-hero > .card:last-child { grid-column: 1 / -1; }
+  #themesWrap { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; align-items: start; }
+  #themesWrap > .addbtn { grid-column: 1 / -1; justify-self: start; }
+  #panel-roll.active { display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: auto 1fr; column-gap: 16px; align-items: start; }
+  #panel-roll .rl-build { grid-column: 1; grid-row: 1 / span 2; }
+  #panel-roll .rl-dice { grid-column: 2; grid-row: 1; position: sticky; top: 76px; }
+  #panel-roll .rl-hist { grid-column: 2; grid-row: 2; }
+  .roll-dock { display: none; }
+  .sheet { max-width: 560px; }
+}
+.hdr-top { padding-bottom: 13px; }
+.save-dot { bottom: 1px; font-size: 9.5px; }
 </style>
 </head>
 <body>
@@ -861,7 +936,7 @@ input:not([type]), input[type=search], input[type=number] { width: 100%; padding
     </div>
   </details>
   <div class="card">
-    <h2>🪶 Hero Card</h2>
+    <h2>🪶 Hero Card <span id="heroCrest" class="hero-crest" aria-hidden="true"></span></h2>
     <div class="row">
       <label class="fld"><span>Player Name</span><input type="text" id="f_playerName"></label>
       <label class="fld"><span>Hero Name</span><input type="text" id="f_heroName"></label>
@@ -1014,7 +1089,7 @@ input:not([type]), input[type=search], input[type=number] { width: 100%; padding
       <p class="howto-note">Loaded a Grimoire action (📜 → 🎲 Use in a roll)? Its help/hinder suggestions and Success effects seed this tab.</p>
     </div>
   </details>
-  <div class="card">
+  <div class="card rl-build">
     <h2 id="rollHead">🎲 Roll an Action</h2>
     <div class="seg" id="modeSeg" style="margin-bottom:10px">
       <button data-mode="action" class="on">⚔️ Action</button>
@@ -1048,7 +1123,7 @@ input:not([type]), input[type=search], input[type=number] { width: 100%; padding
     <button class="addbtn" onclick="addHelp()">＋ add help</button>
   </div>
 
-  <div class="card">
+  <div class="card rl-dice">
     <div class="powerbig"><div class="n" id="powerNum">0</div><div class="l">Power <button type="button" class="infodot" onclick="explain('power')" title="What's this?">ⓘ</button></div></div>
     <div class="dice"><div class="die" id="die1" aria-label="die 1"></div><div class="die" id="die2" aria-label="die 2"></div></div>
     <button class="btn wide" id="rollBtn" style="font-size:17px;padding:14px" onclick="rollDice()">🎲 Roll 2d6 + Power</button>
@@ -1056,7 +1131,7 @@ input:not([type]), input[type=search], input[type=number] { width: 100%; padding
     <div id="spendBox"></div>
   </div>
 
-  <div class="card">
+  <div class="card rl-hist">
     <h2>📜 Roll History</h2>
     <div id="rollHist"></div>
   </div>
@@ -1973,6 +2048,7 @@ function renderMightRef(){
 function renderAll(){
   updateNewbieBanner();
   $('hdrTitle').textContent = S.heroName ? S.heroName : 'Legend in the Mist';
+  const hc=$('heroCrest'); if(hc) hc.innerHTML=heroCrestSVG(S,48);
   $('f_playerName').value = S.playerName;
   $('f_heroName').value   = S.heroName;
   $('f_quintessences').value = S.quintessences;
@@ -2281,7 +2357,7 @@ function renderProgress(){
   if(!S.progress.length){ w.innerHTML=emptyHTML('target','No progress tracks yet.'); }
   S.progress.forEach((pr,i)=>{
     const max=Math.min(10,Math.max(2,pr.max||4)); const cur=Math.min(max,Math.max(0,pr.cur||0));
-    const card=document.createElement('div'); card.className='status-card';
+    const card=document.createElement('div'); card.className='status-card prog-card'+(cur>=max?' done':'');
     const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='goal (e.g. making-progress, catch)'; nm.value=pr.name||''; nm.oninput=()=>{ pr.name=nm.value; save(); };
     const boxes=document.createElement('div'); boxes.className='boxes';
     for(let t=1;t<=max;t++){ const b=document.createElement('button'); b.className='sbox'+(t<=cur?' on':'')+(t===max?' lim':'');
@@ -2805,20 +2881,22 @@ function renderMoF(){
 function availableTags(){
   // Returns [{id,label,kind,base,status?,tier?}]
   const out=[];
-  S.themes.forEach(th=>{
-    if(th.title.trim() && !th._titleScr) out.push({id:'tt_'+th.id,label:th.title,kind:'power',base:1});
-    th.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1}); });
-    th.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1}); });
+  S.themes.forEach((th,ti)=>{
+    const grp='th'+ti, gl=(th.title||'').trim()||th.type, gm=MIGHT_OF[th.type]||'any';
+    if(th.title.trim() && !th._titleScr) out.push({id:'tt_'+th.id,label:th.title,kind:'power',base:1,grp,gl,gm,gi:'feather'});
+    th.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1,grp,gl,gm,gi:'feather'}); });
+    th.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1,grp,gl,gm,gi:'feather'}); });
   });
+  const FG={grp:'fel',gl:'Fellowship',gi:'handshake'}, BG={grp:'bp',gl:'Backpack',gi:'backpack'}, SG={grp:'sc',gl:'Scene',gi:'clapperboard'}, TG={grp:'st',gl:'Statuses',gi:'shield'};
   // fellowship
-  if(S.fellowship.title.trim()) out.push({id:'ft_'+S.fellowship.id,label:S.fellowship.title,kind:'power',base:1});
-  S.fellowship.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1}); });
-  S.fellowship.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1}); });
+  if(S.fellowship.title.trim()) out.push({id:'ft_'+S.fellowship.id,label:S.fellowship.title,kind:'power',base:1,...FG});
+  S.fellowship.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1,...FG}); });
+  S.fellowship.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1,...FG}); });
   // backpack + scene story tags
-  S.backpack.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1}); });
-  S.scene.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1}); });
+  S.backpack.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1,...BG}); });
+  S.scene.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1,...SG}); });
   // statuses (your own + foes'; foe ones are marked and only count when tapped)
-  S.statuses.forEach(st=>{ const tier=st.boxes.lastIndexOf(true)+1; if(st.name.trim() && tier>0) out.push({id:st.id,label:st.name,kind:'status',tier,foe:(st.owner||'me')==='foe',target:(st.target||'').trim()}); });
+  S.statuses.forEach(st=>{ const tier=st.boxes.lastIndexOf(true)+1; if(st.name.trim() && tier>0) out.push({id:st.id,label:st.name,kind:'status',tier,foe:(st.owner||'me')==='foe',target:(st.target||'').trim(),...TG}); });
   return out;
 }
 
@@ -2848,11 +2926,17 @@ function renderRoller(){
   const w=$('rollTags'); w.innerHTML='';
   const tags=availableTags();
   if(!tags.length){ w.innerHTML='<p class="muted">Add tags on the Hero tab and they\'ll appear here.</p>'; computePower(); return; }
-  const tagDiv=document.createElement('div');
+  const tagDiv=document.createElement('div'); tagDiv.className='rt-wrap';
+  const groups={};
   tags.forEach(t=>{
-    const sel=rollMods[t.id];
+    const gk=t.grp||'x';
+    if(!groups[gk]){ const g=document.createElement('div'); g.className='rt-grp'+(t.gm?' mt-'+t.gm:'');
+      g.innerHTML='<div class="rt-h">'+icoSVG(t.gi||'feather')+'<span>'+esc(t.gl||'')+'</span><b class="rt-n"></b></div><div class="rt-chips"></div>';
+      tagDiv.appendChild(g); groups[gk]={el:g.querySelector('.rt-chips'), n:0, hdr:g.querySelector('.rt-n')}; }
+    const G=groups[gk];
+    const sel=rollMods[t.id]; if(sel){ G.n++; G.hdr.textContent=G.n+' invoked'; }
     const chip=document.createElement('span');
-    chip.className='modchip'+(sel==='help'?' help':'')+(sel==='hind'?' hind':'')+(t.kind==='status'?' stat':'')+(t.foe?' foe':'')+(burnId===t.id?' burning':'');
+    chip.className='modchip k-'+(t.kind==='story'&&t.base<0?'storyh':t.kind)+(sel==='help'?' help':'')+(sel==='hind'?' hind':'')+(t.kind==='status'?' stat':'')+(t.foe?' foe':'')+(burnId===t.id?' burning':'');
     let val='';
     if(t.kind==='status'){ val = sel==='help'?'+'+t.tier : sel==='hind'?'−'+t.tier : '±'+t.tier; }
     else { val = sel==='help'?(burnId===t.id?'+3':'+1') : sel==='hind'?'−1':(t.base>0?'+1':'−1'); }
@@ -2867,7 +2951,7 @@ function renderRoller(){
       fl.onclick=(e)=>{ e.stopPropagation(); burnId = burnId===t.id?null:t.id; renderRoller(); };
       chip.appendChild(fl);
     }
-    tagDiv.appendChild(chip);
+    G.el.appendChild(chip);
   });
   w.appendChild(tagDiv);
   computePower();
@@ -3249,7 +3333,7 @@ function renderRoster(){
   roster.forEach(h=>{
     const row=document.createElement('div'); row.className='roster-item';
     const pick=document.createElement('button'); pick.className='pick'+(h.id===activeId?' active':'');
-    pick.innerHTML=(esc(h.heroName)||'<i>Unnamed Hero</i>')+(h.playerName?' <span class="muted">· '+esc(h.playerName)+'</span>':'');
+    pick.innerHTML=heroCrestSVG(h,30)+'<span class="rp-nm">'+(esc(h.heroName)||'<i>Unnamed Hero</i>')+(h.playerName?' <span class="muted">· '+esc(h.playerName)+'</span>':'')+'</span>';
     pick.onclick=()=>{ switchHero(h.id); };
     row.appendChild(pick);
     if(roster.length>1){ const d=document.createElement('button'); d.className='ic'; d.style.cssText='width:38px;height:38px;border:1px solid var(--border);border-radius:9px;background:var(--bg-deep)'; d.textContent='🗑'; d.onclick=(e)=>{ e.stopPropagation(); if(confirm('Delete '+(h.heroName||'this hero')+'?')) delHeroById(h.id); }; row.appendChild(d); }
@@ -3491,6 +3575,18 @@ function startIconizer(){
     else m.addedNodes.forEach(iconize);
   }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
+
+// ----- UI refresh R1: generated hero crest (initials on a shield, tinted by dominant theme Might) -----
+const CREST_COL={origin:['#2e5d52','#5f9886'],adventure:['#8a6418','#c39a3e'],greatness:['#5d2f70','#9a5fae'],any:['#4a5b54','#7fa99b']};
+function heroMight(h){ const c={origin:0,adventure:0,greatness:0}; (h.themes||[]).forEach(t=>{ const m=MIGHT_OF[t.type]; if(m in c) c[m]++; });
+  const order=['greatness','adventure','origin']; let best='any', n=0; order.forEach(k=>{ if(c[k]>n){ best=k; n=c[k]; } }); return best; }
+function heroInitials(h){ const w=(h.heroName||'').trim().split(/\s+/).filter(x=>/^[A-Za-z0-9]/.test(x)); if(!w.length) return '?';
+  return (w[0][0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase(); }
+function heroCrestSVG(h,size){ const m=heroMight(h), [c1,c2]=CREST_COL[m], ini=heroInitials(h), gid='cg'+Math.random().toString(36).slice(2,7);
+  return '<svg class="crest" width="'+size+'" height="'+size+'" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c2+'"/><stop offset="1" stop-color="'+c1+'"/></linearGradient></defs>'
+   +'<path d="M24 3 41 9v13c0 11-7.5 19-17 23C14.5 41 7 33 7 22V9z" fill="url(#'+gid+')" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>'
+   +'<path d="M24 7 37.5 11.8V22c0 8.8-5.8 15.3-13.5 18.8C16.3 37.3 10.5 30.8 10.5 22V11.8z" fill="none" stroke="rgba(255,255,255,.35)" stroke-width=".9"/>'
+   +'<text x="24" y="'+(ini.length>1?28.5:29.5)+'" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-weight="700" font-size="'+(ini.length>1?14:16)+'" fill="#fffcf2">'+esc(ini)+'</text></svg>'; }
 
 // ----- UI refresh P4: illustrated empty states + swipe-down-to-close sheets -----
 function emptyHTML(icon, text){ return '<div class="empty-state"><span class="es-ic">'+icoSVG(icon)+'</span><p class="muted">'+text+'</p></div>'; }

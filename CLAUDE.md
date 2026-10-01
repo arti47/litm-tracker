@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v54` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v55` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -660,6 +660,17 @@ ink-line icons), auto light/dark.
   centred dialogs ≥600px. Menu icons sit in tiles; toast slides with a shadow; buttons/chips press-scale; panels
   fade in on tab switch. Wizard headings use the display font. Untyped `<input>`s (e.g. Oracle question) now get the
   standard field styling.
+
+- **Audit R1 ✅ —** **Roll chips grouped by source** (`availableTags` now tags each entry with `grp`/`gl`/`gm`/`gi`:
+  one group per theme (Might-coloured edge), Fellowship, Backpack, Scene, Statuses; header shows "N invoked") and
+  **kind-tinted outlines** before selection (`.k-power|k-weak|k-story|k-storyh|k-status`). **Generated hero crest**
+  (`heroCrestSVG`/`heroMight`/`heroInitials`/`CREST_COL`): initials on an SVG shield tinted by the dominant theme Might,
+  shown in the Hero Card heading (`#heroCrest`) and roster rows — derived, no new state. **Progress tracks** render as
+  one connected bar with a ⚑ goal box (`.prog-card`, `.done` ring). Fellowship card h3s match theme cards. Camp step
+  headings are accent pills; all accordions use a rotating CSS chevron. **Night-ink dark mode**: light-on-dark paper
+  noise + a seeded SVG **starfield** (`body.dark::before`, masked fade). **≥900px tablet grid**: Hero (Hero Card |
+  Backpack, themes 2-up), Tracking & Fellowship 2-up, Roll = tag builder left / sticky Power+dice + history right
+  (`.rl-build`/`.rl-dice`/`.rl-hist`), dock hidden; sheets 560px.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
