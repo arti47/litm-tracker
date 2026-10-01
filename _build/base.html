@@ -525,6 +525,114 @@ input[type=text]:focus, textarea:focus, select:focus { border-color: var(--teal)
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
     transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
+
+/* =====================================================================
+   UI REFRESH — Phase 2: header, bottom nav, help sheet, collapsible themes, roll dock + FAB
+   ===================================================================== */
+:root { --nav-h: 62px; --hdr-bg: linear-gradient(180deg, #33675b 0%, #2a5a4f 55%, #24503f 100%); }
+body.dark { --hdr-bg: linear-gradient(180deg, #1d3a33 0%, #17302a 100%); }
+header { background: var(--hdr-bg); padding-bottom: 0; }
+.hdr-top { padding-bottom: 10px; gap: 8px; }
+.hdr-emblem { width: 26px; height: 26px; flex: none; fill: none; stroke: #eaf2ec; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+.hdr-title { font-size: 15.5px; letter-spacing: .04em; }
+.hdr-btn { width: 40px; height: 40px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; }
+.hdr-btn .ico { width: 19px; height: 19px; }
+@media (max-width: 380px) { .hdr-btn { width: 36px; min-width: 36px; } .hdr-top { gap: 5px; } }
+
+/* bottom tab bar (thumb reach) */
+#nav.bottomnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; justify-content: center;
+  gap: 2px; overflow: visible; padding: 5px 6px calc(var(--safe-bot) + 5px);
+  background: var(--card-bg); border-top: 1px solid var(--border); box-shadow: 0 -4px 18px var(--shadow); }
+#nav .tab { flex: 1 1 0; max-width: 120px; min-width: 0; display: flex; flex-direction: column; align-items: center;
+  gap: 2px; padding: 4px 2px 3px; border-radius: var(--r-m); background: transparent; color: var(--ink-soft);
+  font-size: 10.5px; font-weight: 700; letter-spacing: .01em; white-space: nowrap; }
+#nav .tab .tab-ic { display: flex; align-items: center; justify-content: center; width: 52px; height: 30px;
+  border-radius: 15px; transition: background .2s var(--ease), color .2s var(--ease); }
+#nav .tab .ico { width: 22px; height: 22px; }
+#nav .tab.active { color: var(--teal); background: transparent; }
+#nav .tab.active .tab-ic { background: var(--m-origin-bg); color: var(--teal); }
+body.dark #nav .tab.active, body.dark #nav .tab.active .tab-ic { color: var(--teal-dark); }
+#nav .tab .tab-lb { overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.panel { padding-bottom: calc(var(--safe-bot) + var(--nav-h) + 90px); }
+.toast { bottom: calc(var(--safe-bot) + var(--nav-h) + 14px); }
+.update-banner { bottom: calc(var(--safe-bot) + var(--nav-h) + 14px); }
+#coachBar { bottom: calc(var(--safe-bot) + var(--nav-h)); padding-bottom: 11px; border-radius: var(--r-l) var(--r-l) 0 0; }
+body.coach-active { padding-bottom: 0; }
+body.coach-active .panel { padding-bottom: calc(var(--safe-bot) + var(--nav-h) + 190px); }
+#coachDot { right: auto; left: 12px; bottom: calc(var(--safe-bot) + var(--nav-h) + 14px); }
+
+/* per-tab help lives in a sheet now (❓ in the header); inline accordions hidden */
+.panel > details.howto { display: none; }
+#helpBody .help-sec + .help-sec { border-top: 1px solid var(--border); margin-top: 6px; }
+#helpBody .help-h { font-size: 15px; color: var(--teal); margin: 14px 0 4px; display: flex; align-items: center; gap: 7px; }
+#helpBody .howto-body h4 { margin: 12px 0 4px; font-size: 13px; color: var(--teal-light); }
+#helpBody .howto-body ul, #helpBody .howto-body ol { margin: 4px 0; padding-left: 20px; }
+#helpBody .howto-body li { font-size: 14px; line-height: 1.55; margin: 4px 0; }
+#helpBody .howto-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+
+/* theme cards: Might-coloured band + collapsible summary */
+.card.theme { border-left: 1px solid var(--border); border-top: 5px solid var(--mist); padding-top: 10px; }
+.card.theme.mt-origin { border-top-color: #5f9886; }
+.card.theme.mt-adventure { border-top-color: #c39a3e; }
+.card.theme.mt-greatness { border-top-color: #9a5fae; }
+.card.theme.mt-any { border-top-color: var(--mist); }
+.theme-sum { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: transparent;
+  border: 0; padding: 4px 0 8px; color: var(--ink); }
+.theme-sum .ts-chev { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--bg-deep);
+  display: flex; align-items: center; justify-content: center; color: var(--teal); transition: transform .2s var(--ease); }
+.theme-sum .ts-chev .ico { width: 15px; height: 15px; }
+.card.theme.collapsed .theme-sum .ts-chev { transform: rotate(180deg); }
+.theme-sum .ts-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.theme-sum .ts-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--teal);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.theme-sum .ts-title i { font-style: normal; opacity: .55; }
+.theme-sum .ts-meta { font-size: 12px; color: var(--ink-soft); }
+.theme-sum .ts-side { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.theme-sum .ts-trks { display: flex; gap: 7px; }
+.theme-sum .ts-trk { display: inline-flex; align-items: center; gap: 2px; }
+.theme-sum .ts-trk i { font-style: normal; font-size: 9.5px; font-weight: 800; color: var(--ink-soft); margin-right: 1px; }
+.theme-sum .ts-trk b { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--mist); }
+.theme-sum .ts-trk b.on { background: var(--teal); border-color: var(--teal); }
+.card.theme:not(.collapsed) .theme-sum { border-bottom: 1px dashed var(--border); margin-bottom: 10px; }
+.card.theme:not(.collapsed) .theme-sum .ts-meta, .card.theme:not(.collapsed) .theme-sum .ts-side { display: none; }
+.hdr-pair { display: inline-flex; flex: none; background: rgba(255,255,255,0.12); border-radius: 11px; }
+.hdr-pair .hdr-btn { background: transparent; width: 34px; min-width: 34px; }
+.hdr-title { font-size: 14.5px; letter-spacing: .01em; white-space: normal; line-height: 1.15;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+.hdr-top .hdr-btn:not(.hdr-pair .hdr-btn) { width: 38px; min-width: 38px; }
+.roll-fab { transition: transform .22s var(--ease), opacity .22s; }
+.hdr-top { position: relative; }
+.save-dot { position: absolute; left: 36px; bottom: 0; font-size: 10px; margin: 0; pointer-events: none; }
+#tourCard .tour-title { font-family: var(--font-display); }
+body.coach-active .toast { bottom: calc(var(--safe-bot) + var(--nav-h) + 170px); }
+.roll-fab.away { transform: translateY(90px); opacity: 0; pointer-events: none; }
+.card.theme.collapsed { padding-bottom: 6px; }
+.card.theme.collapsed > *:not(.theme-sum) { display: none !important; }
+.card.theme.collapsed .theme-sum { padding-bottom: 4px; }
+.theme .theme-hd { flex-wrap: wrap; }
+.theme .theme-hd .title-in { flex: 1 1 100%; order: -1; }
+.theme .theme-hd select { flex: 1 1 auto; width: auto; font-size: 13px; padding: 7px 8px; }
+.btn-remove { color: var(--bad) !important; border-color: transparent !important; background: transparent !important; float: right; }
+
+/* sticky roll dock (Roll tab, when the main button scrolls away) + floating Roll button elsewhere */
+.roll-dock { position: fixed; left: 50%; transform: translate(-50%, 140%); bottom: calc(var(--safe-bot) + var(--nav-h) + 10px);
+  z-index: 55; width: min(560px, calc(100% - 24px)); display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px;
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 8px 26px var(--shadow);
+  transition: transform .25s var(--ease), opacity .25s; opacity: 0; pointer-events: none; }
+.roll-dock.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+.roll-dock .rd-pow { display: flex; flex-direction: column; align-items: center; line-height: 1; min-width: 46px; }
+.roll-dock .rd-l { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.roll-dock b { font-family: var(--font-display); font-size: 24px; color: var(--teal); }
+.roll-dock b.pos { color: var(--good); } .roll-dock b.neg { color: var(--bad); }
+.roll-dock .btn { flex: 1; padding: 12px; font-size: 15px; border-radius: 12px; }
+.roll-fab { position: fixed; right: 14px; bottom: calc(var(--safe-bot) + var(--nav-h) + 14px); z-index: 55;
+  width: 54px; height: 54px; border-radius: 18px; border: 0; display: none; align-items: center; justify-content: center;
+  background: var(--teal); color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.28); font-size: 22px; }
+.roll-fab .ico { width: 26px; height: 26px; }
+.roll-fab:active { transform: scale(.94); }
+body[data-tab=hero] .roll-fab, body[data-tab=fellowship] .roll-fab, body[data-tab=track] .roll-fab { display: flex; }
+body.coach-active .roll-fab { display: none !important; }
 </style>
 </head>
 <body>
@@ -532,21 +640,15 @@ input[type=text]:focus, textarea:focus, select:focus { border-color: var(--teal)
 
 <header>
   <div class="hdr-top">
+    <svg class="hdr-emblem" aria-hidden="true"><use href="#i-antler"/></svg>
     <div class="hdr-title" id="hdrTitle">Legend in the Mist</div>
     <span class="save-dot" id="saveDot"></span>
-    <button class="hdr-btn" id="undoBtn" onclick="undo()" title="Undo" aria-label="Undo" disabled><svg class="ico"><use href="#i-undo-2"/></svg></button>
-    <button class="hdr-btn" id="redoBtn" onclick="redo()" title="Redo" aria-label="Redo" disabled><svg class="ico"><use href="#i-redo-2"/></svg></button>
+    <span class="hdr-pair"><button class="hdr-btn" id="undoBtn" onclick="undo()" title="Undo" aria-label="Undo" disabled><svg class="ico"><use href="#i-undo-2"/></svg></button>
+    <button class="hdr-btn" id="redoBtn" onclick="redo()" title="Redo" aria-label="Redo" disabled><svg class="ico"><use href="#i-redo-2"/></svg></button></span>
+    <button class="hdr-btn" id="helpBtn" onclick="openHelp()" title="How to use this tab" aria-label="Help">❓</button>
     <button class="hdr-btn" onclick="openRoster()" title="Heroes" aria-label="Heroes">👥</button>
     <button class="hdr-btn" onclick="openMenu()" title="Menu" aria-label="Menu">☰</button>
   </div>
-  <nav id="nav">
-    <button class="tab active" data-tab="hero" onclick="showTab('hero')">Hero</button>
-    <button class="tab" data-tab="fellowship" onclick="showTab('fellowship')">Fellowship</button>
-    <button class="tab" data-tab="track" onclick="showTab('track')">Tracking</button>
-    <button class="tab" data-tab="roll" onclick="showTab('roll')">Roll</button>
-    <button class="tab" data-tab="ref" onclick="showTab('ref')">Rules</button>
-    <button class="tab" data-tab="oracle" id="oracleTab" onclick="showTab('oracle')" style="display:none">🔮 Oracle</button>
-  </nav>
 </header>
 
 <!-- HERO -->
@@ -1134,6 +1236,26 @@ input[type=text]:focus, textarea:focus, select:focus { border-color: var(--teal)
   </div>
 </div>
 
+<nav id="nav" class="bottomnav" aria-label="Sections">
+  <button class="tab active" data-tab="hero" onclick="showTab('hero')"><span class="tab-ic"><svg class="ico"><use href="#i-feather"/></svg></span><span class="tab-lb">Hero</span></button>
+  <button class="tab" data-tab="fellowship" onclick="showTab('fellowship')"><span class="tab-ic"><svg class="ico"><use href="#i-handshake"/></svg></span><span class="tab-lb">Fellowship</span></button>
+  <button class="tab" data-tab="track" onclick="showTab('track')"><span class="tab-ic"><svg class="ico"><use href="#i-target"/></svg></span><span class="tab-lb">Tracking</span></button>
+  <button class="tab" data-tab="roll" onclick="showTab('roll')"><span class="tab-ic"><svg class="ico"><use href="#i-dices"/></svg></span><span class="tab-lb">Roll</span></button>
+  <button class="tab" data-tab="ref" onclick="showTab('ref')"><span class="tab-ic"><svg class="ico"><use href="#i-book-open"/></svg></span><span class="tab-lb">Rules</span></button>
+  <button class="tab" data-tab="oracle" onclick="showTab('oracle')" id="oracleTab" style="display:none"><span class="tab-ic"><svg class="ico"><use href="#i-orb"/></svg></span><span class="tab-lb">Oracle</span></button>
+</nav>
+<div id="rollDock" class="roll-dock" aria-hidden="true">
+  <div class="rd-pow"><span class="rd-l">Power</span><b id="dockPow">0</b></div>
+  <button class="btn" onclick="dockRoll()">🎲 Roll 2d6 + Power</button>
+</div>
+<button id="rollFab" class="roll-fab" onclick="showTab('roll')" title="Roll" aria-label="Go to Roll">🎲</button>
+<div class="overlay" id="helpOverlay" onclick="if(event.target===this)closeHelp()">
+  <div class="sheet">
+    <h2 id="helpTitle">❓ How to use this tab</h2>
+    <div id="helpBody"></div>
+    <button class="btn wide" style="margin-top:14px" onclick="closeHelp()">Got it</button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <!-- "Play with me" coach bar + always-there re-summon button -->
@@ -1320,7 +1442,9 @@ function showTab(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
   $('panel-'+name).classList.add('active');
+  document.body.dataset.tab=name;
   window.scrollTo(0,0);
+  uiTabChanged(name);
   if (name==='roll') renderRoller();
   if (name==='ref') renderRefData();
   if (name==='oracle') renderOracle();
@@ -1767,8 +1891,26 @@ function renderThemes(){
   wrap.appendChild(add);
 }
 
+const _themeOpen={};   // transient: theme id -> expanded? (first theme open by default)
+function themeIsOpen(th, idx){ return (th.id in _themeOpen) ? _themeOpen[th.id] : idx===0; }
+function themeSummary(th, idx, card){
+  const m=MIGHT_OF[th.type]||'any';
+  const sm=document.createElement('button'); sm.type='button'; sm.className='theme-sum';
+  sm.setAttribute('aria-expanded', String(!card.classList.contains('collapsed')));
+  const pw=th.power.filter(t=>(t.text||'').trim()).length, wk=th.weak.filter(t=>(t.text||'').trim()).length;
+  const trk=['improve','abandon','milestone'].map(k=>'<span class="ts-trk" title="'+k+'"><i>'+k[0].toUpperCase()+'</i>'
+    +[1,2,3].map(i=>'<b class="'+(i<=th[k]?'on':'')+'"></b>').join('')+'</span>').join('');
+  sm.innerHTML='<span class="ts-chev"><svg class="ico"><use href="#i-arrow-up"/></svg></span>'
+    +'<span class="ts-main"><span class="ts-title">'+(esc(th.title)||'<i>Untitled theme</i>')+'</span>'
+    +'<span class="ts-meta">'+esc(th.type)+' · '+pw+' power · '+wk+' weak</span></span>'
+    +'<span class="ts-side"><span class="mightbadge m-'+m+'">'+({origin:'Origin',adventure:'Adventure',greatness:'Greatness',any:'Any'})[m]+'</span>'
+    +'<span class="ts-trks">'+trk+'</span></span>';
+  sm.onclick=()=>{ _themeOpen[th.id]=card.classList.contains('collapsed'); renderThemes(); };
+  return sm;
+}
 function themeCard(th, idx, isFellowship){
-  const card=document.createElement('div'); card.className='card theme';
+  const card=document.createElement('div'); card.className='card theme mt-'+(MIGHT_OF[th.type]||'any');
+  if(!isFellowship){ if(!themeIsOpen(th, idx)) card.classList.add('collapsed'); card.appendChild(themeSummary(th, idx, card)); }
   // header
   const hd=document.createElement('div'); hd.className='theme-hd';
   const sel=document.createElement('select');
@@ -1777,10 +1919,11 @@ function themeCard(th, idx, isFellowship){
     THEME_TYPES[grp].forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; if(t===th.type)o.selected=true; og.appendChild(o); });
     sel.appendChild(og);
   }
-  sel.onchange=()=>{ th.type=sel.value; badge.className='mightbadge '+mc(th.type); badge.textContent=mtxt(th.type); save(); };
+  sel.onchange=()=>{ th.type=sel.value; badge.className='mightbadge '+mc(th.type); badge.textContent=mtxt(th.type);
+    card.className=card.className.replace(/\bmt-\w+/,'mt-'+(MIGHT_OF[th.type]||'any')); save(); };
   const title=document.createElement('input'); title.type='text'; title.className='title-in power';
   title.placeholder = isFellowship?'Fellowship title tag…':'Theme title (main power tag)…';
-  title.value=th.title; title.oninput=()=>{ th.title=title.value; save(); };
+  title.value=th.title; title.oninput=()=>{ th.title=title.value; const tt=card.querySelector('.ts-title'); if(tt) tt.textContent=th.title||'Untitled theme'; save(); };
   const mc=t=>'m-'+(MIGHT_OF[t]||'any');
   const mtxt=t=>({origin:'Origin',adventure:'Adventure',greatness:'Greatness',any:'Any'})[MIGHT_OF[t]||'any'];
   const badge=document.createElement('span'); badge.className='mightbadge '+mc(th.type); badge.textContent=mtxt(th.type);
@@ -1859,8 +2002,8 @@ function themeCard(th, idx, isFellowship){
   st.oninput=()=>{ th.special=st.value; save(); }; sl.appendChild(st); card.appendChild(sl);
 
   if(!isFellowship){
-    const del=document.createElement('button'); del.className='btn ghost sm'; del.style.marginTop='4px';
-    del.textContent='Remove this theme'; del.onclick=()=>{ if(confirm('Remove this theme?')){ S.themes.splice(idx,1); renderThemes(); save(); } };
+    const del=document.createElement('button'); del.className='btn ghost sm btn-remove'; del.style.marginTop='4px';
+    del.textContent='🗑 Remove this theme'; del.onclick=()=>{ if(confirm('Remove this theme?')){ S.themes.splice(idx,1); renderThemes(); save(); } };
     card.appendChild(del);
   }
 
@@ -2605,6 +2748,7 @@ function computePower(){
   p += hiHelp - hiHind + might + sit;
   $('powerNum').textContent=p;
   $('powerNum')._val=p;
+  const dp=$('dockPow'); if(dp){ dp.textContent=(p>0?'+':'')+p; dp.className=p>0?'pos':p<0?'neg':''; }
   $('powerNum')._weak=invokedWeak;
   return p;
 }
@@ -3188,12 +3332,54 @@ function startIconizer(){
   }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 
+// ----- UI refresh P2: help sheet, roll dock, floating Roll button -----
+function panelHowtos(name){ const p=$('panel-'+(name||document.body.dataset.tab||'hero')); return p? [...p.querySelectorAll(':scope > details.howto')] : []; }
+function uiTabChanged(name){
+  const hb=$('helpBtn'); if(hb) hb.style.visibility=panelHowtos(name).length?'':'hidden';
+  updateRollDock();
+}
+function openHelp(){
+  const hs=panelHowtos(); if(!hs.length) return;
+  const b=$('helpBody'); b.innerHTML='';
+  hs.forEach((d,i)=>{
+    const sec=document.createElement('section'); sec.className='help-sec';
+    const h=document.createElement('h3'); h.className='help-h'; h.innerHTML=(d.querySelector('summary')||{}).innerHTML||'';
+    if(hs.length>1 || i>0) sec.appendChild(h);
+    const body=d.querySelector('.howto-body'); if(body) sec.appendChild(body.cloneNode(true));
+    b.appendChild(sec);
+  });
+  const t=$('helpTitle'); if(t) t.textContent='❓ '+(hs.length>1?'Help':(((hs[0].querySelector('summary')||{}).textContent||'Help').trim()));
+  $('helpOverlay').classList.add('show');
+}
+function closeHelp(){ $('helpOverlay').classList.remove('show'); }
+let _rollBtnVisible=true;
+function updateRollDock(){
+  const d=$('rollDock'); if(!d) return;
+  const show = document.body.dataset.tab==='roll' && !_rollBtnVisible;
+  d.classList.toggle('show', show); d.setAttribute('aria-hidden', String(!show));
+}
+function dockRoll(){
+  const rb=$('rollBtn'); if(rb){ try{ rb.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} }
+  rollDice();
+}
+let _fabY=0;
+function startFabAutoHide(){
+  window.addEventListener('scroll',()=>{ const y=window.scrollY, f=$('rollFab'); if(!f) return;
+    if(Math.abs(y-_fabY)<8) return; f.classList.toggle('away', y>_fabY && y>120); _fabY=y; },{passive:true});
+  document.addEventListener('focusin',e=>{ const f=$('rollFab'); if(f && /INPUT|TEXTAREA|SELECT/.test(e.target.nodeName)) f.classList.add('away'); });
+}
+function startRollDock(){
+  const rb=$('rollBtn'); if(!rb || !window.IntersectionObserver) return;
+  new IntersectionObserver(es=>{ es.forEach(e=>{ _rollBtnVisible=e.isIntersecting; }); updateRollDock(); },{threshold:0.2}).observe(rb);
+}
+
 applyTheme();
 loadAll();
 renderAll();
 applySolo();
 maybeWelcome();
 startIconizer();
+document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide();
 _lastSnap=_snap(); updateUndoUI();
 
 

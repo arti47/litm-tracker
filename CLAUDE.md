@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v51` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v52` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -627,6 +627,19 @@ ink-line icons), auto light/dark.
   underlying text/data is untouched. `:focus-visible` outlines, `prefers-reduced-motion` kill-switch,
   ≥44px **hit-area halos** (`::after{inset:-8px}`) on pips/status boxes/tag buttons/infodots without
   changing the visual grid, small-text floor raised. `applyTheme` now also syncs `meta[name=theme-color]`.
+- **Phase 2 ✅ — layout & navigation.** **Bottom tab bar** (`#nav.bottomnav`, moved out of `<header>`; SVG icon +
+  label per tab, pill highlight, `--nav-h` reserves space; toast/update banner/coach bar/coach dot sit above it).
+  **Header**: gradient (stays dark teal in dark mode), antler emblem (`#i-antler`), 2-line-clamped title, grouped
+  undo/redo pill, save-dot tucked under the title, new **❓ help button** (`#helpBtn`). **Per-tab help sheet**
+  (`#helpOverlay`, `openHelp`/`closeHelp`/`panelHowtos`): the panels' inline `details.howto` blocks are hidden
+  and their content is cloned into a bottom sheet (❓ hidden on tabs without help). `showTab` now sets
+  `body[data-tab]` and calls `uiTabChanged`. **Collapsible theme cards** (`themeSummary`/`themeIsOpen`,
+  transient `_themeOpen` by theme id; first theme open by default so the tour's target is expanded): summary
+  row = chevron, title, type · tag counts, Might badge, mini I/A/M track dots. Theme cards get a **Might-coloured
+  top band** (`.mt-origin|adventure|greatness|any`); title input gets its own full row; **Remove theme** is a
+  subdued red text button. **Sticky roll dock** (`#rollDock`, `dockRoll`, `startRollDock` IntersectionObserver
+  on `#rollBtn`; live Power via `#dockPow` from `computePower`) and a **floating 🎲 button** (`#rollFab`) on
+  Hero/Fellowship/Tracking that hides on scroll-down / input focus (`startFabAutoHide`) and during the coach.
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
