@@ -726,6 +726,66 @@ body.dark .sbox.on[data-t="5"] { background: #5a9160; } body.dark .sbox.on[data-
 .rollhist.rh-win { border-left-color: var(--good); } .rollhist.rh-mixed { border-left-color: var(--mixed); } .rollhist.rh-lose { border-left-color: var(--bad); }
 .rh-dice { display: inline-flex; gap: 3px; }
 .rh-dice .die-face { width: 18px; height: 18px; fill: var(--ink-soft); background: var(--bg-deep); border-radius: 4px; border: 1px solid var(--border); }
+
+/* =====================================================================
+   UI REFRESH — Phase 4: parchment, mist, ornaments, empty states, motion
+   ===================================================================== */
+:root { --card-bg: #fffcf5; --paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .2  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(#n)' opacity='.22'/%3E%3C/svg%3E"); --tint-top: rgba(127,169,155,.28); }
+body.dark { --card-bg: #222b27; --tint-top: rgba(79,148,134,.16); }
+body { background-color: var(--bg);
+  background-image: radial-gradient(120% 60% at 50% -10%, var(--tint-top), transparent 70%), var(--paper-noise);
+  background-attachment: fixed, fixed; min-height: 100vh; }
+body.dark { background-image: radial-gradient(120% 60% at 50% -10%, var(--tint-top), transparent 70%); }
+header { position: sticky; }
+header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 40' preserveAspectRatio='none'%3E%3Cpath fill='%23ffffff' d='M0 40V30l12-10 6 6 10-16 10 14 8-8 12 12 14-20 12 16 10-8 10 10 16-14 10 12 12-6 14 10 12-18 12 14 10-6 12 10 14-16 10 12 12-8 12 10 16-12 12 12 10-6 14 10 12-14 12 12 10-4 12 8V40z'/%3E%3C/svg%3E") bottom / 100% 100% no-repeat; opacity: .07; }
+.card { background-image: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0) 120px); position: relative;
+  border-radius: var(--r-l); box-shadow: 0 1px 2px var(--shadow), 0 6px 18px -10px var(--shadow); }
+body.dark .card { background-image: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0) 120px); }
+.card:not(.theme)::before, .card:not(.theme)::after { content: ''; position: absolute; width: 14px; height: 14px; pointer-events: none;
+  border-color: var(--mist); opacity: .45; }
+.card:not(.theme)::before { top: 6px; left: 6px; border-top: 1.5px solid; border-left: 1.5px solid; border-top-left-radius: 6px; }
+.card:not(.theme)::after { bottom: 6px; right: 6px; border-bottom: 1.5px solid; border-right: 1.5px solid; border-bottom-right-radius: 6px; }
+.card > h2::after { content: ''; flex: 1; height: 1px; margin-left: 4px; background: linear-gradient(90deg, var(--border), transparent); }
+.tagrow input.power, .tagrow input.story, .tagrow input.weak { box-shadow: inset 0 -2px 0 rgba(0,0,0,.06); }
+.tagrow input.scratched { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: currentColor; opacity: .55;
+  background-image: repeating-linear-gradient(-45deg, transparent 0 6px, rgba(0,0,0,.05) 6px 7px); }
+
+input:not([type]), input[type=search], input[type=number] { width: 100%; padding: 9px 10px; border: 1px solid var(--border);
+  border-radius: 9px; font-size: 15px; font-family: inherit; background: var(--card-bg); color: var(--ink); }
+#wzOverlay h1, #wzOverlay h2, #wzOverlay h3, #wzOverlay .wz-title { font-family: var(--font-display); letter-spacing: .02em; }
+/* illustrated empty states */
+.empty-state { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 14px 10px 10px; }
+.empty-state .es-ic { width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: var(--mist); background: radial-gradient(circle at 50% 40%, var(--bg-deep), transparent 72%); border: 1.5px dashed var(--border); }
+.empty-state .es-ic .ico { width: 26px; height: 26px; stroke-width: 1.6; }
+.empty-state p { margin: 0; max-width: 300px; }
+
+/* sheets: fade + slide up, grab handle, swipe down to close (startSheetSwipe) */
+.overlay.show { animation: ovIn .2s ease; }
+.overlay.show .sheet { animation: sheetIn .28s var(--ease); }
+.sheet { position: relative; border-radius: 20px 20px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,.25); padding-top: 22px; }
+.sheet::before { content: ''; position: absolute; top: 8px; left: 50%; width: 40px; height: 4.5px; margin-left: -20px; border-radius: 3px;
+  background: var(--border); }
+@keyframes ovIn { from { background: rgba(20,30,26,0); } }
+@keyframes sheetIn { from { transform: translateY(40px); opacity: .4; } to { transform: none; opacity: 1; } }
+@media (min-width: 600px) { .overlay { align-items: center; } .sheet { border-radius: 20px; } .sheet::before { display: none; } }
+.menu-item { transition: transform .1s, background .15s; }
+.menu-item:active { transform: scale(.98); }
+.menu-item .em { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
+  background: var(--card-bg); border: 1px solid var(--border); flex: none; }
+
+/* toast: slide + shadow */
+.toast { transform: translate(-50%, 12px); transition: opacity .25s, transform .25s var(--ease); box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  max-width: calc(100% - 32px); text-align: center; line-height: 1.4; }
+.toast.show { transform: translate(-50%, 0); }
+
+/* buttons & panels: gentle press + tab transition */
+.btn, .addbtn, .seg button { transition: transform .08s, filter .15s, background .15s; }
+.btn:active, .addbtn:active, .seg button:active { transform: scale(.97); }
+.addbtn { border-radius: var(--r-m); }
+.panel.active { animation: panelIn .22s ease; }
+@keyframes panelIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 </style>
 </head>
 <body>
@@ -998,7 +1058,7 @@ body.dark .sbox.on[data-t="5"] { background: #5a9160; } body.dark .sbox.on[data-
 
   <div class="card">
     <h2>📜 Roll History</h2>
-    <div id="rollHist"><p class="muted">No rolls yet.</p></div>
+    <div id="rollHist"></div>
   </div>
 </section>
 
@@ -2135,7 +2195,7 @@ function renderStatuses(){
   const w=$('statusList'); w.innerHTML='';
   const mine=S.statuses.filter(st=>(st.owner||'me')!=='foe');
   const foes=S.statuses.filter(st=>(st.owner||'me')==='foe');
-  if(!S.statuses.length){ w.innerHTML='<p class="muted">No active statuses.</p>'; return; }
+  if(!S.statuses.length){ w.innerHTML=emptyHTML('shield','No active statuses.'); return; }
   // ----- your statuses -----
   if(mine.length){
     const h=document.createElement('div'); h.className='status-grouphd'; h.innerHTML='🧍 Your statuses'; w.appendChild(h);
@@ -2218,7 +2278,7 @@ function addFoeStatus(){ S.statuses.push({id:uid(),name:'',boxes:[false,false,fa
 function renderProgress(){
   const w=$('progressList'); if(!w) return; w.innerHTML='';
   if(!S.progress) S.progress=[];
-  if(!S.progress.length){ w.innerHTML='<p class="muted">No progress tracks yet.</p>'; }
+  if(!S.progress.length){ w.innerHTML=emptyHTML('target','No progress tracks yet.'); }
   S.progress.forEach((pr,i)=>{
     const max=Math.min(10,Math.max(2,pr.max||4)); const cur=Math.min(max,Math.max(0,pr.cur||0));
     const card=document.createElement('div'); card.className='status-card';
@@ -2298,7 +2358,7 @@ function renderJourney(){
   $('jr_tm').onclick=()=>{ j.time=Math.max(0,(j.time||0)-1); save(); renderJourney(); };
   $('jr_tp').onclick=()=>{ j.time=(j.time||0)+1; save(); renderJourney(); };
   const vw=$('jr_vigs');
-  if(!(j.vignettes||[]).length) vw.innerHTML='<p class="muted">No vignettes yet.</p>';
+  if(!(j.vignettes||[]).length) vw.innerHTML=emptyHTML('compass','No vignettes yet.');
   (j.vignettes||[]).forEach((v,i)=>{
     const row=document.createElement('div'); row.className='tagrow';
     const inp=document.createElement('input'); inp.type='text'; inp.placeholder='the challenge this leg (e.g. an icy ford, bandits, a sudden storm)'; inp.value=v.text||''; if(v.done) inp.style.textDecoration='line-through';
@@ -2491,7 +2551,7 @@ function oracleApplyScene(text){             // gap #5: add a rolled Consequence
   toast('Added to scene tags');
 }
 function renderOracleLog(){ const w=$('oracleLog'); if(!w) return; const log=S.oracleLog||[];
-  if(!log.length){ w.innerHTML='<p class="muted">No rolls yet — roll an oracle above and it\'s recorded here. Add a journal note to any entry.</p>'; return; }
+  if(!log.length){ w.innerHTML=emptyHTML('orb','No rolls yet — roll an oracle above and it\'s recorded here. Add a journal note to any entry.'); return; }
   w.innerHTML=log.map(e=>'<div class="orl"><div class="orl-h"><b>'+esc(e.kind)+'</b><button class="ic" data-del="'+e.id+'" style="flex:none">✕</button></div><div class="orl-r">'+esc(e.result)+'</div><textarea class="orl-note" data-note="'+e.id+'" placeholder="journal note…">'+esc(e.note||'')+'</textarea></div>').join('');
   w.querySelectorAll('[data-del]').forEach(btn=>btn.onclick=()=>{ S.oracleLog=S.oracleLog.filter(x=>x.id!==btn.dataset.del); save(); renderOracleLog(); });
   w.querySelectorAll('[data-note]').forEach(t=>t.oninput=()=>{ const e=S.oracleLog.find(x=>x.id===t.dataset.note); if(e){ e.note=t.value; save(); } });
@@ -3158,7 +3218,7 @@ document.querySelectorAll('#modeSeg button').forEach(b=>{
 });
 
 function renderRollHist(){
-  const w=$('rollHist'); if(!rolls.length){ w.innerHTML='<p class="muted">No rolls yet.</p>'; return; }
+  const w=$('rollHist'); if(!rolls.length){ w.innerHTML=emptyHTML('dices','No rolls yet.'); return; }
   w.innerHTML='';
   rolls.slice(0,20).forEach(r=>{
     const d=document.createElement('div'); d.className='rollhist';
@@ -3432,6 +3492,18 @@ function startIconizer(){
   }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 
+// ----- UI refresh P4: illustrated empty states + swipe-down-to-close sheets -----
+function emptyHTML(icon, text){ return '<div class="empty-state"><span class="es-ic">'+icoSVG(icon)+'</span><p class="muted">'+text+'</p></div>'; }
+function startSheetSwipe(){
+  let st=null;
+  document.addEventListener('touchstart',e=>{ const sh=e.target.closest && e.target.closest('.overlay.show .sheet'); if(!sh || sh.scrollTop>0) { st=null; return; }
+    st={sh, y:e.touches[0].clientY, dy:0}; },{passive:true});
+  document.addEventListener('touchmove',e=>{ if(!st) return; st.dy=Math.max(0,e.touches[0].clientY-st.y);
+    if(st.dy>4){ st.sh.style.transition='none'; st.sh.style.transform='translateY('+st.dy+'px)'; } },{passive:true});
+  document.addEventListener('touchend',()=>{ if(!st) return; const {sh,dy}=st; st=null; sh.style.transition=''; sh.style.transform='';
+    const ov=sh.closest('.overlay'); if(dy>90 && ov) ov.dispatchEvent(new MouseEvent('click',{bubbles:true})); });   // same path as a backdrop tap
+}
+
 // ----- UI refresh P3: SVG pip dice -----
 const PIPS={1:[[50,50]],2:[[28,28],[72,72]],3:[[28,28],[50,50],[72,72]],4:[[28,28],[72,28],[28,72],[72,72]],
   5:[[28,28],[72,28],[50,50],[28,72],[72,72]],6:[[28,26],[72,26],[28,50],[72,50],[28,74],[72,74]]};
@@ -3486,7 +3558,7 @@ applySolo();
 maybeWelcome();
 startIconizer();
 setDie($('die1'),0); setDie($('die2'),0);
-document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide();
+document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide(); startSheetSwipe();
 _lastSnap=_snap(); updateUndoUI();
 
 

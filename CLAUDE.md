@@ -37,9 +37,9 @@ and *Narrator-side* content (Challenges, bestiary) are intentionally **not** in 
 
 ### Current state (verify before quoting — figures drift)
 
-Last verified: **2026-07-13** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
+Last verified: **2026-10-01** (Phase 2 + polish + Phase 5 play loop + Phase 3 Special
 Improvements + Phase 4 development automation + Phase 6 scene board & camp/sojourn + Phase 7
-searchable reference + the Oracle + the Character-Pack ready-made Heroes + Solo Play in-app guide). Re-run to refresh:
+searchable reference + the Oracle + the Character-Pack ready-made Heroes + Solo Play in-app guide + the UI refresh). Re-run to refresh:
 
 ```bash
 wc -lc character-tracker.html              # size + line count
@@ -48,13 +48,13 @@ grep -o "litm-[a-z0-9-]*" character-tracker.html | sort -u   # localStorage keys
 ```
 
 As of last verification:
-- **`character-tracker.html`**: ~3,692 lines / ~728 KB (includes the embedded Phase-2 dataset +
+- **`character-tracker.html`**: ~4,176 lines / ~807 KB (includes the embedded Cinzel font + SVG icon sprite + UI-refresh CSS/JS, the embedded Phase-2 dataset +
   Quintessence list + Might table + Core-Book Action-Grimoire examples + the Gerrin tutorial +
   the Action Grimoire supplement catalog + the Oracle tables + the Character-Pack ready-made
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v53` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v54` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -177,6 +177,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 - `icon.svg` + `icon-192.png` + `icon-512.png` — app icon (misty stag antlers + "LITM").
 - `apple-touch-icon.png` (180, full-bleed — iOS ignores SVG touch icons) + `icon-maskable-192/512.png`
   (art scaled into the 80% safe zone) — referenced by `<link rel=apple-touch-icon>` / `manifest.json`, precached in `sw.js`.
+- `_build/fonts/`, `_build/icons/`, `_build/icons.json` — UI-refresh assets (see Build process).
 - `.claude/launch.json` — local preview server config (`python3 -m http.server`).
 - `_build/` — build sources (see **Build process**): `base.html`, `wizard.js`,
   `litm-data.json`, `quintessences.json`, `specials-override.json`, `general-store.json`,
@@ -649,6 +650,19 @@ ink-line icons), auto light/dark.
   **Status boxes** deepen in green by tier (`data-t`), the Limit box carries a red marker. **Promise** pips are
   **stars** that fill gold (`--promise`). Burning tag's flame flickers. **Roll history** rows show mini pip dice +
   a win/mixed/lose colour edge (tier derived from the stored `big` text — no new stored field).
+- **Phase 4 ✅ — atmosphere & motion.** Light **parchment**: cream `--card-bg` (`#fffcf5`), an SVG-noise paper
+  texture (`--paper-noise`) + top mist radial tint on `body` (dark keeps tint only), a faint treeline silhouette on
+  the header's bottom edge, card sheen + soft drop shadow, **corner ornaments** on non-theme cards, a fading rule
+  after each card `h2`, stamped hatch on scratched tags. **Illustrated empty states** (`emptyHTML(icon,text)` —
+  same text, dashed-ring icon above) for roll history, statuses, progress, journey vignettes, Oracle log.
+  **Sheets** fade/slide up with a grab handle; **swipe down to close** (`startSheetSwipe` — dispatches a backdrop
+  click on the overlay, so only overlays that already close on backdrop tap close, via their own handler);
+  centred dialogs ≥600px. Menu icons sit in tiles; toast slides with a shadow; buttons/chips press-scale; panels
+  fade in on tab switch. Wizard headings use the display font. Untyped `<input>`s (e.g. Oracle question) now get the
+  standard field styling.
+
+**Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
+source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
