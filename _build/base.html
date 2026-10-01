@@ -926,6 +926,66 @@ body.dark .status-wrap.foe .status-card { background: rgba(240,163,156,.07); }
 /* wizard header in display font */
 #wzOverlay .wz-hd { background: var(--hdr-bg); }
 #wzOverlay .wz-hd .t { font-family: var(--font-display); letter-spacing: .03em; font-size: 16px; }
+
+/* =====================================================================
+   UI REFRESH — Round 3: contrast, keyboard, landscape, sticky AG heads, hint clamp, print
+   ===================================================================== */
+.toast, .update-banner { background: #1c3f38; color: #fff; }
+body.dark .toast, body.dark .update-banner { background: #0f2622; border: 1px solid rgba(255,255,255,.12); }
+.update-banner { width: min(380px, calc(100% - 24px)); padding: 10px 10px 10px 14px; }
+.update-banner .upd-msg { flex: 1; min-width: 0; }
+.update-banner .upd-go { color: #1c3f38; }
+body.has-upd .roll-fab, body.has-upd .roll-dock { opacity: 0; pointer-events: none; }
+/* on-screen keyboard open (touch): get bottom chrome out of the way */
+body.kb #nav.bottomnav, body.kb .roll-fab, body.kb .roll-dock, body.kb #coachDot { display: none !important; }
+body.kb .panel { padding-bottom: calc(var(--safe-bot) + 40px); }
+/* phone landscape: compact chrome */
+@media (max-height: 500px) and (orientation: landscape) {
+  :root { --nav-h: 46px; }
+  .hdr-top { padding-top: 0; padding-bottom: 6px; }
+  header { padding-top: calc(var(--safe-top) + 4px); }
+  #nav .tab .tab-lb { display: none; }
+  #nav .tab .tab-ic { height: 30px; }
+  .hdr-title { -webkit-line-clamp: 1; }
+}
+/* Action Grimoire: open section heading stays visible while reading */
+#agOverlay details.ag-sec[open] > summary { position: sticky; top: -22px; z-index: 2; background: var(--bg-deep);
+  border-bottom: 1px solid var(--border); box-shadow: 0 4px 8px -6px var(--shadow); }
+#agOverlay details.ag-sec { overflow: visible; }
+#agOverlay details.ag-sec[open] > summary { border-radius: 10px 10px 0 0; }
+/* clamped card hints */
+p.hint.clamp:not(.open) { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.hint-more { border: 0; background: transparent; color: var(--teal); font-size: 12px; font-weight: 700; padding: 2px 0 6px; cursor: pointer; }
+/* misc polish */
+.track-lbl { white-space: nowrap; width: auto; min-width: 78px; }
+::selection { background: rgba(127,169,155,.38); }
+input, textarea { caret-color: var(--teal); }
+.sheet, .q-list, .tut-text { scrollbar-width: thin; scrollbar-color: var(--mist) transparent; }
+.sheet::-webkit-scrollbar, .q-list::-webkit-scrollbar { width: 6px; }
+.sheet::-webkit-scrollbar-thumb, .q-list::-webkit-scrollbar-thumb { background: var(--mist); border-radius: 3px; }
+#fulfillVal, #sitVal { font-family: var(--font-display); font-size: 20px; }
+
+/* print / PDF: paper character sheet (Hero + Fellowship) */
+@media print {
+  @page { margin: 12mm; }
+  html, body { background: #fff !important; color: #111; font-size: 11pt; }
+  body::before, header, #nav, .roll-fab, .roll-dock, .overlay, .toast, .update-banner, #coachBar, #coachDot, #tourLayer,
+  .newbie, .addbtn, .btn, .ic, .tagrow .ic, .hint-more, .infodot, .theme-sum, .empty-state, .hint, .status-meta, details.howto { display: none !important; }
+  .panel { display: none !important; padding: 0 !important; max-width: none !important; animation: none !important; }
+  #panel-hero, #panel-fellowship { display: block !important; }
+  #panel-fellowship { break-before: page; }
+  .card { box-shadow: none !important; background: #fff !important; border: 1px solid #888 !important; break-inside: avoid; margin-bottom: 8mm; }
+  .card::before, .card::after, .card > h2::after { display: none !important; }
+  .card.theme.collapsed > *:not(.theme-sum) { display: revert !important; }
+  #themesWrap { display: grid !important; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  input, textarea, select { border: 0 !important; border-bottom: 1px solid #bbb !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+  .tagrow input.power, .tagrow input.story, .tagrow input.weak, .mightbadge, .pip, .sbox, .crest { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .tagrow input.power, .tagrow input.story { background: #ffe9a3 !important; border-radius: 12px !important; border: 0 !important; }
+  .tagrow input.weak { background: #ffcf9e !important; border-radius: 12px !important; border: 0 !important; }
+  textarea { resize: none; min-height: 0; }
+  .stepper button { display: none !important; }
+  ::placeholder { color: transparent !important; }
+}
 </style>
 </head>
 <body>
@@ -1395,6 +1455,7 @@ body.dark .status-wrap.foe .status-card { background: rgba(240,163,156,.07); }
     <button class="menu-item" onclick="openJourney()"><span class="em">🧭</span> Journey montage</button>
     <button class="menu-item" onclick="openTutorial()"><span class="em">📖</span> Tutorial (Gerrin walkthrough)</button>
     <button class="menu-item" onclick="openAG()"><span class="em">📜</span> Action Grimoire</button>
+    <button class="menu-item" onclick="printSheet()"><span class="em">🖨️</span> Print / PDF sheet</button>
     <button class="menu-item" onclick="exportJSON()"><span class="em">⬇️</span> Export hero (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('importFile').click()"><span class="em">⬆️</span> Import hero (JSON file)</button>
     <button class="menu-item" onclick="exportFellowship()"><span class="em">🤝</span> Share Fellowship (JSON file)</button>
@@ -3650,6 +3711,35 @@ function startIconizer(){
   }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 
+// ----- UI refresh R3: keyboard-aware chrome, clamped hints, print sheet -----
+function startKeyboardChrome(){
+  if(!(window.matchMedia && matchMedia('(pointer: coarse)').matches)) return;
+  let t=null; const isField=el=>el && (/TEXTAREA|SELECT/.test(el.nodeName) || (el.nodeName==='INPUT' && !/checkbox|radio|button|file/.test(el.type)));
+  document.addEventListener('focusin',e=>{ if(isField(e.target)){ clearTimeout(t); document.body.classList.add('kb'); } });
+  document.addEventListener('focusout',()=>{ clearTimeout(t); t=setTimeout(()=>{ if(!isField(document.activeElement)) document.body.classList.remove('kb'); },120); });
+}
+const _hintOpen=new Set();
+function clampHints(root){
+  if(!root || root.nodeType!==1) return;
+  const list=root.matches && root.matches('.card > p.hint, .card.theme p.hint') ? [root] : [...root.querySelectorAll('.card > p.hint, .card.theme p.hint')];
+  list.forEach(p=>{ if(p.dataset.cl || (p.textContent||'').length<130 || p.closest('.overlay')) return;
+    p.dataset.cl='1'; const key=p.textContent.slice(0,60); p.classList.add('clamp'); if(_hintOpen.has(key)) p.classList.add('open');
+    const b=document.createElement('button'); b.type='button'; b.className='hint-more'; b.textContent=p.classList.contains('open')?'less':'more';
+    b.setAttribute('aria-expanded', String(p.classList.contains('open')));
+    b.onclick=()=>{ const o=p.classList.toggle('open'); if(o) _hintOpen.add(key); else _hintOpen.delete(key); b.textContent=o?'less':'more'; b.setAttribute('aria-expanded',String(o)); };
+    p.after(b); });
+}
+function startHintClamp(){ clampHints(document.body);
+  if(window.MutationObserver) new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{ if(n.nodeType===1) clampHints(n); }))).observe(document.body,{childList:true,subtree:true}); }
+function printSheet(){
+  if(typeof closeOverlays==='function') closeOverlays();
+  const saved=Object.assign({},_themeOpen); S.themes.forEach(t=>_themeOpen[t.id]=true); renderThemes();
+  document.body.classList.add('printing');
+  const done=()=>{ document.body.classList.remove('printing'); Object.keys(_themeOpen).forEach(k=>delete _themeOpen[k]); Object.assign(_themeOpen,saved); renderThemes(); window.removeEventListener('afterprint',done); };
+  window.addEventListener('afterprint',done);
+  setTimeout(()=>{ try{ window.print(); }catch(e){ done(); } },60);
+}
+
 // ----- UI refresh R2: celebration burst + journey trail -----
 function celebrate(el){
   if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -3761,14 +3851,14 @@ applySolo();
 maybeWelcome();
 startIconizer();
 setDie($('die1'),0); setDie($('die2'),0);
-document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide(); startSheetSwipe();
+document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide(); startSheetSwipe(); startKeyboardChrome(); startHintClamp();
 _lastSnap=_snap(); updateUndoUI();
 
 
 // Service worker + update banner
 let _waitingSW=null, _reloading=false;
-function showUpdateBanner(sw){ _waitingSW=sw; const b=$('updateBanner'); if(b) b.classList.add('show'); }
-function dismissUpdate(){ const b=$('updateBanner'); if(b) b.classList.remove('show'); }
+function showUpdateBanner(sw){ _waitingSW=sw; const b=$('updateBanner'); if(b) b.classList.add('show'); document.body.classList.add('has-upd'); }
+function dismissUpdate(){ const b=$('updateBanner'); if(b) b.classList.remove('show'); document.body.classList.remove('has-upd'); }
 function applyUpdate(){
   dismissUpdate();
   if(_waitingSW){ _waitingSW.postMessage({type:'SKIP_WAITING'}); }

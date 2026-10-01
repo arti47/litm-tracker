@@ -65,7 +65,9 @@
     "⬇": "arrow-down",
     "⏹️": "square",
     "⏹": "square",
-    "⏳": "hourglass"
+    "⏳": "hourglass",
+    "🖨️": "printer",
+    "🖨": "printer"
   },
   "custom": {
     "orb": "<circle cx=\"12\" cy=\"10\" r=\"7\"/><path d=\"M8 20h8M8.5 15.5 7 20M15.5 15.5 17 20\"/><path d=\"M9 8.5a3.5 3.5 0 0 1 3-2.5\"/>",

@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v56` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v57` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -680,6 +680,15 @@ ink-line icons), auto light/dark.
   motion) on double 6, Moment of Fulfillment, a progress track reaching its Limit, and journey arrival. **Spend
   panel** effects are icon tiles (`.sp-tiles`, 3-col). Foe status cards tinted. Wizard header uses the header
   gradient + display font.
+
+- **Audit R3 ✅ —** Toast/update banner on a fixed dark-teal (dark-mode contrast fix); banner wider, hides FAB/dock
+  (`body.has-upd`). **Keyboard-aware chrome** (`startKeyboardChrome`, touch only): `body.kb` hides bottom nav/FAB/dock/
+  coach dot while a text field is focused. **Phone landscape** (≤500px tall): icon-only nav, 1-line title, tighter header.
+  **Action Grimoire** open-section heading is sticky in the sheet. **Clamped card hints** (`clampHints`/`startHintClamp`,
+  session-only `_hintOpen`): card `p.hint` ≥130 chars clamp to 2 lines with a more/less toggle — same text.
+  **Print / PDF sheet** (☰ → `printSheet()`; `@media print`): Hero + Fellowship on paper, all themes expanded 2-up,
+  chrome/buttons/hints hidden, tag colours kept (`print-color-adjust: exact`), placeholders blank. Thin themed
+  scrollbars, teal selection/caret, Cinzel stepper numerals, Promise ⓘ no longer wraps.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
