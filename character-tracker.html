@@ -861,6 +861,71 @@ body.dark::before { content: ''; position: fixed; left: 0; right: 0; top: 0; hei
 }
 .hdr-top { padding-bottom: 13px; }
 .save-dot { bottom: 1px; font-size: 9.5px; }
+
+/* =====================================================================
+   UI REFRESH — Round 2: oracle tiles, journal, trail, celebration, spend tiles, foe tint
+   ===================================================================== */
+.or-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.or-tile { display: flex; align-items: center; gap: 9px; padding: 10px 11px; border-radius: var(--r-m); text-align: left;
+  border: 1.5px solid var(--border); background: var(--card-bg); color: var(--ink); font-size: 13.5px; font-weight: 700; min-height: 46px; }
+.or-tile .ico { width: 20px; height: 20px; color: var(--teal); flex: none; }
+.or-tile.on { background: var(--teal); border-color: var(--teal); color: #fff; box-shadow: 0 3px 10px -3px var(--shadow); }
+.or-tile.on .ico { color: #fff; }
+.or-tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+@media (min-width: 640px) { .or-tiles { grid-template-columns: repeat(4, 1fr); } .or-tile:last-child:nth-child(odd) { grid-column: auto; } }
+.orl { background: var(--card-bg); border-left: 3px solid var(--teal-light); }
+.orl-k { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
+.orl-k .ico { width: 15px; height: 15px; }
+.orl-t { font-weight: 400; color: var(--ink-soft); font-size: 11px; margin-left: 4px; }
+.orl-parts { margin: 4px 0 6px; padding: 0; list-style: none; }
+.orl-parts li { padding: 4px 0; border-bottom: 1px dotted var(--border); font-size: 13px; line-height: 1.4; }
+.orl-parts li:last-child { border-bottom: 0; }
+.orl-parts b { color: var(--teal); font-size: 11.5px; text-transform: uppercase; letter-spacing: .03em; margin-right: 3px; }
+.orl-note { background: var(--bg-deep); border-style: dashed; }
+
+/* journey trail */
+.jr-trail { display: block; margin: 4px 0 2px; }
+.jr-svg { width: 100%; height: auto; max-height: 110px; overflow: visible; }
+.jr-road { fill: none; stroke: var(--mist); stroke-width: 3; stroke-dasharray: 2 7; stroke-linecap: round; }
+.jr-done { fill: none; stroke: var(--teal-light); stroke-width: 4; stroke-linecap: round; }
+.jr-start circle { fill: var(--teal-light); stroke: var(--card-bg); stroke-width: 2; }
+.jr-wp { cursor: pointer; outline: none; }
+.jr-wp .hit { fill: transparent; }
+.jr-wp .dot { fill: var(--card-bg); stroke: var(--mist); stroke-width: 2; transition: fill .15s; }
+.jr-wp text { font: 700 10px var(--font-body); fill: var(--ink-soft); pointer-events: none; }
+.jr-wp.on .dot { fill: var(--teal-light); stroke: var(--teal); } .jr-wp.on text { fill: #fff; }
+.jr-wp.dest .dot { stroke: var(--promise); stroke-width: 2.5; }
+.jr-wp .flag { fill: var(--promise); stroke: var(--promise); stroke-width: 1.4; stroke-linejoin: round; }
+.jr-wp.dest.on .dot { fill: var(--promise); } .jr-wp.dest.on .flag { fill: #fff; stroke: #fff; }
+.jr-wp:focus-visible .dot { stroke: var(--focus); stroke-width: 3; }
+.jr-me path { fill: var(--bad); } .jr-me circle { fill: #fff; }
+.jr-me { animation: jrBob 1.6s ease-in-out infinite; }
+@keyframes jrBob { 50% { translate: 0 -2px; } }
+
+/* celebration burst */
+.fx-burst { position: fixed; z-index: 400; width: 0; height: 0; pointer-events: none; }
+.fx-burst i { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; opacity: 0;
+  animation: fxPop 1.05s cubic-bezier(.15,.7,.3,1) forwards; }
+.fx-burst i.star { width: 11px; height: 11px; border-radius: 0;
+  clip-path: polygon(50% 0,61% 38%,100% 50%,61% 62%,50% 100%,39% 62%,0 50%,39% 38%); }
+@keyframes fxPop { 0% { opacity: 1; transform: translate(0,0) scale(.4); }
+  70% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--dx), calc(var(--dy) + 40px)) scale(1) rotate(200deg); } }
+#devOverlay .sheet:has(.q-list) { box-shadow: 0 -10px 40px rgba(0,0,0,.25), inset 0 3px 0 var(--promise); }
+
+/* spend tiles */
+.sp-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.sp-tiles button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 54px; padding: 6px 4px; }
+.sp-tiles button .ico { width: 18px; height: 18px; color: var(--teal); }
+.sp-tiles button.on .ico { color: #fff; }
+.sp-tiles button[data-e="other"] { grid-column: auto; }
+
+/* foe statuses tinted */
+.status-wrap.foe .status-card { background: rgba(179,38,30,.06); border-left-color: var(--weak-ink); }
+body.dark .status-wrap.foe .status-card { background: rgba(240,163,156,.07); }
+
+/* wizard header in display font */
+#wzOverlay .wz-hd { background: var(--hdr-bg); }
+#wzOverlay .wz-hd .t { font-family: var(--font-display); letter-spacing: .03em; font-size: 16px; }
 </style>
 </head>
 <body>
@@ -2361,7 +2426,7 @@ function renderProgress(){
     const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='goal (e.g. making-progress, catch)'; nm.value=pr.name||''; nm.oninput=()=>{ pr.name=nm.value; save(); };
     const boxes=document.createElement('div'); boxes.className='boxes';
     for(let t=1;t<=max;t++){ const b=document.createElement('button'); b.className='sbox'+(t<=cur?' on':'')+(t===max?' lim':'');
-      b.textContent=t; b.title=(t===max?'Limit — fills the goal':''); b.onclick=()=>{ pr.cur=(cur===t? t-1 : t); renderProgress(); save(); }; boxes.appendChild(b); }
+      b.textContent=t; b.title=(t===max?'Limit — fills the goal':''); b.onclick=()=>{ pr.cur=(cur===t? t-1 : t); renderProgress(); save(); if(cur<max && pr.cur>=max) celebrate(b); }; boxes.appendChild(b); }
     const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none'; del.onclick=()=>{ S.progress.splice(i,1); renderProgress(); save(); };
     card.appendChild(nm); card.appendChild(boxes); card.appendChild(del); w.appendChild(card);
     const meta=document.createElement('div'); meta.className='status-meta';
@@ -2426,8 +2491,11 @@ function renderJourney(){
   h+='<h3 style="margin:14px 0 4px">Vignette Challenges</h3><div id="jr_vigs"></div><button class="addbtn" id="jr_addv">＋ add a vignette</button>';
   h+='<button class="btn ghost wide" id="jr_reset" style="margin-top:14px">Reset journey</button>';
   w.innerHTML=h;
-  const bx=$('jr_boxes');
-  for(let t=1;t<=max;t++){ const b=document.createElement('button'); b.className='sbox'+(t<=cur?' on':'')+(t===max?' lim':''); b.textContent=t; b.onclick=()=>{ j.cur=(cur===t?t-1:t); save(); renderJourney(); }; bx.appendChild(b); }
+  const bx=$('jr_boxes'); bx.className='jr-trail';
+  bx.innerHTML=journeyTrailSVG(max,cur);
+  bx.querySelectorAll('[data-leg]').forEach(g=>{ const t=+g.dataset.leg;
+    const go=()=>{ const was=j.cur||0; j.cur=(cur===t?t-1:t); save(); renderJourney(); if(was<max && j.cur>=max) celebrate($('jr_boxes')); };
+    g.addEventListener('click',go); g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }); });
   const sel=$('jr_max'); for(let L=2;L<=10;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===max)o.selected=true; sel.appendChild(o); }
   sel.onchange=()=>{ j.max=+sel.value; if((j.cur||0)>j.max)j.cur=j.max; save(); renderJourney(); };
   $('jr_dest').oninput=e=>{ j.dest=e.target.value; save(); };
@@ -2441,7 +2509,7 @@ function renderJourney(){
     inp.oninput=()=>{ v.text=inp.value; save(); };
     const roll=document.createElement('button'); roll.className='ic'; roll.textContent='🎲'; roll.title='Resolve with a Quick action'; roll.style.flex='none'; roll.onclick=()=>{ closeJourney(); showTab('roll'); };
     const done=document.createElement('button'); done.className='ic'; done.textContent=v.done?'↩':'✓'; done.title=v.done?'reopen':'cleared — advance a leg'; done.style.flex='none';
-    done.onclick=()=>{ if(!v.done){ v.done=true; j.cur=Math.min(max,(j.cur||0)+1); } else v.done=false; save(); renderJourney(); };
+    done.onclick=()=>{ const was=j.cur||0; if(!v.done){ v.done=true; j.cur=Math.min(max,(j.cur||0)+1); } else v.done=false; save(); renderJourney(); if(was<max && j.cur>=max) celebrate($('jr_boxes')); };
     const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none'; del.onclick=()=>{ j.vignettes.splice(i,1); save(); renderJourney(); };
     row.appendChild(inp); row.appendChild(roll); row.appendChild(done); row.appendChild(del); vw.appendChild(row);
   });
@@ -2471,7 +2539,8 @@ const ORACLES=[['question','Question'],['conflict','Conflict / Scene'],['premade
 function renderOracle(){
   const O=litmOracle(); const w=$('oracleBody'); if(!w) return;
   if(!O){ w.innerHTML='<p class="hint">Oracle data not loaded.</p>'; return; }
-  w.innerHTML='<div class="ag-fx" style="margin-bottom:10px">'+ORACLES.map(o=>'<button class="modchip'+(oracleSel===o[0]?' help':'')+'" data-or="'+o[0]+'">'+esc(o[1])+'</button>').join('')+'</div><div id="orBody"></div>';
+  const OR_IC={question:'message-circle-question',conflict:'swords',premade:'users',builder:'clipboard-list',action:'skull',conseq:'triangle-alert',revel:'sparkles'};
+  w.innerHTML='<div class="or-tiles">'+ORACLES.map(o=>'<button class="or-tile'+(oracleSel===o[0]?' on':'')+'" data-or="'+o[0]+'">'+icoSVG(OR_IC[o[0]]||'orb')+'<span>'+esc(o[1])+'</span></button>').join('')+'</div><div id="orBody"></div>';
   w.querySelectorAll('[data-or]').forEach(b=>b.onclick=()=>{ oracleSel=b.dataset.or; renderOracle(); });
   drawOracle(O);
   renderOracleLog();
@@ -2628,7 +2697,10 @@ function oracleApplyScene(text){             // gap #5: add a rolled Consequence
 }
 function renderOracleLog(){ const w=$('oracleLog'); if(!w) return; const log=S.oracleLog||[];
   if(!log.length){ w.innerHTML=emptyHTML('orb','No rolls yet — roll an oracle above and it\'s recorded here. Add a journal note to any entry.'); return; }
-  w.innerHTML=log.map(e=>'<div class="orl"><div class="orl-h"><b>'+esc(e.kind)+'</b><button class="ic" data-del="'+e.id+'" style="flex:none">✕</button></div><div class="orl-r">'+esc(e.result)+'</div><textarea class="orl-note" data-note="'+e.id+'" placeholder="journal note…">'+esc(e.note||'')+'</textarea></div>').join('');
+  const LIC=k=>/question|yes|no/i.test(k)?'message-circle-question':/conflict|scene/i.test(k)?'swords':/consequence/i.test(k)?'triangle-alert':/revel/i.test(k)?'sparkles':/profile/i.test(k)?'clipboard-list':/challenge|threat/i.test(k)?'skull':/roll/i.test(k)?'dices':'orb';
+  const fmtR=r=>{ const parts=String(r||'').split(' | '); return parts.length<2? esc(r) : '<ul class="orl-parts">'+parts.map(x=>{ const m=x.match(/^([^:]{2,40}):\s*(.*)$/); return '<li>'+(m?'<b>'+esc(m[1])+'</b> '+esc(m[2]):esc(x))+'</li>'; }).join('')+'</ul>'; };
+  const tm=t=>{ try{ return t? new Date(t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : ''; }catch(_){ return ''; } };
+  w.innerHTML=log.map(e=>'<div class="orl"><div class="orl-h"><span class="orl-k">'+icoSVG(LIC(e.kind))+'<b>'+esc(e.kind)+'</b><span class="orl-t">'+tm(e.t)+'</span></span><button class="ic" data-del="'+e.id+'" style="flex:none">✕</button></div><div class="orl-r">'+fmtR(e.result)+'</div><textarea class="orl-note" data-note="'+e.id+'" placeholder="journal note…">'+esc(e.note||'')+'</textarea></div>').join('');
   w.querySelectorAll('[data-del]').forEach(btn=>btn.onclick=()=>{ S.oracleLog=S.oracleLog.filter(x=>x.id!==btn.dataset.del); save(); renderOracleLog(); });
   w.querySelectorAll('[data-note]').forEach(t=>t.oninput=()=>{ const e=S.oracleLog.find(x=>x.id===t.dataset.note); if(e){ e.note=t.value; save(); } });
 }
@@ -2840,7 +2912,7 @@ function renderDev(){
 function litmQuintessences(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.quintessences)) return LITM_DATA.quintessences; }catch(e){} return []; }
 function hasQuintessence(name){ return (S.quintessences||'').toLowerCase().indexOf((name||'').toLowerCase())>=0; }
 
-function openMoF(){ devCtx={ kind:'mof', form:{q:null, custom:''} }; renderMoF(); $('devOverlay').classList.add('show'); }
+function openMoF(){ setTimeout(()=>{ const sh=document.querySelector('#devOverlay .sheet'); celebrate(sh&&sh.offsetParent?sh:document.body); },120); devCtx={ kind:'mof', form:{q:null, custom:''} }; renderMoF(); $('devOverlay').classList.add('show'); }
 function renderMoF(){
   $('devTitle').textContent='🌟 Moment of Fulfillment';
   const carry=Math.max(0,(S.promise||0)-5);
@@ -3076,6 +3148,7 @@ function rollDice(){
     }
     const crit = dbl6?' crit-win':(dbl1auto?' crit-lose':'');
     if(crit){ d1.classList.add(crit.trim()); d2.classList.add(crit.trim()); }
+    if(dbl6) setTimeout(()=>celebrate($('outcomeBox')),60);
     const ocIc = {win: reaction?'shield':'trophy', mixed:'scale', lose:'triangle-alert'}[cls];
     $('outcomeBox').innerHTML = '<div class="outcome '+cls+crit+'"><div class="oc-ic">'+icoSVG(ocIc)+'</div><div class="big">'+big+'</div>'
       + '<div class="sub">Rolled '+r1+' + '+r2+' '+(power>=0?'+ ':'− ')+Math.abs(power)+' Power = <b>'+total+'</b></div>'
@@ -3189,7 +3262,8 @@ function renderSpend(){
   h+='<div class="muted" style="flex:1">'+(spend.reaction?'Spend to lessen the blow':'Spend on Effects')+'</div>';
   h+='<button class="btn ghost sm" onclick="closeSpend()">Done</button></div>';
   const E=[['status','＋ Status'],['foe','👹 Foe status'],['reduce','− Status'],['bag','＋ Backpack'],['recover','Recover'],['progress','▲ Progress'],['detail','Detail · 1'],['feat','Feat · 1'],['other','Other…']];
-  h+='<div class="seg">'+E.map(e=>'<button onclick="spForm(\''+e[0]+'\')"'+(spend._form&&spend._form.type===e[0]?' class="on"':'')+'>'+e[1]+'</button>').join('')+'</div>';
+  const SPI={status:'shield',foe:'',reduce:'shield',bag:'backpack',recover:'refresh-ccw',progress:'target',detail:'search',feat:'zap',other:'pen-line'};
+  h+='<div class="seg sp-tiles">'+E.map(e=>'<button data-e="'+e[0]+'" onclick="spForm(\''+e[0]+'\')"'+(spend._form&&spend._form.type===e[0]?' class="on"':'')+'>'+(SPI[e[0]]?icoSVG(SPI[e[0]]):'')+'<span>'+e[1]+'</span></button>').join('')+'</div>';
   h+='<div id="spForm"></div>';
   let fx=[];
   if(agAction && !spend.reaction){
@@ -3576,6 +3650,36 @@ function startIconizer(){
   }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 
+// ----- UI refresh R2: celebration burst + journey trail -----
+function celebrate(el){
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const r=(el&&el.getBoundingClientRect)? el.getBoundingClientRect() : {left:innerWidth/2,top:innerHeight/3,width:0,height:0};
+  const cx=r.left+r.width/2, cy=r.top+Math.min(r.height/2,140);
+  const layer=document.createElement('div'); layer.className='fx-burst'; layer.style.left=cx+'px'; layer.style.top=cy+'px';
+  const cols=['#e6b84a','#f2d27a','#c9971f','#7fa99b','#fff3c4'];
+  for(let i=0;i<26;i++){ const sp=document.createElement('i'); const a=Math.random()*Math.PI*2, d=50+Math.random()*90;
+    sp.style.setProperty('--dx',(Math.cos(a)*d).toFixed(1)+'px'); sp.style.setProperty('--dy',(Math.sin(a)*d-30).toFixed(1)+'px');
+    sp.style.background=cols[i%cols.length]; sp.style.animationDelay=(Math.random()*.12).toFixed(2)+'s';
+    if(i%3===0) sp.className='star'; layer.appendChild(sp); }
+  document.body.appendChild(layer); setTimeout(()=>layer.remove(),1300);
+  if(navigator.vibrate) try{ navigator.vibrate([15,40,25]); }catch(e){}
+}
+function journeyTrailSVG(max,cur){
+  const W=320,H=78,x0=18,x1=W-22, pts=[];
+  for(let t=0;t<=max;t++){ const x=x0+(x1-x0)*t/max, y=H/2+Math.sin(t*1.25)*16; pts.push([x,y]); }
+  const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const done=pts.slice(0,cur+1).map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  let g='<svg viewBox="0 0 '+W+' '+H+'" class="jr-svg" role="group" aria-label="Legs to arrival">'
+    +'<path d="'+path+'" class="jr-road"/>'+(cur>0?'<path d="'+done+'" class="jr-done"/>':'');
+  pts.forEach((p,t)=>{ if(t===0){ g+='<g class="jr-start" transform="translate('+p[0]+' '+p[1]+')"><circle r="7"/></g>'; return; }
+    const last=t===max, on=t<=cur;
+    g+='<g class="jr-wp'+(on?' on':'')+(last?' dest':'')+(t===cur?' here':'')+'" data-leg="'+t+'" tabindex="0" role="button" aria-label="Leg '+t+(last?' (destination)':'')+'" transform="translate('+p[0].toFixed(1)+' '+p[1].toFixed(1)+')">'
+      +'<circle r="17" class="hit"/><circle r="10.5" class="dot"/>'
+      +(last?'<path d="M-3 6V-8l9 3.5-9 3.5" class="flag"/>':'<text y="4" text-anchor="middle">'+t+'</text>')+'</g>'; });
+  if(cur>0 && cur<=max){ const p=pts[cur]; g+='<g class="jr-me" transform="translate('+p[0].toFixed(1)+' '+(p[1]-21).toFixed(1)+')"><path d="M0 7-6-3a7 7 0 1 1 12 0z"/><circle r="2.6" cy="-3.5"/></g>'; }
+  return g+'</svg>';
+}
+
 // ----- UI refresh R1: generated hero crest (initials on a shield, tinted by dominant theme Might) -----
 const CREST_COL={origin:['#2e5d52','#5f9886'],adventure:['#8a6418','#c39a3e'],greatness:['#5d2f70','#9a5fae'],any:['#4a5b54','#7fa99b']};
 function heroMight(h){ const c={origin:0,adventure:0,greatness:0}; (h.themes||[]).forEach(t=>{ const m=MIGHT_OF[t.type]; if(m in c) c[m]++; });
@@ -3642,9 +3746,12 @@ function startFabAutoHide(){
     if(Math.abs(y-_fabY)<8) return; f.classList.toggle('away', y>_fabY && y>120); _fabY=y; },{passive:true});
   document.addEventListener('focusin',e=>{ const f=$('rollFab'); if(f && /INPUT|TEXTAREA|SELECT/.test(e.target.nodeName)) f.classList.add('away'); });
 }
+const _dockVis={};
 function startRollDock(){
-  const rb=$('rollBtn'); if(!rb || !window.IntersectionObserver) return;
-  new IntersectionObserver(es=>{ es.forEach(e=>{ _rollBtnVisible=e.isIntersecting; }); updateRollDock(); },{threshold:0.2}).observe(rb);
+  const ids=['rollBtn','outcomeBox','spendBox']; if(!window.IntersectionObserver) return;
+  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ _dockVis[e.target.id]=e.isIntersecting && e.target.offsetHeight>0; });
+    _rollBtnVisible=ids.some(k=>_dockVis[k]); updateRollDock(); },{threshold:0});
+  ids.forEach(k=>{ const el=$(k); if(el) io.observe(el); });
 }
 
 applyTheme();

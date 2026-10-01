@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v55` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v56` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -671,6 +671,15 @@ ink-line icons), auto light/dark.
   noise + a seeded SVG **starfield** (`body.dark::before`, masked fade). **≥900px tablet grid**: Hero (Hero Card |
   Backpack, themes 2-up), Tracking & Fellowship 2-up, Roll = tag builder left / sticky Power+dice + history right
   (`.rl-build`/`.rl-dice`/`.rl-hist`), dock hidden; sheets 560px.
+
+- **Audit R2 ✅ —** Roll dock also hides while `#outcomeBox`/`#spendBox` are in view (`_dockVis`). **Oracle picker** =
+  2-col icon **tile grid** (`.or-tile`, 4-up ≥640px). **Oracle journal**: per-kind icon + time, multi-part results
+  (`' | '`-joined) shown as labelled rows (`.orl-parts`) — same text. **Journey trail** (`journeyTrailSVG`): legs as
+  waypoints on a winding SVG path (done segment solid, destination ⚑, bobbing location pin), tap/Enter a waypoint
+  sets the leg. **Celebration burst** (`celebrate(el)`: gold dot/star particles + haptic, skipped under reduced
+  motion) on double 6, Moment of Fulfillment, a progress track reaching its Limit, and journey arrival. **Spend
+  panel** effects are icon tiles (`.sp-tiles`, 3-col). Foe status cards tinted. Wizard header uses the header
+  gradient + display font.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
