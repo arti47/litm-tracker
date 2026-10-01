@@ -1053,6 +1053,62 @@ body.dark { --power: #6f5c1f; --power-ink: #ffe7a6; }
   background: radial-gradient(closest-side, rgba(238,243,236,.35), transparent); animation: spMist 1.2s ease-in-out both; }
 @keyframes spIn { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes spMist { from { transform: translateX(-30px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* =====================================================================
+   UI REFRESH — Round 5: wizard polish, quest line, oracle reveal + seal, tablet Oracle/Rules, gold accents
+   ===================================================================== */
+#wzOverlay .wz-h, #wzOverlay .wz-pick .nm { font-family: var(--font-display); letter-spacing: .02em; }
+#wzOverlay .wz-pick { transition: transform .1s, box-shadow .15s, border-color .15s; position: relative; }
+#wzOverlay .wz-pick:active { transform: scale(.985); }
+#wzOverlay .wz-pick.sel { box-shadow: 0 0 0 2px var(--teal), 0 6px 18px -8px var(--teal); }
+#wzOverlay .wz-pm { display: flex; align-items: center; gap: 12px; }
+#wzOverlay .wz-pm-tx { flex: 1; min-width: 0; }
+#wzOverlay .wz-pm .fl { margin-top: 3px; }
+.wz-tier { display: inline-block; vertical-align: 2px; margin-left: 4px; font: 700 9.5px var(--font-body); letter-spacing: .05em;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 8px; background: var(--m-origin-bg); color: var(--m-origin-ink); }
+.wz-tier.powerful { background: var(--m-great-bg); color: var(--m-great-ink); }
+.wz-pv-hd { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.wz-pv-hd .wz-sub { margin-bottom: 0; }
+.wz-quote { position: relative; margin: 6px 0 14px; padding: 18px 16px 14px 40px; border-radius: 13px; font-style: italic;
+  font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); background: linear-gradient(135deg, var(--card-bg), var(--bg-deep));
+  border: 1px solid var(--border); border-left: 4px solid var(--promise); }
+.wz-quote::before { content: '“'; position: absolute; left: 10px; top: -6px; font: 700 54px/1 var(--font-display); color: var(--promise); opacity: .6; }
+.wz-tt { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+.wz-tt .ico { width: 13px; height: 13px; color: var(--teal); }
+.wz-dot { margin: 0 4px; opacity: .5; }
+.wz-plus { opacity: .85; }
+
+/* collapsed theme: quest line */
+.theme-sum .ts-quest { font-size: 12px; font-style: italic; color: var(--ink-soft); opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card.theme:not(.collapsed) .theme-sum .ts-quest { display: none; }
+
+/* oracle: mist-clears reveal + yes/no seal */
+.or-reveal { animation: mistClear .7s var(--ease) both; }
+@keyframes mistClear { 0% { opacity: 0; filter: blur(8px); transform: scale(.98); } 60% { opacity: 1; filter: blur(1px); } 100% { filter: none; transform: none; } }
+.yn-seal { display: table; margin: 2px auto 10px; padding: 6px 16px; border: 3px double currentColor; border-radius: 10px;
+  font: 700 20px var(--font-display); letter-spacing: .08em; text-transform: uppercase; transform: rotate(-4deg);
+  animation: stamp .45s cubic-bezier(.2,1.6,.4,1) .15s both; }
+.yn-0, .yn-1 { color: var(--bad); } .yn-2 { color: var(--mixed); } .yn-3 { color: var(--good); }
+.yn-4 { color: var(--promise); box-shadow: 0 0 18px rgba(230,184,74,.35); }
+@keyframes stamp { from { opacity: 0; transform: rotate(-4deg) scale(1.8); } to { opacity: 1; transform: rotate(-4deg) scale(1); } }
+
+.theme-sum .ts-title { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.2; }
+.theme-sum .ts-meta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card.theme.collapsed .theme-wm { right: -12px; top: 6px; width: 64px; height: 64px; opacity: .05; }
+.theme-sum .ts-side { gap: 6px; }
+@media (max-width: 400px) { .theme-sum .ts-trks { flex-direction: column; align-items: flex-end; gap: 2px; } }
+/* gold accents: Promise family (Quintessences, Fulfillments) */
+#f_quintessences { border-color: rgba(201,151,31,.45); background-image: linear-gradient(180deg, rgba(230,184,74,.08), transparent 60%); }
+#f_quintessences:focus { border-color: var(--promise); box-shadow: 0 0 0 3px rgba(201,151,31,.18); }
+#fulfillVal { color: var(--promise); }
+
+/* tablet: Oracle tools | sticky journal; Rules readable measure */
+@media (min-width: 1000px) {
+  #panel-oracle.active { display: grid; grid-template-columns: 1.5fr 1fr; column-gap: 16px; align-items: start; }
+  #panel-oracle > .card:last-of-type { position: sticky; top: calc(var(--hdr-h, 60px) + 12px); max-height: calc(100vh - var(--hdr-h, 60px) - var(--nav-h) - 40px); overflow: auto; }
+  #panel-oracle .or-tiles { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) { #panel-ref { max-width: 880px; } }
 </style>
 </head>
 <body>
@@ -2335,7 +2391,7 @@ function themeSummary(th, idx, card){
     +[1,2,3].map(i=>'<b class="'+(i<=th[k]?'on':'')+'"></b>').join('')+'</span>').join('');
   sm.innerHTML='<span class="ts-chev"><svg class="ico"><use href="#i-arrow-up"/></svg></span><span class="ts-num">'+(['I','II','III','IV','V','VI','VII','VIII'][idx]||(idx+1))+'</span>'
     +'<span class="ts-main"><span class="ts-title">'+(esc(th.title)||'<i>Untitled theme</i>')+'</span>'
-    +'<span class="ts-meta">'+esc(th.type)+' · '+pw+' power · '+wk+' weak</span></span>'
+    +'<span class="ts-meta">'+esc(th.type)+' · '+pw+' power · '+wk+' weak</span>'+((th.quest||'').trim()?'<span class="ts-quest">'+esc(th.quest)+'</span>':'')+'</span>'
     +'<span class="ts-side"><span class="mightbadge m-'+m+'">'+({origin:'Origin',adventure:'Adventure',greatness:'Greatness',any:'Any'})[m]+'</span>'
     +'<span class="ts-trks">'+trk+'</span></span>';
   sm.onclick=()=>{ _themeOpen[th.id]=card.classList.contains('collapsed'); renderThemes(); };
@@ -2672,7 +2728,7 @@ function inR(rng,n){ const p=String(rng).split('-'); return n>=+p[0] && n<=+(p[1
 let oracleSel='question';
 let _or={ pow:0, role:'Aggressor', act:1, area:null, conflict:{},
   pb:{ adv:1, great:0, aspects:[], phase:'mid', cr:0, might:0, limits:{hard:'',med:'',easy:''}, role:'Aggressor' } };
-function setRes(html){ const r=$('orResult'); if(r) r.innerHTML='<div class="outcome win" style="margin-top:10px">'+html+'</div>'; }
+function setRes(html, cls){ const r=$('orResult'); if(r) r.innerHTML='<div class="outcome '+(cls||'win')+' or-reveal" style="margin-top:10px">'+html+'</div>'; }
 const ORACLES=[['question','Question'],['conflict','Conflict / Scene'],['premade','Premade Profile'],['builder','Profile Builder'],['action','Challenge Action'],['conseq','Consequences'],['revel','Revelations']];
 function renderOracle(){
   const O=litmOracle(); const w=$('oracleBody'); if(!w) return;
@@ -2701,7 +2757,9 @@ function drawOracle(O){
     $('or_yn').onclick=()=>{ const a=d6(),c2=d6(),tot=a+c2+_or.pow,d1=a===1&&c2===1,d6b=a===6&&c2===6;
       const band=d1?O.yesno[0]:d6b?O.yesno[4]:tot<=6?O.yesno[1]:tot<=9?O.yesno[2]:O.yesno[3];
       const q=($('or_q').value||'').trim();
-      setRes('<b>'+a+' + '+c2+(_or.pow?(_or.pow>0?' + '+_or.pow:' − '+Math.abs(_or.pow)):'')+' = '+tot+'</b><div class="sub"><b>'+esc(band.label)+'</b> — '+esc(band.answer)+'</div>');
+      const bi=O.yesno.indexOf(band), seal=String(band.answer).split(/\s+—\s+|\.\s*$/)[0];
+      setRes('<div class="yn-seal yn-'+bi+'">'+esc(seal)+'</div><b>'+a+' + '+c2+(_or.pow?(_or.pow>0?' + '+_or.pow:' − '+Math.abs(_or.pow)):'')+' = '+tot+'</b><div class="sub"><b>'+esc(band.label)+'</b> — '+esc(band.answer)+'</div>', ['lose','lose','mixed','win','win'][bi]||'win');
+      if(bi===4) setTimeout(()=>celebrate($('orResult')),80);
       oracleAdd('Question · Yes/No',(q?q+' → ':'')+band.label+': '+band.answer); };
   } else if(oracleSel==='conflict'){
     b.innerHTML='<button class="btn sm" id="or_call">🎲 Roll a whole scene</button><p class="hint" style="margin:8px 0 2px">Each column, tap 🎲 to (re)roll just that one:</p><div id="or_cols"></div><button class="btn sm ghost" id="or_toroll" style="margin-top:10px">⚔️ Act — go to Roll</button>';

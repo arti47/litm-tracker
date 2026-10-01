@@ -21,7 +21,7 @@
   .wz-ov{position:fixed;inset:0;z-index:120;background:var(--bg);display:none;flex-direction:column}
   .wz-ov.show{display:flex}
   .wz-hd{position:sticky;top:0;background:var(--teal);color:#f3f7f2;padding:calc(var(--safe-top) + 10px) 12px 10px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px var(--shadow)}
-  .wz-hd .t{flex:1;font-family:Georgia,serif;font-weight:700;font-size:17px}
+  .wz-hd .t{flex:1;font-family:var(--font-display,Georgia),serif;font-weight:700;font-size:17px}
   .wz-x{background:rgba(255,255,255,.16);border:none;color:#fff;width:36px;height:36px;border-radius:9px;font-size:18px}
   .wz-prog{display:flex;gap:4px;padding:8px 12px;background:var(--bg-deep)}
   .wz-prog span{flex:1;height:4px;border-radius:2px;background:var(--border)}
@@ -29,13 +29,13 @@
   .wz-body{flex:1;overflow-y:auto;padding:14px 12px calc(var(--safe-bot) + 100px);max-width:720px;margin:0 auto;width:100%}
   .wz-foot{position:fixed;bottom:0;left:0;right:0;display:flex;gap:10px;padding:12px 12px calc(var(--safe-bot) + 12px);background:var(--card-bg);border-top:1px solid var(--border);z-index:5}
   .wz-foot .btn{flex:1}
-  .wz-h{font-family:Georgia,serif;color:var(--teal);font-size:20px;margin:0 0 4px}
+  .wz-h{font-family:var(--font-display,Georgia),serif;color:var(--teal);font-size:20px;margin:0 0 4px}
   .wz-sub{color:var(--ink-soft);font-size:13px;margin:0 0 14px;line-height:1.45}
   .wz-card{background:var(--card-bg);border:1px solid var(--border);border-radius:13px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px var(--shadow)}
   .wz-pick{display:block;width:100%;text-align:left;background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:13px;margin-bottom:10px;color:var(--ink)}
   .wz-pick:active{filter:brightness(.97)}
   .wz-pick.sel{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
-  .wz-pick .nm{font-weight:700;font-size:16px;font-family:Georgia,serif}
+  .wz-pick .nm{font-weight:700;font-size:16px;font-family:var(--font-display,Georgia),serif}
   .wz-pick .meta{font-size:12px;color:var(--ink-soft);margin-top:3px}
   .wz-pick .fl{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.4}
   .chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
@@ -159,7 +159,8 @@
         if(!items.length) return;
         html+=`<div class="wz-fld" style="margin:14px 0 2px"><span>${esc(label)}</span></div><p class="wz-note" style="margin:0 0 8px">${esc(blurb)}</p>`;
         items.forEach(([c,i])=>{
-          html+=`<button class="wz-pick" data-i="${i}"><div class="nm">${esc(c.name)}</div><div class="fl">${esc(c.tagline)}</div></button>`;
+          const crest=(typeof heroCrestSVG==='function')?heroCrestSVG({heroName:c.name,themes:c.themes},40):'';
+          html+=`<button class="wz-pick wz-pm" data-i="${i}">${crest}<div class="wz-pm-tx"><div class="nm">${esc(c.name)} <span class="wz-tier ${esc(c.tier)}">${esc(label)}</span></div><div class="fl">${esc(c.tagline)}</div></div></button>`;
         });
       });
       $b().innerHTML=html;
@@ -170,12 +171,12 @@
     const c=list[draft._pm]; if(!c){ draft._pm=null; render(); return; }
     setFoot(true,true,'Create Hero ✓');
     let html=`<button class="wz-pick" id="wz_pmback" style="margin-bottom:12px;padding:9px 13px"><div class="nm" style="font-size:14px">← Choose a different Hero</div></button>`;
-    html+=`<h2 class="wz-h">${esc(c.name)}</h2><p class="wz-sub">${esc(c.tagline)}</p>`;
-    if(c.quote) html+=`<div class="wz-card" style="font-style:italic;color:var(--ink-soft);font-size:13px;line-height:1.55">“${esc(c.quote)}”</div>`;
+    html+=`<div class="wz-pv-hd">${(typeof heroCrestSVG==='function')?heroCrestSVG({heroName:c.name,themes:c.themes},56):''}<div><h2 class="wz-h">${esc(c.name)}</h2><p class="wz-sub">${esc(c.tagline)}</p></div></div>`;
+    if(c.quote) html+=`<blockquote class="wz-quote">${esc(c.quote)}</blockquote>`;
     c.themes.forEach(t=>{
       html+=`<div class="wz-card">
         <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--ink-soft)">${esc(t.type)} · ${esc(mightLabel(t.type))}</div>
-        <div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--teal);margin:2px 0 7px">${esc(t.title)}</div>
+        <div style="font-family:var(--font-display,Georgia),serif;font-size:17px;font-weight:700;color:var(--teal);margin:2px 0 7px">${esc(t.title)}</div>
         <div class="chips">${t.power.map(p=>`<span class="chip pw">${esc(p)}</span>`).join('')}<span class="chip wk">${esc(t.weak)}</span></div>
         <div class="wz-note"><b>Quest:</b> ${esc(t.quest)}</div>
         <div class="wz-note" style="margin-top:5px"><b>Special — ${esc(t.special.name)}:</b> ${esc(t.special.desc)}</div>
@@ -245,8 +246,9 @@
     const tropes=D.tropes||[];
     let html=`<h2 class="wz-h">Pick a Trope</h2><p class="wz-sub">A recipe of three themes plus a suggested fourth. Tap one — you'll fill in each theme next. Or tap "Skip / manual" to choose theme types yourself.</p>`;
     tropes.forEach((tr,i)=>{
-      const ts=tr.themes.map(x=>x.type).join(' · ');
-      html+=`<button class="wz-pick ${draft._trope===i?'sel':''}" data-i="${i}"><div class="nm">${esc(tr.name||'Trope '+(i+1))}</div><div class="meta">${esc(ts)} &nbsp;+ choose one: ${esc(tr.fourth.map(x=>x.type).join(' / '))}</div></button>`;
+      const ic=t=>(typeof icoSVG==='function' && typeof THEME_ICON!=='undefined')?icoSVG(THEME_ICON[t]||'feather'):'';
+      const ts=tr.themes.map(x=>'<span class="wz-tt">'+ic(x.type)+esc(x.type)+'</span>').join('<span class="wz-dot">·</span>');
+      html+=`<button class="wz-pick ${draft._trope===i?'sel':''}" data-i="${i}"><div class="nm">${esc(tr.name||'Trope '+(i+1))}</div><div class="meta">${ts} <span class="wz-plus">&nbsp;+ choose one: ${esc(tr.fourth.map(x=>x.type).join(' / '))}</span></div></button>`;
     });
     $b().innerHTML=html;
     $b().querySelectorAll('[data-i]').forEach(btn=>btn.onclick=()=>{

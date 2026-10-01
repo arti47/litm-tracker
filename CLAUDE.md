@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v58` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v59` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -701,6 +701,15 @@ ink-line icons), auto light/dark.
   **Haptics** (`startHaptics`): 6ms tick on chips/pips/boxes/tiles/tabs (Android). **Launch splash** (`#splash`,
   `endSplash`): emblem + title over a mist gradient, ~1s fade, once per session (`sessionStorage litm-splashed`),
   skipped under reduced motion.
+
+- **Audit R5 ✅ —** **Wizard**: display-font titles (wizard CSS `Georgia` → `var(--font-display)`); Ready-made cards show
+  a generated crest (`heroCrestSVG` from the premade's name/themes) + tier badge (`.wz-tier`, the group label); preview
+  gets a crest header and a gold-ruled pull-quote (`.wz-quote`); Trope cards show theme types with `THEME_ICON` icons
+  (`.wz-tt`); selected-card glow + press scale. **Collapsed theme summary** adds the Quest as an italic 1-line
+  (`.ts-quest`); title clamps to 2 lines, meta single-line, compact watermark. **Oracle**: results fade in with a
+  blur-to-sharp "mist clears" (`.or-reveal`); **Yes/No** gets a stamped seal (`.yn-seal.yn-0…4`, text = the band
+  answer's lead phrase) and tier colour (`setRes(html, cls)`), Extreme Yes triggers `celebrate`. Gold accent on
+  Quintessences + Fulfillments. **Tablet**: Oracle = tools | sticky scrollable journal (≥1000px); Rules capped at 880px.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
