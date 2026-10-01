@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v59` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v60` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -710,6 +710,15 @@ ink-line icons), auto light/dark.
   blur-to-sharp "mist clears" (`.or-reveal`); **Yes/No** gets a stamped seal (`.yn-seal.yn-0…4`, text = the band
   answer's lead phrase) and tier colour (`setRes(html, cls)`), Extreme Yes triggers `celebrate`. Gold accent on
   Quintessences + Fulfillments. **Tablet**: Oracle = tools | sticky scrollable journal (≥1000px); Rules capped at 880px.
+
+- **Audit R6 ✅ —** Coach dot / FAB / dock hide while any sheet, the wizard or the tour is open (`body:has(...)`).
+  **☰ menu grouped** under Heroes · Play · Learn · Data & sharing · Settings (`.menu-grp`; same items/labels; Delete last,
+  red). **Coach bar**: glowing **lantern guide** avatar (`#i-lantern`, custom) + speech-bubble text, slide-in on each state
+  (`coachSet` adds `.bump`); dark ghost-button contrast fixed. **Scene art headers** (inline SVG, theme-aware): Camp =
+  tent + flickering campfire + rising embers; Journey = ridgelines, drifting mist, dotted road to a waving flag. Camp
+  inline field rows keep the button compact. **Status box pop** on tap (`_popKey`). **Rules section icons**
+  (`attachRefAccordion` keyword map). Header title is a **hero-switcher** (opens roster). **Swipe a tag row left**
+  (>64px) to toggle scratch (`startTagSwipe`; buttons unchanged, delete stays button-only). `▶` mapped to the play icon.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
