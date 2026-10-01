@@ -633,6 +633,99 @@ body.coach-active .toast { bottom: calc(var(--safe-bot) + var(--nav-h) + 170px);
 .roll-fab:active { transform: scale(.94); }
 body[data-tab=hero] .roll-fab, body[data-tab=fellowship] .roll-fab, body[data-tab=track] .roll-fab { display: flex; }
 body.coach-active .roll-fab { display: none !important; }
+
+/* =====================================================================
+   UI REFRESH — Phase 3: dice, outcome, Might bar, Power, statuses, Promise
+   ===================================================================== */
+:root { --promise: #c9971f; --die-bg: #fffdf6; --die-ink: #1f2a26; }
+body.dark { --promise: #e6b84a; --die-bg: #2b3530; --die-ink: #e7efe9; }
+.dice { perspective: 600px; gap: 18px; margin: 16px 0; }
+.die { width: 66px; height: 66px; border-radius: 15px; background: var(--die-bg); color: var(--die-ink);
+  border: 1.5px solid var(--border); box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 4px 0 var(--bg-deep), 0 6px 14px var(--shadow);
+  transform-style: preserve-3d; }
+.die .die-face { width: 78%; height: 78%; fill: currentColor; }
+.die[data-v=""] .die-face { opacity: 0; }
+.die[data-v=""]::after { content: '?'; font-family: var(--font-display); font-size: 26px; color: var(--ink-soft); opacity: .45; }
+.die.rolling { animation: tumble .48s cubic-bezier(.3,.7,.4,1); }
+#die2.rolling { animation-delay: .04s; }
+@keyframes tumble {
+  0% { transform: translateY(0) rotateX(0) rotateZ(0); }
+  30% { transform: translateY(-26px) rotateX(200deg) rotateZ(-40deg); }
+  60% { transform: translateY(-8px) rotateX(330deg) rotateZ(20deg); }
+  80% { transform: translateY(-3px) rotateX(360deg) rotateZ(-6deg); }
+  100% { transform: translateY(0) rotateX(360deg) rotateZ(0); } }
+.die.crit-win { border-color: var(--promise); color: var(--promise); box-shadow: 0 0 0 3px rgba(201,151,31,.25), 0 0 22px rgba(230,184,74,.55); }
+.die.crit-lose { border-color: var(--bad); color: var(--bad); animation: critShake .45s ease .05s; }
+@keyframes critShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px) rotate(-4deg)} 40%{transform:translateX(5px) rotate(3deg)} 60%{transform:translateX(-3px)} 80%{transform:translateX(2px)} }
+.outcome { position: relative; border: 1px solid transparent; animation: ocIn .35s var(--ease); }
+.outcome.win { border-color: rgba(46,125,50,.25); } .outcome.mixed { border-color: rgba(154,106,16,.25); } .outcome.lose { border-color: rgba(179,38,30,.25); }
+.outcome .oc-ic { display: flex; justify-content: center; margin-bottom: 4px; }
+.outcome .oc-ic .ico { width: 30px; height: 30px; stroke-width: 1.7; }
+.outcome.crit-win { box-shadow: 0 0 0 2px var(--promise), 0 0 28px rgba(230,184,74,.35); }
+.outcome.crit-win .oc-ic { color: var(--promise); }
+@keyframes ocIn { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+.powerbig .n { transition: color .2s; }
+.powerbig .n.pos { color: var(--good); } .powerbig .n.neg { color: var(--bad); }
+.powerbig .n.bump { animation: pbump .28s var(--ease); }
+@keyframes pbump { 0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)} }
+#rollBtn { box-shadow: 0 4px 0 var(--teal-dark), 0 8px 18px var(--shadow); transition: transform .08s, box-shadow .08s; }
+#rollBtn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--teal-dark), 0 3px 8px var(--shadow); }
+
+/* Might: one colour-graded bar, number + name */
+.might-bar { gap: 0; flex-wrap: nowrap; border-radius: var(--r-m); overflow: hidden; border: 1.5px solid var(--border); }
+.might-bar button { min-width: 0; border: 0; border-radius: 0; padding: 7px 2px 6px; display: flex; flex-direction: column;
+  align-items: center; gap: 1px; border-right: 1px solid var(--border); }
+.might-bar button:last-child { border-right: 0; }
+.might-bar button b { font-family: var(--font-display); font-size: 16px; line-height: 1.1; }
+.might-bar button small { font-size: 9.5px; font-weight: 600; line-height: 1.15; opacity: .85; text-align: center; }
+.might-bar [data-m="-6"] { background: rgba(179,38,30,.16); color: #8f2019; }
+.might-bar [data-m="-3"] { background: rgba(179,38,30,.07); color: #a13a2c; }
+.might-bar [data-m="0"]  { background: var(--card-bg); color: var(--ink); }
+.might-bar [data-m="3"]  { background: rgba(46,125,50,.07); color: #2d6b31; }
+.might-bar [data-m="6"]  { background: rgba(46,125,50,.16); color: #1f5a23; }
+body.dark .might-bar [data-m="-6"], body.dark .might-bar [data-m="-3"] { color: #f0a39c; }
+body.dark .might-bar [data-m="3"], body.dark .might-bar [data-m="6"] { color: #9fd8a3; }
+.might-bar button.on { color: #fff !important; }
+.might-bar [data-m="-6"].on { background: #a32a21; } .might-bar [data-m="-3"].on { background: #c0564a; }
+.might-bar [data-m="0"].on { background: var(--teal); } .might-bar [data-m="3"].on { background: #4c8f50; }
+.might-bar [data-m="6"].on { background: #2e7d32; }
+
+/* statuses: tier boxes deepen with intensity; Limit box marked */
+.sbox { border-radius: 7px; transition: background .15s, transform .1s; }
+.sbox:active { transform: scale(.92); }
+.sbox.on[data-t="1"] { background: #d8eed2; } .sbox.on[data-t="2"] { background: #c2e3b9; }
+.sbox.on[data-t="3"] { background: #a6d29b; } .sbox.on[data-t="4"] { background: #86bd7a; color: #fff; }
+.sbox.on[data-t="5"] { background: #5f9a55; color: #fff; } .sbox.on[data-t="6"] { background: #3f7537; color: #fff; }
+body.dark .sbox.on[data-t="1"] { background: #2b4a2e; } body.dark .sbox.on[data-t="2"] { background: #33583a; }
+body.dark .sbox.on[data-t="3"] { background: #3d6a43; } body.dark .sbox.on[data-t="4"] { background: #4a7d4f; }
+body.dark .sbox.on[data-t="5"] { background: #5a9160; } body.dark .sbox.on[data-t="6"] { background: #6aa670; }
+.sbox.lim { border-width: 2px; }
+.sbox.lim::before { content: ''; position: absolute; top: -5px; right: -5px; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--bad); box-shadow: 0 0 0 2px var(--card-bg); }
+.status-card { border: 1px solid var(--border); border-left: 4px solid var(--status-ink); }
+.status-meta select { width: auto; flex: none; }
+
+/* Promise: stars that turn gold */
+.pip.promise { border: 0; background: transparent; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; color: var(--mist); }
+.pip.promise .ico { width: 26px; height: 26px; stroke-width: 1.6; }
+.pip.promise.on { background: transparent; color: var(--promise); }
+.pip.promise.on .ico { fill: var(--promise); filter: drop-shadow(0 1px 2px rgba(201,151,31,.4)); }
+.pip.promise.on:last-child .ico { animation: starIn .35s var(--ease); }
+@keyframes starIn { from { transform: scale(.4) rotate(-30deg); } to { transform: none; } }
+.pip:not(.promise) { transition: background .15s, transform .1s; }
+.pip:not(.promise).on { box-shadow: inset 0 0 0 3px var(--card-bg); }
+
+/* burn: flickering flame */
+.modchip.burning .burn .ico { color: var(--burn); animation: flicker 1.1s ease-in-out infinite; transform-origin: 50% 90%; }
+@keyframes flicker { 0%,100%{transform:scale(1) rotate(0)} 30%{transform:scale(1.12) rotate(-5deg)} 60%{transform:scale(.95) rotate(4deg)} }
+.modchip { transition: background .15s, transform .1s; min-height: 36px; }
+.modchip:active { transform: scale(.96); }
+
+/* roll history */
+.rollhist { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; border-left: 3px solid transparent; padding-left: 8px; }
+.rollhist.rh-win { border-left-color: var(--good); } .rollhist.rh-mixed { border-left-color: var(--mixed); } .rollhist.rh-lose { border-left-color: var(--bad); }
+.rh-dice { display: inline-flex; gap: 3px; }
+.rh-dice .die-face { width: 18px; height: 18px; fill: var(--ink-soft); background: var(--bg-deep); border-radius: 4px; border: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -871,12 +964,12 @@ body.coach-active .roll-fab { display: none !important; }
     <div id="agRoll"></div>
     <div id="rollTags"></div>
     <h3>Might <button type="button" class="infodot" onclick="explain('might')" title="What's this?">ⓘ</button></h3>
-    <div class="seg" id="mightSeg">
-      <button data-m="-6">Extr. Imperiled −6</button>
-      <button data-m="-3">Imperiled −3</button>
-      <button data-m="0" class="on">Matched</button>
-      <button data-m="3">Favored +3</button>
-      <button data-m="6">Extr. Favored +6</button>
+    <div class="seg might-bar" id="mightSeg">
+      <button data-m="-6"><b>−6</b><small>Extr. Imperiled</small></button>
+      <button data-m="-3"><b>−3</b><small>Imperiled</small></button>
+      <button data-m="0" class="on"><b>0</b><small>Matched</small></button>
+      <button data-m="3"><b>+3</b><small>Favored</small></button>
+      <button data-m="6"><b>+6</b><small>Extr. Favored</small></button>
     </div>
     <details class="might-help"><summary>⚖️ Might helper — set it for me</summary>
       <p class="hint" style="margin:6px 0">Pick the <b>Might the task demands</b> and the <b>Might you bring</b> (your relevant theme); the app sets the modifier above.</p>
@@ -897,7 +990,7 @@ body.coach-active .roll-fab { display: none !important; }
 
   <div class="card">
     <div class="powerbig"><div class="n" id="powerNum">0</div><div class="l">Power <button type="button" class="infodot" onclick="explain('power')" title="What's this?">ⓘ</button></div></div>
-    <div class="dice"><div class="die" id="die1">–</div><div class="die" id="die2">–</div></div>
+    <div class="dice"><div class="die" id="die1" aria-label="die 1"></div><div class="die" id="die2" aria-label="die 2"></div></div>
     <button class="btn wide" id="rollBtn" style="font-size:17px;padding:14px" onclick="rollDice()">🎲 Roll 2d6 + Power</button>
     <div id="outcomeBox"></div>
     <div id="spendBox"></div>
@@ -1841,7 +1934,8 @@ function renderPromise(){
   const w = $('promisePips'); w.innerHTML='';
   for(let i=1;i<=5;i++){
     const b=document.createElement('button');
-    b.className='pip promise'+(i<=S.promise?' on':'');
+    b.className='pip promise'+(i<=S.promise?' on':''); b.setAttribute('aria-label','Promise '+i);
+    b.innerHTML='<svg class="ico"><use href="#i-star"/></svg>';
     b.onclick=()=>{ S.promise = (S.promise===i? i-1 : i); renderPromise(); save(); if(S.promise>=5) openMoF(); };
     w.appendChild(b);
   }
@@ -2071,7 +2165,7 @@ function statusCard(st){
   const tier=st.boxes.lastIndexOf(true)+1;
   for(let t=1;t<=6;t++){
     const b=document.createElement('button'); b.className='sbox'+(st.boxes[t-1]?' on':'')+(t===tier?' tier':'')+(t===lim?' lim':'');
-    b.textContent=t;
+    b.textContent=t; b.dataset.t=t;
     if(t===lim) b.title='Limit '+lim+' — reaching this tier takes the target out';
     b.onclick=()=>{ toggleStatusBox(st,t); renderStatuses(); save(); };
     boxes.appendChild(b);
@@ -2748,6 +2842,8 @@ function computePower(){
   p += hiHelp - hiHind + might + sit;
   $('powerNum').textContent=p;
   $('powerNum')._val=p;
+  const pn=$('powerNum'); if(pn._shown!==undefined && pn._shown!==p){ pn.classList.remove('bump'); void pn.offsetWidth; pn.classList.add('bump'); }
+  pn._shown=p; pn.classList.toggle('pos',p>0); pn.classList.toggle('neg',p<0);
   const dp=$('dockPow'); if(dp){ dp.textContent=(p>0?'+':'')+p; dp.className=p>0?'pos':p<0?'neg':''; }
   $('powerNum')._weak=invokedWeak;
   return p;
@@ -2783,10 +2879,10 @@ function rollDice(){
   spend=null; $('spendBox').innerHTML='';
   const d1=$('die1'), d2=$('die2');
   d1.classList.add('rolling'); d2.classList.add('rolling');
-  d1.textContent='?'; d2.textContent='?';
+  setDie(d1,0); setDie(d2,0); d1.classList.remove('crit-win','crit-lose'); d2.classList.remove('crit-win','crit-lose');
   setTimeout(()=>{
     const r1=1+Math.floor(Math.random()*6), r2=1+Math.floor(Math.random()*6);
-    d1.textContent=r1; d2.textContent=r2;
+    setDie(d1,r1); setDie(d2,r2);
     d1.classList.remove('rolling'); d2.classList.remove('rolling');
     const total=r1+r2+power;
     const dbl6=(r1===6&&r2===6), dbl1=(r1===1&&r2===1);
@@ -2834,7 +2930,10 @@ function rollDice(){
       if(!reaction && tier!=='win') bridge+='<button class="btn sm" onclick="oracleJump(\'conseq\',\'or_cq\')">🔮 Roll a Consequence</button>';
       bridge+='<button class="btn sm ghost" onclick="logRollToJournal()">📓 Log to journal</button></div>';
     }
-    $('outcomeBox').innerHTML = '<div class="outcome '+cls+'"><div class="big">'+big+'</div>'
+    const crit = dbl6?' crit-win':(dbl1auto?' crit-lose':'');
+    if(crit){ d1.classList.add(crit.trim()); d2.classList.add(crit.trim()); }
+    const ocIc = {win: reaction?'shield':'trophy', mixed:'scale', lose:'triangle-alert'}[cls];
+    $('outcomeBox').innerHTML = '<div class="outcome '+cls+crit+'"><div class="oc-ic">'+icoSVG(ocIc)+'</div><div class="big">'+big+'</div>'
       + '<div class="sub">Rolled '+r1+' + '+r2+' '+(power>=0?'+ ':'− ')+Math.abs(power)+' Power = <b>'+total+'</b></div>'
       + '<div class="sub">'+sub+'</div>'+detail+weakNote+blNote+agNote+burnNote+bridge+'</div>';
     rolls.unshift({t:Date.now(), r1, r2, power, total, big:(reaction?'🛡 ':'')+big, hero:S.heroName||'Hero'});
@@ -3064,7 +3163,8 @@ function renderRollHist(){
   rolls.slice(0,20).forEach(r=>{
     const d=document.createElement('div'); d.className='rollhist';
     const time=new Date(r.t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-    d.innerHTML='<b>'+r.total+'</b> · '+r.big+' <span class="muted">('+r.r1+'+'+r.r2+(r.power>=0?'+':'−')+Math.abs(r.power)+') · '+time+'</span>';
+    const tr=/10\+|Success!|React!/.test(r.big)?'win':/7–9/.test(r.big)?'mixed':'lose'; d.classList.add('rh-'+tr);
+    d.innerHTML='<span class="rh-dice">'+dieSVG(r.r1)+dieSVG(r.r2)+'</span><b>'+r.total+'</b> · '+r.big+' <span class="muted">('+r.r1+'+'+r.r2+(r.power>=0?'+':'−')+Math.abs(r.power)+') · '+time+'</span>';
     w.appendChild(d);
   });
 }
@@ -3332,6 +3432,12 @@ function startIconizer(){
   }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 
+// ----- UI refresh P3: SVG pip dice -----
+const PIPS={1:[[50,50]],2:[[28,28],[72,72]],3:[[28,28],[50,50],[72,72]],4:[[28,28],[72,28],[28,72],[72,72]],
+  5:[[28,28],[72,28],[50,50],[28,72],[72,72]],6:[[28,26],[72,26],[28,50],[72,50],[28,74],[72,74]]};
+function dieSVG(v){ return '<svg class="die-face" viewBox="0 0 100 100" aria-hidden="true">'+(PIPS[v]||[]).map(([x,y])=>'<circle cx="'+x+'" cy="'+y+'" r="'+(v===1?13:10)+'"/>').join('')+'</svg>'; }
+function setDie(el,v){ if(!el) return; el.innerHTML=dieSVG(v); el.dataset.v=v||''; el.setAttribute('aria-label', v?('die shows '+v):'die'); }
+
 // ----- UI refresh P2: help sheet, roll dock, floating Roll button -----
 function panelHowtos(name){ const p=$('panel-'+(name||document.body.dataset.tab||'hero')); return p? [...p.querySelectorAll(':scope > details.howto')] : []; }
 function uiTabChanged(name){
@@ -3379,6 +3485,7 @@ renderAll();
 applySolo();
 maybeWelcome();
 startIconizer();
+setDie($('die1'),0); setDie($('die2'),0);
 document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide();
 _lastSnap=_snap(); updateUndoUI();
 

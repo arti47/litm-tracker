@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v52` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v53` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -640,6 +640,15 @@ ink-line icons), auto light/dark.
   subdued red text button. **Sticky roll dock** (`#rollDock`, `dockRoll`, `startRollDock` IntersectionObserver
   on `#rollBtn`; live Power via `#dockPow` from `computePower`) and a **floating 🎲 button** (`#rollFab`) on
   Hero/Fellowship/Tracking that hides on scroll-down / input focus (`startFabAutoHide`) and during the coach.
+- **Phase 3 ✅ — play visuals.** **SVG pip dice** (`PIPS`/`dieSVG`/`setDie`; `#die1/#die2` hold an SVG face,
+  `data-v` = value, blank "?" before first roll) with a 3D **tumble** keyframe; **double 6** gets a gold glow
+  (`.crit-win`), auto-miss **double 1** a red shake (`.crit-lose`). **Outcome banner** gains a tier icon (trophy /
+  scale / triangle-alert; shield for a reaction success) and a slide-in. **Power** numeral pulses on change and
+  turns green/red (`.pos`/`.neg`, also on the dock). Roll button has a pressable 3D edge. **Might** is one
+  **colour-graded bar** (`.might-bar`, red → neutral → green; each button = big number + same name text).
+  **Status boxes** deepen in green by tier (`data-t`), the Limit box carries a red marker. **Promise** pips are
+  **stars** that fill gold (`--promise`). Burning tag's flame flickers. **Roll history** rows show mini pip dice +
+  a win/mixed/lose colour edge (tier derived from the stored `big` text — no new stored field).
 
 ### App-level
 - **Multi-hero roster** (create / switch / delete).
