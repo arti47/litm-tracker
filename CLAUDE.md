@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v57` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v58` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (6)**:
@@ -65,6 +65,7 @@ As of last verification:
   - `litm-solo` — `'1'` when Solo Play Mode is on (reveals the 🔮 Oracle tab); app-level, not per-hero
   - `litm-seen` — `'1'` once the first-run **Welcome** overlay has been dismissed; app-level, not per-hero
   - (`litm-hero` appears only as the default export filename stem, not a storage key)
+  - **sessionStorage** `litm-splashed` — `'1'` once the launch splash has shown this browser session (UI only)
 
 ### Stack
 - **Pure HTML5 + CSS + vanilla JS** — no frameworks, no runtime dependencies.
@@ -689,6 +690,17 @@ ink-line icons), auto light/dark.
   **Print / PDF sheet** (☰ → `printSheet()`; `@media print`): Hero + Fellowship on paper, all themes expanded 2-up,
   chrome/buttons/hints hidden, tag colours kept (`print-color-adjust: exact`), placeholders blank. Thin themed
   scrollbars, teal selection/caret, Cinzel stepper numerals, Promise ⓘ no longer wraps.
+
+- **Audit R4 ✅ —** **Dark-mode contrast**: primary fills use `--btn` (`#2c6b5e` in dark, ≥4.5:1 with white) for `.btn`,
+  selected seg/tiles, FAB, coach dot/bar, guide phases; dark `--power` pill retuned. **Theme identity**: roman-numeral
+  seal (`.ts-num`, Might-tinted) in each summary + faint **theme-type watermark** icon (`THEME_ICON`: 20 types → Lucide
+  icons) on every theme card; **Expand all / Collapse all** bar (`.themes-bar`) above the themes. **Hero glance strip**
+  (`#heroGlance`, `updateGlance` — called from `renderAll` and `save`): Promise stars · Fulfillments · active own
+  statuses · scratched tags, plus jump chips (Hero/Backpack/Themes/Notes); sticky under the header (`--hdr-h` from
+  `syncHeaderH`), blurred backdrop. **Relationships**: fellow's name as a display-font heading line above the tag.
+  **Haptics** (`startHaptics`): 6ms tick on chips/pips/boxes/tiles/tabs (Android). **Launch splash** (`#splash`,
+  `endSplash`): emblem + title over a mist gradient, ~1s fade, once per session (`sessionStorage litm-splashed`),
+  skipped under reduced motion.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
