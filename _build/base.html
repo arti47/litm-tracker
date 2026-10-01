@@ -1185,12 +1185,41 @@ body.dark .scene-art { background: linear-gradient(180deg, #0f1f1b, #1c2723 85%)
 .tagrow { transition: transform .18s var(--ease); position: relative; }
 .tagrow.swiping { transition: none; }
 .tagrow.swipe-arm input { box-shadow: 0 0 0 2px var(--teal); }
+
+/* =====================================================================
+   UI REFRESH — Round 7: a11y fixes, theme move, tag drag/fresh/embers, display settings, reduce-motion class
+   ===================================================================== */
+body.dark .tb-btn { color: var(--teal-dark); }
+.theme-move { display: flex; gap: 6px; margin-top: 4px; }
+.theme-move .btn { display: inline-flex; align-items: center; gap: 4px; }
+.theme-move .btn .ico { width: 14px; height: 14px; }
+.theme-move .btn:disabled { opacity: .35; }
+.card.theme.moved { animation: movedGlow .9s ease; }
+@keyframes movedGlow { 0% { box-shadow: 0 0 0 3px var(--focus); } 100% { box-shadow: 0 1px 2px var(--shadow), 0 6px 18px -10px var(--shadow); } }
+.tag-grip { flex: none; width: 16px; margin: 0 -4px 0 -6px; display: flex; align-items: center; justify-content: center; color: var(--mist);
+  cursor: grab; touch-action: none; align-self: stretch; position: relative; }
+.tag-grip::after { content: ''; position: absolute; inset: -4px -6px; }
+.tag-grip .ico { width: 14px; height: 14px; }
+.taglist:not(:has(.tagrow + .tagrow)) .tag-grip, #relList .tag-grip, #sceneList .tag-grip, .orl .tag-grip { visibility: hidden; width: 4px; }
+.tagrow.dragging { z-index: 5; opacity: .92; box-shadow: 0 8px 20px -6px var(--shadow); border-radius: 20px; transition: none; }
+.tagrow.dragging .tag-grip { cursor: grabbing; color: var(--teal); }
+.tagrow.fresh { animation: tagIn .32s var(--ease); }
+@keyframes tagIn { from { opacity: 0; transform: translateY(-6px) scale(.97); } to { opacity: 1; transform: none; } }
+.fx-burst.ember i { width: 5px; height: 5px; animation-duration: .9s; }
+/* display settings */
+.ui-h { display: flex; align-items: center; gap: 7px; font-size: 14px; color: var(--teal); margin: 16px 0 6px; }
+.ui-h .ico { width: 17px; height: 17px; }
+.ui-seg button { min-height: 40px; font-size: 13px; }
+.ui-prev { margin: 8px 0 0; padding: 10px 12px; border-radius: var(--r-m); background: var(--bg-deep); font-size: 15px; }
+/* reduce-motion preference (app-level override) */
+body.rm *, body.rm *::before, body.rm *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+  transition-duration: .001ms !important; scroll-behavior: auto !important; }
 </style>
 </head>
 <body>
 <!--__ICON_SPRITE__-->
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-emb"><use href="#i-antler"/></svg><div class="sp-t">Legend in the Mist</div><div class="sp-mist"></div></div></div>
-<script>try{ if(sessionStorage.getItem('litm-splashed') || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.getElementById('splash').remove(); else sessionStorage.setItem('litm-splashed','1'); }catch(e){}</script>
+<script>try{ if(sessionStorage.getItem('litm-splashed') || /"motion":"reduce"/.test(localStorage.getItem('litm-ui')||'') || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.getElementById('splash').remove(); else sessionStorage.setItem('litm-splashed','1'); }catch(e){}</script>
 
 <header>
   <div class="hdr-top">
@@ -1670,6 +1699,7 @@ body.dark .scene-art { background: linear-gradient(180deg, #0f1f1b, #1c2723 85%)
     <button class="menu-item" onclick="exportFellowship()"><span class="em">🤝</span> Share Fellowship (JSON file)</button>
     <button class="menu-item" onclick="document.getElementById('fellowFile').click()"><span class="em">🔗</span> Import / sync Fellowship</button>
     <div class="menu-grp">Settings</div>
+    <button class="menu-item" onclick="openUISettings()"><span class="em">⚙️</span> Display settings</button>
     <button class="menu-item" onclick="toggleTheme()"><span class="em">🌓</span> <span id="themeLbl">Toggle dark mode</span></button>
     <button class="menu-item danger-text" onclick="deleteHero()"><span class="em">🗑️</span> Delete this hero</button>
     <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importJSON(event)">
@@ -1822,11 +1852,18 @@ body.dark .scene-art { background: linear-gradient(180deg, #0f1f1b, #1c2723 85%)
   <button class="tab" data-tab="ref" onclick="showTab('ref')"><span class="tab-ic"><svg class="ico"><use href="#i-book-open"/></svg></span><span class="tab-lb">Rules</span></button>
   <button class="tab" data-tab="oracle" onclick="showTab('oracle')" id="oracleTab" style="display:none"><span class="tab-ic"><svg class="ico"><use href="#i-orb"/></svg></span><span class="tab-lb">Oracle</span></button>
 </nav>
-<div id="rollDock" class="roll-dock" aria-hidden="true">
+<div id="rollDock" class="roll-dock" aria-hidden="true" inert>
   <div class="rd-pow"><span class="rd-l">Power</span><b id="dockPow">0</b></div>
   <button class="btn" onclick="dockRoll()">🎲 Roll 2d6 + Power</button>
 </div>
 <button id="rollFab" class="roll-fab" onclick="showTab('roll')" title="Roll" aria-label="Go to Roll">🎲</button>
+<div class="overlay" id="uiOverlay" onclick="if(event.target===this)closeUISettings()">
+  <div class="sheet">
+    <h2>⚙️ Display settings</h2>
+    <div id="uiBody"></div>
+    <button class="btn wide" style="margin-top:16px" onclick="closeUISettings()">Done</button>
+  </div>
+</div>
 <div class="overlay" id="helpOverlay" onclick="if(event.target===this)closeHelp()">
   <div class="sheet">
     <h2 id="helpTitle">❓ How to use this tab</h2>
@@ -2435,6 +2472,7 @@ function renderPromise(){
   }
 }
 
+const _freshIds=new Set();   // tag ids already seen (only genuinely new empty rows animate in)
 function tagRow(tag, kind, onScratchToggle, onFlip, onDel, onText){
   // kind: 'power' | 'weak' | 'story'
   const row=document.createElement('div'); row.className='tagrow';
@@ -2444,6 +2482,8 @@ function tagRow(tag, kind, onScratchToggle, onFlip, onDel, onText){
   inp.value=tag.text;
   inp.placeholder = kind==='weak' ? 'weakness tag…' : (kind==='power'?'power tag…':'story tag…');
   inp.oninput=()=>{ onText(inp.value); };
+  const grip=document.createElement('span'); grip.className='tag-grip'; grip.setAttribute('aria-hidden','true'); grip.innerHTML=icoSVG('grip-vertical'); row.appendChild(grip);
+  if(!(tag.text||'').trim() && _freshIds.has(tag.id)===false){ _freshIds.add(tag.id); row.classList.add('fresh'); }
   row.appendChild(inp);
   if(onFlip){ // story tags flip helpful/hindering
     const f=document.createElement('button'); f.className='ic'; f.textContent = tag.type==='hindering'?'🟠':'🟡';
@@ -2451,15 +2491,16 @@ function tagRow(tag, kind, onScratchToggle, onFlip, onDel, onText){
   }
   if(onScratchToggle){
     const s=document.createElement('button'); s.className='ic'+(tag.scratched?' on':''); s.textContent='✓';
-    s.title='Scratch / recover'; s.onclick=onScratchToggle; row.appendChild(s);
+    s.title='Scratch / recover'; s.setAttribute('aria-pressed',String(!!tag.scratched)); s.setAttribute('aria-label',(tag.scratched?'Recover ':'Scratch ')+(tag.text||'tag'));
+    s.onclick=e=>{ const was=!!tag.scratched, r=row.getBoundingClientRect(); onScratchToggle(e); if(!was) emberAt(r); }; row.appendChild(s);
   }
-  const d=document.createElement('button'); d.className='ic'; d.textContent='✕'; d.title='Delete'; d.onclick=onDel;
+  const d=document.createElement('button'); d.className='ic'; d.textContent='✕'; d.title='Delete'; d.setAttribute('aria-label','Delete '+(tag.text||'tag')); d.onclick=onDel;
   row.appendChild(d);
   return row;
 }
 
 function renderBackpack(){
-  const w=$('backpackList'); w.innerHTML='';
+  const w=$('backpackList'); w.innerHTML=''; w._arr=S.backpack; w._re=()=>{ renderBackpack(); save(); };
   S.backpack.forEach((t,i)=>{
     w.appendChild(tagRow(t,'story',
       ()=>{ t.scratched=!t.scratched; renderBackpack(); save(); },
@@ -2507,7 +2548,7 @@ function themeCard(th, idx, isFellowship){
   if(!isFellowship){ if(!themeIsOpen(th, idx)) card.classList.add('collapsed'); card.appendChild(themeSummary(th, idx, card)); }
   // header
   const hd=document.createElement('div'); hd.className='theme-hd';
-  const sel=document.createElement('select');
+  const sel=document.createElement('select'); sel.setAttribute('aria-label','Theme type');
   for(const grp in THEME_TYPES){
     const og=document.createElement('optgroup'); og.label=grp;
     THEME_TYPES[grp].forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; if(t===th.type)o.selected=true; og.appendChild(o); });
@@ -2532,7 +2573,7 @@ function themeCard(th, idx, isFellowship){
     null,
     ()=>{ th.power.splice(i,1); renderHost(); },
     v=>{ t.text=v; save(); })));
-  card.appendChild(pl);
+  pl._arr=th.power; pl._re=renderHost; card.appendChild(pl);
   const ap=document.createElement('button'); ap.className='addbtn'; ap.textContent='＋ power tag';
   ap.onclick=()=>{ th.power.push({id:uid(),text:'',scratched:false}); renderHost(); }; card.appendChild(ap);
 
@@ -2543,7 +2584,7 @@ function themeCard(th, idx, isFellowship){
     null, null,
     ()=>{ th.weak.splice(i,1); renderHost(); },
     v=>{ t.text=v; save(); })));
-  card.appendChild(wl);
+  wl._arr=th.weak; wl._re=renderHost; card.appendChild(wl);
   const aw=document.createElement('button'); aw.className='addbtn'; aw.textContent='＋ weakness tag';
   aw.onclick=()=>{ th.weak.push({id:uid(),text:''}); renderHost(); }; card.appendChild(aw);
 
@@ -2559,7 +2600,7 @@ function themeCard(th, idx, isFellowship){
     const tr=document.createElement('div'); tr.className='track';
     const lbl=document.createElement('span'); lbl.className='track-lbl'; lbl.textContent=tk; tr.appendChild(lbl);
     const pips=document.createElement('div'); pips.className='pips';
-    for(let i=1;i<=3;i++){ const p=document.createElement('button'); p.className='pip'+(i<=th[tk]?' on':'');
+    for(let i=1;i<=3;i++){ const p=document.createElement('button'); p.className='pip'+(i<=th[tk]?' on':''); p.setAttribute('aria-label',tk+' '+i+' of 3'); p.setAttribute('aria-pressed',String(i<=th[tk]));
       p.onclick=()=>{ const was=th[tk]; th[tk]=(th[tk]===i?i-1:i); renderHost(); if(th[tk]===3 && was!==3) openDev(th,tk,renderHost); }; pips.appendChild(p); }
     tr.appendChild(pips);
     const n=document.createElement('span'); n.className='muted'; n.style.marginLeft='6px'; n.style.fontSize='11px'; n.textContent=TRACK_NOTE[tk]; tr.appendChild(n);
@@ -2598,6 +2639,13 @@ function themeCard(th, idx, isFellowship){
   if(!isFellowship){
     const del=document.createElement('button'); del.className='btn ghost sm btn-remove'; del.style.marginTop='4px';
     del.textContent='🗑 Remove this theme'; del.onclick=()=>{ if(confirm('Remove this theme?')){ S.themes.splice(idx,1); renderThemes(); save(); } };
+    const mv=document.createElement('div'); mv.className='theme-move';
+    [['up',-1,'arrow-up','Move up'],['down',1,'arrow-down','Move down']].forEach(([k,dir,ic,lb])=>{ const j=idx+dir; const b=document.createElement('button'); b.type='button';
+      b.className='btn ghost sm'; b.innerHTML=icoSVG(ic)+'<span>'+lb+'</span>'; b.disabled=(j<0||j>=S.themes.length);
+      b.onclick=()=>{ const t=S.themes.splice(idx,1)[0]; S.themes.splice(j,0,t); _themeOpen[t.id]=true; renderThemes(); save();
+        const c=$('themesWrap').querySelectorAll('.card.theme')[j]; if(c){ c.classList.add('moved'); try{ c.scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(e){} } };
+      mv.appendChild(b); });
+    card.appendChild(mv);
     card.appendChild(del);
   }
 
@@ -2693,7 +2741,7 @@ function statusCard(st){
     meta.appendChild(tin);
   }
   const limLbl=document.createElement('span'); limLbl.textContent='Limit'; meta.appendChild(limLbl);
-  const sel=document.createElement('select');
+  const sel=document.createElement('select'); sel.setAttribute('aria-label','Status Limit');
   for(let L=1;L<=6;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===lim) o.selected=true; sel.appendChild(o); }
   sel.onchange=()=>{ st.limit=+sel.value; renderStatuses(); save(); };
   meta.appendChild(sel);
@@ -2730,7 +2778,7 @@ function renderProgress(){
     const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none'; del.onclick=()=>{ S.progress.splice(i,1); renderProgress(); save(); };
     card.appendChild(nm); card.appendChild(boxes); card.appendChild(del); w.appendChild(card);
     const meta=document.createElement('div'); meta.className='status-meta';
-    const lbl=document.createElement('span'); lbl.textContent='Limit'; const sel=document.createElement('select');
+    const lbl=document.createElement('span'); lbl.textContent='Limit'; const sel=document.createElement('select'); sel.setAttribute('aria-label','Progress Limit');
     for(let L=2;L<=10;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===max) o.selected=true; sel.appendChild(o); }
     sel.onchange=()=>{ pr.max=+sel.value; if((pr.cur||0)>pr.max) pr.cur=pr.max; renderProgress(); save(); };
     meta.appendChild(lbl); meta.appendChild(sel);
@@ -3952,10 +4000,55 @@ function startIconizer(){
   }); }).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 
+// ----- UI refresh R7: scratch embers, tag drag-reorder, display settings -----
+function emberAt(r){
+  if(document.body.classList.contains('rm') || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  const layer=document.createElement('div'); layer.className='fx-burst ember'; layer.style.left=(r.left+r.width*0.35)+'px'; layer.style.top=(r.top+r.height/2)+'px';
+  for(let i=0;i<12;i++){ const sp=document.createElement('i'); const a=-Math.PI/2+(Math.random()-.5)*1.6, d=20+Math.random()*40;
+    sp.style.setProperty('--dx',(Math.cos(a)*d).toFixed(1)+'px'); sp.style.setProperty('--dy',(Math.sin(a)*d).toFixed(1)+'px');
+    sp.style.background=['#ffb347','#e8821e','#ffd76a'][i%3]; sp.style.animationDelay=(Math.random()*.1).toFixed(2)+'s'; layer.appendChild(sp); }
+  document.body.appendChild(layer); setTimeout(()=>layer.remove(),1100);
+}
+function startTagDrag(){
+  let d=null;
+  document.addEventListener('pointerdown',e=>{ const g=e.target.closest && e.target.closest('.tag-grip'); if(!g) return;
+    const row=g.closest('.tagrow'), list=row && row.parentElement; if(!list || !list._arr) return;
+    e.preventDefault(); const rows=[...list.querySelectorAll(':scope > .tagrow')];
+    d={row,list,rows,from:rows.indexOf(row),to:rows.indexOf(row),y0:e.clientY,h:row.offsetHeight+6};
+    row.classList.add('dragging'); try{ g.setPointerCapture(e.pointerId); }catch(_){} });
+  document.addEventListener('pointermove',e=>{ if(!d) return; const dy=e.clientY-d.y0; d.row.style.transform='translateY('+dy+'px)';
+    const to=Math.max(0,Math.min(d.rows.length-1,d.from+Math.round(dy/d.h))); if(to!==d.to){ d.to=to;
+      d.rows.forEach((r,i)=>{ if(r===d.row) return; let sh=0; if(d.from<to && i>d.from && i<=to) sh=-d.h; if(d.from>to && i<d.from && i>=to) sh=d.h; r.style.transform=sh?'translateY('+sh+'px)':''; }); } });
+  const end=()=>{ if(!d) return; const {list,rows,from,to,row}=d; d=null; rows.forEach(r=>r.style.transform=''); row.classList.remove('dragging');
+    if(to!==from){ const it=list._arr.splice(from,1)[0]; list._arr.splice(to,0,it); list._re(); } };
+  document.addEventListener('pointerup',end); document.addEventListener('pointercancel',end);
+}
+const LS_UI='litm-ui';
+function uiPrefs(){ try{ return Object.assign({size:'m',motion:'auto',haptics:true}, JSON.parse(localStorage.getItem(LS_UI)||'{}')); }catch(e){ return {size:'m',motion:'auto',haptics:true}; } }
+function applyUIPrefs(){ const u=uiPrefs();
+  document.body.style.zoom=({s:.93,m:1,l:1.1,xl:1.2})[u.size]||1;
+  document.body.classList.toggle('rm', u.motion==='reduce'); document.body.classList.toggle('no-hap', u.haptics===false);
+  syncHeaderH && syncHeaderH(); }
+function setUIPref(k,v){ const u=uiPrefs(); u[k]=v; try{ localStorage.setItem(LS_UI, JSON.stringify(u)); }catch(e){} applyUIPrefs(); renderUISettings(); }
+function openUISettings(){ closeOverlays(); renderUISettings(); $('uiOverlay').classList.add('show'); }
+function closeUISettings(){ $('uiOverlay').classList.remove('show'); }
+function renderUISettings(){ const u=uiPrefs(), b=$('uiBody'); if(!b) return;
+  const th=localStorage.getItem(LS_THEME)||'auto';
+  const seg=(k,opts,cur)=>'<div class="seg ui-seg">'+opts.map(([v,l])=>'<button type="button" data-k="'+k+'" data-v="'+v+'"'+(String(cur)===String(v)?' class="on"':'')+'>'+l+'</button>').join('')+'</div>';
+  b.innerHTML='<h3 class="ui-h">'+icoSVG('type')+' Text size</h3>'+seg('size',[['s','S'],['m','M'],['l','L'],['xl','XL']],u.size)
+    +'<h3 class="ui-h">'+icoSVG('sun-moon')+' Theme</h3>'+seg('theme',[['auto','Auto'],['light','Light'],['dark','Dark']],th)
+    +'<h3 class="ui-h">'+icoSVG('sparkles')+' Motion</h3>'+seg('motion',[['auto','Follow device'],['reduce','Reduce']],u.motion)
+    +'<h3 class="ui-h">'+icoSVG('vibrate')+' Haptics</h3>'+seg('haptics',[['true','On'],['false','Off']],String(u.haptics!==false));
+  b.querySelectorAll('[data-k]').forEach(x=>x.onclick=()=>{ const k=x.dataset.k, v=x.dataset.v;
+    if(k==='theme'){ if(v==='auto') localStorage.removeItem(LS_THEME); else localStorage.setItem(LS_THEME,v); document.body.classList.remove('dark'); applyTheme(); renderUISettings(); return; }
+    setUIPref(k, k==='haptics'? v==='true' : v); });
+}
+(function(){ try{ const nv=navigator.vibrate && navigator.vibrate.bind(navigator); if(nv) navigator.vibrate=p=>document.body.classList.contains('no-hap')?false:nv(p); }catch(e){} })();
+
 // ----- UI refresh R6: swipe a tag row left to toggle scratch (buttons remain) -----
 function startTagSwipe(){
   let st=null;
-  document.addEventListener('touchstart',e=>{ const row=e.target.closest && e.target.closest('.tagrow'); if(!row) { st=null; return; }
+  document.addEventListener('touchstart',e=>{ const row=e.target.closest && !e.target.closest('.tag-grip') && e.target.closest('.tagrow'); if(!row) { st=null; return; }
     const sb=[...row.querySelectorAll('button.ic')].find(b=>/^Scratch/.test(b.title||'')); if(!sb){ st=null; return; }
     st={row,sb,x:e.touches[0].clientX,y:e.touches[0].clientY,dx:0,lock:null}; },{passive:true});
   document.addEventListener('touchmove',e=>{ if(!st) return; const dx=e.touches[0].clientX-st.x, dy=e.touches[0].clientY-st.y;
@@ -4026,7 +4119,7 @@ function printSheet(){
 
 // ----- UI refresh R2: celebration burst + journey trail -----
 function celebrate(el){
-  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(document.body.classList.contains('rm') || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   const r=(el&&el.getBoundingClientRect)? el.getBoundingClientRect() : {left:innerWidth/2,top:innerHeight/3,width:0,height:0};
   const cx=r.left+r.width/2, cy=r.top+Math.min(r.height/2,140);
   const layer=document.createElement('div'); layer.className='fx-burst'; layer.style.left=cx+'px'; layer.style.top=cy+'px';
@@ -4082,7 +4175,7 @@ function startSheetSwipe(){
 const PIPS={1:[[50,50]],2:[[28,28],[72,72]],3:[[28,28],[50,50],[72,72]],4:[[28,28],[72,28],[28,72],[72,72]],
   5:[[28,28],[72,28],[50,50],[28,72],[72,72]],6:[[28,26],[72,26],[28,50],[72,50],[28,74],[72,74]]};
 function dieSVG(v){ return '<svg class="die-face" viewBox="0 0 100 100" aria-hidden="true">'+(PIPS[v]||[]).map(([x,y])=>'<circle cx="'+x+'" cy="'+y+'" r="'+(v===1?13:10)+'"/>').join('')+'</svg>'; }
-function setDie(el,v){ if(!el) return; el.innerHTML=dieSVG(v); el.dataset.v=v||''; el.setAttribute('aria-label', v?('die shows '+v):'die'); }
+function setDie(el,v){ if(!el) return; el.innerHTML=dieSVG(v); el.dataset.v=v||''; el.setAttribute('role','img'); el.setAttribute('aria-label', v?('die shows '+v):'die not rolled'); }
 
 // ----- UI refresh P2: help sheet, roll dock, floating Roll button -----
 function panelHowtos(name){ const p=$('panel-'+(name||document.body.dataset.tab||'hero')); return p? [...p.querySelectorAll(':scope > details.howto')] : []; }
@@ -4108,7 +4201,7 @@ let _rollBtnVisible=true;
 function updateRollDock(){
   const d=$('rollDock'); if(!d) return;
   const show = document.body.dataset.tab==='roll' && !_rollBtnVisible;
-  d.classList.toggle('show', show); d.setAttribute('aria-hidden', String(!show));
+  d.classList.toggle('show', show); d.setAttribute('aria-hidden', String(!show)); d.inert=!show;
 }
 function dockRoll(){
   const rb=$('rollBtn'); if(rb){ try{ rb.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} }
@@ -4135,7 +4228,7 @@ applySolo();
 maybeWelcome();
 startIconizer();
 setDie($('die1'),0); setDie($('die2'),0);
-document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide(); startSheetSwipe(); startKeyboardChrome(); startHintClamp(); startHaptics(); startTagSwipe(); syncHeaderH(); window.addEventListener('resize',syncHeaderH); endSplash();
+document.body.dataset.tab='hero'; uiTabChanged('hero'); startRollDock(); startFabAutoHide(); startSheetSwipe(); startKeyboardChrome(); startHintClamp(); startHaptics(); startTagSwipe(); startTagDrag(); applyUIPrefs(); syncHeaderH(); window.addEventListener('resize',syncHeaderH); endSplash();
 _lastSnap=_snap(); updateUndoUI();
 
 

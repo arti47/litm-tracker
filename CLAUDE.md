@@ -54,16 +54,17 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v60` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v61` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
-- **localStorage keys (6)**:
+- **localStorage keys (7)**:
   - `litm-roster-v1` — array of all heroes (each hero is the full state object)
   - `litm-active-v1` — id of the currently open hero
   - `litm-rolls-v1` — last 40 dice rolls
   - `litm-theme` — `'light'` / `'dark'` / unset = auto (`prefers-color-scheme`)
   - `litm-solo` — `'1'` when Solo Play Mode is on (reveals the 🔮 Oracle tab); app-level, not per-hero
   - `litm-seen` — `'1'` once the first-run **Welcome** overlay has been dismissed; app-level, not per-hero
+  - `litm-ui` — Display settings JSON `{size:'s'|'m'|'l'|'xl', motion:'auto'|'reduce', haptics:bool}`; app-level
   - (`litm-hero` appears only as the default export filename stem, not a storage key)
   - **sessionStorage** `litm-splashed` — `'1'` once the launch splash has shown this browser session (UI only)
 
@@ -719,6 +720,18 @@ ink-line icons), auto light/dark.
   inline field rows keep the button compact. **Status box pop** on tap (`_popKey`). **Rules section icons**
   (`attachRefAccordion` keyword map). Header title is a **hero-switcher** (opens roster). **Swipe a tag row left**
   (>64px) to toggle scratch (`startTagSwipe`; buttons unchanged, delete stays button-only). `▶` mapped to the play icon.
+
+- **Audit R7 ✅ —** axe-core (WCAG 2 A/AA) pass on all tabs, light+dark: track pips get `aria-label`/`aria-pressed`;
+  theme-type/status-Limit/progress-Limit selects get `aria-label`; scratch/delete tag buttons named; dice `role=img`;
+  hidden roll dock is `inert`; dark "Expand all" contrast fixed. *Only remaining axe item: `meta-viewport`
+  (`user-scalable=no`) — kept by owner decision.* **Theme reorder**: Move up / Move down buttons in each expanded
+  theme (`.theme-move`, glow on the moved card). **Tag drag-reorder**: grip (`.tag-grip`, pointer events) on theme
+  power/weakness and Backpack rows — lists expose `_arr`/`_re`, `startTagDrag` splices the array on drop (undoable);
+  grip hidden for single rows and non-reorderable lists. New empty tag rows slide in (`_freshIds`); scratching a tag
+  throws embers (`emberAt`). **Display settings** sheet (☰ → Settings → Display settings, `#uiOverlay`,
+  `openUISettings`/`renderUISettings`/`setUIPref`/`applyUIPrefs`, key `litm-ui`): text size S/M/L/XL (`body.style.zoom`
+  .93/1/1.1/1.2), theme Auto/Light/Dark (uses `litm-theme`), motion Follow device/Reduce (`body.rm` kill-switch; also
+  honoured by `celebrate`/`emberAt`/splash), haptics On/Off (`body.no-hap`; `navigator.vibrate` wrapped).
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
