@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v61` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v62` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (7)**:
@@ -391,11 +391,12 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
 - **1 · Expire story tags** — checklist of scene tags (checked = expire); removes the chosen ones.
 - **2 · Establish the place** — add a haven story tag to the scene.
 - **3 · Activities** — 2 (or **3** via the "Took Consequences" toggle), with a used/limit counter:
-  **Rest** (un-scratches every scratched power tag — themes/title/fellowship/backpack — and
-  reduces each status by 1 tier), **Reflect** (marks Improve on a chosen theme), **Camp Action**
+  **Rest** (un-scratches the Hero's own scratched tags — theme power tags/titles + backpack — and
+  reduces each status by 1 tier; Fellowship parts are *not* restored here), **Reflect** (marks Improve on a chosen theme), **Camp Action**
   (logged advisory: count Power, spend half without rolling, or roll on the Roll tab).
-- **4 · Recover one Fellowship part** — un-scratch a chosen Fellowship power tag *or* renew a
-  scratched relationship tag.
+- **4 · Recover one Fellowship part** — un-scratch a chosen Fellowship power tag (or its scratched
+  title) *or* renew a scratched relationship tag. **Reflect** filling Improve (3) opens the Improve
+  development flow directly (`openDev`).
 - A running "This camp" log; each action applies to the sheet immediately (`renderAll`).
 
 ### Journey montage (Phase 6) ✅
@@ -733,6 +734,18 @@ ink-line icons), auto light/dark.
   .93/1/1.1/1.2), theme Auto/Light/Dark (uses `litm-theme`), motion Follow device/Reduce (`body.rm` kill-switch; also
   honoured by `celebrate`/`emberAt`/splash), haptics On/Off (`body.no-hap`; `navigator.vibrate` wrapped).
 
+- **Cross-link & rules pass ✅ (2026-10-07)** — wired the missing sheet ↔ roller ↔ camp links:
+  **relationship tags** now appear on the Roll tab (group *Relationships*, lazy `id` migration in `availableTags`);
+  **Fellowship power tags and relationship tags are single-use** — invoking one as helpful scratches it on roll
+  (`single:true` → `_single` → `scratchTagById`, noted "Single-use — scratched"); a burned **Fellowship title** now
+  actually scratches (`S.fellowship._titleScr`, excluded from the roller, recoverable). **Weakness invoked** → the
+  outcome offers one-tap **⚑ Mark Improve — <theme>** per invoking theme (`_weakThs`, `data-markimp`; a 3rd mark
+  opens the Improve flow). **Theme/Fellowship titles** show their scratched state on the sheet with a ✓
+  scratch/recover toggle (`.title-scr`). `scratchedTags`/`recoverTagById` (Spend → Recover) include the Fellowship
+  title + relationships. **Camp**: Rest no longer restores Fellowship tags (one Fellowship part per camp via step 4,
+  which now also lists a scratched Fellowship title); Reflect → Improve 3 opens the development flow. Glance-strip
+  status count links to Tracking. 4 new coverage entries.
+
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
 
@@ -927,7 +940,7 @@ They are deterministic — **do not** wrap them in a retry loop.
   implements documented rules features. Fails if any `implemented`/`partial`/`unknown` entry's
   **marker** (a code substring that would vanish if the feature were removed) is missing from
   `character-tracker.html`, if an entry lacks `source`/`marker`, or if a non-`implemented` entry lacks a
-  `note`. Prints per-status counts. **57 entries** (49 implemented / 3 partial / 4 deliberately-omitted
+  `note`. Prints per-status counts. **61 entries** (53 implemented / 3 partial / 4 deliberately-omitted
   / 1 unknown).
   - ⚠️ **`docs/coverage.json` is SEEDED from this CLAUDE.md, NOT verified against the Core Rulebook**
     (the rulebook text isn't in this repo). So `_meta.omissionDetectionActive=false`: a genuine rulebook

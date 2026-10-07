@@ -1214,6 +1214,12 @@ body.dark .tb-btn { color: var(--teal-dark); }
 /* reduce-motion preference (app-level override) */
 body.rm *, body.rm *::before, body.rm *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
   transition-duration: .001ms !important; scroll-behavior: auto !important; }
+
+/* cross-link pass: title scratch toggle, glance link */
+.theme .theme-hd .title-in { flex: 1 1 calc(100% - 46px); }
+.theme .theme-hd .title-scr { order: -1; flex: none; width: 38px; height: 38px; margin-top: 1px; }
+.theme .theme-hd .title-in.scratched { text-decoration: line-through; opacity: .55; }
+.g-link { border: 0; background: transparent; padding: 0; cursor: pointer; font: inherit; }
 </style>
 </head>
 <body>
@@ -2558,11 +2564,15 @@ function themeCard(th, idx, isFellowship){
     card.className=card.className.replace(/\bmt-\w+/,'mt-'+(MIGHT_OF[th.type]||'any')); wm.innerHTML=icoSVG(THEME_ICON[th.type]||'feather'); save(); };
   const title=document.createElement('input'); title.type='text'; title.className='title-in power';
   title.placeholder = isFellowship?'Fellowship title tag…':'Theme title (main power tag)…';
+  if(th._titleScr) title.classList.add('scratched');
+  const tScr=document.createElement('button'); tScr.type='button'; tScr.className='ic title-scr'+(th._titleScr?' on':''); tScr.textContent='✓';
+  tScr.title='Scratch / recover'; tScr.setAttribute('aria-pressed',String(!!th._titleScr)); tScr.setAttribute('aria-label',(th._titleScr?'Recover title ':'Scratch title ')+(th.title||''));
+  tScr.onclick=()=>{ th._titleScr=!th._titleScr; renderHost(); };
   title.value=th.title; title.oninput=()=>{ th.title=title.value; const tt=card.querySelector('.ts-title'); if(tt) tt.textContent=th.title||'Untitled theme'; save(); };
   const mc=t=>'m-'+(MIGHT_OF[t]||'any');
   const mtxt=t=>({origin:'Origin',adventure:'Adventure',greatness:'Greatness',any:'Any'})[MIGHT_OF[t]||'any'];
   const badge=document.createElement('span'); badge.className='mightbadge '+mc(th.type); badge.textContent=mtxt(th.type);
-  hd.appendChild(sel); hd.appendChild(title); hd.appendChild(badge);
+  hd.appendChild(sel); hd.appendChild(title); hd.appendChild(tScr); hd.appendChild(badge);
   card.appendChild(hd);
 
   // power tags
@@ -3057,8 +3067,7 @@ function renderOracleLog(){ const w=$('oracleLog'); if(!w) return; const log=S.o
 function campRest(){
   let n=0, red=0;
   S.themes.forEach(th=>{ if(th._titleScr){th._titleScr=false;n++;} th.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} }); });
-  S.fellowship.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });
-  S.backpack.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });
+  S.backpack.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });   // Fellowship parts recover only via step 4 (one part per camp)
   S.statuses.forEach(st=>{ if(st.boxes.some(Boolean)){ for(let i=0;i<6;i++) st.boxes[i]=st.boxes[i+1]||false; red++; } });
   campCtx.used++; campCtx.log.push('Rest — recovered '+n+' scratched tag(s); reduced '+red+' status(es) by 1 tier');
   save(); renderAll(); renderCamp();
@@ -3068,16 +3077,18 @@ function campReflect(idx){
   th.improve=Math.min(3,(th.improve||0)+1);
   campCtx.used++; campCtx.log.push('Reflect — marked Improve on '+(th.title||('Theme '+(idx+1)))+' ('+th.improve+'/3)');
   save(); renderAll(); renderCamp();
-  if(th.improve>=3) toast('Improve full — Resolve it on the Hero tab');
+  if(th.improve>=3) openDev(th,'improve',()=>{ renderAll(); renderCamp(); });
 }
 function campAction(){ campCtx.used++; campCtx.log.push('Camp Action — count Power, then spend half without rolling, or roll on the Roll tab'); renderCamp(); }
-function campRecoverFellow(id){ const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=false; campCtx.log.push('Recovered Fellowship power tag — '+t.text); save(); renderAll(); renderCamp(); } }
+function campRecoverFellow(id){ if(id==='ft'){ S.fellowship._titleScr=false; campCtx.log.push('Recovered Fellowship title — '+S.fellowship.title); save(); renderAll(); renderCamp(); return; }
+  const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=false; campCtx.log.push('Recovered Fellowship power tag — '+t.text); save(); renderAll(); renderCamp(); } }
 function campRenewRel(idx){ const r=S.relationships[idx]; if(r){ r.scratched=false; campCtx.log.push('Renewed relationship — '+((r.name||'')+(r.tag?(' / '+r.tag):''))); save(); renderAll(); renderCamp(); } }
 function renderCamp(){
   if(!campCtx) return;
   const body=$('campBody');
   const scene=S.scene||[];
   const scratchedF=S.fellowship.power.filter(t=>t.scratched && (t.text||'').trim());
+  if(S.fellowship._titleScr && (S.fellowship.title||'').trim()) scratchedF.unshift({id:'ft',text:S.fellowship.title});
   const scratchedR=S.relationships.filter(r=>r.scratched);
   let h='';
   h+='<div class="camp-meta"><label class="camp-chk"><input type="checkbox" id="camp_conseq"'+(campCtx.limit===3?' checked':'')+'> Took Consequences (3 activities)</label>'
@@ -3307,13 +3318,16 @@ function availableTags(){
     const grp='th'+ti, gl=(th.title||'').trim()||th.type, gm=MIGHT_OF[th.type]||'any';
     if(th.title.trim() && !th._titleScr) out.push({id:'tt_'+th.id,label:th.title,kind:'power',base:1,grp,gl,gm,gi:'feather'});
     th.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1,grp,gl,gm,gi:'feather'}); });
-    th.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1,grp,gl,gm,gi:'feather'}); });
+    th.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1,grp,gl,gm,gi:'feather',thId:th.id}); });
   });
   const FG={grp:'fel',gl:'Fellowship',gi:'handshake'}, BG={grp:'bp',gl:'Backpack',gi:'backpack'}, SG={grp:'sc',gl:'Scene',gi:'clapperboard'}, TG={grp:'st',gl:'Statuses',gi:'shield'};
   // fellowship
-  if(S.fellowship.title.trim()) out.push({id:'ft_'+S.fellowship.id,label:S.fellowship.title,kind:'power',base:1,...FG});
-  S.fellowship.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1,...FG}); });
-  S.fellowship.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1,...FG}); });
+  if(S.fellowship.title.trim() && !S.fellowship._titleScr) out.push({id:'ft_'+S.fellowship.id,label:S.fellowship.title,kind:'power',base:1,...FG});
+  S.fellowship.power.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'power',base:1,single:true,...FG}); });   // Fellowship power tags are single-use
+  S.fellowship.weak.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'weak',base:-1,...FG,thId:'fel'}); });
+  // relationship tags (single-use story tags held for each fellow Hero)
+  (S.relationships||[]).forEach(r=>{ if(!r.id) r.id=uid(); if((r.tag||'').trim() && !r.scratched)
+    out.push({id:r.id,label:r.tag+((r.name||'').trim()?' ('+r.name.trim()+')':''),kind:'power',base:1,single:true,grp:'rel',gl:'Relationships',gi:'heart-handshake'}); });
   // backpack + scene story tags
   S.backpack.forEach(t=>{ if(t.text.trim() && !t.scratched) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1,...BG}); });
   S.scene.forEach(t=>{ if(t.text.trim()) out.push({id:t.id,label:t.text,kind:'story',base:t.type==='hindering'?-1:1,...SG}); });
@@ -3394,13 +3408,13 @@ function cycleMod(t){
 
 function computePower(){
   const tags=availableTags();
-  let p=0, hiHelp=0, hiHind=0, invokedWeak=false;
+  let p=0, hiHelp=0, hiHind=0, invokedWeak=false; const weakThs=[];
   tags.forEach(t=>{
     const sel=rollMods[t.id]; if(!sel) return;
     if(t.kind==='status'){ if(sel==='help') hiHelp=Math.max(hiHelp,t.tier); else hiHind=Math.max(hiHind,t.tier); }
     else {
       if(sel==='help'){ p += (burnId===t.id?3:1); }
-      else { p -= 1; if(t.kind==='weak') invokedWeak=true; }
+      else { p -= 1; if(t.kind==='weak'){ invokedWeak=true; if(t.thId && weakThs.indexOf(t.thId)<0) weakThs.push(t.thId); } }
     }
   });
   if(agAction){ agAction.help.forEach(x=>{ if(x.on) p+=1; }); agAction.hind.forEach(x=>{ if(x.on) p-=1; }); }
@@ -3411,7 +3425,8 @@ function computePower(){
   const pn=$('powerNum'); if(pn._shown!==undefined && pn._shown!==p){ pn.classList.remove('bump'); void pn.offsetWidth; pn.classList.add('bump'); }
   pn._shown=p; pn.classList.toggle('pos',p>0); pn.classList.toggle('neg',p<0);
   const dp=$('dockPow'); if(dp){ dp.textContent=(p>0?'+':'')+p; dp.className=p>0?'pos':p<0?'neg':''; }
-  $('powerNum')._weak=invokedWeak;
+  $('powerNum')._weak=invokedWeak; $('powerNum')._weakThs=weakThs;
+  $('powerNum')._single=tags.filter(t=>t.single && rollMods[t.id]==='help' && burnId!==t.id).map(t=>t.id);
   return p;
 }
 
@@ -3461,6 +3476,8 @@ function rollDice(){
     // burn: scratch the burned tag now (it was worth +3 this roll)
     let burnNote='';
     if(burnId){ const lbl=scratchTagById(burnId); if(lbl) burnNote='<div class="sub">🔥 Burned <b>'+esc(lbl)+'</b> — scratched.</div>'; burnId=null; }
+    const singles=($('powerNum')._single||[]).map(id=>{ const l=scratchTagById(id); rollMods[id]=undefined; return l; }).filter(Boolean);
+    if(singles.length) burnNote+='<div class="sub">Single-use — scratched: <b>'+singles.map(esc).join(', ')+'</b>.</div>';
 
     let cls=tier,big,sub,detail='';
     if(reaction){
@@ -3481,7 +3498,10 @@ function rollDice(){
         if((total>=10||dbl6) && !dbl1auto) detail+='<div class="sub" style="opacity:.8">Push your luck: take Consequences for +1 Power.</div>';
         openSpend(sp,false); }
     }
-    const weakNote = $('powerNum')._weak ? '<div class="sub" style="opacity:.85">⚑ Weakness invoked — mark Improve on its theme.</div>' : '';
+    const wths=($('powerNum')._weakThs||[]);
+    const weakNote = $('powerNum')._weak ? '<div class="sub" style="opacity:.85">⚑ Weakness invoked — mark Improve on its theme.</div>'
+      + (wths.length?'<div class="row" style="gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px">'+wths.map(id=>{ const th=id==='fel'?S.fellowship:S.themes.find(x=>x.id===id);
+          return th?'<button class="btn sm ghost" data-markimp="'+id+'">⚑ Mark Improve — '+esc(th.title||th.type||'Fellowship')+'</button>':''; }).join('')+'</div>':'') : '';
     const blNote = beyondLuck ? '<div class="sub" style="opacity:.85">✨ Beyond Luck — double ones no longer auto-miss.</div>' : '';
     let agNote='';
     if(agAction && tier!=='win' && agAction.consequences.length){
@@ -3505,7 +3525,10 @@ function rollDice(){
       + '<div class="sub">'+sub+'</div>'+detail+weakNote+blNote+agNote+burnNote+bridge+'</div>';
     rolls.unshift({t:Date.now(), r1, r2, power, total, big:(reaction?'🛡 ':'')+big, hero:S.heroName||'Hero'});
     rolls=rolls.slice(0,40); saveRolls(); renderRollHist();
-    if(burnNote){ save(); renderThemes(); renderFellowship(); renderBackpack(); renderScene(); renderRoller(); }
+    if(burnNote){ save(); renderThemes(); renderFellowship(); renderRel(); renderBackpack(); renderScene(); renderRoller(); }
+    $('outcomeBox').querySelectorAll('[data-markimp]').forEach(b=>b.onclick=()=>{ const id=b.dataset.markimp, th=id==='fel'?S.fellowship:S.themes.find(x=>x.id===id); if(!th) return;
+      const was=th.improve||0; th.improve=Math.min(3,was+1); b.disabled=true; b.textContent='✓ Improve marked ('+th.improve+'/3)'; save(); renderThemes(); renderFellowship();
+      if(th.improve===3 && was<3) openDev(th,'improve',()=>{ renderThemes(); renderFellowship(); }); });
     if(navigator.vibrate) navigator.vibrate(tier!=='lose'?20:[10,40,10]);
     if(typeof tourOnRoll==='function') tourOnRoll(tier);
     if(typeof coachOnRoll==='function') coachOnRoll(tier);
@@ -3515,23 +3538,28 @@ function rollDice(){
 // ----- Burn / scratch / recover helpers -----
 function scratchTagById(id){
   if(id.indexOf('tt_')===0){ const th=S.themes.find(t=>'tt_'+t.id===id); if(th){ th._titleScr=true; return th.title; } return null; }
-  if(id.indexOf('ft_')===0){ return S.fellowship.title; }
+  if(id.indexOf('ft_')===0){ S.fellowship._titleScr=true; return S.fellowship.title; }
   let label=null;
   S.themes.forEach(th=>{ const t=th.power.find(x=>x.id===id); if(t){ t.scratched=true; label=t.text; } });
   if(!label){ const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=true; label=t.text; } }
   if(!label){ const t=S.backpack.find(x=>x.id===id); if(t){ t.scratched=true; label=t.text; } }
   if(!label){ const i=S.scene.findIndex(x=>x.id===id); if(i>=0){ label=S.scene[i].text; S.scene.splice(i,1); } }
+  if(!label){ const r=(S.relationships||[]).find(x=>x.id===id); if(r){ r.scratched=true; label=r.tag; } }
   return label;
 }
 function scratchedTags(){
   const out=[];
   S.themes.forEach(th=>{ if(th._titleScr&&th.title.trim()) out.push({id:'tt_'+th.id,label:th.title}); th.power.forEach(t=>{ if(t.scratched&&t.text.trim()) out.push({id:t.id,label:t.text}); }); });
+  if(S.fellowship._titleScr && S.fellowship.title.trim()) out.push({id:'ft_'+S.fellowship.id,label:S.fellowship.title});
   S.fellowship.power.forEach(t=>{ if(t.scratched&&t.text.trim()) out.push({id:t.id,label:t.text}); });
   S.backpack.forEach(t=>{ if(t.scratched&&t.text.trim()) out.push({id:t.id,label:t.text}); });
+  (S.relationships||[]).forEach(r=>{ if(r.id && r.scratched && (r.tag||'').trim()) out.push({id:r.id,label:r.tag}); });
   return out;
 }
 function recoverTagById(id){
   if(id.indexOf('tt_')===0){ const th=S.themes.find(t=>'tt_'+t.id===id); if(th) th._titleScr=false; return; }
+  if(id.indexOf('ft_')===0){ S.fellowship._titleScr=false; return; }
+  const rl=(S.relationships||[]).find(x=>x.id===id); if(rl){ rl.scratched=false; return; }
   S.themes.forEach(th=>{ const t=th.power.find(x=>x.id===id); if(t)t.scratched=false; });
   const f=S.fellowship.power.find(x=>x.id===id); if(f)f.scratched=false;
   const b=S.backpack.find(x=>x.id===id); if(b)b.scratched=false;
@@ -4073,7 +4101,7 @@ function updateGlance(){
   const jump=[['hero','Hero','feather'],['bag','Backpack','backpack'],['themes','Themes','scroll'],['notes','Notes','notebook-pen']];
   g.innerHTML='<div class="g-stats"><span class="g-s" title="Promise">'+stars+'</span>'
     +'<span class="g-s" title="Moments of Fulfillment">'+icoSVG('trophy')+'<b>'+(S.fulfillments||0)+'</b></span>'
-    +'<span class="g-s'+(st?' warn':'')+'" title="Active statuses">'+icoSVG('shield')+'<b>'+st+'</b></span>'
+    +'<button type="button" class="g-s g-link'+(st?' warn':'')+'" title="Active statuses — open Tracking" onclick="showTab(\'track\')">'+icoSVG('shield')+'<b>'+st+'</b></button>'
     +'<span class="g-s" title="Scratched tags">'+icoSVG('flame-kindling')+'<b>'+scr+'</b></span></div>'
     +'<div class="g-jump">'+jump.map(j=>'<button type="button" data-j="'+j[0]+'">'+icoSVG(j[2])+j[1]+'</button>').join('')+'</div>';
   g.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{ const t={hero:()=>$('f_heroName').closest('.card'), bag:()=>$('backpackList').closest('.card'),

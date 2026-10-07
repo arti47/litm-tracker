@@ -19,72 +19,440 @@
     "howToExtend": "Obtain the Core Rulebook, read a section, and add one entry per discrete requirement: stable id, source citation (page/section), one-line summary in the book's own terms, and the MOST SPECIFIC code marker that would disappear if the feature were removed (a function/const/element-id substring present in character-tracker.html). New requirements start 'unknown' until their marker is found. Run: node scripts/coverage.js"
   },
   "entries": [
-    { "id": "roll-2d6-power", "source": "Core Book — Taking Action", "summary": "An action is resolved by rolling 2d6 and adding Power.", "marker": "function rollDice", "status": "implemented" },
-    { "id": "power-counting", "source": "Core Book — Counting Power", "summary": "Power = +1 per helpful tag, -1 per hindering tag, plus highest helpful status tier minus highest hindering.", "marker": "function computePower", "status": "implemented" },
-    { "id": "outcome-tiers", "source": "Core Book — Outcomes", "summary": "10+ full success; 7-9 success with a consequence; 6- consequence.", "marker": "'10+ Success'", "status": "implemented" },
-    { "id": "outcome-doubles", "source": "Core Book — Outcomes", "summary": "Double sixes = automatic success; double ones = automatic consequence, regardless of Power.", "marker": "dbl1auto", "status": "implemented" },
-    { "id": "rule-of-minimum-one", "source": "Core Book — Spending Power", "summary": "On a success you always have at least 1 Power to spend.", "marker": "Rule of Minimum One", "status": "implemented" },
-    { "id": "burn-tag", "source": "Core Book — Tags", "summary": "Burn a tag for +3 instead of +1; the tag is scratched.", "marker": "burnId", "status": "implemented" },
-    { "id": "might-favored-imperiled", "source": "Core Book — Might / Favored & Imperiled", "summary": "Task Might vs your Might yields Favored (+3/+6) or Imperiled (-3/-6).", "marker": "function computeMightCmp", "status": "implemented" },
-    { "id": "reactions", "source": "Core Book — Reactions", "summary": "Reaction: 10+ spend Power+1 on any effect; 7-9 spend only to lessen; 6- take as-is.", "marker": "rollMode==='reaction'", "status": "implemented" },
-    { "id": "spend-power-effects", "source": "Core Book — Spending Power on Effects", "summary": "Spend Power to create/recover tags, inflict/reduce statuses, discover a detail, or take an extra feat.", "marker": "function openSpend", "status": "implemented" },
-    { "id": "group-help-actions", "source": "Core Book — Helping / group actions", "summary": "Other Heroes can contribute helping/hindering tags to an action.", "marker": "function renderHelp", "status": "implemented" },
-
-    { "id": "statuses-tiers", "source": "Core Book — Statuses", "summary": "Statuses have tiers 1-6; applying one marks its tier's box, spilling right if taken.", "marker": "function giveStatusTier", "status": "implemented" },
-    { "id": "status-limit", "source": "Core Book — Statuses / Limits", "summary": "A Hero's Limit is 5 (overcome at 5, killed/transformed at 6); a Challenge/foe may have Limit 1-6.", "marker": "function statusLimit", "status": "implemented" },
-    { "id": "status-reduce", "source": "Core Book — Statuses", "summary": "Reducing a status shifts its marks down by the tiers removed.", "marker": "function reduceStatusByAmt", "status": "implemented" },
-    { "id": "status-owner-foe", "source": "Core Book — Statuses (on adversaries)", "summary": "Statuses belong to a Hero or a foe; foe statuses are tracked per target.", "marker": "function addFoeStatus", "status": "implemented" },
-    { "id": "progress-limits", "source": "Core Book — Progress / Limits", "summary": "Progress tracks advance toward a Limit (projects, chases, unlocks, breakthroughs).", "marker": "function renderProgress", "status": "implemented" },
-
-    { "id": "themes-four", "source": "Core Book — Hero Creation / Themes", "summary": "A Hero is defined by (typically four) theme cards.", "marker": "function renderThemes", "status": "implemented" },
-    { "id": "theme-types-20", "source": "Core Book — Themes / Might", "summary": "20 theme types grouped by Might (Origin/Adventure/Greatness/Any).", "marker": "THEME_TYPES", "status": "implemented" },
-    { "id": "power-and-weakness-tags", "source": "Core Book — Tags", "summary": "Themes carry power tags (help) and weakness tags (hinder; invoking a weakness marks Improve).", "marker": "function availableTags", "status": "implemented" },
-    { "id": "backpack-story-tags", "source": "Core Book — Backpack", "summary": "The Backpack holds story tags, flipped helpful/hindering, scratched when single-use.", "marker": "function renderBackpack", "status": "implemented" },
-    { "id": "scratch-recover", "source": "Core Book — Tags (single-use / scratching)", "summary": "Scratched tags are used up until recovered (e.g., by resting at camp).", "marker": "function scratchTagById", "status": "implemented" },
-
-    { "id": "promise-track", "source": "Core Book — Advancement / Promise", "summary": "A Promise track of 5 records advancement.", "marker": "function renderPromise", "status": "implemented" },
-    { "id": "moment-of-fulfillment", "source": "Core Book — Advancement", "summary": "Reaching 5 Promise triggers a Moment of Fulfillment: reset Promise (carry overflow), gain a reward.", "marker": "function openMoF", "status": "implemented" },
-    { "id": "quintessences", "source": "Core Book — Quintessences", "summary": "Permanent, rule-breaking qualities gained at a Moment of Fulfillment.", "marker": "function litmQuintessences", "status": "implemented" },
-    { "id": "quintessence-mechanics", "source": "Core Book — Quintessences", "summary": "Quintessences with mechanical effects change how rolls/play resolve.", "marker": "hasQuintessence('Beyond Luck')", "status": "partial", "note": "Only Beyond Luck is auto-encoded in the roller (removes the double-ones auto-miss). Other mechanical Quintessences (Larger Than Life, Lucky Bastard, Virtuoso, Loyal Companion, etc.) are stored as recorded text and applied manually by the player; there is no per-Quintessence auto-trigger UI." },
-    { "id": "theme-development-tracks", "source": "Core Book — Theme Development", "summary": "Each theme has Improve/Milestone/Abandon tracks; filling one (3) develops the theme.", "marker": "function openDev", "status": "implemented" },
-    { "id": "special-improvements", "source": "Core Book — Special Improvements", "summary": "Each theme type offers Special Improvements, chosen as the theme improves (5 per type).", "marker": "function openSpecialPicker", "status": "implemented" },
-    { "id": "promise-trading", "source": "Core Book — Abandon / Quests & Transformations", "summary": "Extra parts of an abandoned/replaced theme can be traded for +1 Promise each.", "marker": "function tradeableParts", "status": "implemented" },
-
-    { "id": "fellowship-theme", "source": "Core Book — Fellowship", "summary": "A shared fifth theme any Hero can invoke; its power tags are single-use.", "marker": "function renderFellowship", "status": "implemented" },
-    { "id": "fellowship-relationships", "source": "Core Book — Fellowship / Relationships", "summary": "A single-use relationship tag per fellow Hero.", "marker": "function renderRel", "status": "implemented" },
-
-    { "id": "scene-story-tags", "source": "Core Book — Scene / Story tags", "summary": "Environment/temporary story tags exist in the current scene.", "marker": "function renderScene", "status": "implemented" },
-    { "id": "game-loop", "source": "Core Book — Playing the Game (the loop)", "summary": "The play loop: Establish the scene, take Action, resolve Consequences.", "marker": "function renderSceneBoard", "status": "implemented" },
-    { "id": "camping-sojourn", "source": "Core Book — Camping & Sojourn", "summary": "Expire tags, establish the place, take activities (Rest/Reflect/Camp Action), recover a Fellowship part.", "marker": "function openCamp", "status": "implemented" },
-    { "id": "journey-montage", "source": "Core Book — Journeys / montage", "summary": "A journey montage with legs to arrival, a time-passes clock, and vignette challenges.", "marker": "function openJourney", "status": "implemented" },
-
-    { "id": "creation-tropes", "source": "Core Book — Hero Creation / Tropes", "summary": "28 Tropes (three themes plus a suggested fourth) as a quick-start path.", "marker": "function renderTrope", "status": "implemented" },
-    { "id": "creation-themebooks", "source": "Core Book — Hero Creation / Themebooks", "summary": "20 themebooks with power/weakness tag questions and quest ideas (the Detailed path).", "marker": "themebookChipsHTML", "status": "implemented" },
-    { "id": "creation-theme-kits", "source": "Core Book — Hero Creation / Theme Kits", "summary": "Per-type theme kits: choose 2 power + 1 weakness tag and a suggested Quest.", "marker": "function renderKit", "status": "partial", "note": "One known PDF-parser artefact remains: Relic -> 'Heirloom Longsword' has a merged weakness/quest tag (cosmetic, editable on the sheet). Otherwise the 113 kits parse cleanly." },
-    { "id": "creation-general-store", "source": "Core Book — Hero Creation / General Store", "summary": "Suggested starting Backpack items to pick from.", "marker": "function renderStore", "status": "partial", "note": "Implemented as an EXPANDED CURATED suggestions aid (17 categories / ~217 items in _build/general-store.json), not a verbatim reproduction of the Core Book's General Store table. Players can type their own. Fidelity of the exact book list is unverified." },
-    { "id": "creation-fellowship-kits", "source": "Core Book — Fellowship Creation", "summary": "6 Fellowship kits plus a per-fellow relationship table.", "marker": "fellowshipKits", "status": "implemented" },
-
-    { "id": "might-example-table", "source": "Core Book — Might example actions", "summary": "Per-Might example actions (Climb/Archery/etc.) at Origin/Adventure/Greatness.", "marker": "function renderMightRef", "status": "implemented" },
-    { "id": "grimoire-worked-examples", "source": "Core Book — Action Grimoire (worked examples)", "summary": "Verbatim worked cost+effect spend examples grouped by scenario.", "marker": "grimoireExamplesHTML", "status": "implemented" },
-    { "id": "action-grimoire-supplement", "source": "Action Grimoire (supplement book)", "summary": "Full standalone action catalog: 19 leaf action sections (101 entries) + 2 prose sections.", "marker": "function renderAG", "status": "implemented" },
-    { "id": "tutorial-gerrin", "source": "Core Book — tutorial (Gerrin deer-stalker)", "summary": "The Gerrin introductory walkthrough.", "marker": "function renderTutorial", "status": "implemented" },
-    { "id": "character-pack-premades", "source": "Character Pack (supplement)", "summary": "20 ready-made Heroes importable at full fidelity.", "marker": "function renderPremade", "status": "implemented" },
-
-    { "id": "oracle-solo", "source": "The Oracle (supplement)", "summary": "Solo/co-op oracle tools, gated behind a Solo Play mode.", "marker": "function renderOracle", "status": "implemented" },
-    { "id": "oracle-question", "source": "The Oracle — Question", "summary": "Interpretive (d66 symbol) and Yes/No (2d6 +/- Power, extreme on doubles) question oracles.", "marker": "oracleSel==='question'", "status": "implemented" },
-    { "id": "oracle-conflict-scene", "source": "The Oracle — Conflict / Scene", "summary": "Roll a whole scene across seven columns; re-roll any single column.", "marker": "oracleSel==='conflict'", "status": "implemented" },
-    { "id": "oracle-premade-profile", "source": "The Oracle — Premade Profile", "summary": "Roll an area then a creature/person/place, plus a vignette.", "marker": "oracleSel==='premade'", "status": "implemented" },
-    { "id": "oracle-profile-builder", "source": "The Oracle — Profile Builder", "summary": "Build a Challenge Profile: Mighty aspects, CR, Limits, tags/statuses, consequences.", "marker": "function renderPB", "status": "implemented" },
-    { "id": "oracle-challenge-action", "source": "The Oracle — Challenge Action", "summary": "Pick one of 11 Roles, roll d6 for its Threat/Consequence.", "marker": "challengeAction", "status": "implemented" },
-    { "id": "oracle-consequences", "source": "The Oracle — Consequences", "summary": "Roll d66 for a consequence category plus a specific d6 consequence.", "marker": "oracleSel==='conseq'", "status": "implemented" },
-    { "id": "oracle-revelations", "source": "The Oracle — Revelations", "summary": "Pick Act I/II/III and roll d66 for a revelation.", "marker": "oracleSel==='revel'", "status": "implemented" },
-    { "id": "oracle-journal", "source": "The Oracle — journaling", "summary": "A per-hero oracle log/journal with a note per entry.", "marker": "function renderOracleLog", "status": "implemented" },
-
-    { "id": "consequence-menu-full", "source": "Core Book — Consequences (Narrator's menu)", "summary": "The full menu of consequence types/severities the Narrator can inflict.", "marker": "LITM_DATA.oracle", "status": "unknown", "note": "Not verified against the Core Rulebook's consequence rules. The app surfaces the Oracle supplement's solo Consequences tables as a player-side approximation; whether that covers the Core Book's consequence framework is unchecked (requires the rulebook)." },
-
-    { "id": "narrator-challenge-profiles", "source": "Core Book — Challenges / Adversaries (Narrator)", "summary": "Full Challenge/adversary profiles: Might-by-aspect, tags & statuses, Limits, Special Features, Vulnerabilities.", "marker": null, "status": "deliberately-omitted", "note": "This is a player-facing app; Narrator-side content is intentionally out of scope (CLAUDE.md Roadmap Phase 8). The Oracle's Profile Builder provides a light player-side approximation only." },
-    { "id": "frames-of-play", "source": "Core Book — Frames of Play", "summary": "The Mountain (single Series Challenge) and The Crossroads (evolving Fronts) campaign frames.", "marker": null, "status": "deliberately-omitted", "note": "Narrator-side campaign structure; CLAUDE.md Roadmap Phase 8, not implemented." },
-    { "id": "bestiary-creature-packs", "source": "Core Book / packs — Bestiary (Narrator)", "summary": "Statted adversaries and creature packs (e.g., the Winter Creature Pack).", "marker": null, "status": "deliberately-omitted", "note": "Narrator-side content; CLAUDE.md Roadmap Phase 8, not implemented." },
-    { "id": "five-e-crossover", "source": "Supplement — 5E D&D crossover quick-reference", "summary": "Class/race -> theme-kit hints for players coming from D&D 5E.", "marker": null, "status": "deliberately-omitted", "note": "Blocked: needs the notebook's crossover source, which is not reachable in this environment (CLAUDE.md Roadmap Phase 7)." }
+    {
+      "id": "roll-2d6-power",
+      "source": "Core Book — Taking Action",
+      "summary": "An action is resolved by rolling 2d6 and adding Power.",
+      "marker": "function rollDice",
+      "status": "implemented"
+    },
+    {
+      "id": "power-counting",
+      "source": "Core Book — Counting Power",
+      "summary": "Power = +1 per helpful tag, -1 per hindering tag, plus highest helpful status tier minus highest hindering.",
+      "marker": "function computePower",
+      "status": "implemented"
+    },
+    {
+      "id": "outcome-tiers",
+      "source": "Core Book — Outcomes",
+      "summary": "10+ full success; 7-9 success with a consequence; 6- consequence.",
+      "marker": "'10+ Success'",
+      "status": "implemented"
+    },
+    {
+      "id": "outcome-doubles",
+      "source": "Core Book — Outcomes",
+      "summary": "Double sixes = automatic success; double ones = automatic consequence, regardless of Power.",
+      "marker": "dbl1auto",
+      "status": "implemented"
+    },
+    {
+      "id": "rule-of-minimum-one",
+      "source": "Core Book — Spending Power",
+      "summary": "On a success you always have at least 1 Power to spend.",
+      "marker": "Rule of Minimum One",
+      "status": "implemented"
+    },
+    {
+      "id": "burn-tag",
+      "source": "Core Book — Tags",
+      "summary": "Burn a tag for +3 instead of +1; the tag is scratched.",
+      "marker": "burnId",
+      "status": "implemented"
+    },
+    {
+      "id": "might-favored-imperiled",
+      "source": "Core Book — Might / Favored & Imperiled",
+      "summary": "Task Might vs your Might yields Favored (+3/+6) or Imperiled (-3/-6).",
+      "marker": "function computeMightCmp",
+      "status": "implemented"
+    },
+    {
+      "id": "reactions",
+      "source": "Core Book — Reactions",
+      "summary": "Reaction: 10+ spend Power+1 on any effect; 7-9 spend only to lessen; 6- take as-is.",
+      "marker": "rollMode==='reaction'",
+      "status": "implemented"
+    },
+    {
+      "id": "spend-power-effects",
+      "source": "Core Book — Spending Power on Effects",
+      "summary": "Spend Power to create/recover tags, inflict/reduce statuses, discover a detail, or take an extra feat.",
+      "marker": "function openSpend",
+      "status": "implemented"
+    },
+    {
+      "id": "group-help-actions",
+      "source": "Core Book — Helping / group actions",
+      "summary": "Other Heroes can contribute helping/hindering tags to an action.",
+      "marker": "function renderHelp",
+      "status": "implemented"
+    },
+    {
+      "id": "statuses-tiers",
+      "source": "Core Book — Statuses",
+      "summary": "Statuses have tiers 1-6; applying one marks its tier's box, spilling right if taken.",
+      "marker": "function giveStatusTier",
+      "status": "implemented"
+    },
+    {
+      "id": "status-limit",
+      "source": "Core Book — Statuses / Limits",
+      "summary": "A Hero's Limit is 5 (overcome at 5, killed/transformed at 6); a Challenge/foe may have Limit 1-6.",
+      "marker": "function statusLimit",
+      "status": "implemented"
+    },
+    {
+      "id": "status-reduce",
+      "source": "Core Book — Statuses",
+      "summary": "Reducing a status shifts its marks down by the tiers removed.",
+      "marker": "function reduceStatusByAmt",
+      "status": "implemented"
+    },
+    {
+      "id": "status-owner-foe",
+      "source": "Core Book — Statuses (on adversaries)",
+      "summary": "Statuses belong to a Hero or a foe; foe statuses are tracked per target.",
+      "marker": "function addFoeStatus",
+      "status": "implemented"
+    },
+    {
+      "id": "progress-limits",
+      "source": "Core Book — Progress / Limits",
+      "summary": "Progress tracks advance toward a Limit (projects, chases, unlocks, breakthroughs).",
+      "marker": "function renderProgress",
+      "status": "implemented"
+    },
+    {
+      "id": "themes-four",
+      "source": "Core Book — Hero Creation / Themes",
+      "summary": "A Hero is defined by (typically four) theme cards.",
+      "marker": "function renderThemes",
+      "status": "implemented"
+    },
+    {
+      "id": "theme-types-20",
+      "source": "Core Book — Themes / Might",
+      "summary": "20 theme types grouped by Might (Origin/Adventure/Greatness/Any).",
+      "marker": "THEME_TYPES",
+      "status": "implemented"
+    },
+    {
+      "id": "power-and-weakness-tags",
+      "source": "Core Book — Tags",
+      "summary": "Themes carry power tags (help) and weakness tags (hinder; invoking a weakness marks Improve).",
+      "marker": "function availableTags",
+      "status": "implemented"
+    },
+    {
+      "id": "backpack-story-tags",
+      "source": "Core Book — Backpack",
+      "summary": "The Backpack holds story tags, flipped helpful/hindering, scratched when single-use.",
+      "marker": "function renderBackpack",
+      "status": "implemented"
+    },
+    {
+      "id": "scratch-recover",
+      "source": "Core Book — Tags (single-use / scratching)",
+      "summary": "Scratched tags are used up until recovered (e.g., by resting at camp).",
+      "marker": "function scratchTagById",
+      "status": "implemented"
+    },
+    {
+      "id": "promise-track",
+      "source": "Core Book — Advancement / Promise",
+      "summary": "A Promise track of 5 records advancement.",
+      "marker": "function renderPromise",
+      "status": "implemented"
+    },
+    {
+      "id": "moment-of-fulfillment",
+      "source": "Core Book — Advancement",
+      "summary": "Reaching 5 Promise triggers a Moment of Fulfillment: reset Promise (carry overflow), gain a reward.",
+      "marker": "function openMoF",
+      "status": "implemented"
+    },
+    {
+      "id": "quintessences",
+      "source": "Core Book — Quintessences",
+      "summary": "Permanent, rule-breaking qualities gained at a Moment of Fulfillment.",
+      "marker": "function litmQuintessences",
+      "status": "implemented"
+    },
+    {
+      "id": "quintessence-mechanics",
+      "source": "Core Book — Quintessences",
+      "summary": "Quintessences with mechanical effects change how rolls/play resolve.",
+      "marker": "hasQuintessence('Beyond Luck')",
+      "status": "partial",
+      "note": "Only Beyond Luck is auto-encoded in the roller (removes the double-ones auto-miss). Other mechanical Quintessences (Larger Than Life, Lucky Bastard, Virtuoso, Loyal Companion, etc.) are stored as recorded text and applied manually by the player; there is no per-Quintessence auto-trigger UI."
+    },
+    {
+      "id": "theme-development-tracks",
+      "source": "Core Book — Theme Development",
+      "summary": "Each theme has Improve/Milestone/Abandon tracks; filling one (3) develops the theme.",
+      "marker": "function openDev",
+      "status": "implemented"
+    },
+    {
+      "id": "special-improvements",
+      "source": "Core Book — Special Improvements",
+      "summary": "Each theme type offers Special Improvements, chosen as the theme improves (5 per type).",
+      "marker": "function openSpecialPicker",
+      "status": "implemented"
+    },
+    {
+      "id": "promise-trading",
+      "source": "Core Book — Abandon / Quests & Transformations",
+      "summary": "Extra parts of an abandoned/replaced theme can be traded for +1 Promise each.",
+      "marker": "function tradeableParts",
+      "status": "implemented"
+    },
+    {
+      "id": "fellowship-theme",
+      "source": "Core Book — Fellowship",
+      "summary": "A shared fifth theme any Hero can invoke; its power tags are single-use.",
+      "marker": "function renderFellowship",
+      "status": "implemented"
+    },
+    {
+      "id": "fellowship-relationships",
+      "source": "Core Book — Fellowship / Relationships",
+      "summary": "A single-use relationship tag per fellow Hero.",
+      "marker": "function renderRel",
+      "status": "implemented"
+    },
+    {
+      "id": "scene-story-tags",
+      "source": "Core Book — Scene / Story tags",
+      "summary": "Environment/temporary story tags exist in the current scene.",
+      "marker": "function renderScene",
+      "status": "implemented"
+    },
+    {
+      "id": "game-loop",
+      "source": "Core Book — Playing the Game (the loop)",
+      "summary": "The play loop: Establish the scene, take Action, resolve Consequences.",
+      "marker": "function renderSceneBoard",
+      "status": "implemented"
+    },
+    {
+      "id": "camping-sojourn",
+      "source": "Core Book — Camping & Sojourn",
+      "summary": "Expire tags, establish the place, take activities (Rest/Reflect/Camp Action), recover a Fellowship part.",
+      "marker": "function openCamp",
+      "status": "implemented"
+    },
+    {
+      "id": "journey-montage",
+      "source": "Core Book — Journeys / montage",
+      "summary": "A journey montage with legs to arrival, a time-passes clock, and vignette challenges.",
+      "marker": "function openJourney",
+      "status": "implemented"
+    },
+    {
+      "id": "creation-tropes",
+      "source": "Core Book — Hero Creation / Tropes",
+      "summary": "28 Tropes (three themes plus a suggested fourth) as a quick-start path.",
+      "marker": "function renderTrope",
+      "status": "implemented"
+    },
+    {
+      "id": "creation-themebooks",
+      "source": "Core Book — Hero Creation / Themebooks",
+      "summary": "20 themebooks with power/weakness tag questions and quest ideas (the Detailed path).",
+      "marker": "themebookChipsHTML",
+      "status": "implemented"
+    },
+    {
+      "id": "creation-theme-kits",
+      "source": "Core Book — Hero Creation / Theme Kits",
+      "summary": "Per-type theme kits: choose 2 power + 1 weakness tag and a suggested Quest.",
+      "marker": "function renderKit",
+      "status": "partial",
+      "note": "One known PDF-parser artefact remains: Relic -> 'Heirloom Longsword' has a merged weakness/quest tag (cosmetic, editable on the sheet). Otherwise the 113 kits parse cleanly."
+    },
+    {
+      "id": "creation-general-store",
+      "source": "Core Book — Hero Creation / General Store",
+      "summary": "Suggested starting Backpack items to pick from.",
+      "marker": "function renderStore",
+      "status": "partial",
+      "note": "Implemented as an EXPANDED CURATED suggestions aid (17 categories / ~217 items in _build/general-store.json), not a verbatim reproduction of the Core Book's General Store table. Players can type their own. Fidelity of the exact book list is unverified."
+    },
+    {
+      "id": "creation-fellowship-kits",
+      "source": "Core Book — Fellowship Creation",
+      "summary": "6 Fellowship kits plus a per-fellow relationship table.",
+      "marker": "fellowshipKits",
+      "status": "implemented"
+    },
+    {
+      "id": "might-example-table",
+      "source": "Core Book — Might example actions",
+      "summary": "Per-Might example actions (Climb/Archery/etc.) at Origin/Adventure/Greatness.",
+      "marker": "function renderMightRef",
+      "status": "implemented"
+    },
+    {
+      "id": "grimoire-worked-examples",
+      "source": "Core Book — Action Grimoire (worked examples)",
+      "summary": "Verbatim worked cost+effect spend examples grouped by scenario.",
+      "marker": "grimoireExamplesHTML",
+      "status": "implemented"
+    },
+    {
+      "id": "action-grimoire-supplement",
+      "source": "Action Grimoire (supplement book)",
+      "summary": "Full standalone action catalog: 19 leaf action sections (101 entries) + 2 prose sections.",
+      "marker": "function renderAG",
+      "status": "implemented"
+    },
+    {
+      "id": "tutorial-gerrin",
+      "source": "Core Book — tutorial (Gerrin deer-stalker)",
+      "summary": "The Gerrin introductory walkthrough.",
+      "marker": "function renderTutorial",
+      "status": "implemented"
+    },
+    {
+      "id": "character-pack-premades",
+      "source": "Character Pack (supplement)",
+      "summary": "20 ready-made Heroes importable at full fidelity.",
+      "marker": "function renderPremade",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-solo",
+      "source": "The Oracle (supplement)",
+      "summary": "Solo/co-op oracle tools, gated behind a Solo Play mode.",
+      "marker": "function renderOracle",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-question",
+      "source": "The Oracle — Question",
+      "summary": "Interpretive (d66 symbol) and Yes/No (2d6 +/- Power, extreme on doubles) question oracles.",
+      "marker": "oracleSel==='question'",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-conflict-scene",
+      "source": "The Oracle — Conflict / Scene",
+      "summary": "Roll a whole scene across seven columns; re-roll any single column.",
+      "marker": "oracleSel==='conflict'",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-premade-profile",
+      "source": "The Oracle — Premade Profile",
+      "summary": "Roll an area then a creature/person/place, plus a vignette.",
+      "marker": "oracleSel==='premade'",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-profile-builder",
+      "source": "The Oracle — Profile Builder",
+      "summary": "Build a Challenge Profile: Mighty aspects, CR, Limits, tags/statuses, consequences.",
+      "marker": "function renderPB",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-challenge-action",
+      "source": "The Oracle — Challenge Action",
+      "summary": "Pick one of 11 Roles, roll d6 for its Threat/Consequence.",
+      "marker": "challengeAction",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-consequences",
+      "source": "The Oracle — Consequences",
+      "summary": "Roll d66 for a consequence category plus a specific d6 consequence.",
+      "marker": "oracleSel==='conseq'",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-revelations",
+      "source": "The Oracle — Revelations",
+      "summary": "Pick Act I/II/III and roll d66 for a revelation.",
+      "marker": "oracleSel==='revel'",
+      "status": "implemented"
+    },
+    {
+      "id": "oracle-journal",
+      "source": "The Oracle — journaling",
+      "summary": "A per-hero oracle log/journal with a note per entry.",
+      "marker": "function renderOracleLog",
+      "status": "implemented"
+    },
+    {
+      "id": "consequence-menu-full",
+      "source": "Core Book — Consequences (Narrator's menu)",
+      "summary": "The full menu of consequence types/severities the Narrator can inflict.",
+      "marker": "LITM_DATA.oracle",
+      "status": "unknown",
+      "note": "Not verified against the Core Rulebook's consequence rules. The app surfaces the Oracle supplement's solo Consequences tables as a player-side approximation; whether that covers the Core Book's consequence framework is unchecked (requires the rulebook)."
+    },
+    {
+      "id": "narrator-challenge-profiles",
+      "source": "Core Book — Challenges / Adversaries (Narrator)",
+      "summary": "Full Challenge/adversary profiles: Might-by-aspect, tags & statuses, Limits, Special Features, Vulnerabilities.",
+      "marker": null,
+      "status": "deliberately-omitted",
+      "note": "This is a player-facing app; Narrator-side content is intentionally out of scope (CLAUDE.md Roadmap Phase 8). The Oracle's Profile Builder provides a light player-side approximation only."
+    },
+    {
+      "id": "frames-of-play",
+      "source": "Core Book — Frames of Play",
+      "summary": "The Mountain (single Series Challenge) and The Crossroads (evolving Fronts) campaign frames.",
+      "marker": null,
+      "status": "deliberately-omitted",
+      "note": "Narrator-side campaign structure; CLAUDE.md Roadmap Phase 8, not implemented."
+    },
+    {
+      "id": "bestiary-creature-packs",
+      "source": "Core Book / packs — Bestiary (Narrator)",
+      "summary": "Statted adversaries and creature packs (e.g., the Winter Creature Pack).",
+      "marker": null,
+      "status": "deliberately-omitted",
+      "note": "Narrator-side content; CLAUDE.md Roadmap Phase 8, not implemented."
+    },
+    {
+      "id": "five-e-crossover",
+      "source": "Supplement — 5E D&D crossover quick-reference",
+      "summary": "Class/race -> theme-kit hints for players coming from D&D 5E.",
+      "marker": null,
+      "status": "deliberately-omitted",
+      "note": "Blocked: needs the notebook's crossover source, which is not reachable in this environment (CLAUDE.md Roadmap Phase 7)."
+    },
+    {
+      "id": "fellowship-single-use",
+      "source": "Core Book — Fellowship theme",
+      "summary": "Fellowship power tags are single-use: scratched when invoked, recovered while camping.",
+      "marker": "Fellowship power tags are single-use",
+      "status": "implemented"
+    },
+    {
+      "id": "relationship-tags-invoke",
+      "source": "Core Book — Fellowship relationships",
+      "summary": "Relationship tags are single-use story tags a Hero can invoke; scratched on use, renewed at camp.",
+      "marker": "relationship tags (single-use story tags held for each fellow Hero)",
+      "status": "implemented"
+    },
+    {
+      "id": "weakness-marks-improve",
+      "source": "Core Book — Theme development",
+      "summary": "Invoking a weakness tag marks Improve on its theme.",
+      "marker": "data-markimp",
+      "status": "implemented"
+    },
+    {
+      "id": "camp-fellowship-one-part",
+      "source": "Core Book — Camping",
+      "summary": "At camp the Fellowship recovers one scratched part (power tag, title or relationship); Rest recovers a Hero's own tags.",
+      "marker": "Fellowship parts recover only via step 4",
+      "status": "implemented"
+    }
   ]
 }
