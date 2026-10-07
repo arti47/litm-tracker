@@ -9,6 +9,11 @@ rule-correct **2d6 + Power** dice roller.
 > derived **solely from the Legend in the Mist Core Rulebook** (sourced via the project's
 > NotebookLM notebook `Legend In The Mist: Core Rulebook`, id `ee1b1502-78a0-4b9e-9e26-a0662816ec0b`).
 
+> ### 🗣️ Owner working preferences (standing)
+> - **Report progress only as percentages** (5%, 10% … 100%) — don't narrate each step; a brief result at 100%.
+> - **Always push to `main`** (also mirror to the session branch). Keep replies short and technical.
+> - **Always keep the app faithful to the Core Rulebook** — UI changes must never alter rule mechanics.
+
 > ### 📌 Standing rule: keep this file current
 > **Every time an update is made to the app, this `CLAUDE.md` MUST be updated in the same
 > change** — before the work is considered done. This includes new/changed features, the
@@ -54,7 +59,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v64` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v65` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (7)**:
@@ -165,8 +170,11 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 1. `<head>` — viewport, PWA meta, inline SVG app icon (data-URI), `manifest.json` link.
 2. `<style>` — CSS variables for light/dark; rulebook tag palette (power=yellow,
    weakness=orange, status=green); teal/mist "rustic fantasy" theme.
-3. `<header>` — sticky title + 👥 roster + ☰ menu, then a 5-tab nav.
-4. `<section.panel>` ×5 — **Hero / Fellowship / Tracking / Roll / Rules**.
+3. `<header>` — sticky crest (hero switcher) + title + undo/redo + ❓ + ☰. Bottom nav (`#nav`):
+   **Play** (`track`) · **Hero** (`hero`) · **Journal** (`journal`) · **Lore** (`ref`) · **Oracle** (`oracle`, solo only).
+4. `<section.panel>` — `panel-track` (Play, the default), `panel-hero` (sheet incl. Fellowship +
+   relationships), `panel-journal`, `panel-ref`, `panel-oracle`, plus `panel-roll` (the ACT flow, opened by ACT/🎲,
+   not in the nav) and the now-empty `panel-fellowship` (help text only; `showTab('fellowship')` → Hero + scroll).
 5. Overlays — Menu sheet, Roster sheet, Tutorial sheet, hidden import `<input type=file>`, toast.
 6. `<script>` — state model, render functions, roller, persistence, theme; then the injected
    **Phase-2 block** (`LITM_DATA` + the creation-wizard IIFE, which appends its own overlay
@@ -752,6 +760,39 @@ ink-line icons), auto light/dark.
   status count links to Tracking. 4 new coverage entries. *Owner confirmed against the Core Rulebook (2026-10-07):
   Rest = personal theme + backpack tags only; Step 4 = one Fellowship choice (recover a Fellowship tag **or**
   create/update a relationship tag).* Step 4 now enforces that single choice and adds create/update.
+
+### Redesign 2026-10 — Play-first, card-based, progressive disclosure ✅ (rules mechanics unchanged)
+Owner brief: "too cluttered, too wordy, intimidating — be radical". Implemented all recommendations:
+- **4-tab IA** — Play / Hero / Journal / Lore (+ Oracle in solo). `showTab` aliases `fellowship→hero` (+scroll to
+  `#fellowCard`) and highlights **Play** while the ACT flow (`roll`) is open (`NAV_OF`). App now **starts on Play**.
+- **Play stage** (`#playStage`, `renderStage`): misty landscape SVG, the scene's **stakes** as a display headline (or a
+  "＋ What's at stake?" prompt → `focusStakes`), scene tags as pills, **status tokens** (round tier badges, foe = red,
+  at-Limit ring; tap → `focusStatus`), a big **⚔ ACT** button (`startAct`) and quick tiles (Camp, Journey, Oracle
+  [solo-only via `body.solo`], Journal). The Scene/Statuses/Progress/Scene-tags editing cards follow below.
+- **ACT flow** (`panel-roll`): one step at a time on phones — **1 Tags · 2 Might · 3 Roll** (`#actSteps`, `.act-step[data-s]`,
+  `actGo`, `body[data-act]`); the roll dock becomes the flow footer (Power + **Next ›**, `dockRoll`/`updateRollDock`);
+  ≥900px shows all steps at once. Tour/coach spotlights auto-reveal the right step (`actRevealFor` in `tourPlace` /
+  `coachSpot`); `rollDice` jumps to step 3. A full-screen **outcome flash** (`#outcomeFlash`: tier colour, icon, result,
+  dice sum; tap/auto-dismiss) precedes the outcome + Spend panel. FAB → `startAct`.
+- **Hero = identity + card deck**: `#heroIdent` (`renderHeroIdent`) — large crest with a **5-star Promise arc** (tap to
+  set; same logic as the pips, opens MoF at 5), name, player, Promise/Fulfillments stats, Quintessences in a gold box,
+  **✎ Edit sheet** toggle. **View mode** (default for built heroes; blank heroes open in Edit — `_editFor`): no form
+  chrome — labels, add/delete/grip/move buttons, selects, empty rows/fields, theme notes and hints hidden; theme cards
+  become a **horizontal swipe deck** (scroll-snap, `#deckDots`/`syncDeckDots`; 2-up grid ≥900px) with numeral seal,
+  title, type, Might badge, tag pills, the Quest as an italic face line (`.ts-quest-face`), tracks and Special
+  Improvements. Collapsing applies only in Edit mode. Hero Card form fields show in Edit mode only. Glance strip retired.
+- **Hints → ⓘ** (`hintsToInfo`, `openInfo`): every card-level explanation paragraph (and `#rollHint`) is hidden and
+  opened from an ⓘ on the card heading (existing jargon ⓘ now shows its jargon line + the card's paragraph). Same text.
+- **Beginner / Full mode** (`litm-ui.mode`, `applyMode`, Display settings "Experience"): Beginner hides `.adv` — Might
+  helper, Situational ±, Help from other Heroes, Add foe status, Progress card (shown anyway once a track exists,
+  `.has`). Default: Beginner for first-run users, Full for existing users. Mechanics untouched.
+- **Journal tab** (`renderJournal`, `#journalList`, filter All/Rolls/Oracle): one day-grouped timeline of rolls (pip dice,
+  tier edge) and Oracle results (labelled rows, journal note, delete). Old Roll History / Oracle log cards hidden.
+- **Lore tab** = Rules + tiles for Action Grimoire, Tutorial, Run-a-game guide, Play-with-me.
+- **First run**: the Welcome sheet leads with a **hero gallery** (all 20 premade crests + "Build my own"); tapping one
+  creates that Hero (`heroFromPremade`) and drops you on Play (`renderWcGallery`, deferred until `LITM_DATA` exists).
+- **Header**: 👥 removed — the crest/emblem (`#hdrCrest`) and title open the roster.
+- Verified: specs pass; tour/coach/wizard/camp/rest/cross-link scripted checks pass; axe clean except `meta-viewport`.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
