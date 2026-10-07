@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v63` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v64` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (7)**:
@@ -391,8 +391,11 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
 - **1 · Expire story tags** — checklist of scene tags (checked = expire); removes the chosen ones.
 - **2 · Establish the place** — add a haven story tag to the scene.
 - **3 · Activities** — 2 (or **3** via the "Took Consequences" toggle), with a used/limit counter:
-  **Rest** (un-scratches the Hero's own scratched tags — theme power tags/titles + backpack — and
-  reduces each status by 1 tier; Fellowship parts are *not* restored here), **Reflect** (marks Improve on a chosen theme), **Camp Action**
+  **Rest** — a **pre-checked picker** (`campRest` → `campCtx.restPick`, `restCandidates`, `campRestConfirm`) of what
+  would naturally recover after a rest: the Hero's own scratched theme power tags/titles + backpack tags, and the
+  Hero's **own** statuses (−1 tier each; foe statuses excluded). One tap **Confirm Rest** for a normal camp; untick
+  anything the Narrator rules doesn't recover (broken gear needing a Camp Action, a harsh campsite). Fellowship
+  parts are *not* restored here, **Reflect** (marks Improve on a chosen theme), **Camp Action**
   (logged advisory: count Power, spend half without rolling, or roll on the Roll tab).
 - **4 · Recover one Fellowship part** (Fellowship quality time — **one choice per camp**, `campCtx.fel`
   locks the step once used, `campFelDone`): un-scratch a chosen Fellowship power tag (or its scratched
@@ -944,7 +947,7 @@ They are deterministic — **do not** wrap them in a retry loop.
   implements documented rules features. Fails if any `implemented`/`partial`/`unknown` entry's
   **marker** (a code substring that would vanish if the feature were removed) is missing from
   `character-tracker.html`, if an entry lacks `source`/`marker`, or if a non-`implemented` entry lacks a
-  `note`. Prints per-status counts. **61 entries** (53 implemented / 3 partial / 4 deliberately-omitted
+  `note`. Prints per-status counts. **62 entries** (54 implemented / 3 partial / 4 deliberately-omitted
   / 1 unknown).
   - ⚠️ **`docs/coverage.json` is SEEDED from this CLAUDE.md, NOT verified against the Core Rulebook**
     (the rulebook text isn't in this repo). So `_meta.omissionDetectionActive=false`: a genuine rulebook

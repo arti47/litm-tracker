@@ -451,7 +451,14 @@
       "id": "camp-fellowship-one-part",
       "source": "Core Book — Camping",
       "summary": "At camp the Fellowship recovers one scratched part (power tag, title or relationship); Rest recovers a Hero's own tags.",
-      "marker": "Fellowship parts recover only via step 4",
+      "marker": "Fellowship parts recover only in step 4",
+      "status": "implemented"
+    },
+    {
+      "id": "camp-rest-natural",
+      "source": "Core Book — Camping (Rest)",
+      "summary": "Rest recovers statuses and scratched power tags that would naturally be recovered after a rest; the Narrator may rule some don't (broken gear, harsh camp).",
+      "marker": "function restCandidates",
       "status": "implemented"
     }
   ]

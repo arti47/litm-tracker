@@ -1223,6 +1223,10 @@ body.rm *, body.rm *::before, body.rm *::after { animation-duration: .001ms !imp
 
 .camp-feldone { margin: 6px 0 0; padding: 9px 12px; border-radius: var(--r-m); background: var(--good-bg); color: var(--good); font-weight: 600; font-size: 14px; }
 .camp-relnew { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border); }
+
+.camp-restpick { margin: 8px 0 4px; padding: 10px 12px; border: 1px solid var(--border); border-left: 3px solid var(--teal); border-radius: var(--r-m); background: var(--bg-deep); }
+.camp-h2 { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); margin: 8px 0 2px; }
+.camp-restpick .camp-chk { padding: 5px 0; }
 </style>
 </head>
 <body>
@@ -3067,12 +3071,24 @@ function renderOracleLog(){ const w=$('oracleLog'); if(!w) return; const log=S.o
   w.querySelectorAll('[data-del]').forEach(btn=>btn.onclick=()=>{ S.oracleLog=S.oracleLog.filter(x=>x.id!==btn.dataset.del); save(); renderOracleLog(); });
   w.querySelectorAll('[data-note]').forEach(t=>t.oninput=()=>{ const e=S.oracleLog.find(x=>x.id===t.dataset.note); if(e){ e.note=t.value; save(); } });
 }
-function campRest(){
-  let n=0, red=0;
-  S.themes.forEach(th=>{ if(th._titleScr){th._titleScr=false;n++;} th.power.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} }); });
-  S.backpack.forEach(t=>{ if(t.scratched){t.scratched=false;n++;} });   // Fellowship parts recover only via step 4 (one part per camp)
-  S.statuses.forEach(st=>{ if(st.boxes.some(Boolean)){ for(let i=0;i<6;i++) st.boxes[i]=st.boxes[i+1]||false; red++; } });
-  campCtx.used++; campCtx.log.push('Rest — recovered '+n+' scratched tag(s); reduced '+red+' status(es) by 1 tier');
+// Rest: recovers what would naturally recover after a rest — a pre-checked picker of the Hero's own scratched
+// theme/backpack tags + own statuses (−1 tier each); untick anything the Narrator rules doesn't recover
+// (e.g. broken gear needing a Camp Action, or a harsh campsite). Fellowship parts recover only in step 4.
+function restCandidates(){
+  const tags=[];
+  S.themes.forEach(th=>{ if(th._titleScr && (th.title||'').trim()) tags.push({id:'tt_'+th.id,label:th.title,src:th.title||th.type});
+    th.power.forEach(t=>{ if(t.scratched && (t.text||'').trim()) tags.push({id:t.id,label:t.text,src:th.title||th.type}); }); });
+  S.backpack.forEach(t=>{ if(t.scratched && (t.text||'').trim()) tags.push({id:t.id,label:t.text,src:'Backpack'}); });
+  S.statuses.forEach(st=>{ if(!st.id) st.id=uid(); });
+  const sts=S.statuses.filter(st=>(st.owner||'me')!=='foe' && st.boxes.some(Boolean));
+  return {tags,sts};
+}
+function campRest(){ campCtx.restPick=true; renderCamp(); }
+function campRestConfirm(){
+  const body=$('campBody'); let n=0, red=0;
+  body.querySelectorAll('[data-rtag]:checked').forEach(cb=>{ recoverTagById(cb.dataset.rtag); n++; });
+  body.querySelectorAll('[data-rst]:checked').forEach(cb=>{ const st=S.statuses.find(x=>x.id===cb.dataset.rst); if(st){ for(let i=0;i<6;i++) st.boxes[i]=st.boxes[i+1]||false; red++; } });
+  campCtx.restPick=false; campCtx.used++; campCtx.log.push('Rest — recovered '+n+' scratched tag(s); reduced '+red+' status(es) by 1 tier');
   save(); renderAll(); renderCamp();
 }
 function campReflect(idx){
@@ -3114,7 +3130,13 @@ function renderCamp(){
     +'<button class="btn sm" id="camp_addplace">Add</button></div>';
   // 3 activities
   h+='<h3 class="camp-h">3 · Activities</h3><p class="hint">Each Hero takes <b>2</b> (3 if they took Consequences): Rest, Reflect, or a Camp Action.</p>';
-  h+='<div class="seg" style="margin-top:4px"><button id="camp_rest">💤 Rest</button><button id="camp_action">⚔️ Camp Action</button></div>';
+  h+='<div class="seg" style="margin-top:4px"><button id="camp_rest"'+(campCtx.restPick?' class="on"':'')+'>💤 Rest</button><button id="camp_action">⚔️ Camp Action</button></div>';
+  if(campCtx.restPick){ const rc=restCandidates();
+    h+='<div class="camp-restpick"><p class="hint" style="margin:0 0 6px">Recover what would naturally recover after a rest. Untick anything that won\'t (e.g. broken gear needing a Camp Action, or a harsh campsite).</p>';
+    if(rc.tags.length) h+='<div class="camp-h2">Scratched tags</div>'+rc.tags.map(t=>'<label class="camp-chk"><input type="checkbox" data-rtag="'+esc(t.id)+'" checked> '+esc(t.label)+' <span class="muted">· '+esc(t.src)+'</span></label>').join('');
+    if(rc.sts.length) h+='<div class="camp-h2">Statuses (−1 tier)</div>'+rc.sts.map(st=>'<label class="camp-chk"><input type="checkbox" data-rst="'+esc(st.id)+'" checked> '+esc(st.name||'status')+'-'+(st.boxes.lastIndexOf(true)+1)+'</label>').join('');
+    if(!rc.tags.length && !rc.sts.length) h+='<p class="muted">Nothing scratched and no statuses — resting still uses the activity.</p>';
+    h+='<div class="row" style="margin-top:8px;gap:8px"><button class="btn sm" id="camp_restok">Confirm Rest</button><button class="btn sm ghost" id="camp_restx">Cancel</button></div></div>'; }
   h+='<div class="row" style="align-items:flex-end;margin-top:8px"><label class="fld" style="flex:1;margin:0"><span>🤔 Reflect — mark Improve on…</span><select id="camp_reflsel">'
     +S.themes.map((t,i)=>'<option value="'+i+'">'+esc((t.title||('Theme '+(i+1))))+' ('+(t.improve||0)+'/3)</option>').join('')+'</select></label><button class="btn sm" id="camp_reflect">Reflect</button></div>';
   // 4 Fellowship — one choice per camp: recover a Fellowship tag OR create/update/renew a relationship tag
@@ -3148,6 +3170,8 @@ function renderCamp(){
   };
   $('camp_addplace').onclick=()=>{ const v=($('camp_place').value||'').trim(); if(!v){toast('Name the place tag');return;} S.scene.push({id:uid(),text:v,type:'story',scratched:false}); campCtx.log.push('Established the place — '+v); save(); renderAll(); renderCamp(); };
   $('camp_rest').onclick=campRest;
+  if($('camp_restok')) $('camp_restok').onclick=campRestConfirm;
+  if($('camp_restx')) $('camp_restx').onclick=()=>{ campCtx.restPick=false; renderCamp(); };
   $('camp_action').onclick=campAction;
   $('camp_reflect').onclick=()=>campReflect(+$('camp_reflsel').value);
   if($('camp_frec')) $('camp_frec').onclick=()=>campRecoverFellow($('camp_fsel').value);
