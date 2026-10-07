@@ -54,7 +54,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v62` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v63` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (7)**:
@@ -394,8 +394,10 @@ opened from the Scene card or the ☰ menu. Single scrolling sheet:
   **Rest** (un-scratches the Hero's own scratched tags — theme power tags/titles + backpack — and
   reduces each status by 1 tier; Fellowship parts are *not* restored here), **Reflect** (marks Improve on a chosen theme), **Camp Action**
   (logged advisory: count Power, spend half without rolling, or roll on the Roll tab).
-- **4 · Recover one Fellowship part** — un-scratch a chosen Fellowship power tag (or its scratched
-  title) *or* renew a scratched relationship tag. **Reflect** filling Improve (3) opens the Improve
+- **4 · Recover one Fellowship part** (Fellowship quality time — **one choice per camp**, `campCtx.fel`
+  locks the step once used, `campFelDone`): un-scratch a chosen Fellowship power tag (or its scratched
+  title) *or* renew a scratched relationship tag *or* **create / update a relationship tag** with a
+  fellow Hero (pick an existing fellow or "＋ New fellow Hero…", write/rephrase the tag — `campSetRel`). **Reflect** filling Improve (3) opens the Improve
   development flow directly (`openDev`).
 - A running "This camp" log; each action applies to the sheet immediately (`renderAll`).
 
@@ -744,7 +746,9 @@ ink-line icons), auto light/dark.
   scratch/recover toggle (`.title-scr`). `scratchedTags`/`recoverTagById` (Spend → Recover) include the Fellowship
   title + relationships. **Camp**: Rest no longer restores Fellowship tags (one Fellowship part per camp via step 4,
   which now also lists a scratched Fellowship title); Reflect → Improve 3 opens the development flow. Glance-strip
-  status count links to Tracking. 4 new coverage entries.
+  status count links to Tracking. 4 new coverage entries. *Owner confirmed against the Core Rulebook (2026-10-07):
+  Rest = personal theme + backpack tags only; Step 4 = one Fellowship choice (recover a Fellowship tag **or**
+  create/update a relationship tag).* Step 4 now enforces that single choice and adds create/update.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.

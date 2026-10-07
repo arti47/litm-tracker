@@ -1220,6 +1220,9 @@ body.rm *, body.rm *::before, body.rm *::after { animation-duration: .001ms !imp
 .theme .theme-hd .title-scr { order: -1; flex: none; width: 38px; height: 38px; margin-top: 1px; }
 .theme .theme-hd .title-in.scratched { text-decoration: line-through; opacity: .55; }
 .g-link { border: 0; background: transparent; padding: 0; cursor: pointer; font: inherit; }
+
+.camp-feldone { margin: 6px 0 0; padding: 9px 12px; border-radius: var(--r-m); background: var(--good-bg); color: var(--good); font-weight: 600; font-size: 14px; }
+.camp-relnew { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border); }
 </style>
 </head>
 <body>
@@ -2833,7 +2836,7 @@ $('sb_threats').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',th
 
 // ----- Camp / Sojourn wizard -----
 let campCtx = null; // { limit, used, log:[] }
-function openCamp(){ if(typeof closeOverlays==='function') closeOverlays(); campCtx={limit:2,used:0,log:[]}; renderCamp(); $('campOverlay').classList.add('show'); }
+function openCamp(){ if(typeof closeOverlays==='function') closeOverlays(); campCtx={limit:2,used:0,log:[],fel:null}; renderCamp(); $('campOverlay').classList.add('show'); }
 function closeCamp(){ $('campOverlay').classList.remove('show'); campCtx=null; }
 
 // ----- Journey montage helper (Phase 6) -----
@@ -3080,9 +3083,14 @@ function campReflect(idx){
   if(th.improve>=3) openDev(th,'improve',()=>{ renderAll(); renderCamp(); });
 }
 function campAction(){ campCtx.used++; campCtx.log.push('Camp Action — count Power, then spend half without rolling, or roll on the Roll tab'); renderCamp(); }
-function campRecoverFellow(id){ if(id==='ft'){ S.fellowship._titleScr=false; campCtx.log.push('Recovered Fellowship title — '+S.fellowship.title); save(); renderAll(); renderCamp(); return; }
-  const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=false; campCtx.log.push('Recovered Fellowship power tag — '+t.text); save(); renderAll(); renderCamp(); } }
-function campRenewRel(idx){ const r=S.relationships[idx]; if(r){ r.scratched=false; campCtx.log.push('Renewed relationship — '+((r.name||'')+(r.tag?(' / '+r.tag):''))); save(); renderAll(); renderCamp(); } }
+function campFelDone(msg){ campCtx.fel=msg; campCtx.log.push(msg); save(); renderAll(); renderCamp(); }
+function campRecoverFellow(id){ if(campCtx.fel) return; if(id==='ft'){ S.fellowship._titleScr=false; campFelDone('Recovered Fellowship title — '+S.fellowship.title); return; }
+  const t=S.fellowship.power.find(x=>x.id===id); if(t){ t.scratched=false; campFelDone('Recovered Fellowship power tag — '+t.text); } }
+function campSetRel(who, name, tag){ if(campCtx.fel) return; tag=(tag||'').trim(); if(!tag){ toast('Write the relationship tag'); return; }
+  let r; if(who==='new'){ name=(name||'').trim(); if(!name){ toast('Name the fellow Hero'); return; } r={id:uid(),name,tag,scratched:false}; S.relationships.push(r); }
+  else { r=S.relationships[+who]; if(!r) return; r.tag=tag; r.scratched=false; }
+  campFelDone('Relationship — '+(r.name||'')+' / '+tag); }
+function campRenewRel(idx){ if(campCtx.fel) return; const r=S.relationships[idx]; if(r){ r.scratched=false; campFelDone('Renewed relationship — '+((r.name||'')+(r.tag?(' / '+r.tag):''))); } }
 function renderCamp(){
   if(!campCtx) return;
   const body=$('campBody');
@@ -3109,17 +3117,25 @@ function renderCamp(){
   h+='<div class="seg" style="margin-top:4px"><button id="camp_rest">💤 Rest</button><button id="camp_action">⚔️ Camp Action</button></div>';
   h+='<div class="row" style="align-items:flex-end;margin-top:8px"><label class="fld" style="flex:1;margin:0"><span>🤔 Reflect — mark Improve on…</span><select id="camp_reflsel">'
     +S.themes.map((t,i)=>'<option value="'+i+'">'+esc((t.title||('Theme '+(i+1))))+' ('+(t.improve||0)+'/3)</option>').join('')+'</select></label><button class="btn sm" id="camp_reflect">Reflect</button></div>';
-  // 4 fellowship recovery
-  h+='<h3 class="camp-h">4 · Recover one Fellowship part</h3><p class="hint">Recover a Fellowship power tag <b>or</b> renew one relationship tag.</p>';
-  if(scratchedF.length){
-    h+='<div class="row" style="align-items:flex-end"><label class="fld" style="flex:1;margin:0"><span>Recover Fellowship power tag</span><select id="camp_fsel">'
-      +scratchedF.map(t=>'<option value="'+t.id+'">'+esc(t.text)+'</option>').join('')+'</select></label><button class="btn sm" id="camp_frec">Recover</button></div>';
+  // 4 Fellowship — one choice per camp: recover a Fellowship tag OR create/update/renew a relationship tag
+  h+='<h3 class="camp-h">4 · Recover one Fellowship part</h3><p class="hint">Choose <b>one</b>: recover a Fellowship power tag <b>or</b> create / update a relationship tag with a fellow Hero.</p>';
+  if(campCtx.fel){ h+='<p class="camp-feldone">✓ '+esc(campCtx.fel)+'</p>'; }
+  else {
+    if(scratchedF.length){
+      h+='<div class="row" style="align-items:flex-end"><label class="fld" style="flex:1;margin:0"><span>Recover Fellowship power tag</span><select id="camp_fsel">'
+        +scratchedF.map(t=>'<option value="'+t.id+'">'+esc(t.text)+'</option>').join('')+'</select></label><button class="btn sm" id="camp_frec">Recover</button></div>';
+    }
+    if(scratchedR.length){
+      h+='<div class="row" style="align-items:flex-end;margin-top:6px"><label class="fld" style="flex:1;margin:0"><span>Renew relationship</span><select id="camp_rsel">'
+        +scratchedR.map(r=>'<option value="'+S.relationships.indexOf(r)+'">'+esc(((r.name||'(unnamed)')+(r.tag?(' / '+r.tag):'')))+'</option>').join('')+'</select></label><button class="btn sm" id="camp_rren">Renew</button></div>';
+    }
+    const rels=S.relationships||[];
+    h+='<div class="camp-relnew"><label class="fld" style="margin:8px 0 4px"><span>Create / update relationship tag</span><select id="camp_relwho">'
+      +rels.map((r,i)=>'<option value="'+i+'">'+esc(r.name||'(unnamed)')+(r.tag?' — '+esc(r.tag):'')+'</option>').join('')
+      +'<option value="new"'+(rels.length?'':' selected')+'>＋ New fellow Hero…</option></select></label>'
+      +'<input id="camp_relname" placeholder="Fellow Hero name" style="margin-bottom:6px'+(rels.length?';display:none':'')+'">'
+      +'<div class="row" style="align-items:flex-end"><label class="fld" style="flex:1;margin:0"><input id="camp_reltag" placeholder="relationship tag…"></label><button class="btn sm" id="camp_relset">Set</button></div></div>';
   }
-  if(scratchedR.length){
-    h+='<div class="row" style="align-items:flex-end;margin-top:6px"><label class="fld" style="flex:1;margin:0"><span>Renew relationship</span><select id="camp_rsel">'
-      +scratchedR.map(r=>'<option value="'+S.relationships.indexOf(r)+'">'+esc(((r.name||'(unnamed)')+(r.tag?(' / '+r.tag):'')))+'</option>').join('')+'</select></label><button class="btn sm" id="camp_rren">Renew</button></div>';
-  }
-  if(!scratchedF.length && !scratchedR.length) h+='<p class="muted">No scratched Fellowship tags or relationships to recover.</p>';
   // log
   if(campCtx.log.length) h+='<h3 class="camp-h">This camp</h3><ul class="camp-log">'+campCtx.log.map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul>';
   h+='<button class="btn wide" id="camp_done" style="margin-top:14px">Done</button>';
@@ -3136,6 +3152,10 @@ function renderCamp(){
   $('camp_reflect').onclick=()=>campReflect(+$('camp_reflsel').value);
   if($('camp_frec')) $('camp_frec').onclick=()=>campRecoverFellow($('camp_fsel').value);
   if($('camp_rren')) $('camp_rren').onclick=()=>campRenewRel(+$('camp_rsel').value);
+  if($('camp_relwho')){ const who=$('camp_relwho'), nm=$('camp_relname'), tg=$('camp_reltag');
+    const sync=()=>{ const r=S.relationships[+who.value]; nm.style.display=who.value==='new'?'':'none'; if(r && !tg.value) tg.value=r.tag||''; };
+    who.onchange=()=>{ tg.value=''; sync(); }; sync();
+    $('camp_relset').onclick=()=>campSetRel(who.value, nm.value, tg.value); }
   $('camp_done').onclick=closeCamp;
 }
 
