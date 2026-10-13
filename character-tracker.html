@@ -1427,6 +1427,104 @@ body[data-tab=track] .roll-fab { display: none !important; }
 
 body.dark .hi-edit, body.dark .act-steps button.on { color: var(--teal-dark); border-color: var(--teal-dark); }
 body.dark .act-steps button.on { box-shadow: 0 0 0 2px var(--teal-dark); }
+
+/* =====================================================================
+   STORY — solo-journaling main screen
+   ===================================================================== */
+#panel-journal { padding-bottom: calc(var(--safe-bot) + var(--nav-h) + 150px); }
+body[data-tab=journal] .roll-fab { display: none !important; }
+.story-hud { position: sticky; top: var(--hdr-h, 60px); z-index: 20; display: flex; gap: 10px; align-items: center; margin: -14px -12px 10px; padding: 8px 12px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+.hud-crest { border: 0; background: transparent; padding: 0; flex: none; }
+.hud-mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.hud-name { font: 700 14px var(--font-display); color: var(--ink); display: flex; align-items: center; gap: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hud-stars { display: inline-flex; gap: 1px; }
+.hud-stars .ico { width: 12px; height: 12px; color: var(--mist); }
+.hud-stars .ico.on { color: var(--promise); fill: var(--promise); }
+.hud-quest { font-size: 12.5px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hud-toks { display: flex; gap: 5px; flex-wrap: wrap; }
+.hud-tok { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 4px 2px 8px; border-radius: 12px; background: var(--status); color: var(--status-ink); }
+.hud-tok b { background: rgba(0,0,0,.12); border-radius: 8px; padding: 0 6px; }
+.hud-tok.foe { background: var(--bad-bg); color: var(--bad); }
+
+.ch-hd { display: flex; align-items: center; gap: 10px; margin: 26px 0 10px; }
+.ch-hd:first-child { margin-top: 6px; }
+.ch-orn { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--mist), transparent); }
+.ch-title { font: 700 20px var(--font-display); color: var(--teal); letter-spacing: .06em; text-align: center; outline: none; padding: 0 4px; }
+.sc-hd { margin: 16px 0 10px; padding: 10px 14px; border-radius: 14px; border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--card-bg), var(--bg-deep)); position: relative; }
+.sc-hd::before { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 3px; background: var(--teal); }
+.sc-title { font: 700 16px var(--font-display); color: var(--ink); outline: none; }
+.sc-stakes { font-size: 13.5px; color: var(--ink-soft); font-style: italic; outline: none; margin-top: 2px; min-height: 18px; }
+[contenteditable][data-ph]:empty::before { content: attr(data-ph); color: var(--mist); font-style: italic; }
+[contenteditable]:focus { box-shadow: 0 0 0 2px var(--focus); border-radius: 6px; }
+.se-empty { display: flex; gap: 10px; align-items: center; padding: 14px; border: 1.5px dashed var(--border); border-radius: 14px; color: var(--ink-soft); font-size: 14px; }
+.se-empty .ico { width: 26px; height: 26px; color: var(--teal); flex: none; }
+
+.se { position: relative; margin: 0 0 12px; padding: 12px 14px 10px; border-radius: 16px; background: var(--card-bg);
+  border: 1px solid var(--border); box-shadow: 0 1px 2px var(--shadow), 0 8px 18px -12px var(--shadow); animation: seIn .3s var(--ease); }
+@keyframes seIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.se-del { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border: 0; border-radius: 8px; background: transparent; color: var(--mist); font-size: 12px; opacity: .6; }
+.se-del:hover, .se-del:focus-visible { opacity: 1; background: var(--bg-deep); }
+.se-prose { font-family: Georgia, 'Times New Roman', serif; font-size: 16.5px; line-height: 1.55; color: var(--ink); outline: none; padding-right: 22px; min-height: 22px; white-space: pre-wrap; }
+.se-intent { font-size: 12.5px; color: var(--ink-soft); font-style: italic; margin-bottom: 4px; padding-right: 24px; }
+.se-turn { border-left: 5px solid var(--mist); }
+.se-turn.win { border-left-color: var(--good); } .se-turn.mixed { border-left-color: var(--mixed); } .se-turn.lose { border-left-color: var(--bad); }
+.se-turn.crit-win { box-shadow: 0 0 0 2px var(--promise), 0 10px 24px -12px rgba(201,151,31,.6); }
+.se-mech { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); font-size: 12.5px; }
+.se-dice { display: inline-flex; gap: 3px; }
+.se-dice .die-face { width: 20px; height: 20px; fill: var(--ink); background: var(--bg-deep); border-radius: 5px; border: 1px solid var(--border); }
+.se-mech b { font: 700 16px var(--font-display); }
+.se-turn.win .se-tier { color: var(--good); } .se-turn.mixed .se-tier { color: var(--mixed); } .se-turn.lose .se-tier { color: var(--bad); }
+.se-tier { font-weight: 700; }
+.se-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.se-tags span { font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: var(--power); color: var(--power-ink); }
+.se-tags span.h { background: var(--weak); color: var(--weak-ink); }
+.se-fx { margin-top: 6px; font-size: 12.5px; color: var(--teal); font-weight: 600; }
+.se-oracle { border-left: 5px solid var(--teal-light); background: linear-gradient(180deg, rgba(127,169,155,.10), var(--card-bg) 60%); }
+.se-k { font: 700 11.5px var(--font-body); text-transform: uppercase; letter-spacing: .06em; color: var(--teal); margin-bottom: 4px; }
+.se-res { font-size: 14px; line-height: 1.5; margin-bottom: 4px; }
+.se-seal { margin: 4px 0 8px; font-size: 16px; }
+.se-note.se-prose, .se .se-note { font-size: 15px; color: var(--ink-soft); }
+.se-note:not(.se-prose) .se-prose { color: var(--ink); }
+.se-conseq { border-left: 5px solid var(--bad); }
+.se-camp { border-left: 5px solid #8a6a3a; }
+.se-camp ul { margin: 2px 0 6px; padding-left: 18px; font-size: 13px; color: var(--ink-soft); }
+.se-mile { display: flex; align-items: center; gap: 12px; font: 700 15px var(--font-display); color: var(--ink);
+  background: linear-gradient(135deg, rgba(230,184,74,.22), var(--card-bg) 70%); border: 1px solid rgba(201,151,31,.45); }
+.se-mi { flex: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--promise); color: #fff;
+  box-shadow: 0 0 14px rgba(230,184,74,.5); }
+.se-mi .ico { width: 22px; height: 22px; }
+
+.story-next .nx-card { margin: 4px 0 12px; padding: 12px 14px; border-radius: 16px; border: 1.5px dashed var(--border); text-align: center; }
+.nx-card.lose { border-color: var(--bad); background: var(--bad-bg); }
+.nx-card.win { border-color: var(--good); background: var(--good-bg); }
+.nx-h { font: 700 14px var(--font-display); margin-bottom: 8px; }
+.nx-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.nx-btns button { border: 0; border-radius: 12px; padding: 9px 14px; font-weight: 700; font-size: 13.5px; background: var(--btn); color: #fff; }
+.story-tools { display: flex; gap: 8px; justify-content: center; margin: 6px 0 0; }
+.story-tools button { border: 1px solid var(--border); background: var(--card-bg); color: var(--teal); border-radius: 20px; padding: 8px 14px; font-weight: 700; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+
+/* composer */
+.composer { position: fixed; left: 0; right: 0; bottom: calc(var(--safe-bot) + var(--nav-h)); z-index: 58; display: none; padding: 8px 10px;
+  background: var(--card-bg); border-top: 1px solid var(--border); box-shadow: 0 -6px 18px -8px var(--shadow); }
+body[data-tab=journal] .composer { display: block; }
+body.kb[data-tab=journal] .composer { bottom: 0; }
+body:has(.overlay.show) .composer, body.coach-active .composer { display: none !important; }
+.composer textarea { width: 100%; min-height: 40px; max-height: 120px; resize: none; border-radius: 14px; font-family: Georgia, serif; font-size: 16px; padding: 9px 12px; line-height: 1.35; }
+.cmp-btns { display: flex; gap: 6px; margin-top: 6px; }
+.cmp-btns button { flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 9px 6px; font-weight: 700; font-size: 14px; background: var(--bg-deep); color: var(--teal);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.cmp-btns .cmp-act { flex: 1.6; background: var(--btn); color: #fff; border-color: var(--btn); font-family: var(--font-display); letter-spacing: .06em; }
+.cmp-btns .ico { width: 18px; height: 18px; }
+@media (min-width: 900px) { .composer { left: 50%; transform: translateX(-50%); width: min(880px, 100%); border-radius: 16px 16px 0 0; } }
+
+/* ACT flow: intent banner + back to story */
+.act-intent { margin: 0 0 10px; padding: 10px 14px; border-radius: 14px; background: var(--bg-deep); border-left: 4px solid var(--teal);
+  font-family: Georgia, serif; font-style: italic; font-size: 15px; color: var(--ink); }
+.back-story { margin-top: 10px; }
+
+body.dark .story-tools button, body.dark .cmp-btns button:not(.cmp-act), body.dark .ch-title { color: var(--teal-dark); }
 </style>
 </head>
 <body>
@@ -1569,7 +1667,7 @@ body.dark .act-steps button.on { box-shadow: 0 0 0 2px var(--teal-dark); }
 </section>
 
 <!-- TRACKING -->
-<section class="panel active" id="panel-track">
+<section class="panel" id="panel-track">
   <details class="howto">
     <summary>❓ How to use this tab</summary>
     <div class="howto-body">
@@ -1611,7 +1709,7 @@ body.dark .act-steps button.on { box-shadow: 0 0 0 2px var(--teal-dark); }
         <button onclick="openCamp()">🏕️<span>Camp</span></button>
         <button onclick="openJourney()">🧭<span>Journey</span></button>
         <button class="solo-only" onclick="showTab('oracle')">🔮<span>Oracle</span></button>
-        <button onclick="showTab('journal')">📓<span>Journal</span></button>
+        <button onclick="showTab('journal')">📜<span>Story</span></button>
       </div>
     </div>
   </div>
@@ -1685,6 +1783,7 @@ body.dark .act-steps button.on { box-shadow: 0 0 0 2px var(--teal-dark); }
     <button data-go="2"><b>2</b><span>Might</span></button>
     <button data-go="3"><b>3</b><span>Roll</span></button>
   </nav>
+  <div class="act-intent" id="actIntent" style="display:none"></div>
   <div class="card rl-build">
     <h2 id="rollHead">🎲 Roll an Action</h2>
     <div class="act-step" data-s="1">
@@ -1890,11 +1989,13 @@ body.dark .act-steps button.on { box-shadow: 0 0 0 2px var(--teal-dark); }
 </section>
 
 <!-- ORACLE (solo / co-op play) -->
-<section class="panel" id="panel-journal">
-  <div class="card">
-    <h2>📓 Journal</h2>
-    <div class="seg sm jr-filter" id="jrFilter"><button data-f="all" class="on">All</button><button data-f="roll">🎲 Rolls</button><button data-f="oracle">🔮 Oracle</button></div>
-    <div id="journalList"></div>
+<section class="panel active" id="panel-journal">
+  <div class="story-hud" id="storyHud"></div>
+  <div class="story-feed" id="storyFeed"></div>
+  <div class="story-next" id="storyNext"></div>
+  <div class="story-tools">
+    <button onclick="storyNewScene()">🎬 New scene</button>
+    <button onclick="storyEndChapter()">🏕️ End chapter</button>
   </div>
 </section>
 
@@ -2107,9 +2208,9 @@ body.dark .act-steps button.on { box-shadow: 0 0 0 2px var(--teal-dark); }
 </div>
 
 <nav id="nav" class="bottomnav" aria-label="Sections">
-  <button class="tab active" data-tab="track" onclick="showTab('track')"><span class="tab-ic"><svg class="ico"><use href="#i-swords"/></svg></span><span class="tab-lb">Play</span></button>
+  <button class="tab active" data-tab="journal" onclick="showTab('journal')"><span class="tab-ic"><svg class="ico"><use href="#i-scroll-text"/></svg></span><span class="tab-lb">Story</span></button>
+  <button class="tab" data-tab="track" onclick="showTab('track')"><span class="tab-ic"><svg class="ico"><use href="#i-clapperboard"/></svg></span><span class="tab-lb">Scene</span></button>
   <button class="tab" data-tab="hero" onclick="showTab('hero')"><span class="tab-ic"><svg class="ico"><use href="#i-feather"/></svg></span><span class="tab-lb">Hero</span></button>
-  <button class="tab" data-tab="journal" onclick="showTab('journal')"><span class="tab-ic"><svg class="ico"><use href="#i-notebook-pen"/></svg></span><span class="tab-lb">Journal</span></button>
   <button class="tab" data-tab="ref" onclick="showTab('ref')"><span class="tab-ic"><svg class="ico"><use href="#i-book-open"/></svg></span><span class="tab-lb">Lore</span></button>
   <button class="tab" data-tab="oracle" onclick="showTab('oracle')" id="oracleTab" style="display:none"><span class="tab-ic"><svg class="ico"><use href="#i-orb"/></svg></span><span class="tab-lb">Oracle</span></button>
 </nav>
@@ -2130,6 +2231,14 @@ body.dark .act-steps button.on { box-shadow: 0 0 0 2px var(--teal-dark); }
     <h2 id="helpTitle">❓ How to use this tab</h2>
     <div id="helpBody"></div>
     <button class="btn wide" style="margin-top:14px" onclick="closeHelp()">Got it</button>
+  </div>
+</div>
+<div id="composer" class="composer">
+  <textarea id="cmpText" rows="1" placeholder="What do you do?" aria-label="What do you do?"></textarea>
+  <div class="cmp-btns">
+    <button class="cmp-act" onclick="cmpAct()">⚔️ Act</button>
+    <button class="cmp-ask solo-only" onclick="cmpAsk()">🔮 Ask</button>
+    <button class="cmp-note" onclick="cmpNote()">✍️ Note</button>
   </div>
 </div>
 <div id="outcomeFlash" class="oc-flash" onclick="this.classList.remove('show')" aria-live="polite"></div>
@@ -2319,7 +2428,7 @@ function fmtText(text){
 }
 
 // ---------- Tabs ----------
-const NAV_OF={roll:'track',fellowship:'hero'};
+const NAV_OF={roll:'journal',fellowship:'hero'};
 function showTab(name){
   let jump=null; if(name==='fellowship'){ name='hero'; jump='fellowCard'; }
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -2331,7 +2440,7 @@ function showTab(name){
   if (name==='roll') renderRoller();
   if (name==='ref') renderRefData();
   if (name==='oracle') renderOracle();
-  if (name==='journal') renderJournal();
+  if (name==='journal'){ _storyScrollEnd=true; renderStory(); }
   if (name==='track') renderStage();
   if (jump) setTimeout(()=>{ const el=$(jump); if(el) try{ el.scrollIntoView({block:'start'}); window.scrollBy(0,-80); }catch(e){} },30);
 }
@@ -2711,7 +2820,7 @@ function renderAll(){
   $('hdrTitle').textContent = S.heroName ? S.heroName : 'Legend in the Mist';
   const hc=$('heroCrest'); if(hc) hc.innerHTML=heroCrestSVG(S,48);
   const hdc=$('hdrCrest'); if(hdc) hdc.innerHTML=(S.heroName||'').trim()? heroCrestSVG(S,30) : '<svg class="hdr-emblem" aria-hidden="true"><use href="#i-antler"/></svg>';
-  renderStage(); renderJournal(); renderHeroIdent(); applyMode();
+  renderStage(); renderJournal(); renderHeroIdent(); applyMode(); if(typeof syncHeaderH==='function') requestAnimationFrame(syncHeaderH);
   if(_editFor!==S.id){ _editFor=S.id; toggleSheetEdit(heroIsUntouched()); }   // blank hero opens in Edit, built heroes in View
   updateGlance();
   $('f_playerName').value = S.playerName;
@@ -3055,7 +3164,7 @@ function renderProgress(){
     const nm=document.createElement('input'); nm.type='text'; nm.className='nm'; nm.placeholder='goal (e.g. making-progress, catch)'; nm.value=pr.name||''; nm.oninput=()=>{ pr.name=nm.value; save(); };
     const boxes=document.createElement('div'); boxes.className='boxes';
     for(let t=1;t<=max;t++){ const b=document.createElement('button'); b.className='sbox'+(t<=cur?' on':'')+(t===max?' lim':'');
-      b.textContent=t; b.title=(t===max?'Limit — fills the goal':''); b.onclick=()=>{ pr.cur=(cur===t? t-1 : t); renderProgress(); save(); if(cur<max && pr.cur>=max) celebrate(b); }; boxes.appendChild(b); }
+      b.textContent=t; b.title=(t===max?'Limit — fills the goal':''); b.onclick=()=>{ pr.cur=(cur===t? t-1 : t); renderProgress(); save(); if(cur<max && pr.cur>=max){ celebrate(b); storyAdd({kind:'milestone', icon:'target', text:(pr.name||'A goal')+' reached its Limit'+(pr.goal?' — '+pr.goal:'')}); } }; boxes.appendChild(b); }
     const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none'; del.onclick=()=>{ S.progress.splice(i,1); renderProgress(); save(); };
     card.appendChild(nm); card.appendChild(boxes); card.appendChild(del); w.appendChild(card);
     const meta=document.createElement('div'); meta.className='status-meta';
@@ -3101,13 +3210,15 @@ document.querySelectorAll('#loopSeg button').forEach(b=>{
     const s=+b.dataset.step; const sel=(S.sceneBoard.step===s? -1 : s); S.sceneBoard.step=sel; renderSceneBoard(); save();
     if(sel!==-1 && soloOn()){ if(sel===1) showTab('roll'); else if(sel===2){ oracleSel='conseq'; showTab('oracle'); } } };  // solo deep-link: Action→Roll, Consequences→Oracle
 });
-$('sb_stakes').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.stakes=e.target.value; save(); renderStage(); };
+$('sb_stakes').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.stakes=e.target.value; const sc=curScene(); if(sc) sc.stakes=e.target.value; save(); renderStage(); };
 $('sb_threats').oninput=e=>{ if(!S.sceneBoard)S.sceneBoard={step:-1,stakes:'',threats:''}; S.sceneBoard.threats=e.target.value; save(); };
 
 // ----- Camp / Sojourn wizard -----
 let campCtx = null; // { limit, used, log:[] }
 function openCamp(){ if(typeof closeOverlays==='function') closeOverlays(); campCtx={limit:2,used:0,log:[],fel:null}; renderCamp(); $('campOverlay').classList.add('show'); }
-function closeCamp(){ $('campOverlay').classList.remove('show'); campCtx=null; }
+function closeCamp(){ const log=campCtx&&campCtx.log?campCtx.log.slice():[]; $('campOverlay').classList.remove('show'); campCtx=null;
+  if(log.length) storyAdd({kind:'camp', items:log, text:''}, true);
+  if(_endChapter){ _endChapter=false; storyNewChapter(); } else { save(); renderStory(); } }
 
 // ----- Journey montage helper (Phase 6) -----
 function openJourney(){ if(typeof closeOverlays==='function') closeOverlays(); if(!S.journey) S.journey={dest:'',max:3,cur:0,time:0,vignettes:[]}; renderJourney(); $('journeyOverlay').classList.add('show'); }
@@ -3125,7 +3236,7 @@ function renderJourney(){
   const bx=$('jr_boxes'); bx.className='jr-trail';
   bx.innerHTML=journeyTrailSVG(max,cur);
   bx.querySelectorAll('[data-leg]').forEach(g=>{ const t=+g.dataset.leg;
-    const go=()=>{ const was=j.cur||0; j.cur=(cur===t?t-1:t); save(); renderJourney(); if(was<max && j.cur>=max) celebrate($('jr_boxes')); };
+    const go=()=>{ const was=j.cur||0; j.cur=(cur===t?t-1:t); save(); renderJourney(); if(was<max && j.cur>=max){ celebrate($('jr_boxes')); storyAdd({kind:'milestone', icon:'flag', text:'Arrived at '+(j.dest||'the destination')}); } };
     g.addEventListener('click',go); g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }); });
   const sel=$('jr_max'); for(let L=2;L<=10;L++){ const o=document.createElement('option'); o.value=L; o.textContent=L; if(L===max)o.selected=true; sel.appendChild(o); }
   sel.onchange=()=>{ j.max=+sel.value; if((j.cur||0)>j.max)j.cur=j.max; save(); renderJourney(); };
@@ -3140,7 +3251,7 @@ function renderJourney(){
     inp.oninput=()=>{ v.text=inp.value; save(); };
     const roll=document.createElement('button'); roll.className='ic'; roll.textContent='🎲'; roll.title='Resolve with a Quick action'; roll.style.flex='none'; roll.onclick=()=>{ closeJourney(); showTab('roll'); };
     const done=document.createElement('button'); done.className='ic'; done.textContent=v.done?'↩':'✓'; done.title=v.done?'reopen':'cleared — advance a leg'; done.style.flex='none';
-    done.onclick=()=>{ const was=j.cur||0; if(!v.done){ v.done=true; j.cur=Math.min(max,(j.cur||0)+1); } else v.done=false; save(); renderJourney(); if(was<max && j.cur>=max) celebrate($('jr_boxes')); };
+    done.onclick=()=>{ const was=j.cur||0; if(!v.done){ v.done=true; j.cur=Math.min(max,(j.cur||0)+1); } else v.done=false; save(); renderJourney(); if(was<max && j.cur>=max){ celebrate($('jr_boxes')); storyAdd({kind:'milestone', icon:'flag', text:'Arrived at '+(j.dest||'the destination')}); } };
     const del=document.createElement('button'); del.className='ic'; del.textContent='✕'; del.style.flex='none'; del.onclick=()=>{ j.vignettes.splice(i,1); save(); renderJourney(); };
     row.appendChild(inp); row.appendChild(roll); row.appendChild(done); row.appendChild(del); vw.appendChild(row);
   });
@@ -3308,7 +3419,9 @@ function renderPB(O){
   b.querySelectorAll('[data-pblim]').forEach(el=>{ el.onchange=()=>{ p.limits[el.dataset.pblim]=el.value; renderPB(O); }; });
   const rs=b.querySelector('[data-pbrole]'); if(rs) rs.onchange=()=>{ p.role=rs.value; const sm=$('pb_sum'); if(sm) sm.textContent=pbSummary(); };
 }
-function oracleAdd(kind, result){ if(!S.oracleLog) S.oracleLog=[]; S.oracleLog.unshift({id:uid(), t:Date.now(), kind, result, note:''}); S.oracleLog=S.oracleLog.slice(0,80); save(); renderOracleLog(); }
+function oracleAdd(kind, result, extra){ if(!S.oracleLog) S.oracleLog=[]; S.oracleLog.unshift({id:uid(), t:Date.now(), kind, result, note:''}); S.oracleLog=S.oracleLog.slice(0,80);
+  if(!/roll$/i.test(kind)) storyAdd(Object.assign({kind:'oracle', okind:kind, result, text:''}, extra||{}), true);
+  save(); renderOracleLog(); }
 // ----- Play-loop bridges (seamless flow) -----
 let _orLastApply='';                         // last Oracle "specific" text, for one-tap apply-to-scene
 let _lastRoll=null;                          // last dice roll summary, for one-tap journal logging
@@ -3514,6 +3627,8 @@ function tradeableParts(th){
   return parts;
 }
 function openDev(th, kind, rerender){
+  if(kind!=='mof') storyAdd({kind:'milestone', icon:kind==='improve'?'arrow-up':kind==='milestone'?'sparkles':'refresh-ccw',
+    text:(th.title||th.type||'A theme')+' — '+({improve:'the Improve track is full: gain an improvement',milestone:'Milestone reached: the theme evolves',abandon:'Abandoned: the theme is replaced'})[kind]}, true);
   devCtx={ kind:kind, th:th, rerender:rerender, form:{} };
   if(kind==='milestone') devCtx.form={ title:th.title||'', type:th.type, quest:th.quest||'' };
   if(kind==='abandon')   devCtx.form={ trade:{} };
@@ -3583,7 +3698,7 @@ function renderDev(){
 function litmQuintessences(){ try{ if(typeof LITM_DATA!=='undefined' && Array.isArray(LITM_DATA.quintessences)) return LITM_DATA.quintessences; }catch(e){} return []; }
 function hasQuintessence(name){ return (S.quintessences||'').toLowerCase().indexOf((name||'').toLowerCase())>=0; }
 
-function openMoF(){ setTimeout(()=>{ const sh=document.querySelector('#devOverlay .sheet'); celebrate(sh&&sh.offsetParent?sh:document.body); },120); devCtx={ kind:'mof', form:{q:null, custom:''} }; renderMoF(); $('devOverlay').classList.add('show'); }
+function openMoF(){ storyAdd({kind:'milestone', icon:'star', text:'A Moment of Fulfillment'}, true); setTimeout(()=>{ const sh=document.querySelector('#devOverlay .sheet'); celebrate(sh&&sh.offsetParent?sh:document.body); },120); devCtx={ kind:'mof', form:{q:null, custom:''} }; renderMoF(); $('devOverlay').classList.add('show'); }
 function renderMoF(){
   $('devTitle').textContent='🌟 Moment of Fulfillment';
   const carry=Math.max(0,(S.promise||0)-5);
@@ -3766,6 +3881,7 @@ document.querySelectorAll('#mhYou button').forEach(b=>{ b.onclick=()=>{ mightCmp
 
 function rollDice(){
   if(+(document.body.dataset.act||3)!==3) actGo(3);
+  const _invoked=availableTags().filter(t=>rollMods[t.id]).map(t=>(rollMods[t.id]==='help'?(burnId===t.id?'🔥 ':'+ '):'− ')+t.label);
   const power=computePower();
   const reaction = rollMode==='reaction';
   spend=null; $('spendBox').innerHTML='';
@@ -3825,16 +3941,19 @@ function rollDice(){
     if(soloOn()){
       bridge='<div class="row" style="gap:8px;margin-top:8px">';
       if(!reaction && tier!=='win') bridge+='<button class="btn sm" onclick="oracleJump(\'conseq\',\'or_cq\')">🔮 Roll a Consequence</button>';
-      bridge+='<button class="btn sm ghost" onclick="logRollToJournal()">📓 Log to journal</button></div>';
+      bridge+='<button class="btn sm ghost" style="display:none" onclick="logRollToJournal()">📓 Log to journal</button></div>';
     }
     const crit = dbl6?' crit-win':(dbl1auto?' crit-lose':'');
     if(crit){ d1.classList.add(crit.trim()); d2.classList.add(crit.trim()); }
     if(dbl6) setTimeout(()=>celebrate($('outcomeBox')),60);
     const ocIc = {win: reaction?'shield':'trophy', mixed:'scale', lose:'triangle-alert'}[cls];
+    bridge+='<button class="btn wide back-story" onclick="showTab(\'journal\')">📜 Back to the story</button>';
     $('outcomeBox').innerHTML = '<div class="outcome '+cls+crit+'"><div class="oc-ic">'+icoSVG(ocIc)+'</div><div class="big">'+big+'</div>'
       + '<div class="sub">Rolled '+r1+' + '+r2+' '+(power>=0?'+ ':'− ')+Math.abs(power)+' Power = <b>'+total+'</b></div>'
       + '<div class="sub">'+sub+'</div>'+detail+weakNote+blNote+agNote+burnNote+bridge+'</div>';
     rolls.unshift({t:Date.now(), r1, r2, power, total, big:(reaction?'🛡 ':'')+big, hero:S.heroName||'Hero'});
+    const _te=storyAdd({kind:'turn', reaction, intent:_pendingIntent, tier, big, dice:[r1,r2], power, total, tags:_invoked, effects:[], crit:(dbl6?'win':dbl1auto?'lose':'')}, true);
+    _te.text=draftProse(_te); _pendingIntent=''; if(spend) spend._entryId=_te.id; save();
     rolls=rolls.slice(0,40); saveRolls(); renderRollHist();
     if(burnNote){ save(); renderThemes(); renderFellowship(); renderRel(); renderBackpack(); renderScene(); renderRoller(); }
     $('outcomeBox').querySelectorAll('[data-markimp]').forEach(b=>b.onclick=()=>{ const id=b.dataset.markimp, th=id==='fel'?S.fellowship:S.themes.find(x=>x.id===id); if(!th) return;
@@ -3934,7 +4053,7 @@ function seedEffect(e){
   const sf=$('spForm'); if(sf&&sf.scrollIntoView) sf.scrollIntoView({block:'nearest'});
 }
 function openSpend(total,isReaction){ spend={total:total,remaining:total,reaction:isReaction,log:[],_form:null}; renderSpend(); }
-function closeSpend(){ spend=null; $('spendBox').innerHTML=''; }
+function closeSpend(){ const back=spend && spend._entryId; spend=null; $('spendBox').innerHTML=''; save(); if(back) showTab('journal'); }
 function doSpend(cost,label,apply){
   if(cost>spend.remaining){ toast('Not enough Power'); return false; }
   spend.remaining-=cost; spend.log.push(label+' (−'+cost+')'); if(apply) apply(); return true;
@@ -3946,6 +4065,7 @@ function spForm(t){
 }
 function renderSpend(){
   const box=$('spendBox'); if(!spend){ box.innerHTML=''; return; }
+  if(spend._entryId){ const e=storyFind(spend._entryId); if(e){ e.effects=spend.log.slice(); } }
   const r=spend.remaining;
   let h='<div class="card" style="margin-top:12px">';
   h+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">';
@@ -4199,7 +4319,7 @@ function updateNewbieBanner(){ const el=$('newbieBanner'); if(el) el.style.displ
 function renderWcGallery(){ const g=$('wcGallery'); if(!g) return; const P=(typeof LITM_DATA!=='undefined' && LITM_DATA.premades)||[];
   g.innerHTML=P.map((c,i)=>'<button class="wc-hero" data-pm="'+i+'">'+heroCrestSVG({heroName:c.name,themes:c.themes},46)+'<span>'+esc(c.name)+'</span></button>').join('')
     +'<button class="wc-hero wc-own" onclick="welcomeGo(\'premade\')"><span class="wc-plus">＋</span><span>Build my own</span></button>';
-  g.querySelectorAll('[data-pm]').forEach(b=>b.onclick=()=>{ const c=P[+b.dataset.pm]; const h=heroFromPremade(c); roster.push(h); welcomeDismiss(); switchHero(h.id); showTab('track'); toast('Welcome, '+c.name); }); }
+  g.querySelectorAll('[data-pm]').forEach(b=>b.onclick=()=>{ const c=P[+b.dataset.pm]; const h=heroFromPremade(c); roster.push(h); welcomeDismiss(); switchHero(h.id); showTab('journal'); toast('Welcome, '+c.name); }); }
 function maybeWelcome(){
   if(localStorage.getItem(LS_SEEN)==='1') return;
   setTimeout(renderWcGallery,0);   // LITM_DATA is defined later in the script
@@ -4319,7 +4439,7 @@ const ICON_SKIP = { SCRIPT:1, STYLE:1, TEXTAREA:1, OPTION:1, OPTGROUP:1, SELECT:
 function icoSVG(name){ return '<svg class="ico i-'+name+'" aria-hidden="true"><use href="#i-'+name+'"/></svg>'; }
 function iconizeText(tn){
   const t=tn.nodeValue; if(!ICON_RE || !t) return; ICON_RE.lastIndex=0; if(!ICON_RE.test(t)) return;
-  const p=tn.parentNode; if(!p || ICON_SKIP[p.nodeName] || (p.closest && p.closest('svg,textarea,select,[data-noicon]'))) return;
+  const p=tn.parentNode; if(!p || ICON_SKIP[p.nodeName] || (p.closest && p.closest('svg,textarea,select,[data-noicon],[contenteditable]'))) return;
   const frag=document.createDocumentFragment(); let last=0; ICON_RE.lastIndex=0; let m;
   while((m=ICON_RE.exec(t))){
     if(m.index>last) frag.appendChild(document.createTextNode(t.slice(last,m.index)));
@@ -4382,6 +4502,139 @@ function applyMode(){ const u=uiPrefs(); const beg=(u.mode||'full')==='beginner'
   const pc=$('progressCard'); if(pc) pc.classList.toggle('has', !!(S && S.progress && S.progress.length));
   document.querySelectorAll('.might-help.adv').forEach(d=>{ if(beg) d.open=false; }); }
 
+// ============================================================
+//  STORY — solo-journaling turn loop (Story tab = main screen)
+//  S.story = {chapters:[{id,title,t,scenes:[{id,title,stakes,t,entries:[…]}]}]}
+//  entry kinds: turn (intent+roll+tags+effects, drafted prose) · oracle · note · conseq · milestone · camp
+// ============================================================
+let _pendingIntent='', _endChapter=false;
+function tierOfBig(b){ return /10\+|Success!|React!/.test(b||'')?'win':/7–9/.test(b||'')?'mixed':'lose'; }
+function storyEnsure(){
+  if(S.story && Array.isArray(S.story.chapters) && S.story.chapters.length) return S.story;
+  const old=[]; const hn=S.heroName||'Hero';
+  (rolls||[]).filter(r=>!r.hero || r.hero===hn).forEach(r=>old.push({id:uid(),t:r.t||0,kind:'turn',tier:tierOfBig(r.big),big:r.big,dice:[r.r1,r.r2],power:r.power,total:r.total,tags:[],effects:[],intent:'',text:''}));
+  (S.oracleLog||[]).forEach(e=>old.push({id:uid(),t:e.t||0,kind:'oracle',okind:e.kind,result:e.result,text:e.note||''}));
+  old.sort((a,b)=>a.t-b.t);
+  const st={chapters:[]};
+  if(old.length) st.chapters.push({id:uid(),title:'Before the tale',t:old[0].t,scenes:[{id:uid(),title:'Earlier',stakes:'',t:old[0].t,entries:old}]});
+  st.chapters.push({id:uid(),title:'Chapter 1',t:Date.now(),scenes:[{id:uid(),title:'Scene 1',stakes:(S.sceneBoard&&S.sceneBoard.stakes)||'',t:Date.now(),entries:[]}]});
+  S.story=st; return st;
+}
+function curChapter(){ const c=storyEnsure().chapters; return c[c.length-1]; }
+function curScene(){ if(!S) return null; const ch=curChapter(); if(!ch.scenes.length) ch.scenes.push({id:uid(),title:'Scene 1',stakes:'',t:Date.now(),entries:[]}); return ch.scenes[ch.scenes.length-1]; }
+function storyFind(id){ for(const ch of storyEnsure().chapters) for(const sc of ch.scenes) for(const e of sc.entries) if(e.id===id) return e; return null; }
+function storyAdd(e, quiet){ if(!S) return e; e.id=e.id||uid(); e.t=e.t||Date.now(); curScene().entries.push(e); if(!quiet) save(); renderStory(); return e; }
+function storyNewScene(){ const ch=curChapter(); const n=ch.scenes.length+1;
+  ch.scenes.push({id:uid(),title:'Scene '+n,stakes:'',t:Date.now(),entries:[]});
+  if(S.sceneBoard){ S.sceneBoard.stakes=''; S.sceneBoard.step=0; } save(); renderStory(); renderSceneBoard();
+  setTimeout(()=>{ const h=document.querySelector('#storyFeed .sc-hd:last-of-type .sc-title'); if(h){ h.focus(); try{ document.execCommand('selectAll',false,null); }catch(e){} } },60); }
+function storyNewChapter(){ const st=storyEnsure(); const n=st.chapters.filter(c=>/^Chapter \d+$/.test(c.title)).length+1;
+  st.chapters.push({id:uid(),title:'Chapter '+n,t:Date.now(),scenes:[{id:uid(),title:'Scene 1',stakes:'',t:Date.now(),entries:[]}]});
+  if(S.sceneBoard){ S.sceneBoard.stakes=''; S.sceneBoard.step=0; } save(); renderStory(); toast('A new chapter begins'); }
+function storyEndChapter(){ _endChapter=true; openCamp(); }
+function draftProse(e){
+  const who=((S.heroName||'').trim().split(/\s+/)[0])||'The hero';
+  let i=(e.intent||'').trim().replace(/[.!]+$/,'');
+  i=i.replace(/^(i\s+will|i'll|i\s+try\s+to|i)\s+/i,'').replace(/^to\s+/i,'');
+  const act=i? who+' tries to '+i.charAt(0).toLowerCase()+i.slice(1) : who+(e.reaction?' braces against the blow':' takes action');
+  const out={win:e.reaction?' — and turns the blow aside.':' — and it works.', mixed:e.reaction?' — but can only lessen the blow.':' — it works, but at a cost.',
+    lose:e.reaction?' — and takes the full force of it.':' — but it goes wrong.'}[e.tier]||'.';
+  return act+out;
+}
+function storyNextHTML(){
+  const sc=curScene(); const last=sc && sc.entries[sc.entries.length-1];
+  let h='';
+  if(last && last.kind==='turn' && last.tier!=='win' && !last.reaction){
+    h='<div class="nx-card lose"><div class="nx-h">⚠️ Take the Consequence</div><div class="nx-btns">'
+      +'<button class="solo-only" onclick="oracleJump(\'conseq\',\'or_cq\')">🔮 Roll a Consequence</button>'
+      +'<button onclick="cmpPrime(\'conseq\')">✍️ Write it</button></div></div>';
+  } else if(last && last.kind==='turn' && spend && spend.remaining>0){
+    h='<div class="nx-card win"><div class="nx-h">✨ '+spend.remaining+' Power to spend</div><div class="nx-btns"><button onclick="storyGoSpend()">Spend Power</button></div></div>';
+  }
+  return h;
+}
+function storyGoSpend(){ showTab('roll'); actGo(3); setTimeout(()=>{ const b=$('spendBox'); if(b) try{ b.scrollIntoView({block:'center'}); }catch(e){} },60); }
+function entryHTML(e){
+  const del='<button class="se-del" data-sdel="'+e.id+'" aria-label="Delete entry">✕</button>';
+  const prose=(cls,ph)=>'<div class="se-prose '+(cls||'')+'" contenteditable="true" data-sedit="'+e.id+'" data-ph="'+esc(ph||'Add to the story…')+'">'+esc(e.text||'')+'</div>';
+  if(e.kind==='turn'){
+    const tierLbl={win:'Success',mixed:'Success & Consequences',lose:'Consequences'}[e.tier]||'';
+    return '<article class="se se-turn '+e.tier+(e.crit?' crit-'+e.crit:'')+'">'+del
+      +(e.intent?'<div class="se-intent">“'+esc(e.intent)+'”</div>':'')
+      +prose('', 'Tell what happened…')
+      +'<div class="se-mech"><span class="se-dice">'+(e.dice||[]).map(dieSVG).join('')+'</span><b>'+(e.total!=null?e.total:'')+'</b>'
+      +'<span class="se-tier">'+(e.reaction?'🛡 ':'')+esc(e.big||tierLbl)+'</span></div>'
+      +((e.tags&&e.tags.length)?'<div class="se-tags">'+e.tags.map(t=>'<span class="'+(t[0]==='−'?'h':'')+'">'+esc(t)+'</span>').join('')+'</div>':'')
+      +((e.effects&&e.effects.length)?'<div class="se-fx">✨ '+e.effects.map(esc).join(' · ')+'</div>':'')+'</article>';
+  }
+  if(e.kind==='oracle'){
+    const parts=String(e.result||'').split(' | ');
+    return '<article class="se se-oracle">'+del+'<div class="se-k">🔮 '+esc(e.okind||'Oracle')+'</div>'
+      +(e.seal!=null?'<div class="yn-seal yn-'+e.seal+' se-seal">'+esc(e.sealText||'')+'</div>':'')
+      +(parts.length>1?'<ul class="orl-parts">'+parts.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<div class="se-res">'+esc(e.result)+'</div>')
+      +prose('se-note','What does it mean?')+'</article>';
+  }
+  if(e.kind==='milestone') return '<article class="se se-mile">'+del+'<span class="se-mi">'+icoSVG(e.icon||'star')+'</span><div>'+esc(e.text)+'</div></article>';
+  if(e.kind==='camp') return '<article class="se se-camp">'+del+'<div class="se-k">🏕️ Camp</div><ul>'+(e.items||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+prose('se-note','Around the fire…')+'</article>';
+  if(e.kind==='conseq') return '<article class="se se-conseq">'+del+'<div class="se-k">⚠️ Consequence</div>'+prose()+'</article>';
+  return '<article class="se se-note">'+del+prose()+'</article>';
+}
+function renderStory(){
+  const feed=$('storyFeed'); if(!feed || !S) return;
+  const st=storyEnsure();
+  let h='';
+  st.chapters.forEach((ch,ci)=>{
+    h+='<header class="ch-hd"><span class="ch-orn"></span><div class="ch-title" contenteditable="true" data-chap="'+ch.id+'">'+esc(ch.title)+'</div><span class="ch-orn"></span></header>';
+    ch.scenes.forEach(sc=>{
+      h+='<div class="sc-hd"><div class="sc-title" contenteditable="true" data-scene="'+sc.id+'">'+esc(sc.title)+'</div>'
+        +'<div class="sc-stakes" contenteditable="true" data-stakes="'+sc.id+'" data-ph="What\'s at stake?">'+esc(sc.stakes||'')+'</div></div>';
+      if(!sc.entries.length && ci===st.chapters.length-1) h+='<div class="se-empty">'+icoSVG('feather')+'<span>Your tale begins. Write what your hero does below, then <b>Act</b>.</span></div>';
+      sc.entries.forEach(e=>{ h+=entryHTML(e); });
+    });
+  });
+  feed.innerHTML=h;
+  const nx=$('storyNext'); if(nx) nx.innerHTML=storyNextHTML();
+  // edits
+  feed.querySelectorAll('[data-sedit]').forEach(d=>d.oninput=()=>{ const e=storyFind(d.dataset.sedit); if(e){ e.text=d.innerText; save(); } });
+  feed.querySelectorAll('[data-sdel]').forEach(b=>b.onclick=()=>{ if(!confirm('Remove this entry from the story?')) return;
+    for(const ch of st.chapters) for(const sc of ch.scenes){ const i=sc.entries.findIndex(x=>x.id===b.dataset.sdel); if(i>=0){ sc.entries.splice(i,1); } } save(); renderStory(); });
+  feed.querySelectorAll('[data-chap]').forEach(d=>d.oninput=()=>{ const c=st.chapters.find(x=>x.id===d.dataset.chap); if(c){ c.title=d.innerText.trim()||c.title; save(); } });
+  feed.querySelectorAll('[data-scene]').forEach(d=>d.oninput=()=>{ for(const ch of st.chapters){ const sc=ch.scenes.find(x=>x.id===d.dataset.scene); if(sc){ sc.title=d.innerText.trim()||sc.title; save(); } } });
+  feed.querySelectorAll('[data-stakes]').forEach(d=>d.oninput=()=>{ for(const ch of st.chapters){ const sc=ch.scenes.find(x=>x.id===d.dataset.stakes); if(sc){ sc.stakes=d.innerText.trim(); if(sc===curScene() && S.sceneBoard){ S.sceneBoard.stakes=sc.stakes; } save(); } } });
+  renderStoryHud();
+  if(document.body.dataset.tab==='journal') requestAnimationFrame(()=>{ if(_storyScrollEnd){ _storyScrollEnd=false; window.scrollTo(0, document.body.scrollHeight); } });
+}
+let _storyScrollEnd=true;
+function renderStoryHud(){
+  const w=$('storyHud'); if(!w || !S) return;
+  const sc=curScene();
+  const toks=(S.statuses||[]).filter(x=>(x.name||'').trim() && x.boxes.some(Boolean)).map(x=>{ const t=x.boxes.lastIndexOf(true)+1, foe=(x.owner||'me')==='foe';
+    return '<span class="hud-tok'+(foe?' foe':'')+'" title="'+esc(x.name)+'">'+(foe?'👹':'')+esc(x.name)+'<b>'+t+'</b></span>'; }).join('');
+  w.innerHTML='<button class="hud-crest" onclick="showTab(\'hero\')" aria-label="Open Hero">'+heroCrestSVG(S,34)+'</button>'
+    +'<div class="hud-mid"><div class="hud-name">'+(esc(S.heroName)||'Your hero')+'<span class="hud-stars">'+[1,2,3,4,5].map(i=>'<svg class="ico'+(i<=S.promise?' on':'')+'"><use href="#i-star"/></svg>').join('')+'</span></div>'
+    +'<div class="hud-quest">'+(sc&&sc.stakes?'🎯 '+esc(sc.stakes):'<span class="muted">No stakes set</span>')+'</div>'
+    +(toks?'<div class="hud-toks">'+toks+'</div>':'')+'</div>';
+}
+// composer
+function cmpText(){ return ($('cmpText').value||'').trim(); }
+function cmpClear(){ const t=$('cmpText'); t.value=''; t.placeholder='What now?'; t.dataset.kind=''; cmpGrow(); }
+function cmpGrow(){ const t=$('cmpText'); if(!t) return; t.style.height='auto'; t.style.height=Math.min(120,t.scrollHeight)+'px'; }
+function cmpAct(){ _pendingIntent=cmpText(); cmpClear(); _storyScrollEnd=true; startAct(); }
+function cmpNote(){ const v=cmpText(); if(!v){ $('cmpText').focus(); return; } const k=$('cmpText').dataset.kind==='conseq'?'conseq':'note';
+  _storyScrollEnd=true; storyAdd({kind:k,text:v}); cmpClear(); }
+function cmpPrime(kind){ const t=$('cmpText'); t.dataset.kind=kind; t.placeholder=kind==='conseq'?'What is the Consequence?':'What do you do?'; t.focus(); }
+function cmpAsk(){
+  const q=cmpText(); if(!q){ toast('Write a yes/no question first'); $('cmpText').focus(); return; }
+  const O=litmOracle(); if(!O||!O.yesno){ toast('Oracle data not loaded'); return; }
+  const a=d6(), c2=d6(), tot=a+c2, d1=a===1&&c2===1, d6b=a===6&&c2===6;
+  const band=d1?O.yesno[0]:d6b?O.yesno[4]:tot<=6?O.yesno[1]:tot<=9?O.yesno[2]:O.yesno[3];
+  const bi=O.yesno.indexOf(band), seal=String(band.answer).split(/\s+—\s+|\.\s*$/)[0];
+  _storyScrollEnd=true;
+  oracleAdd('Question · Yes/No', q+' → '+band.label+': '+band.answer, {seal:bi, sealText:seal, result:q+' → '+band.answer+' ('+a+'+'+c2+')'});
+  cmpClear(); if(bi===4) setTimeout(()=>celebrate($('storyFeed').lastElementChild),80);
+}
+(function(){ const t=$('cmpText'); if(t){ t.addEventListener('input',cmpGrow); t.addEventListener('keydown',e=>{ if(e.key==='Enter' && (e.metaKey||e.ctrlKey)){ e.preventDefault(); cmpAct(); } }); } })();
+
 // ----- Redesign: ACT flow (one step at a time on phones; all visible ≥900px) -----
 function actWide(){ return window.matchMedia && matchMedia('(min-width: 900px)').matches; }
 function actGo(n){ n=Math.max(1,Math.min(3,n|0)); document.body.dataset.act=n;
@@ -4405,29 +4658,8 @@ function renderStage(){
 function focusStakes(){ const i=$('sb_stakes'); if(i){ try{ i.scrollIntoView({block:'center'}); }catch(e){} i.focus(); } }
 function focusStatus(id){ renderStatuses(); const card=$('statusList'); if(card) try{ card.closest('.card').scrollIntoView({block:'start'}); window.scrollBy(0,-70); }catch(e){} }
 let _jrF='all';
-function renderJournal(){
-  const w=$('journalList'); if(!w || !S) return;
-  const items=[];
-  if(_jrF!=='oracle') (rolls||[]).forEach(r=>items.push({k:'roll',t:r.t||0,r}));
-  if(_jrF!=='roll') (S.oracleLog||[]).forEach(e=>items.push({k:'or',t:e.t||0,e}));
-  items.sort((a,b)=>b.t-a.t);
-  if(!items.length){ w.innerHTML=emptyHTML('notebook-pen','Your story so far appears here — every roll and Oracle answer.'); return; }
-  let day='', h='';
-  items.slice(0,120).forEach(it=>{ const d=new Date(it.t||Date.now()), dk=d.toDateString();
-    if(dk!==day){ day=dk; h+='<div class="jr-day">'+d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'})+'</div>'; }
-    const tm=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-    if(it.k==='roll'){ const r=it.r, tr=/10\+|Success!|React!/.test(r.big)?'win':/7–9/.test(r.big)?'mixed':'lose';
-      h+='<div class="jr-it jr-roll rh-'+tr+'"><span class="jr-ic">'+dieSVG(r.r1)+dieSVG(r.r2)+'</span><div class="jr-tx"><b>'+r.total+' · '+esc(r.big)+'</b><span class="muted">'+esc(r.hero||'')+' · '+r.r1+'+'+r.r2+(r.power>=0?'+':'−')+Math.abs(r.power)+' · '+tm+'</span></div></div>'; }
-    else { const e=it.e; const parts=String(e.result||'').split(' | ');
-      h+='<div class="jr-it jr-or"><span class="jr-ic or">'+icoSVG('orb')+'</span><div class="jr-tx"><b>'+esc(e.kind)+'</b><span class="muted">'+tm+'</span>'
-        +(parts.length>1?'<ul class="orl-parts">'+parts.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<div class="jr-res">'+esc(e.result)+'</div>')
-        +'<textarea class="orl-note" data-jnote="'+e.id+'" placeholder="journal note…">'+esc(e.note||'')+'</textarea></div><button class="ic" data-jdel="'+e.id+'" aria-label="Delete entry">✕</button></div>'; } });
-  w.innerHTML=h;
-  w.querySelectorAll('[data-jdel]').forEach(b=>b.onclick=()=>{ S.oracleLog=S.oracleLog.filter(x=>x.id!==b.dataset.jdel); save(); renderJournal(); });
-  w.querySelectorAll('[data-jnote]').forEach(t=>t.oninput=()=>{ const e=S.oracleLog.find(x=>x.id===t.dataset.jnote); if(e){ e.note=t.value; save(); } });
-}
-document.querySelectorAll('#jrFilter button').forEach(b=>b.onclick=()=>{ _jrF=b.dataset.f; document.querySelectorAll('#jrFilter button').forEach(x=>x.classList.toggle('on',x===b)); renderJournal(); });
-function startAct(){ showTab('roll'); if(typeof actGo==='function') actGo(1); }
+function renderJournal(){ if(typeof renderStory==='function') renderStory(); }
+function startAct(){ showTab('roll'); if(typeof actGo==='function') actGo(1); const b=$('actIntent'); if(b){ b.textContent=_pendingIntent?('“'+_pendingIntent+'”'):''; b.style.display=_pendingIntent?'':'none'; } }
 
 // ----- UI refresh R7: scratch embers, tag drag-reorder, display settings -----
 function emberAt(r){
@@ -4664,7 +4896,7 @@ applySolo();
 maybeWelcome();
 startIconizer();
 setDie($('die1'),0); setDie($('die2'),0);
-document.body.dataset.tab='track'; document.body.dataset.act='1'; uiTabChanged('track'); startRollDock(); startFabAutoHide(); startSheetSwipe(); startKeyboardChrome(); startHintClamp(); startHaptics(); startTagSwipe(); startTagDrag(); applyUIPrefs(); hintsToInfo(); syncHeaderH(); window.addEventListener('resize',syncHeaderH); endSplash();
+document.body.dataset.tab='journal'; document.body.dataset.act='1'; uiTabChanged('journal'); renderStory(); startRollDock(); startFabAutoHide(); startSheetSwipe(); startKeyboardChrome(); startHintClamp(); startHaptics(); startTagSwipe(); startTagDrag(); applyUIPrefs(); hintsToInfo(); syncHeaderH(); window.addEventListener('resize',syncHeaderH); endSplash();
 _lastSnap=_snap(); updateUndoUI();
 
 

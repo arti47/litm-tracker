@@ -59,7 +59,7 @@ As of last verification:
   Heroes + the inline per-tab How-to-use help + the solo play-loop bridges + the interactive
   Profile Builder + the first-run Welcome onboarding + the Run-a-game guide + the "Play with me"
   coach, ~458 KB of it `LITM_DATA`).
-- **`sw.js` `CACHE_VERSION`**: `litm-v65` (bump on every deploy)
+- **`sw.js` `CACHE_VERSION`**: `litm-v66` (bump on every deploy)
 - **SW strategy**: HTML/navigations **network-first** (fresh deploy on next online load),
   static assets cache-first. Mirrors the TOR2E Tracker SW pattern.
 - **localStorage keys (7)**:
@@ -171,7 +171,7 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
 2. `<style>` — CSS variables for light/dark; rulebook tag palette (power=yellow,
    weakness=orange, status=green); teal/mist "rustic fantasy" theme.
 3. `<header>` — sticky crest (hero switcher) + title + undo/redo + ❓ + ☰. Bottom nav (`#nav`):
-   **Play** (`track`) · **Hero** (`hero`) · **Journal** (`journal`) · **Lore** (`ref`) · **Oracle** (`oracle`, solo only).
+   **Story** (`journal`, the default/main screen) · **Scene** (`track`) · **Hero** (`hero`) · **Lore** (`ref`) · **Oracle** (`oracle`, solo only).
 4. `<section.panel>` — `panel-track` (Play, the default), `panel-hero` (sheet incl. Fellowship +
    relationships), `panel-journal`, `panel-ref`, `panel-oracle`, plus `panel-roll` (the ACT flow, opened by ACT/🎲,
    not in the nav) and the now-empty `panel-fellowship` (help text only; `showTab('fellowship')` → Hero + scroll).
@@ -239,7 +239,10 @@ The PWA `start_url` is `./index.html`; the dev/preview entry is also `index.html
   scene:[{text,type,scratched}],
   sceneBoard:{step:-1|0|1|2, stakes, threats},
   journey:{dest, max(2–10), cur, time, vignettes:[{text,done}]},   // Journey montage (Phase 6)
-  oracleLog:[{id,t,kind,result,note}] }   // Oracle results + journal notes (solo/co-op), cap 80
+  oracleLog:[{id,t,kind,result,note}],   // Oracle results + journal notes (solo/co-op), cap 80
+  story:{chapters:[{id,title,t,scenes:[{id,title,stakes,t,entries:[
+    {id,t,kind:'turn'|'oracle'|'note'|'conseq'|'milestone'|'camp', text(editable prose),
+     intent?,reaction?,tier?,big?,dice?,power?,total?,tags?,effects?,crit?, okind?,result?,seal?,sealText?, icon?, items?}]}]}]} }
 ```
 
 ---
@@ -793,6 +796,31 @@ Owner brief: "too cluttered, too wordy, intimidating — be radical". Implemente
   creates that Hero (`heroFromPremade`) and drops you on Play (`renderWcGallery`, deferred until `LITM_DATA` exists).
 - **Header**: 👥 removed — the crest/emblem (`#hdrCrest`) and title open the roster.
 - Verified: specs pass; tour/coach/wizard/camp/rest/cross-link scripted checks pass; axe clean except `meta-viewport`.
+
+### Story mode — solo-journaling turn loop (2026-10-13) ✅ (rules mechanics unchanged)
+Owner: "doesn't feel like a game; gameplay ↔ journalling link too weak" → chose a **solo journaling RPG** feel
+(app drafts prose, player edits; Story = main screen; Chapters → Scenes → Turns; rules-driven next prompts;
+slim HUD + milestone cards; old history migrated).
+- **Story tab** (`panel-journal`, now first in the nav and the boot tab; ACT flow highlights Story): sticky **HUD**
+  (`renderStoryHud`: crest → Hero, name, Promise stars, current scene stakes, status chips), the **feed**
+  (`renderStory`/`entryHTML`): chapter headings (editable), scene headers (editable title + stakes — current scene's
+  stakes sync both ways with `S.sceneBoard.stakes`), and entries; **New scene** / **End chapter** (opens Camp; closing
+  Camp starts the next chapter — `storyEndChapter`/`_endChapter`/`storyNewChapter`).
+- **Composer** (`#composer`, fixed above the nav on Story): "What do you do?" → **⚔ Act** (`cmpAct`: stores
+  `_pendingIntent`, opens the ACT flow with the intent banner `#actIntent`), **🔮 Ask** (solo; `cmpAsk` runs the
+  rulebook Yes/No oracle on the typed question, seal in the feed), **✍ Note** (`cmpNote`; a primed Consequence note is
+  kind `conseq`). Ctrl/⌘+Enter = Act.
+- **Turn entries**: `rollDice` captures the invoked tags before scratching and adds a `turn` entry (intent, dice, Power,
+  total, tier, tags, crit) with **drafted prose** (`draftProse`: "<Hero> tries to <intent> — it works, but at a cost." etc.,
+  `contenteditable`, saved on input). Spending Power fills the entry's `effects` live (`spend._entryId` in
+  `renderSpend`); **Done** in the Spend panel and the outcome's **📜 Back to the story** return to the feed.
+- **Next prompt** (`storyNextHTML`): after a 7–9 / 6− action → *Take the Consequence* (🔮 Roll a Consequence [solo] or
+  ✍ Write it); after a success with Power left → *Spend Power*. The composer placeholder becomes "What now?".
+- **Auto entries**: every Oracle result (`oracleAdd` → `oracle` entry, except roll-log kinds), **milestone cards**
+  (`openDev` Improve/Milestone/Abandon, `openMoF`, progress Limit reached, journey arrival), **camp summaries** (`closeCamp`).
+- **Migration** (`storyEnsure`): first open builds a read-only-ish "Before the tale › Earlier" chapter from this hero's
+  past rolls + Oracle log, then "Chapter 1 › Scene 1". `renderJournal` is now an alias of `renderStory`; the old
+  journal filter UI is gone. The iconizer skips `[contenteditable]`.
 
 **Not changed (by design):** all text/rules content, data, state model, storage keys. Emoji remain in the
 source (and in `title`/`placeholder`/`confirm()` text); only rendered text nodes are iconized.
